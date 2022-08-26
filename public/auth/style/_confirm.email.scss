@@ -1,0 +1,236 @@
+@import "./global";
+body {
+  // all in bg
+  font-family: "Poppins", sans-serif;
+  background: $primary-color;
+
+  // container
+  .content-container{
+    @include content-container;
+    .card {
+      height: 65vh;
+      width: 55vw;
+      background: $primary-color;
+      border: 2px solid rgb(255, 255, 255);
+      border-radius: 2rem;
+      box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+
+      .card-header {
+        all: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .title {
+          color: $mfont_col;
+        }
+        img {
+          height: 150px;
+          width: 150px;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+        .warning-banner {
+          color: $sfont_col;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+      }
+      .card-body {
+        display: flex;
+        justify-content: center;
+
+        form {
+          width: 85%;
+          text-align: center;
+
+          .form-group {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+
+            .form-control {
+              height: 30px;
+              width: 70%;
+              margin-bottom: 20px;
+              color: $sfont_col;
+              border-radius: 50px;
+              background: $primary-color;
+              box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+              border: 2px #ffffff solid;
+              background-color: $primary-color;
+            }
+            ::placeholder {
+              color: $sfont_col;
+              font-size: 14px;
+            }
+          }
+
+          button {
+            height: 40px;
+            width: 40px;
+            margin: 15px;
+            color: #c5c3c3;
+            font-size: 20px;
+            font-weight: 900;
+            background: $secondary-color;
+            border: none;
+            border-radius: 50%;
+
+            &:hover {
+              background-color: #004430;
+            }
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include breakpoints(0px, 576px) {
+  body {
+    .content-container {
+      .card {
+        height: auto;
+        width: 95vw; 
+
+        .card-header {
+          img {
+            height: 180px;
+            width: 180px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+          }
+          .warning-banner {
+            width: 80%;
+            font-size: 12px;
+            font-weight: 400;
+          }
+        }
+
+        .card-body {
+          display: flex;
+          justify-content: center;
+
+          form {
+            width: 90%;
+
+            .form-group {
+              .form-control {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include breakpoints(576px, 768px) {
+  body {
+    .content-container {
+      .card {
+        height: 85vh;
+        width: 85vw;
+
+        .card-header {
+          img {
+            height: 180px;
+            width: 180px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+          }
+          h3{
+            font-size: 24px;
+          }
+          .token-banner {
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+          }
+        }
+
+        .card-body {
+          display: flex;
+          justify-content: center;
+
+          form {
+            width: 90%;
+
+            #token {
+              #token-field {
+                width: 50%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include breakpoints(768px, 992px) {
+  body {
+    .content-container {
+      .card {
+        width: 50vw;
+        .card-header {
+          .warning-banner {
+            width: 80%;
+            font-size: 14px;
+            font-weight: 400;
+          }
+        }
+
+        .card-body {
+          display: flex;
+          justify-content: center;
+
+          form {
+            width: 85%;
+
+            .form-group {
+              .form-control {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 1200px) {
+  body {
+    .content-container {
+      .card {
+        width: 40vw;
+        .card-header {
+          .warning-banner {
+            width: 80%;
+            font-size: 16px;
+            font-weight: 400;
+          }
+        }
+
+        .card-body {
+          display: flex;
+          justify-content: center;
+
+          form {
+            width: 85%;
+
+            .form-group {
+              .form-control {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

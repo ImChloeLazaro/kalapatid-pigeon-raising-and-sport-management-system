@@ -1,0 +1,73 @@
+@import "./global";
+.login
+{
+    @include centerElement;
+    
+        .card-login
+        {
+            background: $primary-color;
+            color: $mfont_col;
+            width: 40vw;
+            height: auto;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 2rem;
+            box-shadow:  20px 20px 68px #d3d3d3,
+         -20px -20px 68px #ffffff;
+            .login-form
+            {
+
+                .banner
+                {
+                    text-align: center;
+                }
+                input
+                {
+                    accent-color: $secondary-color;
+                }
+                .custom-input
+                {
+                    color: $sfont_col;
+                    border: none;
+                    border-radius: 0;
+                    background-color: $primary-color;
+                    border-bottom: 3px $secondary-color solid;
+                    box-shadow: none!important;
+                }
+                
+                #forLogin
+                {
+                    
+                    .btn-login
+                    {
+                        background-color: $secondary-color;
+                        border-radius: 2rem;
+                    }
+                }
+                .small-banner
+                {
+                    color: $secondary-color;
+                    text-decoration: none;
+                }
+
+            }
+            .logo
+            {
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img
+                {
+                    height: 200px;
+                    width: 200px;
+                }
+            }
+        }
+        
+}
+//breakpoints for mobile phones.
+@include respond-above(576px)
+{
+
+}

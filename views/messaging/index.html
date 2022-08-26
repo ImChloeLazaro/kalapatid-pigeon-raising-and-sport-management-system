@@ -1,0 +1,16 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container">
+  <h1>Messaging</h1>
+  <div class="msg-container">
+    {% for messageId in data %}
+    <div class="msg-content">
+      <hr>
+      <a href="{{ctx.DOMAIN_NAME}}/messages/{{messageId}}">{{messageId}}</a>
+      <br>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container">
+  <h1>Clubs</h1>
+  <div class="container club-form-container">
+    <form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
+      <input name="clubName" type="text" placeholder="new Club">
+      <input type="submit" value="Create New Club">
+    </form>
+  </div>
+  <div class="club-table-container container">
+    <table class="club-table table table-responsive  table-bordered">
+      <theader>
+        <th>Club Names</th>
+      </theader>
+      <tbody>
+        {% for e in clubs %}
+        <tr>
+          <td><a href="{{ctx.DOMAIN_NAME}}/clubs/{{e._id}}">{{e.name}}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

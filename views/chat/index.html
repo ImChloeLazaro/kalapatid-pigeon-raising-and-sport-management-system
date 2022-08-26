@@ -1,0 +1,19 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container">
+  <h1>Global Chats</h1>
+  <div class="chat-container">
+    {% for d in data %}
+    <div class="chat-content">
+      {{d.username}}: {{d.chat}}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="chat-form-container">
+    <form method="post" id="chat-form">
+      <textarea name="chat" id="" cols="90" rows="2"></textarea>
+      <button type="submit">submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

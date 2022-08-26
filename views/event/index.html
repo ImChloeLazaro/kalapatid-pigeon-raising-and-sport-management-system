@@ -1,0 +1,27 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container">
+  <h1>Events</h1>
+  <div class="container event-form-container">
+    <form action="{{ctx.DOMAIN_NAME}}/events/create" method="post">
+      <input name="eventName" type="text" placeholder="new Event">
+      <input type="submit" value="Create New Event">
+    </form>
+  </div>
+  <div class="event-table-container container">
+    <table class="event-table table table-responsive  table-bordered">
+      <theader>
+        <th>Event Names</th>
+      </theader>
+      <tbody>
+        {% for e in events %}
+        <tr>
+          <td><a href="{{ctx.DOMAIN_NAME}}/events/{{e._id}}">{{e.name}}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

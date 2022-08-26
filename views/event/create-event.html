@@ -1,0 +1,52 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container">
+	<h1>Create Event</h1>
+	<div class="container event-form-container">
+		<form action="{{ctx.DOMAIN_NAME}}/events/save" method="post">
+			<div class="form-group w-50">
+
+				<div class="my-4">
+					<label for="eventName">Event Name</label>
+					<input class="form-control form-control-sm " name="eventName" type="text" value="{{context.eventName}}"
+						placeholder="Event Name">
+				</div>
+				<div class="my-4">
+					<label for="eventDate">Event Name</label>
+					<input class="form-control form-control-sm " defaultValue="Hello" name="eventDate" type="date"
+						placeholder="Event Date">
+				</div>
+				<div class="my-4">
+					<div id="my-map" style="width: fit-content; height:200px;"></div>
+					<label>Event Location</label>
+					<br>
+					<label for="evenLocLong">X Coordinate</label>
+					<input class="form-control form-control-sm " name="eventLocLong" id="eventLocLong" type="location"
+						placeholder="Event Location">
+					<label for="evenLocLong">Y Coordinate</label>
+					<input class="form-control form-control-sm " name="eventLocLat" id="eventLocLat" type="location"
+						placeholder="Event Location">
+				</div>
+				<div class="my-4">
+					<label for="eventHourStart">Event Time Start</label>
+					<input class="form-control form-control-sm " name="eventHourStart" type="time" placeholder="Event Start Time">
+				</div>
+				<div class="my-4">
+					<label for="eventHourEnd">Event Time End</label>
+					<input class="form-control form-control-sm " name="eventHourEnd" type="time" placeholder="Event End Time">
+				</div>
+				<div class="my-4">
+					<label for="eventType">Event Type</label>
+					<input class="form-control form-control-sm " name="eventType" type="text" placeholder="Event Type">
+				</div>
+				<div class="my-4">
+					<label for="eventDiscript">Event Description</label>
+					<textarea class="d-block" name="eventDiscript" placeholder="Event Discription" id="" cols="80"
+						rows="10"></textarea>
+				</div>
+				<input class="my-4" type="submit" value="Save">
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

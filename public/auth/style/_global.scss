@@ -1,0 +1,30 @@
+$primary-color: #F2F2F2;
+$secondary-color: #2DA380;
+$mfont_col: #2D2626;
+$sfont_col: #C5C3C3;
+
+
+/*content container for auth.
+confirm.token
+confrim.token
+reset.password
+*/
+@mixin content-container
+{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+// @author chloe
+// breakpoints
+
+@mixin breakpoints($min, $max)
+{
+    @media (min-width: $min) and (max-width: $max) 
+    {
+        @content;
+    }
+}
