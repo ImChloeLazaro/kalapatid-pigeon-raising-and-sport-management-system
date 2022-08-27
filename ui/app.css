@@ -1,0 +1,39 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper
+{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 5fr 5fr;
+    grid-template-areas: 
+    "header header header header"
+    "aside post post members"
+    "aside feed feed members"
+    "aside feed feed members";
+    
+}
+#feed-header
+{
+    grid-area: header;
+}
+#feed-aside
+{
+    grid-area: aside;
+}
+#feed-post
+{
+    grid-area: post;
+}
+#feed-row
+{
+    grid-area: feed;
+}
+#feed-members-navigation
+{
+    grid-area: members;
+}
