@@ -32,14 +32,10 @@ loginRoute.post("/", (req, res) => {
 		let isMatched = false;
 
 		dataArray.forEach(v => {
-			console.log(v.username)
 			let isCredentialMatched = (v.username === username && bcryptjs.compareSync(password, v.password))
 			if (isCredentialMatched) {
 				isMatched = true;
-			} else {
-				console.log("no.....");
 			}
-
 		})
 		if (isMatched) {
 			req.session.username = username;

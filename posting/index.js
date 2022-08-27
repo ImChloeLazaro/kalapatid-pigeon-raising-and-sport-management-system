@@ -15,12 +15,15 @@ posting.get("/", (req, res) => {
   verifyLogin(req, res, (username) => {
     dbf.getAllPostData((err, docs) => {
       let posts = docs
-      return res.render("posting/index.html", {
-        ctx: globalConstants.ctx,
-        title: constants.TITLE,
-        posts: posts,
-        comments: null
-      });
+      dbf.getAllCommentData((err, docs) => {
+        let comments = docs
+        return res.render("posting/index.html", {
+          ctx: globalConstants.ctx,
+          title: constants.TITLE,
+          posts: posts,
+          comments: comments
+        });
+      })
     })
   })
 

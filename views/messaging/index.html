@@ -3,7 +3,7 @@
 <div class="container">
   <h1>Messaging</h1>
   <div class="msg-container">
-    {% for messageId in data %}
+    {% for messageId in data|reverse %}
     <div class="msg-content">
       <hr>
       <a href="{{ctx.DOMAIN_NAME}}/messages/{{messageId}}">{{messageId}}</a>
