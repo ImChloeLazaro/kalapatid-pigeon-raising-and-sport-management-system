@@ -4,7 +4,6 @@ const bcryptjs = require('bcryptjs')
 const dbo = require("../db/db-operation")
 const model = require("../model/model")
 const sendEmail = require('../lib/mail')
-// const constants = require("../constants");
 const globalConstants = require("../../constants/constants");
 const tk = require("../lib/toolkit")
 
@@ -26,8 +25,6 @@ loginRoute.get("/", (req, res) => {
 loginRoute.post("/", (req, res) => {
 	let username = req.body.username
 	let password = req.body.password
-
-	console.log(username, password)
 	dbo.getAllAcountData((err, dataArray) => {
 		let isMatched = false;
 
