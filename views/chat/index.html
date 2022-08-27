@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
   <h1>Global Chats</h1>
-  <div class="chat-container">
+  <div class="chat-container scroll">
     {% for d in data %}
     <div class="chat-content">
       {{d.username}}: {{d.chat}}

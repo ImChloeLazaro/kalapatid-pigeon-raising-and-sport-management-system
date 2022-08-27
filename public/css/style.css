@@ -1,1 +1,13 @@
- 
+
+
+.chat-container{
+	width: 700px;
+	height: 400px;
+}
+
+
+div.scroll {
+	overflow-x: hidden;
+	overflow-y: auto;
+	white-space: nowrap;
+}
