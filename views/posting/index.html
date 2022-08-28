@@ -9,12 +9,13 @@
     </form>
   </div>
   <div class="post-container">
-    {% for p in posts|reverse  %}
+    {% for p in posts|sort('datetime')|reverse  %}
     <div>
       <div>
         <hr>
         <!-- id : {{p._id}} -->
         <h4>Post</h4>
+        <div>{{p.datetime}}</div>
         <p>
           {{ p.post }}
         </p>
@@ -26,8 +27,7 @@
           </form>
           <div class="reply-container mx-5">
             <h4>Comments</h4>
-            {% for c in comments  %}
-
+            {% for c in comments|sort("datetime") %}
 
             {% set p1 = p._id.toString() %}
             {% set p2 = c.postId.toString() %}
@@ -35,6 +35,7 @@
             {% if (p1 == p2) %}
             <!-- id: {{c._id }} -->
             <hr>
+            <div>{{c.datetime}}</div>
             <p>
               {{ c.comment }}
             </p>

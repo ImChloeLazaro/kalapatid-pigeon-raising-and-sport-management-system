@@ -50,8 +50,6 @@ function getMessageDataById(messageId, fn) {
 	db.getCollection("messages", (col) => {
 		col.find({ messageId: messageId }).toArray((err, docs) => {
 			if (err) console.log(err);
-
-
 			fn(err, docs)
 		})
 	})

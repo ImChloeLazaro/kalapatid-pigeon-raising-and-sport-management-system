@@ -2,7 +2,6 @@ const express = require("express")
 const globalConstants = require('../constants/constants')
 const { loginRoute, registerRoute, recoveryRoute, logoutRoute } = require('./route/route')
 
-
 const auth = express.Router()
 
 auth.use("/login", loginRoute)

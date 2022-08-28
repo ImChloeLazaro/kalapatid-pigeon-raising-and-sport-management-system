@@ -11,7 +11,6 @@ const root = require("../root/index.js")
 
 
 const config = (app, express, constants) => {
-
 	let main = express.Router()
 	main.use('/auth', authentication)
 	main.use('/chats', chat)
@@ -25,6 +24,8 @@ const config = (app, express, constants) => {
 	main.use('/**', root)
 
 
+
+	
 	app.use(constants.ctx.DOMAIN_NAME, main)
 	app.use('/', (req, res) => res.redirect(constants.ctx.DOMAIN_NAME))
 }

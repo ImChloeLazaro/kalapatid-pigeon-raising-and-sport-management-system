@@ -8,7 +8,11 @@
 
   <div class="msg-container">
     {% for d in messages %}
-    <div class="chat-content">{{d.msg}}</div>
+    <div class="chat-content">
+      <p>
+        {{d.datetime}}: {{d.msg}}
+      </p>
+    </div>
     {% endfor %}
   </div>
 

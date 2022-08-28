@@ -14,7 +14,7 @@
         <th>Event Names</th>
       </theader>
       <tbody>
-        {% for e in events %}
+        {% for e in events|reverse %}
         <tr>
           <td><a href="{{ctx.DOMAIN_NAME}}/events/{{e._id}}">{{e.name}}</a></td>
         </tr>

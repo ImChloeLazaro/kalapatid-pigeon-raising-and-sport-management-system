@@ -2,7 +2,19 @@
 {% block content %}
 <div class="container">
 	<h1>Profile</h1>
-	<a href="{{ctx.DOMAIN_NAME}}/profile/messageme"><button>message</button></a>
+	<a class="form-control mx-3" href="{{ctx.DOMAIN_NAME}}/profile/messageme"><button>message</button></a>
+	<div>
+		<form>
+			<label class="mx-3" for="">username</label>
+			<input class="form-control mx-3" type="text" value="{{userData.username}}">
+			<label class="mx-3" for="">First Name</label>
+			<input class="form-control mx-3" type="text" value="{{userData.firstname}}">
+			<label class="mx-3" for="">Middle Name</label>
+			<input class="form-control mx-3" type="text" value="{{userData.middlename}}">
+			<label class="mx-3" for="">Last Name</label>
+			<input class="form-control mx-3" type="text" value="{{userData.lastname}}">
+		</form>
+	</div>
 </div>
 
 {% endblock %}

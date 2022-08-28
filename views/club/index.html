@@ -14,7 +14,7 @@
         <th>Club Names</th>
       </theader>
       <tbody>
-        {% for e in clubs %}
+        {% for e in clubs|reverse %}
         <tr>
           <td><a href="{{ctx.DOMAIN_NAME}}/clubs/{{e._id}}">{{e.name}}</a></td>
         </tr>

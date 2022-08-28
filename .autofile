@@ -1,3 +1,4 @@
 mongod
 mongo
+npm run tun
 npm run dev2

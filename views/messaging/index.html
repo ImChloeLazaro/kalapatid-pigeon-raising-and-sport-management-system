@@ -3,13 +3,20 @@
 <div class="container">
   <h1>Messaging</h1>
   <div class="msg-container scroll">
-    {% for messageId in data|reverse %}
+    {% if data| is_empty %}
+    <p>No Messaging available!</p>
+
+    {% else %}
+
+    {% for d in data|unique|sort('datetime')|reverse %}
     <div class="msg-content">
       <hr>
-      <a href="{{ctx.DOMAIN_NAME}}/messages/{{messageId}}">{{messageId}}</a>
+      {{d.datetime}}:
+      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}"> {{d.messageId}}</a>
       <br>
     </div>
     {% endfor %}
+    {% endif %}
   </div>
 
 </div>

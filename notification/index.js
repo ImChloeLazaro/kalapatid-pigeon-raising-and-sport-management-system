@@ -1,18 +1,10 @@
 const express = require("express")
-const globalConstants = require("../constants/constants")
-const constants = require("./constants")
+const controller = require("./controller/controller")
+
+
 const notification = express.Router()
-const { verifyLogin } = require("../lib/toolkit")
 
-notification.get("/", (req, res) => {
-  verifyLogin(req, res, (username) => {
-    return res.render("notification/index.html", {
-      ctx: globalConstants.ctx,
-      title: constants.TITLE
-    })
-  })
-
-})
+notification.get("/", controller.GET_NOTIFICATION)
 
 module.exports = notification;
 
