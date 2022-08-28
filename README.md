@@ -40,18 +40,7 @@ ngrok http 9000
 # stunel tunnel-client
 st -p 9000
 # localtunnel
-lt -p 9000
-```
-
-## Running System in Docker
-NOTE: the system docker repository is private you need to request permission,you need also to change database port in .env of system inside the docker container
-```sh
-# pull docker image in dockerhub
-docker pull marcuwynu23/kalapatid
-#run docker image and create a random image name
-docker run -p 9000:9000 marcuwynu23/kalapatid
-#open web application in default browser
-explorer http://localhost:9000
+lt -p 9000 -s app
 ```
 
 ## Guide References

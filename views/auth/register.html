@@ -85,11 +85,23 @@
 					</button>
 				</div>
 				{% if isRegistered %}
-				<p class="text-success">Account Registered!</p>
+				<script>
+					swal({
+  						title: "Registration Success!",
+  						icon: "success",
+  						button: "Done",
+					});
+				</script>
 				{% endif %}
 
 				{% if isError %}
-				<p class="text-danger">Account Not Registered!</p>
+				<script>
+					swal({
+  						title: "Registration Error!",
+  						icon: "warning",
+  						button: "Done",
+					});
+				</script>
 				{% endif %}
 			</div>
 		</div>
