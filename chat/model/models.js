@@ -1,6 +1,7 @@
-function Chat(id, username, chat) {
+function Chat(id, accountId, username, chat) {
 	return {
 		_id: id,
+		accountId: accountId,
 		username: username,
 		chat: chat
 	}
