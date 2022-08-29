@@ -12,7 +12,8 @@ const ObjectId = require("mongodb").ObjectId
 const GET_MESSAGE = (req, res) => {
 	const dbquery = (accountId, callback) => {
 		let accountIdObj = new ObjectId(accountId)
-		dbf.getAllMessageData({ accountId: accountIdObj }, (err, docs) => {
+		let filter = {}
+		dbf.getAllMessageData(filter, (err, docs) => {
 			if (err) {
 				callback(null)
 				return
@@ -40,8 +41,7 @@ const GET_MESSAGE_ID = (req, res) => {
 		let accountIdObj = new ObjectId(accId)
 		let messageIdObj = new ObjectId(messageId)
 		let filter = {
-			messageId: messageIdObj,
-			accountId: accountIdObj,
+
 			$or: [{ username1: curusername }, { username2: curusername }]
 		}
 		dbf.getMessageDataById(filter, (err, docs) => {
@@ -54,12 +54,18 @@ const GET_MESSAGE_ID = (req, res) => {
 		})
 	}
 	const template = (req, res, username1, username2, messages) => {
+		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
 			username2 = messages[0].username2
 		}
+		otherusername = username2
+		if (username2 == curuser) {
+			otherusername = username1
+		}
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
+			otherusername: otherusername,
 			username1: username1,
 			username2: username2,
 			messages: messages,
@@ -99,8 +105,6 @@ const POST_MESSAGE_ID = (req, res) => {
 				let messageIdObj = new ObjectId(messageId)
 				let accountIdObj = new ObjectId(accountId)
 				let filter = {
-					messageId: messageIdObj,
-					accountId: accountIdObj,
 					$or: [{ username1: curusername }, { username2: curusername }]
 				}
 				dbf.getMessageDataById(filter, (err, docs) => {
@@ -119,13 +123,18 @@ const POST_MESSAGE_ID = (req, res) => {
 	}
 
 	const template = (req, res, username1, username2, messages) => {
+		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
 			username2 = messages[0].username2
 		}
-
+		otherusername = username2
+		if (username2 == curuser) {
+			otherusername = username1
+		}
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
+			otherusername: otherusername,
 			username1: username1,
 			username2: username2,
 			messages: messages,
@@ -137,7 +146,7 @@ const POST_MESSAGE_ID = (req, res) => {
 
 	verifyLogin(req, res, (accountId, username) => {
 		let username1 = username
-		let username2 = req.session.othername
+		let username2 = req.query.username
 		let messageId = req.params.id
 		let datetime = datetimenow()
 		let messageModel = model.Message(messageId, accountId, datetime, username1, username2, req.body.msg)

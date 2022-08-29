@@ -13,10 +13,14 @@
     <div class="msg-content">
       <hr>
       {{d.datetime}}:
-      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}">
-        <h4>{{d.username2}}</h4>
-      </a>
-      <br>
+      {% if d.username2 == username %}
+      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+        <h4>{{d.username1}}</h4>
+        {% else %}
+        <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
+          <h4>{{d.username2}}</h4>
+          {% endif %}
+          <br>
     </div>
     {% endfor %}
     {% endif %}

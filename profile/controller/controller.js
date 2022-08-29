@@ -25,9 +25,13 @@ const GET_PROFILE = (req, res) => {
 
 
 const GET_PROFILE_ID = (req, res) => {
-	let othername = req.params.username
-	req.session.othername = othername
+
 	verifyLogin(req, res, (accountId, username) => {
+		let othername = req.params.username
+		if (othername === "message") {
+			othername = username
+		}
+		req.session.othername = othername
 		return res.render("profile/profile.html", {
 			ctx: globalConstants.ctx,
 			userData: userData,
@@ -51,7 +55,11 @@ const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		const id = new require("mongodb").ObjectId().toString()
 		let othername = req.session.othername
-		let redirectUrl = globalConstants.ctx.DOMAIN_NAME + '/messages/' + id + '/?username=' + othername
+		if (othername === "message") {
+			othername = username
+
+		}
+		let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${id}/?username=${othername}`
 		return res.redirect(redirectUrl)
 	})
 }

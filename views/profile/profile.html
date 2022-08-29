@@ -2,12 +2,8 @@
 {% block content %}
 <div class="container">
 	<h1>Profile</h1>
-	{% if othername|is_empty_str %}
-	<a class="form-control mx-3" href="{{ctx.DOMAIN_NAME}}/profile/messageme"><button>message</button></a>
-	{% else %}
-	with
-	<a class="form-control mx-3" href="{{ctx.DOMAIN_NAME}}/profile/{{othername}}/messageme"><button>message</button></a>
-	{% endif %}
+
+	<a class="form-control mx-3" href="{{ctx.DOMAIN_NAME}}/profile/message/{{othername}}"><button>message me</button></a>
 	<div>
 		<form>
 			<label class="mx-3" for="">username</label>

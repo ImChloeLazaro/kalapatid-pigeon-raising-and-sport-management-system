@@ -25,6 +25,7 @@ function filters(env) {
 				data.push({
 					messageId: messageId,
 					datetime: d.datetime,
+					username1: d.username1,
 					username2: d.username2
 				})
 			}

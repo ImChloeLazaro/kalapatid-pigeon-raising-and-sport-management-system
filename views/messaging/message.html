@@ -3,17 +3,29 @@
 <div class="container">
 
   <h1 class="text-dark">Account Message</h1>
-  username1: {{username1}}
-  username2: {{username2}}
+  <h4>{{otherusername}}</h4>
+
   <div class="msg-container">
     {% for d in messages %}
+
+
+    {% if d.username2 != otherusername %}
     <div class="chat-content">
-      <div>{{d.username1}}</div>
+      <div>{{d.username1}} to: {{d.username2}}</div>
       <div>{{d.datetime}}</div>
       <p>
         {{d.msg}}
       </p>
     </div>
+    {%else%}
+    <div class="chat-content text-white bg-dark">
+      <div>{{d.username1}} to: {{d.username2}}</div>
+      <div>{{d.datetime}}</div>
+      <p>
+        {{d.msg}}
+      </p>
+    </div>
+    {% endif %}
     {% endfor %}
   </div>
 

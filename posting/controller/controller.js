@@ -34,9 +34,10 @@ function renderTemplate(res, posts, comments) {
 
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		let accountIdObj = new ObjectId(accountId)
-		getAllPostData({ accountId: accountIdObj }, (posts) => {
-			getAllCommentData({ accountId: accountIdObj }, (comments) => {
+		// let accountIdObj = new ObjectId(accountId)
+		let filter = {}
+		getAllPostData(filter, (posts) => {
+			getAllCommentData(filter, (comments) => {
 				renderTemplate(res, posts, comments)
 			})
 		})
@@ -51,9 +52,9 @@ const POST_POSTING = (req, res) => {
 
 		dbf.insertPostData(postModel, (err) => {
 			if (err == null) {
-				let accountIdObj = new ObjectId(accountId)
-				getAllPostData({ accountId: accountIdObj }, (posts) => {
-					getAllCommentData({ accountId: accountIdObj }, (comments) => {
+				let filter = {}
+				getAllPostData(filter, (posts) => {
+					getAllCommentData(filter, (comments) => {
 						renderTemplate(res, posts, comments)
 					})
 				})
@@ -77,9 +78,9 @@ const POST_POSTING_COMMENT = (req, res) => {
 
 		dbf.insertCommentData(commentModel, (err) => {
 			if (err == null) {
-				let accountIdObj = new ObjectId(accountId)
-				getAllPostData({ accountId: accountIdObj }, (posts) => {
-					getAllCommentData({ accountId: accountIdObj }, (comments) => {
+				let filter = {}
+				getAllPostData(filter, (posts) => {
+					getAllCommentData(filter, (comments) => {
 						renderTemplate(res, posts, comments)
 					})
 				})
