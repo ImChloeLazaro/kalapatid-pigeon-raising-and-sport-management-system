@@ -1,15 +1,19 @@
-function Post(id, datetime, post) {
+const ObjectId = require('mongodb').ObjectId
+
+function Post(accountId, datetime, post) {
 	return {
-		_id: id,
+		_id: new ObjectId(),
+		accountId: new ObjectId(accountId),
 		datetime: datetime,
 		post: post
 	}
 }
 
-function Comment(id, postId, datetime, comment) {
+function Comment(accountId, postId, datetime, comment) {
 	return {
-		_id: id,
-		postId: postId,
+		_id: new ObjectId(),
+		accountId: new ObjectId(accountId),
+		postId: new ObjectId(postId),
 		datetime: datetime,
 		comment: comment
 	}

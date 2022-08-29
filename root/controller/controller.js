@@ -7,6 +7,7 @@ const REDIRECT = (req, res) => {
 
 const GET_HOME = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
+		console.log(accountId)
 		return res.render("index.html", {
 			ctx: globalConstants.ctx,
 			username: username,

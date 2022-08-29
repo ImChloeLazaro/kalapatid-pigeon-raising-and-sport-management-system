@@ -10,8 +10,6 @@ const globalConstants = require("../../constants/constants");
 const ObjectId = require('mongodb').ObjectId;
 
 
-
-
 const GET_LOGIN = (req, res) => {
 	res.render("auth/index.html", { ctx: globalConstants.ctx, isNotAuthenticated: false })
 }
@@ -44,28 +42,33 @@ const POST_LOGIN = (req, res) => {
 		return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/home')
 	}
 
-	const render = () => {
+	const render = (isNotAuthenticated) => {
 		return res.render("auth/index.html", {
 			ctx: globalConstants.ctx,
-			isNotAuthenticated: true
+			isNotAuthenticated: isNotAuthenticated
 		})
 	}
 
 	const query = () => {
 		dbo.getAllAcountData((err, dataArray) => {
-			let isMatched = authenticate(dataArray)[0]
-			let accountId = authenticate(dataArray)[1].toString()
+			let isNotAuthenticated = true
+			if (dataArray == null) {
+				render(isNotAuthenticated)
+				return
+			}
+			let auth = authenticate(dataArray)
+			let isMatched = auth[0]
+			let accountId = auth[1]
 
 			if (isMatched) {
 				redirect(accountId)
 			} else {
-				render()
+				render(isNotAuthenticated)
 			}
 		})
 	}
 	query()
 }
-
 
 
 
@@ -133,11 +136,6 @@ const POST_REGISTER = (req, res) => {
 			}
 		)
 	})
-
-
-
-
-
 }
 
 

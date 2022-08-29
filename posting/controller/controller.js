@@ -1,53 +1,64 @@
 const globalConstants = require("../../constants/constants")
+const { verifyLogin, datetimenow } = require("../../lib/toolkit")
 const model = require('../model/model')
 const dbf = require('../db/db-functions')
-const { verifyLogin, datetimenow } = require("../../lib/toolkit")
+
+const ObjectId = require('mongodb').ObjectId
+
+
+function getAllPostData(filter, fn) {
+	dbf.getAllPostData(filter, (err, docs) => {
+		if (err) return
+		let posts = docs
+		fn(posts)
+	})
+}
+
+function getAllCommentData(filter, fn) {
+	dbf.getAllCommentData(filter, (err, docs) => {
+		if (err) return
+		let comments = docs
+		fn(comments)
+	})
+}
+
+function renderTemplate(res, posts, comments) {
+	return res.render("posting/index.html", {
+		ctx: globalConstants.ctx,
+		posts: posts,
+		comments: comments
+	});
+}
 
 
 
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		dbf.getAllPostData((err, docs) => {
-			let posts = docs
-			dbf.getAllCommentData((err, docs) => {
-				let comments = docs
-				return res.render("posting/index.html", {
-					ctx: globalConstants.ctx,
-					posts: posts,
-					comments: comments
-				});
+		let accountIdObj = new ObjectId(accountId)
+		getAllPostData({ accountId: accountIdObj }, (posts) => {
+			getAllCommentData({ accountId: accountIdObj }, (comments) => {
+				renderTemplate(res, posts, comments)
 			})
 		})
 	})
-
 }
 
 const POST_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		let id = new require('mongodb').ObjectId()
-		let datetime = datetimenow()
 		let post = req.body.post
+		let datetime = datetimenow()
+		let postModel = model.Post(accountId, datetime, post)
 
-
-		dbf.insertPostData(model.Post(id, datetime, post), (err, docs) => {
+		dbf.insertPostData(postModel, (err) => {
 			if (err == null) {
-				dbf.getAllPostData((err, docs) => {
-					let posts = docs
-					dbf.getAllCommentData((err, docs) => {
-						let comments = docs
-						return res.render("posting/index.html", {
-							ctx: globalConstants.ctx,
-							posts: posts,
-							comments: comments
-						});
+				let accountIdObj = new ObjectId(accountId)
+				getAllPostData({ accountId: accountIdObj }, (posts) => {
+					getAllCommentData({ accountId: accountIdObj }, (comments) => {
+						renderTemplate(res, posts, comments)
 					})
-
 				})
 			} else {
-				return res.render("posting/index.html", {
-					ctx: globalConstants.ctx,
-					posts: null
-				});
+				renderTemplate(res, null, null)
 			}
 		})
 	})
@@ -56,41 +67,29 @@ const POST_POSTING = (req, res) => {
 
 const POST_POSTING_COMMENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
+
 		let comment = req.body.comment
-		let commentId = new require('mongodb').ObjectId()
-		let postId = new require('mongodb').ObjectId(req.body.postId)
+		let postId = req.body.postId
 		let datetime = datetimenow()
 
-		console.log(comment)
-		dbf.insertCommentData(model.Comment(commentId, postId, datetime, comment), (err) => {
+
+		let commentModel = model.Comment(accountId, postId, datetime, comment)
+
+		dbf.insertCommentData(commentModel, (err) => {
 			if (err == null) {
-				dbf.getAllPostData((err, docs) => {
-					let posts = docs
-					dbf.getAllCommentData((err, docs) => {
-						let comments = docs
-						return res.render("posting/index.html", {
-							ctx: globalConstants.ctx,
-							posts: posts,
-							comments: comments
-						});
+				let accountIdObj = new ObjectId(accountId)
+				getAllPostData({ accountId: accountIdObj }, (posts) => {
+					getAllCommentData({ accountId: accountIdObj }, (comments) => {
+						renderTemplate(res, posts, comments)
 					})
 				})
 			} else {
-				return res.render("posting/index.html", {
-					ctx: globalConstants.ctx,
-					posts: null,
-					comments: null
-				});
+				renderTemplate(res, null, null)
 			}
 		})
 
 	})
-
 }
-
-
-
-
 
 module.exports = {
 	GET_POSTING: GET_POSTING,

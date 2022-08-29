@@ -12,6 +12,9 @@ function filters(env) {
 	env.addFilter('is_empty', function (arr) {
 		return arr.length === 0;
 	})
+	env.addFilter('is_empty_str', function (str) {
+		return str === null
+	})
 
 	env.addFilter('unique', function (arr) {
 		let data = []
@@ -21,12 +24,12 @@ function filters(env) {
 			if (fd.length === 0) {
 				data.push({
 					messageId: messageId,
-					datetime: d.datetime
+					datetime: d.datetime,
+					username2: d.username2
 				})
 			}
 
 		}
-		console.log(data)
 		return data
 	})
 

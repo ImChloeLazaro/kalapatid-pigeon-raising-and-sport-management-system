@@ -3,14 +3,15 @@
 <div class="container">
 
   <h1 class="text-dark">Account Message</h1>
-  <h4>message id: {{context.messageId}}</h4>
-
-
+  username1: {{username1}}
+  username2: {{username2}}
   <div class="msg-container">
     {% for d in messages %}
     <div class="chat-content">
+      <div>{{d.username1}}</div>
+      <div>{{d.datetime}}</div>
       <p>
-        {{d.datetime}}: {{d.msg}}
+        {{d.msg}}
       </p>
     </div>
     {% endfor %}

@@ -42,3 +42,4 @@ function getLocationFromMap(map, fn) {
 	});
 }
 
+console.log("Hello")

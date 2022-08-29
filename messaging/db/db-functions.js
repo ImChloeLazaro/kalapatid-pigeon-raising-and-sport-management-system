@@ -3,10 +3,6 @@ const db = require('./db')
 
 function insertMessageData(data, fn) {
 	db.getCollection("messages", (col) => {
-
-		// col.createIndex({ "email": 1 }, { unique: true })
-		// col.createIndex({ "username": 1 }, { unique: true })
-
 		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)
@@ -17,38 +13,19 @@ function insertMessageData(data, fn) {
 
 
 
-function getAllMessageData(fn) {
+function getAllMessageData(filter, fn) {
 	db.getCollection("messages", (col) => {
-		col.find().toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
-
 
 			fn(err, docs)
 		})
 	})
 }
 
-
-// function insertMessageData(data, fn) {
-// 	db.getCollection("messages", (col) => {
-
-// 		// col.createIndex({ "email": 1 }, { unique: true })
-// 		// col.createIndex({ "username": 1 }, { unique: true })
-
-// 		col.insertOne(data, (err) => {
-// 			if (err) console.log(err);
-// 			fn(err)
-// 		})
-// 	})
-
-// }
-
-
-
-
-function getMessageDataById(messageId, fn) {
+function getMessageDataById(filter, fn) {
 	db.getCollection("messages", (col) => {
-		col.find({ messageId: messageId }).toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
 			fn(err, docs)
 		})

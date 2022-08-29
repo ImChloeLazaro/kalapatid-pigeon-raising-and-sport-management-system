@@ -4,7 +4,10 @@ const controller = require("./controller/controller")
 const profile = express.Router()
 
 profile.get('/', controller.GET_PROFILE)
+profile.get('/:username', controller.GET_PROFILE_ID)
 profile.get('/messageme', controller.GET_PROFILE_MESSAGEME)
+profile.get('/:username/messageme', controller.GET_PROFILE_MESSAGEME_ID)
+
 
 
 

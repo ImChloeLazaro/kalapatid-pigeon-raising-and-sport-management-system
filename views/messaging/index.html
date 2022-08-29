@@ -2,6 +2,7 @@
 {% block content %}
 <div class="container">
   <h1>Messaging</h1>
+  username: {{username}}
   <div class="msg-container scroll">
     {% if data| is_empty %}
     <p>No Messaging available!</p>
@@ -12,7 +13,9 @@
     <div class="msg-content">
       <hr>
       {{d.datetime}}:
-      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}"> {{d.messageId}}</a>
+      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}">
+        <h4>{{d.username2}}</h4>
+      </a>
       <br>
     </div>
     {% endfor %}

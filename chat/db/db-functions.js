@@ -18,9 +18,9 @@ function insertChatData(data, fn) {
 
 
 
-function getAllChatData(fn) {
+function getAllChatData(filter, fn) {
 	db.getCollection("chats", (col) => {
-		col.find().toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
 			fn(err, docs)
 		})

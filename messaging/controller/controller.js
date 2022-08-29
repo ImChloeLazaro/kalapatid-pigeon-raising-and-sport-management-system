@@ -7,31 +7,44 @@ const ObjectId = require("mongodb").ObjectId
 
 
 
+
+
 const GET_MESSAGE = (req, res) => {
-	const dbquery = (callback) => {
-		dbf.getAllMessageData((err, docs) => {
+	const dbquery = (accountId, callback) => {
+		let accountIdObj = new ObjectId(accountId)
+		dbf.getAllMessageData({ accountId: accountIdObj }, (err, docs) => {
 			if (err) {
 				callback(null)
 				return
 			}
+
 			callback(docs)
 		})
 	}
-	const template = (docs) => {
-		return res.render("messaging/index.html", {
-			ctx: globalConstants.ctx,
-			data: docs
-		})
-	}
 	verifyLogin(req, res, (accountId, username) => {
-		dbquery(template)
+		dbquery(accountId, (docs) => {
+			return res.render("messaging/index.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				data: docs,
+
+			})
+		})
 	})
 }
 
 
+
 const GET_MESSAGE_ID = (req, res) => {
-	const dbquery = (messageId, callback) => {
-		dbf.getMessageDataById(messageId, (err, docs) => {
+	const dbquery = (accId, messageId, curusername, callback) => {
+		let accountIdObj = new ObjectId(accId)
+		let messageIdObj = new ObjectId(messageId)
+		let filter = {
+			messageId: messageIdObj,
+			accountId: accountIdObj,
+			$or: [{ username1: curusername }, { username2: curusername }]
+		}
+		dbf.getMessageDataById(filter, (err, docs) => {
 			let messages = docs
 			if (err) {
 				callback(null)
@@ -40,27 +53,62 @@ const GET_MESSAGE_ID = (req, res) => {
 			callback(messages)
 		})
 	}
-	const template = (messages) => {
+	const template = (req, res, username1, username2, messages) => {
+		if (messages.length !== 0) {
+			username1 = messages[0].username1
+			username2 = messages[0].username2
+		}
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
+			username1: username1,
+			username2: username2,
 			messages: messages,
 			messageId: req.params.id
 		});
 	}
 
-
 	verifyLogin(req, res, (accountId, username) => {
-		let messageId = new ObjectId(req.params.id)
-		dbquery(messageId, template)
+		let accId = accountId
+		let messageId = req.params.id
+		dbquery(accId, messageId, username, (messages) => {
+			template(req, res, username, req.query.username, messages)
+		})
 	})
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const POST_MESSAGE_ID = (req, res) => {
-	const dbquery = (messageId, messageModel, callback) => {
+	const dbquery = (messageId, accountId, curusername, messageModel, callback) => {
 		dbf.insertMessageData(messageModel, (err) => {
 			if (err == null) {
-				dbf.getMessageDataById(messageId, (err, docs) => {
+				let messageIdObj = new ObjectId(messageId)
+				let accountIdObj = new ObjectId(accountId)
+				let filter = {
+					messageId: messageIdObj,
+					accountId: accountIdObj,
+					$or: [{ username1: curusername }, { username2: curusername }]
+				}
+				dbf.getMessageDataById(filter, (err, docs) => {
 					let messages = docs
+					if (err) {
+						callback(null)
+						return
+					}
 					callback(messages)
 				})
 			} else {
@@ -70,24 +118,35 @@ const POST_MESSAGE_ID = (req, res) => {
 		})
 	}
 
-	const template = (messages) => {
+	const template = (req, res, username1, username2, messages) => {
+		if (messages.length !== 0) {
+			username1 = messages[0].username1
+			username2 = messages[0].username2
+		}
+
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
+			username1: username1,
+			username2: username2,
 			messages: messages,
 			messageId: req.params.id
 		});
 	}
 
+
+
 	verifyLogin(req, res, (accountId, username) => {
 		let username1 = username
-		let username2 = 'dymaru23'
-		let messageId = new ObjectId(req.params.id)
-		let id = new ObjectId()
+		let username2 = req.session.othername
+		let messageId = req.params.id
 		let datetime = datetimenow()
-		let messageModel = model.Message(id, messageId, datetime, username1, username2, req.body.msg)
-		dbquery(messageId, messageModel, template)
+		let messageModel = model.Message(messageId, accountId, datetime, username1, username2, req.body.msg)
+		console.log("Session Data: ", req.session)
+		console.log("MOdel Data: ", messageModel)
+		dbquery(messageId, accountId, username1, messageModel, (messages) => {
+			template(req, res, username1, username2, messages)
+		})
 	})
-
 }
 
 

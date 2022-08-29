@@ -18,9 +18,9 @@ function insertPostData(data, fn) {
 
 
 
-function getAllPostData(fn) {
+function getAllPostData(filter, fn) {
 	db.getCollection("posts", (col) => {
-		col.find().toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
 			fn(err, docs)
 		})
@@ -43,9 +43,9 @@ function insertCommentData(data, fn) {
 
 
 
-function getCommentDataById(postId, fn) {
+function getCommentDataById(filter, fn) {
 	db.getCollection("comments", (col) => {
-		col.find({ postId: postId }).toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
 			fn(err, docs)
 		})
@@ -53,9 +53,9 @@ function getCommentDataById(postId, fn) {
 }
 
 
-function getAllCommentData(fn) {
+function getAllCommentData(filter, fn) {
 	db.getCollection("comments", (col) => {
-		col.find({}).toArray((err, docs) => {
+		col.find(filter).toArray((err, docs) => {
 			if (err) console.log(err);
 			fn(err, docs)
 		})
