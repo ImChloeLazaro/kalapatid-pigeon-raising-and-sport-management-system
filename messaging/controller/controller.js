@@ -10,9 +10,12 @@ const ObjectId = require("mongodb").ObjectId
 
 
 const GET_MESSAGE = (req, res) => {
-	const dbquery = (accountId, callback) => {
+	const dbquery = (accountId, curusername, callback) => {
 		let accountIdObj = new ObjectId(accountId)
-		let filter = {}
+		let filter = {
+			$or: [{ username1: curusername }, { username2: curusername }]
+		}
+
 		dbf.getAllMessageData(filter, (err, docs) => {
 			if (err) {
 				callback(null)
@@ -23,7 +26,7 @@ const GET_MESSAGE = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		dbquery(accountId, (docs) => {
+		dbquery(accountId, username, (docs) => {
 			return res.render("messaging/index.html", {
 				ctx: globalConstants.ctx,
 				username: username,
@@ -41,8 +44,8 @@ const GET_MESSAGE_ID = (req, res) => {
 		let accountIdObj = new ObjectId(accId)
 		let messageIdObj = new ObjectId(messageId)
 		let filter = {
-
-			$or: [{ username1: curusername }, { username2: curusername }]
+			messageId: messageIdObj,
+			$or: [{ username1: curusername }, { username2: curusername }],
 		}
 		dbf.getMessageDataById(filter, (err, docs) => {
 			let messages = docs
@@ -52,8 +55,11 @@ const GET_MESSAGE_ID = (req, res) => {
 			}
 			callback(messages)
 		})
+
+
 	}
 	const template = (req, res, username1, username2, messages) => {
+		console.log("GET: ", messages)
 		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
@@ -105,6 +111,7 @@ const POST_MESSAGE_ID = (req, res) => {
 				let messageIdObj = new ObjectId(messageId)
 				let accountIdObj = new ObjectId(accountId)
 				let filter = {
+					messageId: messageIdObj,
 					$or: [{ username1: curusername }, { username2: curusername }]
 				}
 				dbf.getMessageDataById(filter, (err, docs) => {
@@ -123,6 +130,7 @@ const POST_MESSAGE_ID = (req, res) => {
 	}
 
 	const template = (req, res, username1, username2, messages) => {
+		console.log("POST: ", messages)
 		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1

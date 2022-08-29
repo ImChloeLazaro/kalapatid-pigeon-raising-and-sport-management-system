@@ -15,7 +15,7 @@ function insertMessageData(data, fn) {
 
 function getAllMessageData(filter, fn) {
 	db.getCollection("messages", (col) => {
-		col.find(filter).toArray((err, docs) => {
+		col.find(filter).sort({ datetime: -1 }).toArray((err, docs) => {
 			if (err) console.log(err);
 
 			fn(err, docs)
