@@ -16,10 +16,5 @@
 .chat-form-container{
 padding: 2px;
 	margin: 10px 4px;
-}
-
-div.scroll {
-	overflow-x: hidden;
-	overflow-y: auto;
-	white-space: nowrap;
+	
 }

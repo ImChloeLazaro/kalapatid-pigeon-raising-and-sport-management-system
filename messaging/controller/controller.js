@@ -10,23 +10,20 @@ const ObjectId = require("mongodb").ObjectId
 
 
 const GET_MESSAGE = (req, res) => {
-	const dbquery = (accountId, curusername, callback) => {
-		let accountIdObj = new ObjectId(accountId)
+	const dbquery = (curusername, callback) => {
 		let filter = {
 			$or: [{ username1: curusername }, { username2: curusername }]
 		}
-
 		dbf.getAllMessageData(filter, (err, docs) => {
 			if (err) {
 				callback(null)
 				return
 			}
-
 			callback(docs)
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		dbquery(accountId, username, (docs) => {
+		dbquery(username, (docs) => {
 			return res.render("messaging/index.html", {
 				ctx: globalConstants.ctx,
 				username: username,
@@ -40,11 +37,9 @@ const GET_MESSAGE = (req, res) => {
 
 
 const GET_MESSAGE_ID = (req, res) => {
-	const dbquery = (accId, messageId, curusername, callback) => {
-		let accountIdObj = new ObjectId(accId)
-		let messageIdObj = new ObjectId(messageId)
+	const dbquery = (messageId, curusername, callback) => {
 		let filter = {
-			messageId: messageIdObj,
+			messageId: new ObjectId(messageId),
 			$or: [{ username1: curusername }, { username2: curusername }],
 		}
 		dbf.getMessageDataById(filter, (err, docs) => {
@@ -59,7 +54,6 @@ const GET_MESSAGE_ID = (req, res) => {
 
 	}
 	const template = (req, res, username1, username2, messages) => {
-		console.log("GET: ", messages)
 		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
@@ -80,9 +74,8 @@ const GET_MESSAGE_ID = (req, res) => {
 	}
 
 	verifyLogin(req, res, (accountId, username) => {
-		let accId = accountId
 		let messageId = req.params.id
-		dbquery(accId, messageId, username, (messages) => {
+		dbquery(messageId, username, (messages) => {
 			template(req, res, username, req.query.username, messages)
 		})
 	})
@@ -105,6 +98,7 @@ const GET_MESSAGE_ID = (req, res) => {
 
 
 const POST_MESSAGE_ID = (req, res) => {
+
 	const dbquery = (messageId, accountId, curusername, messageModel, callback) => {
 		dbf.insertMessageData(messageModel, (err) => {
 			if (err == null) {
@@ -130,7 +124,6 @@ const POST_MESSAGE_ID = (req, res) => {
 	}
 
 	const template = (req, res, username1, username2, messages) => {
-		console.log("POST: ", messages)
 		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
@@ -147,10 +140,8 @@ const POST_MESSAGE_ID = (req, res) => {
 			username2: username2,
 			messages: messages,
 			messageId: req.params.id
-		});
+		})
 	}
-
-
 
 	verifyLogin(req, res, (accountId, username) => {
 		let username1 = username
@@ -158,17 +149,36 @@ const POST_MESSAGE_ID = (req, res) => {
 		let messageId = req.params.id
 		let datetime = datetimenow()
 		let messageModel = model.Message(messageId, accountId, datetime, username1, username2, req.body.msg)
-		console.log("Session Data: ", req.session)
-		console.log("MOdel Data: ", messageModel)
 		dbquery(messageId, accountId, username1, messageModel, (messages) => {
-			template(req, res, username1, username2, messages)
+			// template(req, res, username1, username2, messages)
+			let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${messageId}/?username=${username2}`
+			return res.redirect(redirectUrl)
 		})
 	})
+
+
+}
+
+
+
+
+const DELETE_MESSAGE_ID = (req, res) => {
+	let { mid, messageId, username } = req.body
+	let filter = { _id: ObjectId(mid) }
+	dbf.deleteDataById(filter, (err) => {
+		if (err) return
+		let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${messageId}/?username=${username}`
+		return res.redirect(redirectUrl)
+	})
+
+
+
 }
 
 
 module.exports = {
 	GET_MESSAGE: GET_MESSAGE,
 	GET_MESSAGE_ID: GET_MESSAGE_ID,
-	POST_MESSAGE_ID: POST_MESSAGE_ID
+	POST_MESSAGE_ID: POST_MESSAGE_ID,
+	DELETE_MESSAGE_ID: DELETE_MESSAGE_ID
 }

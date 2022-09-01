@@ -1,6 +1,6 @@
 
 const globalConstants = require("../../constants/constants")
-// const dbf = require('./db/db-functions')
+const dbf = require('../db/db-functions')
 const { verifyLogin } = require("../../lib/toolkit")
 
 
@@ -43,24 +43,32 @@ const GET_PROFILE_ID = (req, res) => {
 
 
 
-
-const GET_PROFILE_MESSAGEME = (req, res) => {
-	verifyLogin(req, res, (accountId, username) => {
-		const id = new require("mongodb").ObjectId().toString()
-		return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/messages/' + id)
-	})
-}
-
 const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		const id = new require("mongodb").ObjectId().toString()
+
 		let othername = req.session.othername
 		if (othername === "message") {
 			othername = username
-
 		}
-		let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${id}/?username=${othername}`
-		return res.redirect(redirectUrl)
+		var messageId = null
+		let filter = {
+			$or: [{ username1: othername }, { username2: othername }]
+		}
+		dbf.getAllMessageDataBy(filter, (err, docs) => {
+			messageId = new require("mongodb").ObjectId().toString()
+			if (docs.length !== 0) {
+				docs.forEach(data => {
+					messageId = data.messageId.toString()
+					if (data.username1 !== othername || data.username2 !== othername) {
+						messageId = new require("mongodb").ObjectId().toString()
+					}
+				})
+			}
+			let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${messageId}/?username=${othername}`
+			return res.redirect(redirectUrl)
+		})
+
+
 	})
 }
 
@@ -69,6 +77,5 @@ const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 module.exports = {
 	GET_PROFILE: GET_PROFILE,
 	GET_PROFILE_ID: GET_PROFILE_ID,
-	GET_PROFILE_MESSAGEME: GET_PROFILE_MESSAGEME,
 	GET_PROFILE_MESSAGEME_ID: GET_PROFILE_MESSAGEME_ID
 }

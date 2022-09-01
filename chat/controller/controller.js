@@ -6,15 +6,15 @@ const model = require('../model/models')
 const ObjectId = require('mongodb').ObjectId
 
 
-function template(res, docs) {
+function template(res, username, docs) {
 	return res.render("chat/index.html", {
 		ctx: globalConstants.ctx,
+		othername: username,
 		data: docs
 	})
 }
 
 function insertChatData(res, model, fn) {
-	console.log(model)
 	dbf.insertChatData(model, (err) => {
 		if (err == null) {
 			fn()
@@ -23,9 +23,10 @@ function insertChatData(res, model, fn) {
 		}
 	})
 }
-function getAllChatData(res, filter) {
+
+function getAllChatData(res, username, filter) {
 	dbf.getAllChatData(filter, (err, docs) => {
-		template(res, docs)
+		template(res, username, docs)
 	})
 }
 
@@ -33,7 +34,7 @@ function getAllChatData(res, filter) {
 
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		getAllChatData(res, {})
+		getAllChatData(res, username, {})
 	})
 }
 
@@ -41,14 +42,15 @@ const POST_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let chat = req.body.chat
 		insertChatData(res, model.Chat(accountId, username, chat), () => {
-			getAllChatData(res, {})
+			res.redirect("/kalapatid.com/chats")
 		})
 	})
 }
 
 
 
+
 module.exports = {
 	GET_CHAT: GET_CHAT,
-	POST_CHAT: POST_CHAT
+	POST_CHAT: POST_CHAT,
 }

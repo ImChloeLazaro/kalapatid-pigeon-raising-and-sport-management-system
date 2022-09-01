@@ -33,7 +33,18 @@ function getMessageDataById(filter, fn) {
 }
 
 
+function deleteDataById(filter, fn) {
+	db.getCollection("messages", (col) => {
+		col.remove(filter, (err) => {
+			if (err) console.log(err)
+			fn(err)
+		})
+	})
+}
+
+
 module.exports.getAllMessageData = getAllMessageData
 module.exports.insertMessageData = insertMessageData
 module.exports.getMessageDataById = getMessageDataById
+module.exports.deleteDataById = deleteDataById
 

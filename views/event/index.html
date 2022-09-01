@@ -3,10 +3,7 @@
 <div class="container">
   <h1>Events</h1>
   <div class="container event-form-container">
-    <form action="{{ctx.DOMAIN_NAME}}/events/create" method="post">
-      <input name="eventName" type="text" placeholder="new Event">
-      <input type="submit" value="Create New Event">
-    </form>
+    <a href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
   </div>
   <div class="event-table-container container">
     <table class="event-table table table-responsive  table-bordered">
@@ -16,12 +13,10 @@
       <tbody>
         {% for e in events|reverse %}
         <tr>
-          <td><a href="{{ctx.DOMAIN_NAME}}/events/{{e._id}}">{{e.name}}</a></td>
+          <td><a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">{{e.name}}</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-
-</div>
-{% endblock %}
+  {% endblock %}

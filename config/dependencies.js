@@ -6,6 +6,8 @@ const logger = require('morgan')
 const filters = require('./filter/filters')
 
 
+
+
 const configuration = (app, express, constants, dirname) => {
 	//VIEWS ENGINE| NUNJUCKS
 	const env = nunjucks.configure(path.resolve(dirname, constants.VIEW_FOLDER), {
@@ -15,6 +17,8 @@ const configuration = (app, express, constants, dirname) => {
 		watch: true
 	})
 	filters(env)
+
+
 
 	//LOGGING 
 	app.use(logger('dev', {}))
@@ -28,7 +32,7 @@ const configuration = (app, express, constants, dirname) => {
 	//SESSIONS
 	app.use(session({
 		secret: constants.SESSION_SECRET,
-		saveUninitialized: false,
+		saveUninitialized: true,
 		resave: false
 	}))
 

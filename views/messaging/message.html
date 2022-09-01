@@ -2,28 +2,39 @@
 {% block content %}
 <div class="container">
 
+
+
   <h1 class="text-dark">Account Message</h1>
   <h4>{{otherusername}}</h4>
 
-  <div class="msg-container">
+  <div class="msg-box-container">
     {% for d in messages %}
-
+    <p>messageId: {{d.messageId}}</p>
 
     {% if d.username2 != otherusername %}
+
     <div class="chat-content">
-      <div>{{d.username1}} to: {{d.username2}}</div>
+      <div>username: {{d.username1}}</div>
       <div>{{d.datetime}}</div>
       <p>
         {{d.msg}}
       </p>
     </div>
-    {%else%}
+
+    {% else %}
+
     <div class="chat-content text-white bg-dark">
-      <div>{{d.username1}} to: {{d.username2}}</div>
+      <div>username: {{d.username1}}</div>
       <div>{{d.datetime}}</div>
       <p>
         {{d.msg}}
       </p>
+      <form method="post" action="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}/delete">
+        <input name="username" type="text" hidden="hidden" value="{{d.username2}}">
+        <input name="messageId" type="text" hidden="hidden" value="{{d.messageId}}">
+        <input name="mid" type="text" hidden="hidden" value="{{d._id}}">
+        <input id="msg-rm-form-btn" type="submit" value="remove" class="text-danger">
+      </form>
     </div>
     {% endif %}
     {% endfor %}
@@ -32,10 +43,12 @@
 
   <div class="chat-form-container">
     <form method="post" id="chat-form">
-      <textarea name="msg" id="" cols="20" rows="2"></textarea>
-      <button type="submit">submit</button>
+      <textarea title="text-area" name="msg" id="" cols="20" rows="2"></textarea>
+      <button id="msg-form-btn" type="submit">submit</button>
     </form>
   </div>
 </div>
 
+
+<script src="/javascript/realtime.js"></script>
 {% endblock %}

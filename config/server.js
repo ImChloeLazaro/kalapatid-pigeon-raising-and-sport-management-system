@@ -1,9 +1,8 @@
 require("dotenv").config()
 
-function config(app) {
-	app.listen(process.env.PORT, (err) => {
-		if (err) console.error(err)
-		console.log(`Node.js Web Server: Running on Port ${process.env.PORT}...`)
+function config(server) {
+	server.listen((process.env.PORT), "0.0.0.0", () => {
+		console.log(`Server is running on PORT: ${process.env.PORT}`);
 	});
 }
 

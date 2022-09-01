@@ -9,7 +9,7 @@
     </form>
   </div>
   <div class="post-container">
-    {% for p in posts|sort('datetime')|reverse  %}
+    {% for p in posts|sort(false,true,'datetime')|reverse  %}
     <div>
       <div>
         <hr>
@@ -28,7 +28,7 @@
           </form>
           <div class="reply-container mx-5">
             <h4>Comments</h4>
-            {% for c in comments|sort("datetime") %}
+            {% for c in comments|sort(false,true,'datetime') %}
 
             {% set p1 = p._id.toString() %}
             {% set p2 = c.postId.toString() %}
@@ -49,4 +49,5 @@
     {% endfor %}
   </div>
 </div>
+
 {% endblock %}

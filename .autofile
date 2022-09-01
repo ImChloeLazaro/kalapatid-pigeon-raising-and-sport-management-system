@@ -1,4 +1,11 @@
-mongod
-mongo
-npm run tun
-npm run dev2
+# development mode
+# - mongod
+# - mongo
+# - npm run tun
+# - npm run dev2
+# - scrcpy
+
+# production mode
+- mongod
+- scrcpy
+- npm start

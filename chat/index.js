@@ -5,5 +5,4 @@ const chat = express.Router()
 
 chat.get("/", controller.GET_CHAT)
 chat.post("/", controller.POST_CHAT)
-
-module.exports = chat;
+module.exports = chat

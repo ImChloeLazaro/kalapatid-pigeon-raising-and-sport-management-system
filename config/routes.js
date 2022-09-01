@@ -22,10 +22,6 @@ const config = (app, express, constants) => {
 	main.use('/profile', profile)
 	main.use('/', root)
 	main.use('/**', root)
-
-
-
-	
 	app.use(constants.ctx.DOMAIN_NAME, main)
 	app.use('/', (req, res) => res.redirect(constants.ctx.DOMAIN_NAME))
 }

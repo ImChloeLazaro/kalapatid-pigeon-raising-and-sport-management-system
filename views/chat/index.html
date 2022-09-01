@@ -10,10 +10,12 @@
     {% endfor %}
   </div>
   <div class="chat-form-container">
-    <form method="post" id="chat-form">
+    <form method="post" id="chat-form" redirect="/">
       <textarea name="chat" id="" cols="90" rows="2"></textarea>
-      <button type="submit">submit</button>
+      <button type="submit" id="chat-form-btn">submit</button>
     </form>
   </div>
 </div>
+
+<script defer src="/javascript/realtime.js"></script>
 {% endblock %}

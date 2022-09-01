@@ -1,3 +1,7 @@
+
+
+
+
 function GetMap() {
 	var map = new Microsoft.Maps.Map('#my-map', {
 		showDashboard: false,
@@ -42,4 +46,5 @@ function getLocationFromMap(map, fn) {
 	});
 }
 
-console.log("Hello")
+console.log("This is Client-side Event Script..")
+$("[name=date]").defaultValue = "2014-02-09";
