@@ -26,13 +26,13 @@ $(function () {
 	});
 
 
-
-
+	// Chatting
 	$('#chat-form-btn').on("click", () => {
 		console.log("HOTRELOAD => request reload..")
 		socket.emit('load')
 	})
 
+	// Messaging
 
 	$('#msg-form-btn').on("click", () => {
 		console.log("HOTRELOAD => request reload..")
@@ -46,6 +46,17 @@ $(function () {
 	})
 
 	$('#msg-container').on("change", () => {
+		console.log("HOTRELOAD => request reload..")
+		socket.emit('load')
+	})
+
+	// posting a message
+	$('#post-submit-btn').on("click", () => {
+		console.log("HOTRELOAD => request reload..")
+		socket.emit('load')
+	})
+
+	$('#post-comment-btn').on("click", () => {
 		console.log("HOTRELOAD => request reload..")
 		socket.emit('load')
 	})

@@ -21,7 +21,7 @@
           {{ p.post }}
         </p>
         <div class="reply-form-container mx-5">
-          <form action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="reply-form">
+          <form action="{{ctx.DOMAIN_NAME}}/posts/{{p._id}}" method="post" id="reply-form">
             <input name="postId" type="text" value="{{p._id}}" hidden>
             <input name="comment" type="text" size="20">
             <input type="submit" value="submit">

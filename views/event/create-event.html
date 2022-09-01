@@ -1,7 +1,7 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
 <div class="container">
-	<script defer type="text/javascript" src="/javascript/script.js"></script>
+
 	<h1>Create Event</h1>
 	<div class="container event-form-container">
 		<form method="post">
@@ -15,15 +15,17 @@
 					<input class="form-control form-control-sm " name="date" type="date" placeholder="Event Date">
 				</div>
 				<div class="my-4">
-					<div id="my-map" style="width: fit-content; height:200px;"></div>
+					<div id="event-map" style="width: fit-content; height:200px;"></div>
 					<label> Location</label>
 					<br>
-					<label for="long">X Coordinate</label>
-					<input class="form-control form-control-sm " name="long" id="eventLocLong" type="location"
-						placeholder="Event Location">
-					<label for="lat">Y Coordinate</label>
-					<input class="form-control form-control-sm " name="lat" id="eventLocLat" type="location"
-						placeholder="Event Location">
+					<div class="input-group">
+						<label class="mx-1" for="long">X</label>
+						<input class="form-control form-control-sm mx-1 " name="long" id="eventLocLong" type="location"
+							placeholder="Event Location">
+						<label class="mx-1" for="lat">Y</label>
+						<input class="form-control form-control-sm  mx-1" name="lat" id="eventLocLat" type="location"
+							placeholder="Event Location">
+					</div>
 				</div>
 				<div class="my-4">
 					<label for="hourStart"> Time Start</label>
@@ -47,4 +49,8 @@
 		</form>
 	</div>
 </div>
+<script type='text/javascript'
+	src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ'
+	async defer></script>
+<script type="text/javascript" src="/javascript/script.js"></script>
 {% endblock %}

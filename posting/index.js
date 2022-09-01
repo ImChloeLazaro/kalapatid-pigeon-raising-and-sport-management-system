@@ -5,7 +5,7 @@ const posting = express.Router()
 
 posting.get("/", controller.GET_POSTING)
 posting.post("/", controller.POST_POSTING)
-posting.post("/comments", controller.POST_POSTING_COMMENT)
+posting.post("/:id", controller.POST_POSTING_COMMENT)
 
 
 
