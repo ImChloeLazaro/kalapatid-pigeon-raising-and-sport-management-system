@@ -1,32 +1,26 @@
-.chat-container {
-	width: 900px;
-	height: 400px;
-	padding: 2px;
-	margin: 4px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+#profile-wrapper {
+  height: 100vh;
+  background: rgb(255, 206, 206);
+}
+#profile-wrapper #profile-main {
+  height: 80vh;
+}
+#profile-wrapper #profile-main .card {
+  height: 100%;
+}
+#profile-wrapper #profile-information main {
+  height: 30vh;
+}
+#profile-wrapper #profile-information .card {
+  height: 100%;
 }
 
-.chat-content {
-	border: 1px solid grey;
-	border-radius: 4px;
-	padding: 2px;
-	margin: 4px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.chat-form-container {
-	padding: 2px;
-	margin: 10px 4px;
-
-}
-
-
-.msg-content {
-	border: 1px solid grey;
-	border-radius: 5px;
-	padding: 2px;
-	margin: 4px;
-}
-
-#event-map {
-	
-	border-radius: 10px;
-}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,27 @@
+#profile-wrapper
+{
+    height: 100vh;
+    background: rgb(255, 206, 206);
+
+    #profile-main
+    {
+        height: 80vh;
+        
+    .card
+        {
+            height: 100%;
+        }
+    }
+
+    #profile-information
+    {
+        main
+        {
+            height: 30vh;
+        }
+        .card
+        {
+            height: 100%;
+        }
+    }
+}

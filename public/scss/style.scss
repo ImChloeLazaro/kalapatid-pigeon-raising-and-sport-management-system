@@ -1,0 +1,10 @@
+@use 'assets';
+@use 'layout/profile';
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: assets.$font;
+}
