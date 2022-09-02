@@ -42,7 +42,7 @@ const POST_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let chat = req.body.chat
 		insertChatData(res, model.Chat(accountId, username, chat), () => {
-			res.redirect("/kalapatid.com/chats")
+			res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats")
 		})
 	})
 }

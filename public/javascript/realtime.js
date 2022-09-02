@@ -26,6 +26,9 @@ $(function () {
 	});
 
 
+
+
+	
 	// Chatting
 	$('#chat-form-btn').on("click", () => {
 		console.log("HOTRELOAD => request reload..")

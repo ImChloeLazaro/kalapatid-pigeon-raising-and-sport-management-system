@@ -2,12 +2,9 @@ const db = require('./db')
 
 
 
-function insertPostData(data, fn) {
-	db.getCollection("posts", (col) => {
-
-		// col.createIndex({ "email": 1 }, { unique: true })
-		// col.createIndex({ "username": 1 }, { unique: true })
-
+function insertClubData(data, fn) {
+	db.getCollection("clubs", (col) => {
+		col.createIndex({ "name": 1 }, { unique: true })
 		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)
@@ -18,10 +15,11 @@ function insertPostData(data, fn) {
 
 
 
-function getAllPostData(fn) {
-	db.getCollection("posts", (col) => {
-		col.find().toArray((err, docs) => {
-			if (err) console.log(err);
+function getAllClubDataBy(filter, fn) {
+	db.getCollection("clubs", (col) => {
+		col.find(filter).toArray((err, docs) => {
+			console.log(docs)
+			if (err) console.log(err)
 			fn(err, docs)
 		})
 	})
@@ -29,34 +27,11 @@ function getAllPostData(fn) {
 
 
 
-
-function insertCommentData(data, fn) {
-	db.getCollection("comments", (col) => {
-
-		col.insertOne(data, (err) => {
-			if (err) console.log(err);
-			fn(err)
-		})
-	})
-
-}
-
-
-
-function getCommentDataById(postId, fn) {
-	db.getCollection("comments", (col) => {
-		col.find({ postId: postId }).toArray((err, docs) => {
-			if (err) console.log(err);
-			fn(err, docs)
-		})
-	})
-}
-
-
-function getAllCommentData(fn) {
-	db.getCollection("comments", (col) => {
-		col.find({}).toArray((err, docs) => {
-			if (err) console.log(err);
+function getClubDataBy(filter, fn) {
+	db.getCollection("clubs", (col) => {
+		col.findOne(filter, (err, docs) => {
+			console.log(docs)
+			if (err) console.log(err)
 			fn(err, docs)
 		})
 	})
@@ -65,9 +40,7 @@ function getAllCommentData(fn) {
 
 
 module.exports = {
-	getAllPostData: getAllPostData,
-	insertPostData: insertPostData,
-	insertCommentData: insertCommentData,
-	getCommentDataById: getCommentDataById,
-	getAllCommentData: getAllCommentData
+	getAllClubDataBy: getAllClubDataBy,
+	getClubDataBy: getClubDataBy,
+	insertClubData: insertClubData,
 }

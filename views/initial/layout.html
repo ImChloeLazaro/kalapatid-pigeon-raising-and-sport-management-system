@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ctx.TITLE}}</title>
+  <meta property="og:url" content="http://localhost:9000/wwww.kalapatid.com/home" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kalapatids - Where Pigeon Raiser Interact and Communicates.." />
+  <meta property="og:image" content="https://cdn.dribbble.com/users/60166/screenshots/14013637/pigeon_logo-2_4x.jpg" />
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/style.css">
@@ -14,15 +18,14 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/javascript/realtime.js"></script>
+
+
+  <title>{{ctx.TITLE}}</title>
 </head>
 
 <body>
-  <div class="bg-dark">
-    <code>
-      CURRENT USER: [{{username}}]
-      OTHER USER: [{{otherusername}}]
-      CURRENT ID: [{{accountId}}]
-    </code>
+  <div class="bg-dark py-2">
+    {% include 'initial/header.html' %}
   </div>
   <div class="container w-100">
     {% block content %}
