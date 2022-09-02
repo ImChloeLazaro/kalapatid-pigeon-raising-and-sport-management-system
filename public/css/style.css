@@ -1,21 +1,150 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.cards {
+  padding: 20px;
+  height: auto;
+  width: auto;
+  margin: 5px;
+  background: #F2F2F2;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 5px;
+  background: #F2F2F2;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.btn::hover {
+  color: black;
+}
+
+.btn:focus {
+  border-color: #2DA380;
+  background: #F2F2F2;
+  outline: none;
+  box-shadow: none;
+}
+
 #profile-wrapper {
   height: 100vh;
-  background: rgb(255, 206, 206);
 }
 #profile-wrapper #profile-main {
   height: 80vh;
 }
-#profile-wrapper #profile-main .card {
+#profile-wrapper #profile-main .cards {
   height: 100%;
+}
+#profile-wrapper #profile-main .cards #profile-picture img {
+  padding: 3px;
+  border-radius: 50%;
+  border: 3px solid green;
+}
+#profile-wrapper #profile-main .cards #profile-id {
+  font-size: 12px;
 }
 #profile-wrapper #profile-information main {
   height: 30vh;
 }
-#profile-wrapper #profile-information .card {
+#profile-wrapper #profile-information .cards {
   height: 100%;
 }
+#profile-wrapper #profile-group {
+  height: 50vh;
+}
+#profile-wrapper #profile-group .cards {
+  height: 96%;
+}
 
+@media (max-width: 768px) {
+  #profile-wrapper #profile-main {
+    height: auto;
+    margin-bottom: 10px;
+  }
+  #profile-wrapper #profile-main .cards {
+    height: auto;
+  }
+  #profile-wrapper #profile-main .cards #profile-picture img {
+    padding: 3px;
+    border-radius: 50%;
+    border: 3px solid green;
+  }
+  #profile-wrapper #profile-main .cards #profile-id {
+    font-size: 12px;
+  }
+  #profile-wrapper #profile-information main {
+    font-size: 14px;
+    height: auto;
+  }
+  #profile-wrapper #profile-information .cards {
+    margin: 10px;
+    height: 100%;
+  }
+  #profile-wrapper #profile-information .card-header {
+    margin-bottom: 10px;
+  }
+  #profile-wrapper #profile-group {
+    height: auto;
+  }
+  #profile-wrapper #profile-group .cards {
+    height: 100%;
+  }
+  #profile-wrapper #profile-group .cards #profile-link {
+    display: flex;
+  }
+  #profile-wrapper #profile-group .cards table td div, #profile-wrapper #profile-group .cards table td #profile-link a {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  #profile-wrapper #profile-main {
+    height: auto;
+    margin-bottom: 10px;
+  }
+  #profile-wrapper #profile-main .cards {
+    height: 100%;
+  }
+  #profile-wrapper #profile-main .cards #profile-picture img {
+    padding: 3px;
+    border-radius: 50%;
+    border: 3px solid green;
+  }
+  #profile-wrapper #profile-main .cards #profile-id {
+    font-size: 12px;
+  }
+  #profile-wrapper #profile-information main {
+    font-size: 14px;
+    height: auto;
+  }
+  #profile-wrapper #profile-information .cards {
+    margin: 10px;
+    height: 100%;
+  }
+  #profile-wrapper #profile-information .card-header {
+    margin-bottom: 10px;
+  }
+  #profile-wrapper #profile-group {
+    height: auto;
+  }
+  #profile-wrapper #profile-group .cards {
+    height: 100%;
+  }
+  #profile-wrapper #profile-group .cards #profile-link {
+    display: flex;
+  }
+  #profile-wrapper #profile-group .cards table td div, #profile-wrapper #profile-group .cards table td #profile-link a {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
 * {
   margin: 0;
   padding: 0;

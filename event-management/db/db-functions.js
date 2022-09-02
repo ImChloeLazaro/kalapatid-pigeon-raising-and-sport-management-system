@@ -17,7 +17,7 @@ function insertEventData(data, fn) {
 function getAllEventDataBy(filter, fn) {
 	db.getCollection("events", (col) => {
 		col.find(filter).toArray((err, docs) => {
-			console.log(docs)
+
 			if (err) console.log(err)
 			fn(err, docs)
 		})
@@ -26,7 +26,17 @@ function getAllEventDataBy(filter, fn) {
 
 
 
+function getEventDataBy(filter, fn) {
+	db.getCollection("events", (col) => {
+		col.findOne(filter, (err, docs) => {
+			if (err) console.log(err)
+			fn(err, docs)
+		})
+	})
+}
+
 module.exports = {
+	getEventDataBy: getEventDataBy,
 	getAllEventDataBy: getAllEventDataBy,
 	insertEventData: insertEventData,
 }

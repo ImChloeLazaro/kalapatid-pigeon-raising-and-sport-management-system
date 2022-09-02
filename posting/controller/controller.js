@@ -21,9 +21,10 @@ function getAllCommentData(filter, fn) {
 	})
 }
 
-function renderTemplate(res, posts, comments) {
+function renderTemplate(res, accountId, posts, comments) {
 	return res.render("posting/index.html", {
 		ctx: globalConstants.ctx,
+		accountId: accountId,
 		posts: posts,
 		comments: comments
 	});
@@ -37,7 +38,7 @@ const GET_POSTING = (req, res) => {
 		let filter = {}
 		getAllPostData(filter, (posts) => {
 			getAllCommentData(filter, (comments) => {
-				renderTemplate(res, posts, comments)
+				renderTemplate(res, accountId, posts, comments)
 			})
 		})
 	})
@@ -53,7 +54,7 @@ const POST_POSTING = (req, res) => {
 			if (err == null) {
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
 			} else {
-				renderTemplate(res, null, null)
+				renderTemplate(res, accountId, null, null)
 			}
 		})
 	})
@@ -74,7 +75,7 @@ const POST_POSTING_COMMENT = (req, res) => {
 			if (err == null) {
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
 			} else {
-				renderTemplate(res, null, null)
+				renderTemplate(res, accountId, null, null)
 			}
 		})
 

@@ -8,19 +8,31 @@
     <p>No Messaging available!</p>
 
     {% else %}
+    <div id="oid" data-name="{{data}}"></div>
+    {% for d in data|unique|sort(false,true,"datetime")|reverse %}
 
-    {% for d in data|unique|sort(false,true,'datetime')|reverse %}
     <div class="msg-content">
-      <hr>
-      {{d.datetime}}:
+
       {% if d.username2 == username %}
-      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
-        <h4>{{d.username1}}</h4>
-      </a>
+
+      <strong>
+        datetime: {{d.datetime}}
+        <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+          <h4>{{d.username1}}</h4>
+        </a>
+
+      </strong>
+
       {% else %}
-      <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
-        <h4>{{d.username2}}</h4>
-      </a>
+
+      <strong>
+        datetime: {{d.datetime}}
+        <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
+          <h4>{{d.username2}}</h4>
+        </a>
+
+      </strong>
+
       {% endif %}
       <br>
     </div>

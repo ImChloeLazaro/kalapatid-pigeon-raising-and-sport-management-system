@@ -2,21 +2,18 @@
 {% block content %}
 <div class="container">
   <h1>Clubs</h1>
-  <div class="container club-form-container">
-    <form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
-      <input name="clubName" type="text" placeholder="new Club">
-      <input type="submit" value="Create New Club">
-    </form>
+  <div class="container club-form-container my-2">
+    <a class="btn btn-sm btn-success my-2" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create New Club</a>
   </div>
-  <div class="club-table-container container">
-    <table class="club-table table table-responsive  table-bordered">
+  <div class="club-table-container container my-2">
+    <table class="club-table table table-light  table-bordered">
       <theader>
         <th>Club Names</th>
       </theader>
       <tbody>
-        {% for e in clubs|reverse %}
+        {% for c in clubs|sort(false,true,'datetime') |reverse %}
         <tr>
-          <td><a href="{{ctx.DOMAIN_NAME}}/clubs/{{e._id}}">{{e.name}}</a></td>
+          <td><a href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a></td>
         </tr>
         {% endfor %}
       </tbody>

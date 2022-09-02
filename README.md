@@ -68,4 +68,7 @@ lt -p 9000 -s app
 - https://ngrok.com/docs/secure-tunnels#http-tunnels-local-https
 - https://github.com/localtunnel/localtunnel/blob/master/README.md
 
+### Realtime 
+- https://socket.io/docs
+- https://medium.com/weekly-webtips/how-to-make-a-real-time-chat-app-with-socket-io-cf0cae4bc8f2
 

@@ -4,8 +4,7 @@
   <h1>Notifications</h1>
   <div class="notification">
     {% for n in notifications|sort('datetime')|reverse %}
-    <div class="notif-content">
-      <hr>
+    <div class="box notif-content">
       {{n.datetime}}:
       <a href="{{ctx.DOMAIN_NAME}}/notifications/{{n._id}}">{{n.content}}</a>
     </div>

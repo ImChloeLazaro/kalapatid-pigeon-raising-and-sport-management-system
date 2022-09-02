@@ -24,68 +24,125 @@
     <title>Profile</title>
 </head>
 <body>
-    <div class="container" id="profile-wrapper">
+    <div class="container-lg" id="profile-wrapper">
       <div class="row">
 
+        <!-- Sample Header -->
         <div class="col-lg-12">
-          <header>header</header>
+          <header class="navbar navbar-expand-lg bg-light" id="feed-header">
+            <div class="container-fluid">
+              <!-- brands -->
+              <a class="navbar-brand" href="#">Kalapatids</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerContent"
+                aria-controls="headerContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <!-- header collapse -->
+              <div class="collapse navbar-collapse" id="headerContent">
+                <!-- ########################### Search ########################## -->
+                <ul class="w-100 navbar-nav m-auto my-2 mb-lg-0">
+                  <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success m-search">Search</button>
+                  </form>
+                </ul>
+                <!-- ########################### Menu ########################## -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                  <li class="nav-item home-icon">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Message</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Clubs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Events</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Account
+                    </a>
+                    <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </header>
         </div>
 
         <!-- Profile -->
         <div class="col-lg-3" id="profile-main">
-          <div class="card">
-            <div class="card-header">
+          <div class="cards">
+            <div class="card-header d-flex justify-content-between align-items-center">
               Profile
+            <i class="btn fa-solid fa-gear"></i>
             </div>
-            <div class="card-body">
-              <div class="w-100 d-flex justify-content-end">
-                <button class="btn"><i class="fa-solid fa-gear"></i></button><br>
-              </div>
 
-              <div class="w-100 text-center my-3">
+            <div class="card-body">
+              <div class="w-100 text-center my-3" id="profile-picture">
                 <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 100px; height: 100px;">
               </div>
-              <p class="text-muted">Id: 630f05ebbff3b200f889917c</p>
-              <div>Chloe Kim Lazaro <span>(chloetots)</span>
-                <small class="text-muted">chloekim.lazaro@cbsua.edu.ph</small>
-                <p>0945290210</p></div> 
+              <p class="text-muted text-center" id="profile-id">Id: 630f05ebbff3b200f889917c</p>
+              <hr>
+              <div class="w-auto">Chloe Kim Lazaro <span>(chloetots)</span>
+                <p class="text-muted" style="font-size: 10px;">chloekim.lazaro@cbsua.edu.ph</p>
+                <p>0945290210</p>
+              </div> 
               <br>
             </div>
+
           </div>
         </div>
 
         <!-- Information -->
         <div class="col-lg-9" id="profile-information">
           <main>
-            <div class="card">
+            <div class="cards">
+          
               <div class="card-header">
                 Information
               </div>
               <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti dolor!
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti dolor!</p>
               </div>
             </div>
           </main>
 
-
               <!-- Group -->
-          <footer class="overflow-auto"  style="height: 500px;">
+              
+          <footer class="mt-3" id="profile-group">
 
-            <div class="card">
+            <div class="cards overflow-auto">
 
-              <div class="card-header">
-                    My groups
+              <div class="card-header mb-3">
+                My groups
               </div>
                 
-              <div class="card-body d-flex justify-content-between align-items-center">
-                <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;">
-                  <div>Kalapatids</div>
-                  <div class="text-muted">Libmanan, Camarines Sur</div>
-                  <div>
-                    <a class="mx-2" href="" data-toggle="tooltip" data-placement="top" title="Access this Group"><i class="fa-sharp fa-solid fa-eye"></i></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="Access Global Chat"><i class="fa-solid fa-comment"></i></a>
-                  </div>
+              <div class="card-body d-flex justify-content-between">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;"></th>
+                      <td><div>Kalapatids</div></td>
+                      <td><div class="text-muted">Libmanan, Camarines Sur</div></td>
+                      <td>
+                        <div id="profile-link">
+                          <a class="mx-2" href="" data-toggle="tooltip" data-placement="top" title="Access this Group"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                          <a href="" data-toggle="tooltip" data-placement="top" title="Access Global Chat"><i class="fa-solid fa-comment"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+
             </div>
           </footer>
         </div>

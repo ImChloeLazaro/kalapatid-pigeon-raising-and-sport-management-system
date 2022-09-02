@@ -11,6 +11,20 @@
 					<input class="form-control form-control-sm " name="name" type="text" placeholder="Event Name">
 				</div>
 				<div class="my-4">
+					<label for="type"> Type</label>
+					<input class="form-control form-control-sm " list="types" name="type" type="text">
+					<datalist id="types">
+						<option value="Event type 1">
+						<option value="Event type 2">
+						<option value="Event type 3">
+					</datalist>
+				</div>
+				<div class="my-4">
+					<label for="description"> Description</label>
+					<textarea class="d-block" name="description" placeholder="Event Discription" id="" cols="80"
+						rows="3"></textarea>
+				</div>
+				<div class="my-4">
 					<label for="date"> Date</label>
 					<input class="form-control form-control-sm " name="date" type="date" placeholder="Event Date">
 				</div>
@@ -35,15 +49,7 @@
 					<label for="hourEnd"> Time End</label>
 					<input class="form-control form-control-sm " name="hourEnd" type="time" placeholder="Event End Time">
 				</div>
-				<div class="my-4">
-					<label for="type"> Type</label>
-					<input class="form-control form-control-sm " name="type" type="text" placeholder="Event Type">
-				</div>
-				<div class="my-4">
-					<label for="description"> Description</label>
-					<textarea class="d-block" name="description" placeholder="Event Discription" id="" cols="80"
-						rows="10"></textarea>
-				</div>
+
 				<input class="my-4" type="submit" value="Save">
 			</div>
 		</form>
