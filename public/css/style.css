@@ -104,7 +104,7 @@
     font-weight: 500;
   }
 }
-@media (min-width: 768px) and (max-width: 1200px) {
+@media (min-width: 768px) and (max-width: 992px) {
   #profile-wrapper #profile-main {
     height: auto;
     margin-bottom: 10px;
@@ -141,8 +141,13 @@
     display: flex;
   }
   #profile-wrapper #profile-group .cards table td div, #profile-wrapper #profile-group .cards table td #profile-link a {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
+  }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+  #profile-group {
+    height: 30vh;
   }
 }
 * {

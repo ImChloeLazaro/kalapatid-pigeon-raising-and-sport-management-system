@@ -122,8 +122,7 @@
 
 // tablet.
 
-
-@media (min-width: 768px) and (max-width: 1200px) 
+@media (min-width: 768px) and (max-width: 992px) 
 {
     #profile-wrapper
     {
@@ -184,10 +183,20 @@
             }
             table td div, table td #profile-link a
             {
-                font-size: 12px;
+                font-size: 14px;
                 font-weight: 500;
             }
         }
     }
+    }    
+}
+
+// pc screen.
+
+@media (min-width: 992px) and (max-width: 1200px) 
+{
+    #profile-group
+    {
+        height: 30vh;
     }    
 }
