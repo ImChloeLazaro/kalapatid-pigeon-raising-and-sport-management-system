@@ -1,7 +1,7 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
 <div class="container">
-  <h1>Notifications</h1>
+  <h1 class="display-5">Notifications</h1>
   <div class="notification">
     {% for n in notifications|sort('datetime')|reverse %}
     <div class="box notif-content">
