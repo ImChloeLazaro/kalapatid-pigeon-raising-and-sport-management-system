@@ -1,13 +1,19 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
 <div class="container">
-  <h1>Messaging</h1>
+  <h1 class="display-5">Messages</h1>
   username: {{username}}
+
+
+
   <div class="msg-container scroll">
     {% if data| is_empty %}
     <p>No Messaging available!</p>
 
     {% else %}
+
+    {% include 'search/convo-search.html' %}
+
     <div id="oid" data-name="{{data}}"></div>
     {% for d in data|unique|sort(false,true,"datetime")|reverse %}
 

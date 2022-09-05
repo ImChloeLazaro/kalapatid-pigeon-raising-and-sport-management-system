@@ -1,12 +1,9 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
 <div class="container">
+  <h1 class="display-5">{{otherusername}}</h1>
 
-
-
-  <h1 class="text-dark">Account Message</h1>
-  <h4>{{otherusername}}</h4>
-
+  {% include 'search/message-search.html' %}
   <div class="msg-box-container">
     {% for d in messages %}
 
