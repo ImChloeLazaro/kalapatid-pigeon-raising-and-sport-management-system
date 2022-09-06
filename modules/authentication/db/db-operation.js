@@ -100,5 +100,5 @@ module.exports = {
 
 	insertAddress: insertAddress,
 	getAddressData: getAddressData,
-	getAddressDataByID: getAddressDataByID
+	getAddressDataByID: getAddressDataByID,
 }
