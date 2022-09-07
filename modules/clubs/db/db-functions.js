@@ -1,7 +1,5 @@
 const db = require('./db')
 
-
-
 function insertClubData(data, fn) {
 	db.getCollection("clubs", (col) => {
 		col.createIndex({ "name": 1 }, { unique: true })
