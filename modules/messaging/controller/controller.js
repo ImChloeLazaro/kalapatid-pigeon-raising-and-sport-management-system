@@ -10,16 +10,16 @@ const ObjectId = require("mongodb").ObjectId
 
 
 const GET_MESSAGE = (req, res) => {
-	const dbquery = (curusername, callback) => {
+	const dbquery = (curusername, fn) => {
 		let filter = {
 			$or: [{ username1: curusername }, { username2: curusername }]
 		}
 		dbf.getAllMessageData(filter, (err, docs) => {
 			if (err) {
-				callback(null)
+				fn(null)
 				return
 			}
-			callback(docs)
+			fn(docs)
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
@@ -41,7 +41,7 @@ const GET_MESSAGE = (req, res) => {
 
 
 const GET_MESSAGE_ID = (req, res) => {
-	const dbquery = (messageId, curusername, callback) => {
+	const dbquery = (messageId, curusername, fn) => {
 		let filter = {
 			messageId: new ObjectId(messageId),
 			$or: [{ username1: curusername }, { username2: curusername }],
@@ -49,10 +49,10 @@ const GET_MESSAGE_ID = (req, res) => {
 		dbf.getMessageDataById(filter, (err, docs) => {
 			let messages = docs
 			if (err) {
-				callback(null)
+				fn(null)
 				return
 			}
-			callback(messages)
+			fn(messages)
 		})
 
 
@@ -103,7 +103,7 @@ const GET_MESSAGE_ID = (req, res) => {
 
 const POST_MESSAGE_ID = (req, res) => {
 
-	const dbquery = (messageId, accountId, curusername, messageModel, callback) => {
+	const dbquery = (messageId, accountId, curusername, messageModel, fn) => {
 		dbf.insertMessageData(messageModel, (err) => {
 			if (err == null) {
 				let messageIdObj = new ObjectId(messageId)
@@ -115,14 +115,14 @@ const POST_MESSAGE_ID = (req, res) => {
 				dbf.getMessageDataById(filter, (err, docs) => {
 					let messages = docs
 					if (err) {
-						callback(null)
+						fn(null)
 						return
 					}
-					callback(messages)
+					fn(messages)
 				})
 			} else {
 				console.error("Error.")
-				callback(null)
+				fn(null)
 			}
 		})
 	}
