@@ -80,6 +80,16 @@
   color: #2DA380;
 }
 
+#account-picture, #profile-club-picture {
+  background: #2DA380;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+#profile-link #profile-icons {
+  font-size: 18px;
+}
+
 * {
   margin: 0;
   padding: 0;
