@@ -8,8 +8,7 @@ const model = require('../model/model')
 
 const GET_CLUB = (req, res) => {
 	function query(fn) {
-		let filter = {}
-		dbf.getAllClubDataBy(filter, (err, docs) => {
+		dbf.getAllClubDataBy({}, (err, docs) => {
 			if (err) return
 			let clubs = docs
 			fn(clubs)
@@ -29,18 +28,22 @@ const GET_CLUB = (req, res) => {
 
 const SHOW_CLUB_ID = (req, res) => {
 	function query(clubId, fn) {
-		let filter = {}
-		dbf.getClubDataBy(filter, (err, docs) => {
+		dbf.getClubDataBy({ _id: new ObjectId(clubId) }, (err, docs) => {
 			if (err) return
 			let club = docs
-			fn(club)
+			dbf.getClubAllMemberDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
+				if (err) return
+				let clubMembers = docs
+				fn(club, clubMembers)
+			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.params.id, (club) => {
+		query(req.params.id, (club, clubMembers) => {
 			return res.render("club/show-club.html", {
 				ctx: globalConstants.ctx,
-				club: club
+				club: club,
+				clubMembers: clubMembers
 			})
 		})
 	})
@@ -61,8 +64,15 @@ const GET_CREATE_CLUB = (req, res) => {
 
 
 const POST_CREATE_CLUB = (req, res) => {
-	function query(data, fn) {
-		dbf.insertClubData(data, (err) => {
+	function query(clubModel, clubMemberModel, fn) {
+		dbf.insertClubData(clubModel, (err) => {
+			if (!err) {
+				dbf.insertClubMemberData(clubMemberModel, (err) => {
+					if (err) {
+						console.log(err)
+					}
+				})
+			}
 			fn(err)
 		})
 	}
@@ -70,8 +80,9 @@ const POST_CREATE_CLUB = (req, res) => {
 		let name = req.body.clubName
 		let date = datetimenow()
 		let description = req.body.description
-		let clubModel = model.Club(name, date, description, [model.ClubMember(accountId, username, "admin")])
-		query(clubModel, (err) => {
+		let clubModel = model.Club(name, date, description)
+		let clubMemberModel = model.ClubMember(clubModel._id.toString(), accountId, username, "admin")
+		query(clubModel, clubMemberModel, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
 		})
 	})
@@ -84,15 +95,16 @@ const GET_ADD_MEMBER = (req, res) => {
 		let clubId = req.params.clubId
 		dbf.getAllAcountData((err, docs) => {
 			let accounts = docs
-			let filter = { _id: new ObjectId(clubId) }
-			dbf.getClubDataBy(filter, (err, club) => {
+			let filter = { clubId: new ObjectId(clubId) }
+			dbf.getClubAllMemberDataBy(filter, (err, docs) => {
+				let clubMembers = docs
 				return res.render("club/add-member.html", {
 					ctx: globalConstants.ctx,
 					clubId: clubId,
 					username: username,
 					accountId: accountId,
-					accounts: docs,
-					club: club
+					accounts: accounts,
+					clubMembers: clubMembers
 				})
 			})
 		})
@@ -107,11 +119,11 @@ const POST_ADD_MEMBER = (req, res) => {
 		let members = req.body.members
 		if (members instanceof Array) {
 			members.forEach(member => {
-				clubmembers.push(model.ClubMember(member["accountId"], member["username"], member["memberStatus"]))
+				clubmembers.push(model.ClubMember(clubId, member["accountId"], member["username"], member["memberStatus"]))
 			})
 		}
-		let filter = { _id: new ObjectId(clubId) }
-		dbf.updateClubMemberDataBy(filter, clubmembers, (err) => {
+		dbf.insertManyClubMemberData(clubmembers, (err) => {
+			console.log(err)
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show/" + clubId)
 		})
 	})

@@ -34,6 +34,17 @@ function getClubDataBy(filter, fn) {
 	})
 }
 
+function getClubAllMemberDataBy(filter, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.find(filter).toArray((err, docs) => {
+			if (err) console.log(err)
+			fn(err, docs)
+		})
+	})
+}
+
+
+
 function getAllAcountData(fn) {
 	db.getCollection("accounts", (col) => {
 		col.find().toArray((err, docs) => {
@@ -44,18 +55,25 @@ function getAllAcountData(fn) {
 }
 
 
-function updateClubMemberDataBy(filter, members, fn) {
-	db.getCollection("clubs", (col) => {
-		col.findOne(filter, (err, docs) => {
-			let set = { $set: { members: [...docs.members, ...members] } }
-			console.log([new Set([...docs.members, ...members])]);
-			col.updateOne(filter, set, function (err) {
-				if (err) {
-					fn(err)
-					return
-				}
-			})
-			fn(err, docs)
+
+
+function insertClubMemberData(data, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.insertOne(data, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+
+
+
+function insertManyClubMemberData(array, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.insertMany(array, (err) => {
+			if (err) console.log(err);
+			fn(err)
 		})
 	})
 }
@@ -63,7 +81,9 @@ function updateClubMemberDataBy(filter, members, fn) {
 module.exports = {
 	getAllClubDataBy: getAllClubDataBy,
 	getClubDataBy: getClubDataBy,
+	getClubAllMemberDataBy: getClubAllMemberDataBy,
 	insertClubData: insertClubData,
+	insertClubMemberData: insertClubMemberData,
 	getAllAcountData: getAllAcountData,
-	updateClubMemberDataBy: updateClubMemberDataBy
+	insertManyClubMemberData: insertManyClubMemberData
 }

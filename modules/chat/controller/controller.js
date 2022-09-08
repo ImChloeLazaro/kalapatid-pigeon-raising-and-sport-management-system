@@ -13,15 +13,6 @@ function template(res, username, docs) {
 	})
 }
 
-function insertChatData(res, model, fn) {
-	dbf.insertChatData(model, (err) => {
-		if (err == null) {
-			fn()
-		} else {
-			template(res, null)
-		}
-	})
-}
 
 function getAllChatData(res, username, filter) {
 	dbf.getAllChatData(filter, (err, docs) => {
@@ -39,12 +30,12 @@ const GET_CHATS = (req, res) => {
 
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		let filter = {}
-
+		let clubId = req.params.id
+		let filter = { clubId: new ObjectId(clubId) }
 		dbf.getAllChatData(filter, (err, docs) => {
 			return res.render("chat/chat.html", {
 				ctx: globalConstants.ctx,
-				othername: username,
+				clubId: clubId,
 				data: docs
 			})
 		})
