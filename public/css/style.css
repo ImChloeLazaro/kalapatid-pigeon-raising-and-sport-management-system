@@ -10,7 +10,6 @@
 .icons:hover {
   color: #2DA380;
   border-radius: 50%;
-  transform: rotate(20deg);
 }
 
 .cards {
@@ -24,7 +23,7 @@
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
 
-.forms {
+.form-control {
   height: auto;
   width: auto;
   margin: 5px;
@@ -34,7 +33,7 @@
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
 
-.forms:focus {
+.form-control:focus {
   color: #2D2626;
   border-color: #2DA380;
   background: #F2F2F2;
@@ -43,17 +42,18 @@
   box-shadow: none;
 }
 
-.forms::placeholder {
+.form-control::placeholder {
   color: #C5C3C3;
 }
 
 .btn {
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
   border-radius: 50%;
-  margin: 5px;
-  background: #F2F2F2;
+  background: #2DA380;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 2rem;
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
@@ -68,6 +68,16 @@
   background: #F2F2F2;
   outline: none;
   box-shadow: none;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  color: #2D2626;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link:hover {
+  color: #2DA380;
 }
 
 * {
