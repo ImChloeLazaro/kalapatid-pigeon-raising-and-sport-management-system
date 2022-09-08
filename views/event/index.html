@@ -3,13 +3,13 @@
 <div class="container">
   <h1 class="display-5">Events</h1>
   <div class="container event-form-container">
-    <a class="btn btn-sm btn-success my-2" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
+    <a class="btn my-2" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
   </div>
   <div class="event-table-container container">
     <table class="event-table table table-responsive  table-bordered">
-      <theader>
+      <thead>
         <th>Event Names</th>
-      </theader>
+      </thead>
       <tbody>
         {% for e in events|reverse %}
         <tr>

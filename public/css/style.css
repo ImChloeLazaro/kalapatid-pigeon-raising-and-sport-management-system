@@ -51,16 +51,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #F2F2F2;
   font-weight: bold;
   border-radius: 50%;
-  background: #2DA380;
+  background: #2DA380 !important;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 2rem;
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
 
-.btn::hover {
-  color: black;
+.btn:hover {
+  color: #2DA380;
+  background: #F2F2F2 !important;
 }
 
 .btn:focus {
