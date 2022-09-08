@@ -21,9 +21,10 @@
 			</div>
 			<div class="my-4">
 				<label for="description"> Members</label>
+				<a href="{{ctx.DOMAIN_NAME}}/clubs/add-member/{{club._id}}" class="btn btn-sm btn-success m-2">add member</a>
 				<ul>
 					{% for member in club.members %}
-					<li>{{member.accountId}}</li>
+					<li>{{member.username}}</li>
 					{% endfor %}
 				</ul>
 			</div>

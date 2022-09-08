@@ -11,10 +11,11 @@ function Club(name, date, description, members) {
 }
 
 
-function ClubMember(accountId, memberStatus) {
+function ClubMember(accountId, username, memberStatus) {
 	return {
 		_id: new ObjectId(),
-		accountId: accountId,
+		accountId: new ObjectId(accountId),
+		username: username,
 		memberStatus: memberStatus
 	}
 }

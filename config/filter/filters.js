@@ -9,13 +9,19 @@ function filters(env) {
 		return str.slice(0, count || 5);
 	})
 
+	env.addFilter('contains', function (arr, value) {
+		return arr.indexOf(value) !== -1 ? true : false;
+	})
+
 	env.addFilter('is_empty', function (arr) {
 		return arr.length === 0;
 	})
 	env.addFilter('is_empty_str', function (str) {
 		return str === null
 	})
-
+	env.addFilter('unique', function (arr) {
+		return [new Set(arr)]
+	})
 	env.addFilter('unique_msg', function (arr) {
 		let data = []
 		for (var d of arr) {
