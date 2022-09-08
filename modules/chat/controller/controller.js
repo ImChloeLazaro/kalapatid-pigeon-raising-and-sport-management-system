@@ -1,13 +1,11 @@
-const globalConstants = require("../../../constants/constants")
-const { verifyLogin } = require("../../../lib/toolkit")
-
-
 const dbf = require('../db/db-functions')
 const model = require('../model/models')
+const globalConstants = require("../../../constants/constants");
+const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const ObjectId = require('mongodb').ObjectId
 
-
 function template(res, username, docs) {
+	console.log(docs)
 	return res.render("chat/index.html", {
 		ctx: globalConstants.ctx,
 		othername: username,
@@ -32,19 +30,39 @@ function getAllChatData(res, username, filter) {
 }
 
 
+const GET_CHATS = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		console.log('new ObjectId: ', new ObjectId())
+		getAllChatData(res, username, {})
+	})
+}
 
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		getAllChatData(res, username, {})
+		let filter = {}
+
+		dbf.getAllChatData(filter, (err, docs) => {
+			return res.render("chat/chat.html", {
+				ctx: globalConstants.ctx,
+				othername: username,
+				data: docs
+			})
+		})
+
 	})
 }
 
 const POST_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let chat = req.body.chat
-		insertChatData(res, model.Chat(accountId, username, chat), () => {
-			res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats")
+		let clubId = req.params.id
+		let datetime = datetimenow()
+
+		let chatModel = model.Chat(accountId, clubId, datetime, username, chat)
+		dbf.insertChatData(chatModel, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/club/" + clubId)
 		})
+
 	})
 }
 
@@ -52,6 +70,7 @@ const POST_CHAT = (req, res) => {
 
 
 module.exports = {
+	GET_CHATS: GET_CHATS,
 	GET_CHAT: GET_CHAT,
 	POST_CHAT: POST_CHAT,
 }

@@ -1,5 +1,6 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
+<<<<<<< HEAD
 <div class="container" id="global-chat-wrapper">
   <div class="col-12 text-center p-3">
     <h3>Chats</h3>
@@ -25,3 +26,32 @@
 
 <script defer src="/javascript/realtime.js"></script>
 {% endblock %}
+=======
+<div class="container">
+	<h1 class="display-5">Club Chats</h1>
+
+
+	<div class="chats-container scroll">
+		{% if data|is_empty %}
+		<p>No Chats available!</p>
+
+		{% else %}
+
+		<div id="oid"></div>
+		{% for d in data|unique_chat|sort(false,true,"datetime")|reverse %}
+		<div class="chats-content">
+			<strong>
+				datetime: {{d.datetime}}
+				<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}">
+					<h4>{{d.clubId}}</h4>
+				</a>
+			</strong>
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+
+</div>
+
+{% endblock %}
+>>>>>>> 3d0f9503419787d2417827a63836d1bf30bdc0bf

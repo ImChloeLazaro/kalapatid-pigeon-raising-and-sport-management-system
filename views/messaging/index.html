@@ -15,7 +15,7 @@
     {% include 'search/convo-search.html' %}
 
     <div id="oid" data-name="{{data}}"></div>
-    {% for d in data|unique|sort(false,true,"datetime")|reverse %}
+    {% for d in data|unique_msg|sort(false,true,"datetime")|reverse %}
 
     <div class="msg-content">
 
