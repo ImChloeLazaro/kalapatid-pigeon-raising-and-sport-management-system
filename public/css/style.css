@@ -10,6 +10,29 @@
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
 
+.forms {
+  height: auto;
+  width: auto;
+  margin: 5px;
+  background: #F2F2F2;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.forms:focus {
+  color: #2D2626;
+  border-color: #2DA380;
+  background: #F2F2F2;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  box-shadow: none;
+}
+
+.forms::placeholder {
+  color: #C5C3C3;
+}
+
 .btn {
   display: flex;
   justify-content: center;
