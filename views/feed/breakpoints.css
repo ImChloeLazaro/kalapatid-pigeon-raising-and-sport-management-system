@@ -1,0 +1,35 @@
+/* feed mobile view  */
+@media only screen and (max-width: 576px) {
+    .wrapper {
+        overflow: scroll;
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.3fr 0.3fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "header"
+            "post"
+            "aside"
+            "feed";
+    }
+
+    nav {
+        display: none;
+    }
+}
+
+/* feed tablet view */
+@media (min-width: 576px) and (max-width: 768px) {
+    .wrapper {
+        overflow: scroll;
+        grid-template-columns: 1fr 5fr;
+        grid-template-rows: 1fr 1fr 2.5fr 10fr;
+        grid-template-areas:
+            "header header"
+            "post post"
+            "aside aside"
+            "feed feed"
+    }
+    nav
+    {
+        display: none;
+    }
+}

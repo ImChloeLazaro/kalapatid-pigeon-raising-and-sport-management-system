@@ -1,0 +1,15 @@
+$main-color: #2DA380;
+$bg-color: #F2F2F2;
+$font-color: #2D2626;
+$placeholder: #C5C3C3;
+
+.navbar-expand-lg .navbar-nav .nav-link
+{
+    color: $font-color;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.navbar-expand-lg .navbar-nav .nav-link:hover
+{
+    color: $main-color;
+}

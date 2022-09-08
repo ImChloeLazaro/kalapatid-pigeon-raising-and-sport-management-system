@@ -1,23 +1,31 @@
+$main-color: #2DA380;
+$bg-color: #F2F2F2;
+$font-color: #2D2626;
+$placeholder: #C5C3C3;
+
 .btn
 {
+    margin: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: $bg-color;
+    font-weight: bold;
     border-radius: 50%;
-    margin: 5px;
-    background: #F2F2F2;
+    background: $main-color!important;
     border: 3px solid rgb(255, 255, 255);
     border-radius: 2rem;
     box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
-.btn::hover
+.btn:hover
 {
-   color: black; 
+   color: $main-color; 
+   background: $bg-color!important;
 }
 .btn:focus
 {
-    border-color: #2DA380;
-    background: #F2F2F2;
+    border-color: $main-color;
+    background: $bg-color;
     outline: none;
     box-shadow: none;
 } 
