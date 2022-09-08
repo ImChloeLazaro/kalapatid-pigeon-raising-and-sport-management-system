@@ -31,6 +31,15 @@ function renderTemplate(res, accountId, posts, comments) {
 }
 
 
+function redirectToPostView(res, err) {
+	if (err == null) {
+		return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
+	} else {
+		renderTemplate(res, accountId, null, null)
+	}
+}
+
+
 
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -51,39 +60,56 @@ const POST_POSTING = (req, res) => {
 		let postModel = model.Post(accountId, datetime, post)
 
 		dbf.insertPostData(postModel, (err) => {
-			if (err == null) {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
-			} else {
-				renderTemplate(res, accountId, null, null)
-			}
+			redirectToPostView(res, err)
 		})
 	})
 
 }
+
+
+const POST_POST_DELETE = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let filter = { _id: new ObjectId(req.body.postId) }
+		dbf.deletePostData(filter, (err) => {
+			redirectToPostView(res, err)
+		})
+
+	})
+}
+
+
 
 
 
 const POST_POSTING_COMMENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-
 		let comment = req.body.comment
-		let postId = req.params.id
+		let postId = req.body.postId
 		let datetime = datetimenow()
 		let commentModel = model.Comment(accountId, postId, datetime, comment)
-
 		dbf.insertCommentData(commentModel, (err) => {
-			if (err == null) {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
-			} else {
-				renderTemplate(res, accountId, null, null)
-			}
+			redirectToPostView(res, err)
 		})
 
 	})
 }
 
+
+const POST_POSTING_COMMENT_DELETE = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let filter = { _id: new ObjectId(req.body.commentId) }
+		dbf.deleteCommentData(filter, (err) => {
+			redirectToPostView(res, err)
+		})
+
+	})
+}
+
+
 module.exports = {
 	GET_POSTING: GET_POSTING,
 	POST_POSTING: POST_POSTING,
-	POST_POSTING_COMMENT: POST_POSTING_COMMENT
+	POST_POST_DELETE: POST_POST_DELETE,
+	POST_POSTING_COMMENT: POST_POSTING_COMMENT,
+	POST_POSTING_COMMENT_DELETE: POST_POSTING_COMMENT_DELETE
 }

@@ -1,7 +1,7 @@
 
 console.log("This is Client-side Event Script..")
 
-function GetMap() {
+function GetCreateEventMap() {
 	var map = new Microsoft.Maps.Map('#event-map', {
 		showDashboard: false,
 		showTermsLink: false,
@@ -51,7 +51,7 @@ function GetMap() {
 			let lat = e.location.latitude
 			let long = e.location.longitude
 			var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(lat, long), {
-				icon: "https://docs.microsoft.com/en-us/bingmaps/v8-web-control/media/bmv8-poi-custom.png"
+				icon: "/images/bmv8-poi-custom.png"
 			});
 			map.entities.pop();
 			console.dir(map.entities)
@@ -75,7 +75,7 @@ function GetMap() {
 
 
 
-function setEventShowMap() {
+function GetShowEventMap() {
 	var map = new Microsoft.Maps.Map('#event-show-map', {
 		showDashboard: false,
 		showTermsLink: false,
@@ -85,9 +85,7 @@ function setEventShowMap() {
 
 	function setLocationInMap(latitude, longitude) {
 		var mylocation = new Microsoft.Maps.Location(latitude, longitude);
-		var pin = new Microsoft.Maps.Pushpin(mylocation, {
-			icon: "https://docs.microsoft.com/en-us/bingmaps/v8-web-control/media/bmv8-poi-custom.png"
-		});
+		var pin = new Microsoft.Maps.Pushpin(mylocation);
 		map.entities.push(pin)
 
 		lat = $('#showeventLocLat').val()
@@ -95,7 +93,9 @@ function setEventShowMap() {
 		console.log(lat, long)
 		if (lat !== "" || long !== "") {
 			let loc = new Microsoft.Maps.Location(lat, long);
-			let pin = new Microsoft.Maps.Pushpin(loc)
+			let pin = new Microsoft.Maps.Pushpin(loc, {
+				icon: "/images/bmv8-poi-custom.png"
+			})
 			map.entities.push(pin)
 		}
 		map.setView({

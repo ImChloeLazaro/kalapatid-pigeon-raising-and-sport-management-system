@@ -10,7 +10,7 @@
     </form>
   </div>
   <div class="post-container">
-    {% for p in posts|sort(false,true,'datetime')|reverse  %}
+    {% for p in posts|reverse  %}
     <div>
       <div class="box bg-light">
         <!-- id : {{p._id}} -->
@@ -22,14 +22,15 @@
           </p>
           {% set p1 = p.accountId.toString() %}
           {% if p1 == accountId %}
-          <form action="{{ctx.DOMAIN_NAME}}/posts/delete/{{p._id}}" method="post" id="delete-form">
+          <form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+            <input type="text" name="postId" value="{{p._id}}" hidden>
             <input class="btn btn-sm btn-danger" type="submit" value="delete">
           </form>
           {% endif %}
 
         </div>
         <div class="reply-form-container mx-5">
-          <form action="{{ctx.DOMAIN_NAME}}/posts/{{p._id}}" method="post" id="reply-form">
+          <form action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
             <div class="input-group w-50">
               <input class="form-control" name="postId" type="text" value="{{p._id}}" hidden>
               <input class="form-control" name="comment" type="text" size="20">
@@ -52,7 +53,8 @@
               </p>
               {% set ca = c.accountId.toString() %}
               {% if ca == accountId %}
-              <form action="{{ctx.DOMAIN_NAME}}/posts/delete/{{p._id}}" method="post" id="delete-form">
+              <form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+                <input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden>
                 <input class="btn btn-sm btn-danger" type="submit" value="delete">
               </form>
               {% endif %}

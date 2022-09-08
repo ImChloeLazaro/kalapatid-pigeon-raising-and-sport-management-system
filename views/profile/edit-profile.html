@@ -1,0 +1,86 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+
+<!-- Profile -->
+<div class="col-lg-3" id="profile-main">
+	<div class="cards">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			Edit Profile
+			<a href="{{ctx.DOMAIN_NAME}}/profile/edit"><i class="btn fa-solid fa-gear"></i></a>
+		</div>
+
+		<div class="card-body">
+			<div class="w-100 text-center my-3" id="profile-picture">
+				<img
+					src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png"
+					style="width: 100px; height: 100px;">
+			</div>
+			<p class="text-muted text-center" id="profile-id">Id: {{accData._id}}</p>
+			<hr>
+			<div class="w-auto">{{accData.firstName}} {{accData.middleName}} {{accData.lastName}}<span>(dymaru)</span>
+				<p class="text-muted" style="font-size: 10px;">{{accData.email}}</p>
+				<p>{{accData.phone}}</p>
+			</div>
+			<br>
+		</div>
+
+	</div>
+</div>
+
+<!-- Information -->
+<div class="col-lg-9" id="profile-information">
+	<main>
+		<div class="cards">
+
+			<div class="card-header">
+				Information
+			</div>
+			<div class="card-body">
+				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat
+					veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti
+					dolor!</p>
+			</div>
+		</div>
+	</main>
+
+	<!-- Group -->
+
+	<footer class="mt-3" id="profile-group">
+
+		<div class="cards overflow-auto">
+
+			<div class="card-header mb-3">
+				My groups
+			</div>
+
+			<div class="card-body d-flex justify-content-between">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row"><img
+									src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png"
+									style="width: 50px; height: 50px;"></th>
+							<td>
+								<div>Kalapatids</div>
+							</td>
+							<td>
+								<div class="text-muted">Libmanan, Camarines Sur</div>
+							</td>
+							<td>
+								<div id="profile-link">
+									<a class="mx-2" href="" data-toggle="tooltip" data-placement="top" title="Access this Group"><i
+											class="fa-sharp fa-solid fa-eye"></i></a>
+									<a href="" data-toggle="tooltip" data-placement="top" title="Access Global Chat"><i
+											class="fa-solid fa-comment"></i></a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</footer>
+</div>
+
+{% endblock %}

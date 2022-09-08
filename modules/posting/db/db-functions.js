@@ -63,11 +63,33 @@ function getAllCommentData(filter, fn) {
 }
 
 
+function deletePostData(filter, fn) {
+	db.getCollection("posts", (col) => {
+		col.deleteOne(filter, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+
+function deleteCommentData(filter, fn) {
+	db.getCollection("comments", (col) => {
+		col.deleteOne(filter, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+
 
 module.exports = {
 	getAllPostData: getAllPostData,
 	insertPostData: insertPostData,
 	insertCommentData: insertCommentData,
 	getCommentDataById: getCommentDataById,
-	getAllCommentData: getAllCommentData
+	getAllCommentData: getAllCommentData,
+	deletePostData: deletePostData,
+	deleteCommentData: deleteCommentData
 }

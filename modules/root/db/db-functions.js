@@ -20,16 +20,6 @@ function getAddressDataBy(filter, fn) {
 }
 
 
-function getAllMessageDataBy(filter, fn) {
-	db.getCollection("messages", (col) => {
-		col.find(filter).toArray((err, docs) => {
-			if (err) console.log(err);
-
-			fn(err, docs)
-		})
-	})
-}
-
 
 
 
@@ -37,6 +27,5 @@ function getAllMessageDataBy(filter, fn) {
 
 module.exports = {
 	getAccountDataBy: getAccountDataBy,
-	getAddressDataBy: getAddressDataBy,
-	getAllMessageDataBy: getAllMessageDataBy
+	getAddressDataBy: getAddressDataBy
 }

@@ -29,12 +29,37 @@ const GET_PROFILE = (req, res) => {
 }
 
 
+const EDIT_PROFILE = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let othername = req.query.username
+		if (othername === undefined || othername === username) {
+			othername = username
+		}
+		req.session.othername = othername
+		let accountFilter = { username: othername }
+		dbf.getAccountDataBy(accountFilter, (err, docs) => {
+			let accData = docs
+			let addressFilter = { acc_id: accData._id }
+			dbf.getAddressDataBy(addressFilter, (err, docs) => {
+				let addrData = docs
+				return res.render("profile/edit-profile.html", {
+					ctx: globalConstants.ctx,
+					othername: othername,
+					accData: accData,
+					addrData: addrData
+				})
+			})
+		})
+	})
+}
+
+
 
 
 
 const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		let othername = req.params.username
+		let othername = req.query.username
 		console.log(othername)
 		var messageId = null
 		let filter = {
@@ -65,5 +90,7 @@ const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 
 module.exports = {
 	GET_PROFILE: GET_PROFILE,
+	EDIT_PROFILE: EDIT_PROFILE,
 	GET_PROFILE_MESSAGEME_ID: GET_PROFILE_MESSAGEME_ID
 }
+

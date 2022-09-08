@@ -1,6 +1,14 @@
 .icons
 {
-color: #2DA380;
+margin: 3px;
+color: #2D2626;
 font-size: 22px;
 font-weight: bold;
+transition: 0.3s;
+}
+.icons:hover
+{
+    color: #2DA380;
+    border-radius: 50%;
+    transform: rotate(20deg);
 }

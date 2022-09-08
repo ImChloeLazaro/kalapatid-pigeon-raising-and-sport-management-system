@@ -1,7 +1,7 @@
 
 function realtime(io) {
 	let clients = []
-	const server = io.sockets.on('connection', function (socket) {
+	io.sockets.on('connection', function (socket) {
 		let ip = socket.request.connection.remoteAddress
 
 		socket.on('isConnected', function (data) {
