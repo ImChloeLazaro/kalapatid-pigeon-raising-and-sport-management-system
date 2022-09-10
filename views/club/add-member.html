@@ -1,47 +1,57 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-{% for a in accounts %}
-<div>
-	<p data-id="{{a._id}}">{{ a.username }}</p>
-	<input type="checkbox" name="" id="">
-</div>
-{% endfor %}
+		{% set acc_usernames = accounts | toListItem %}
+		{% set club_usernames = clubMembers | toListItem %}
+		{%for username in club_usernames | intersect(acc_usernames) %}
+				{% for a in accounts %}
+						{% if username == a.username %}
+								<div>
+										<p data-id="{{a._id}}">{{ a.username }}</p>
+										<input type="checkbox">
+								</div>
+						{% endif %}
+				{% endfor %}
 
-<form id="add-member-form" action="{{ctx.DOMAIN_NAME}}/clubs/add-member/{{clubId}}" method="POST">
-	<input type="submit" value="submit">
-</form>
-<script>
-	$(document).ready(function () {
-		function getMembers() {
-			let members = []
-			let data = $('input[type="checkbox"]:checked').parent().find('p')
-			data.each(function () {
-				members.push({
-					accountId: $(this).data('id'),
-					username: $(this).text(),
-					memberStatus: "normal"
-				})
-			})
-			return members
-		}
+		{% endfor %}
 
-		function sendJSONData(url, data) {
-			fetch(url, {
-					method: "post",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(data)
-				})
-				.catch(err => console.error(err))
-		}
+		{% if not club_usernames | intersect(acc_usernames) | is_empty %}
+				<form id="add-member-form" action="{{ctx.DOMAIN_NAME}}/clubs/add-member/{{clubId}}" method="POST">
+						<input type="submit" value="submit">
+				</form>
+		{% else  %}
+				<p class="text-danger text-center">No Account available to add in the Club</p>
+				<a href="{{ctx.DOMAIN_NAME}}/clubs/show/{{clubId}}" class="btn btn-sm btn-success">back</a>
+		{% endif %}
 
-		$("#add-member-form").submit(function () {
-			var data = {
-				members: getMembers()
-			}
-			sendJSONData($(this).attr("action"), data)
-		})
-	});
-</script>
+		<script>
+				$(document).ready(function () {
+						function getMembers() {
+								let members = []
+								let data = $('input[type="checkbox"]:checked')
+										.parent()
+										.find('p')
+								data.each(function () {
+										members.push({accountId: $(this).data('id'), username: $(this).text(), memberStatus: "normal"})
+								})
+								return members
+						}
+
+						function sendJSONData(url, data) {
+								fetch(url, {
+										method: "post",
+										headers: {
+												"Content-Type": "application/json"
+										},
+										body: JSON.stringify(data)
+								}).catch(err => console.error(err))
+						}
+
+						$("#add-member-form").submit(function () {
+								var data = {
+										members: getMembers()
+								}
+								sendJSONData($(this).attr("action"), data)
+						})
+				});
+		</script>
 {% endblock %}

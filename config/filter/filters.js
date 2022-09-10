@@ -9,8 +9,21 @@ function filters(env) {
 		return str.slice(0, count || 5);
 	})
 
-	env.addFilter('contains', function (arr, value) {
-		return arr.indexOf(value) !== -1 ? true : false;
+	env.addFilter('isFoundin', function (value, arr) {
+		return arr.indexOf(value) === -1;
+	})
+	env.addFilter('merge', function (arr1, arr2) {
+		return [...arr1, ...arr2];
+	})
+	env.addFilter('intersect', function (arr1, arr2) {
+		let arr = arr2.filter(val => !arr1.includes(val))
+		console.log(arr1, arr2, arr);
+		return arr
+	})
+	env.addFilter('toListItem', function (arr) {
+		let array = []
+		arr.forEach(item => { array.push(item.username) })
+		return array
 	})
 
 	env.addFilter('is_empty', function (arr) {
