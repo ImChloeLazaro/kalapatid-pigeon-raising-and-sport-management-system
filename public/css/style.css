@@ -161,6 +161,109 @@
   font-size: 18px;
 }
 
+.wrapper {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 5fr 5fr;
+  grid-template-areas: "header header header header" "aside post post members" "aside feed feed members" "aside feed feed members";
+}
+
+#feed-aside {
+  grid-area: aside;
+}
+#feed-aside #feed-event-card .swiper {
+  width: 100%;
+  height: 100%;
+}
+#feed-aside #feed-event-card .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#feed-aside #feed-event-card .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#feed-aside #feed-event-card .swiper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#feed-post {
+  grid-area: post;
+}
+
+#feed-row {
+  grid-area: feed;
+}
+
+#feed-members-navigation {
+  grid-area: members;
+}
+
+/* feed mobile view  */
+@media only screen and (max-width: 576px) {
+  .wrapper {
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr 0.3fr 1fr 1fr 1fr;
+    grid-template-areas: "post" "aside" "feed";
+  }
+  .wrapper #feed-aside {
+    width: 80vw;
+  }
+  .wrapper #feed-aside #feed-event-card {
+    width: 100% !important;
+  }
+  nav {
+    display: none;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr 0.3fr 1fr 1fr 1fr;
+    grid-template-areas: "post" "aside" "feed";
+  }
+  .wrapper #feed-aside {
+    width: 80vw;
+  }
+  .wrapper #feed-aside #feed-event-card {
+    width: 100% !important;
+  }
+  nav {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 2.5fr 10fr;
+    grid-template-areas: "post post" "aside aside" "feed feed";
+  }
+  .wrapper #feed-aside #feed-event-card {
+    width: 100% !important;
+  }
+  nav {
+    display: none;
+  }
+}
 * {
   margin: 0;
   padding: 0;
