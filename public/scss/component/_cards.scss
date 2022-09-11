@@ -1,4 +1,4 @@
-.cards
+.card
 {
     padding: 20px;
     height: auto;
@@ -8,4 +8,14 @@
     border: 2px solid rgb(255, 255, 255);
     border-radius: 2rem;
     box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+.card-header
+{
+    border: none;
+    background: #F2F2F2;
+}
+.card-footer
+{
+    border: none;
+    background: #F2F2F2;
 }
