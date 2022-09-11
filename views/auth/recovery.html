@@ -1,34 +1,36 @@
 {% extends "auth/layout.html" %}
 {% block content %}
-<div class="container center-layout">
-  <div class="row">
-    <div class="col-12 card">
-      <div class="identify">
-        <div class="card-body">
-          <div class="logo-container"><a href="#"><img src="/auth/img/pegion_request.png" class="img-fluid"
-                alt="Account Required" id="identify-logo"></a></div>
-          <div class="title">
-            <h3 class="banner">Verification Required</h3>
-          </div>
-          <form method="post" id="identify-form">
-            <div class="action-banner">
-              <p>Please input your email address and we will send the verification code to you.</p>
+  <div class="container center-layout">
+    <div class="row">
+      <div class="col-12 card">
+        <div class="identify">
+          <div class="card-body">
+            <div class="logo-container">
+              <a href="#"><img src="/auth/img/pegion_request.png" class="img-fluid" alt="Account Required" id="identify-logo"></a>
             </div>
-            <div class="form-group form-container" id="email">
-              <input name="email" type="email" class="form-control" placeholder="Please input your email.">
+            <div class="title">
+              <h3 class="banner">Verification Required</h3>
             </div>
-            <button class="btn fa">&#xf061;</button>
-          </form>
-          {% if not HAS_EMAIL_VALUE %}
-          <div>
-            <p class="text-danger text-center">email is Empty or not valid. </p>
-          </div>
+            <form method="post" id="identify-form">
+              <div class="action-banner">
+                <p>Please input your email address and we will send the verification code to you.</p>
+              </div>
+              <div class="form-group form-container" id="email">
+                <input name="email" type="email" class="form-control" placeholder="Please input your email." required="true">
+              </div>
+              <button class="btn fa">&#xf061;</button>
+            </form>
+            {% if not HAS_EMAIL_VALUE %}
+              <div>
+                <p class="text-danger text-center">email is Empty or not valid.
+                </p>
+              </div>
 
-          {% endif %}
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 {% endblock %}

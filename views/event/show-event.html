@@ -1,50 +1,53 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-<div class="container">
-	<div class="container club-form-container">
-		<form method="post">
-			<div class="form-group w-50">
-				<div class="my-4">
-					<label for="eventName"> Name</label>
-					<input readonly class="form-control form-control-sm " value="{{event.name}}">
+		<div class="container">
+				<div class="container club-form-container">
+						<form method="post">
+								<div class="form-group w-50">
+										<div class="my-4">
+												<label for="eventName">
+														Name</label>
+												<input readonly="readonly" class="form-control form-control-sm " value="{{event.name}}">
+										</div>
+										<div class="my-4">
+												<label for="type">
+														Type</label>
+												<input readonly="readonly" class="form-control form-control-sm " name="type" type="text" value="{{event.type}}">
+										</div>
+										<div class="my-4">
+												<label for="description">
+														Description</label>
+												<textarea readonly="readonly" class="d-inline" name="description" placeholder="Event Discription" id="" cols="80" rows="3">{{event.description}}</textarea>
+										</div>
+										<div class="my-4">
+												<label for="date">
+														Date</label>
+												<input readonly="readonly" class="form-control form-control-sm " value="{{event.date}}">
+										</div>
+										<div class="my-4">
+												<label>
+														Location</label>
+												<div id="event-show-map" style="width: fit-content; height:300px;"></div>
+												<div class="input-group">
+														<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
+														<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
+												</div>
+										</div>
+										<div class="my-4">
+												<label for="hourStart">
+														Time Start</label>
+												<input readonly="readonly" class="form-control form-control-sm " name="hourStart" value="{{event.hourStart}}">
+										</div>
+										<div class="my-4">
+												<label for="hourEnd">
+														Time End</label>
+												<input readonly="readonly" class="form-control form-control-sm " name="hourEnd" value="{{event.hourEnd}}">
+										</div>
+								</div>
+						</form>
 				</div>
-				<div class="my-4">
-					<label for="type"> Type</label>
-					<input readonly class="form-control form-control-sm " name="type" type="text" value="{{event.type}}">
-				</div>
-				<div class="my-4">
-					<label for="description"> Description</label>
-					<textarea readonly class="d-inline" name="description" placeholder="Event Discription" id="" cols="80"
-						rows="3">{{event.description}}</textarea>
-				</div>
-				<div class="my-4">
-					<label for="date"> Date</label>
-					<input readonly class="form-control form-control-sm " value="{{event.date}}">
-				</div>
-				<div class="my-4">
-					<label> Location</label>
-					<div id="event-show-map" style="width: fit-content; height:200px;"></div>
-					<div class="input-group">
-						<input hidden class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-						<input hidden class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
-					</div>
-				</div>
-				<div class="my-4">
-					<label for="hourStart"> Time Start</label>
-					<input readonly class="form-control form-control-sm " name="hourStart" value="{{event.hourStart}}">
-				</div>
-				<div class="my-4">
-					<label for="hourEnd"> Time End</label>
-					<input readonly class="form-control form-control-sm " name="hourEnd" value="{{event.hourEnd}}">
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+		</div>
 
-
-<script type='text/javascript'
-	src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ'
-	async defer></script>
-<script type="text/javascript" src="/javascript/script.js"></script>
+		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+		<script type="text/javascript" src="/javascript/script.js"></script>
 {% endblock %}

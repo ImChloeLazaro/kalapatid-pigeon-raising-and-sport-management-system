@@ -1,86 +1,88 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+					<h5 class="fw-bold">Edit Profile</h5>
+				</div>
 
-<!-- Profile -->
-<div class="col-lg-3" id="profile-main">
-	<div class="cards">
-		<div class="card-header d-flex justify-content-between align-items-center">
-			Edit Profile
-			<a href="{{ctx.DOMAIN_NAME}}/profile/edit"><i class="btn fa-solid fa-gear"></i></a>
-		</div>
-
-		<div class="card-body">
-			<div class="w-100 text-center my-3" id="profile-picture">
-				<img
-					src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png"
-					style="width: 100px; height: 100px;">
+				<div class="card-body">
+					<div class="w-100 text-center my-3">
+						<img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" style="width: 100px; height: 100px;" id="account-picture">
+					</div>
+					<p class="text-muted text-center" id="profile-id">Id:
+						{{accData._id}}</p>
+					<hr>
+					<div class="w-auto">{{accData.firstName}}
+						{{accData.middleName}}
+						{{accData.lastName}}
+						<span>({{accData.username}})</span>
+						<p class="text-muted" style="font-size: 10px;">{{accData.email}}</p>
+						<p>{{accData.phone}}</p>
+					</div>
+					<br>
+				</div>
 			</div>
-			<p class="text-muted text-center" id="profile-id">Id: {{accData._id}}</p>
-			<hr>
-			<div class="w-auto">{{accData.firstName}} {{accData.middleName}} {{accData.lastName}}<span>(dymaru)</span>
-				<p class="text-muted" style="font-size: 10px;">{{accData.email}}</p>
-				<p>{{accData.phone}}</p>
-			</div>
-			<br>
-		</div>
+			<div class="col-lg-8">
+				<div class="row">
+					<div class="col-lg-12">
+						<main>
+							<div class="cards">
 
-	</div>
-</div>
-
-<!-- Information -->
-<div class="col-lg-9" id="profile-information">
-	<main>
-		<div class="cards">
-
-			<div class="card-header">
-				Information
-			</div>
-			<div class="card-body">
-				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat
-					veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti
-					dolor!</p>
-			</div>
-		</div>
-	</main>
-
-	<!-- Group -->
-
-	<footer class="mt-3" id="profile-group">
-
-		<div class="cards overflow-auto">
-
-			<div class="card-header mb-3">
-				My groups
-			</div>
-
-			<div class="card-body d-flex justify-content-between">
-				<table class="table">
-					<tbody>
-						<tr>
-							<th scope="row"><img
-									src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png"
-									style="width: 50px; height: 50px;"></th>
-							<td>
-								<div>Kalapatids</div>
-							</td>
-							<td>
-								<div class="text-muted">Libmanan, Camarines Sur</div>
-							</td>
-							<td>
-								<div id="profile-link">
-									<a class="mx-2" href="" data-toggle="tooltip" data-placement="top" title="Access this Group"><i
-											class="fa-sharp fa-solid fa-eye"></i></a>
-									<a href="" data-toggle="tooltip" data-placement="top" title="Access Global Chat"><i
-											class="fa-solid fa-comment"></i></a>
+								<div class="card-content">
+									<h5 class="fw-bold">Information</h5>
 								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+								<div class="card-body">
+									<p content-editable>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti dolor!</p>
+								</div>
+							</div>
+						</main>
+					</div>
+					<div class="col-lg-12">
+						<footer class="mt-3" id="profile-group">
 
+							<div class="cards overflow-auto">
+
+								<div class="card-content mb-3">
+									<h5 class="fw-bold">My groups</h5>
+								</div>
+
+								<div class="card-body d-flex justify-content-between">
+									<table class="table table-borderless">
+										<tbody id="profile-club">
+											<tr>
+												<th scope="row"><img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
+												<td>
+													<div>Kalapatids</div>
+												</td>
+												<td>
+													<div class="text-muted">Libmanan, Camarines Sur</div>
+												</td>
+												<td>
+													<div id="profile-link">
+														<a class="text-dark" href="" data-toggle="tooltip" data-placement="top" title="Access this Group">
+															<i class="icons fa-sharp fa-solid fa-eye" id="profile-icons"></i>
+														</a>
+														<a class="text-dark" href="" data-toggle="tooltip" data-placement="top" title="Access Global Chat">
+															<i class="icons fa-solid fa-comment" id="profile-icons"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</footer>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex">
+				<button class="btn btnt-sm  m-2">Save</button>
+				<button class="btn btnt-sm  m-2">Cancel</button>
+			</div>
 		</div>
-	</footer>
-</div>
+	</div>
 
 {% endblock %}
