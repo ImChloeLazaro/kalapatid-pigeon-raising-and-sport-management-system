@@ -1,0 +1,258 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="wrapper">
+        <!-- ########################### Events ########################## -->
+        <aside class="" id="feed-aside">
+          <!-- Swiper -->
+
+          <div class="card mb-3" style="width: 30rem;" id="feed-event-card">
+            <div class="card-header">Events</div>
+            <div class="card-body">
+              <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                  {% for e in events %}
+                    {{e}}
+                    <div class="swiper-slide">
+                      <div class="card" style="all: unset;">
+                        <div class="card-header">
+                          {{e.name}}
+                        </div>
+                        <div class="card-body" style="background-color: #f2f2f2;">
+                          <img src="https://media.istockphoto.com/vectors/cover-design-template-corporate-business-annual-report-brochure-vector-id1136635611" style="width: 100%; height: auto;">
+                        </div>
+                        <div class="card-footer">
+                          <button class="btn">Register</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Initialize Swiper -->
+          <script>
+            var swiper = new Swiper(".mySwiper", {
+              slidesPerView: 1,
+              spaceBetween: 30,
+              loop: true,
+              pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+              },
+              navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+              }
+            });
+          </script>
+
+          <div class="cards lg-mt-5">
+            <div class="card-header">Clubs</div>
+            <div class="card-body">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Dragon Mania</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-primary">21</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Libmanenyows</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-primary">21</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Kalapatids</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-primary">21</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </aside>
+        <!-- ################### Create Post #################### -->
+        <main id="feed-post">
+          <form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts" method="post" id="post-form">
+            <input type="text" name="post" class="form-control w-100 h-auto" required="required">
+            <button class="btn btn-primary" type="submit">Post</button>
+          </form>
+        </main>
+        <!-- feed -->
+        <article id="feed-row" style="width: 100%;">
+          <table class="table">
+            <tbody>
+              {% for p in posts | reverse %}
+                <tr>
+                  <td>
+                    <div class="card">
+                      <div class="card-header d-flex">
+                        <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                        <span class="mx-3">
+                          <p>Chloe Kim Lazaro</p>
+                          <small class="text-muted" style="position: relative; bottom: 20px">lazaroChloekim@gmail.com</small >
+                        </span>
+                      </div>
+
+                      <div class="card-body">
+                        <p>{{ p.post }}</p>
+                        <small>12:00 - Dec 25 2002</small>
+                      </div>
+                      <div class="col-12 mb-2">
+                        <span >
+                          <i class="fa fa-heart" aria-hidden="true" style="color: #2da380"></i >
+                          <span class="text-muted">
+                            1.5k
+                          </span>
+                        </span >
+                        <span data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                          <i class="fa fa-comment text-muted" style="cursor: pointer"></i >
+                          <span class="text-muted">
+                            500 Replies</span></span >
+
+                        {% set p1 = p
+                          .accountId
+                          .toString() %}
+                        {% if p1 == accountId %}
+                          <form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+                            <input type="text" name="postId" value="{{p._id}}" hidden="hidden">
+                            <input class="btn btn-sm btn-danger" type="submit" value="delete">
+                          </form>
+                        {% endif %}
+
+                        <div class="collapse mt-2 row" id="collapseExample">
+                          {% for c in comments | sort(false, true, 'datetime') %}
+                            {% set p1 = p
+                              ._id
+                              .toString() %}
+                            {% set p2 = c
+                              .postId
+                              .toString() %}
+                            {{p1}}:
+                            {{p2}}
+                            {% if (p1 == p2) %}
+                              <div id="comment-container" class="col-sm-12">
+                                <div class="col-sm-12 mt-2 d-flex">
+                                  <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="
+                              height: 40px;
+                              width: 40px;
+                              border-radius: 50%;
+                            "/>
+                                  <span class="mx-3">
+                                    <p>Monaliza</p>
+                                    <small class="text-muted" style="position: relative; bottom: 20px">DalagangPilipina@Yahoo.com</small >
+                                  </span>
+                                </div>
+                                <div class="col-md-12">
+                                  <article class="replies-body mt-1 mb-1">
+                                    {{c.comment}}
+                                  </article>
+                                </div>
+                                <div class="col-md-12 mt-1 mb-1">
+                                  <span class="text-muted mr-2">
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>100</span>
+                                  <span class="text-muted">
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>200</span>
+
+                                </div>
+                                {% set ca = c
+                                  .accountId
+                                  .toString() %}
+                                {% if ca == accountId %}
+                                  <form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+                                    <input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
+                                    <input class="btn btn-sm btn-danger" type="submit" value="delete">
+                                  </form>
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                          {% endfor %}
+                          <form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
+                            <input type="text" name="comment" class="form-control w-100 h-auto" required="required">
+                            <input name="postId" type="text" value="{{p._id}}" hidden="hidden">
+                            <button class="btn btn-primary" type="submit">Reply</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </article>
+        <!-- acitve members -->
+        <nav id="feed-members-navigation">
+          <div class="card lg-mt-5">
+            <div class="card-header">Active Members</div>
+            <div class="card-body">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Chloe Kim Lazaro</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-success">active</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Chloe Kim Lazaro</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-success">active</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+                    </th>
+                    <td>
+                      <a class="text-dark text-decoration-none" href="">Chloe Kim Lazaro</a >
+                    </td>
+                    <td>
+                      <div class="badge bg-success">active</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+{% endblock %}
