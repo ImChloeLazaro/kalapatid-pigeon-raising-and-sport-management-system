@@ -5,7 +5,6 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 5fr 5fr;
     grid-template-areas: 
-    "header header header header"
     "aside post post members"
     "aside feed feed members"
     "aside feed feed members";
@@ -52,6 +51,14 @@
         margin-left: auto;
         margin-right: auto;
       }
+
+      .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after, .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after 
+      {
+        color: #2DA380;
+      }
+      .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+        background-color: #2DA380;
+    }
     }
 }
 #feed-post

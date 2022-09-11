@@ -12,7 +12,7 @@
   border-radius: 50%;
 }
 
-.cards {
+.card {
   padding: 20px;
   height: auto;
   width: auto;
@@ -21,6 +21,16 @@
   border: 2px solid rgb(255, 255, 255);
   border-radius: 2rem;
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.card-header {
+  border: none;
+  background: #F2F2F2;
+}
+
+.card-footer {
+  border: none;
+  background: #F2F2F2;
 }
 
 .form-control {
@@ -166,7 +176,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 5fr 5fr;
-  grid-template-areas: "header header header header" "aside post post members" "aside feed feed members" "aside feed feed members";
+  grid-template-areas: "aside post post members" "aside feed feed members" "aside feed feed members";
 }
 
 #feed-aside {
@@ -203,6 +213,12 @@
 #feed-aside #feed-event-card .swiper {
   margin-left: auto;
   margin-right: auto;
+}
+#feed-aside #feed-event-card .swiper-button-next:after, #feed-aside #feed-event-card .swiper-rtl .swiper-button-prev:after, #feed-aside #feed-event-card .swiper-button-prev:after, #feed-aside #feed-event-card .swiper-rtl .swiper-button-next:after {
+  color: #2DA380;
+}
+#feed-aside #feed-event-card .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, #feed-aside #feed-event-card .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+  background-color: #2DA380;
 }
 
 #feed-post {
