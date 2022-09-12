@@ -7,42 +7,44 @@
     {% if data| is_empty %}
     <p>No Messaging available!</p>
 
-    {% else %}
-
-    {% include 'search/convo-search.html' %}
-
-    <div id="oid" data-name="{{data}}"></div>
-    {% for d in data|unique_msg|sort(false,true,"datetime")|reverse %}
-
-    <div class="msg-content">
-
-      {% if d.username2 == username %}
-
-      <strong>
-        datetime: {{d.datetime}}
-        <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
-          <h4>{{d.username1}}</h4>
-        </a>
-
-      </strong>
-
       {% else %}
 
-      <strong>
-        datetime: {{d.datetime}}
-        <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
-          <h4>{{d.username2}}</h4>
-        </a>
+        {% include 'search/convo-search.html' %}
 
-      </strong>
+        <div id="oid" data-name="{{data}}"></div>
+        {% for d in data | unique_msg | sort(false, true, "datetime") | reverse %}
 
+          <div class="msg-content">
+
+            {% if d.username2 == username %}
+              <div>
+                <strong>
+                  datetime:
+                  {{d.datetime}}
+                  <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+                    <h4>{{d.username1}}</h4>
+                  </a>
+
+                </strong>
+              </div>
+
+            {% else %}
+              <div>
+                <strong>
+                  datetime:
+                  {{d.datetime}}
+                  <a href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
+                    <h4>{{d.username2}}</h4>
+                  </a>
+                </strong>
+              </div>
+            {% endif %}
+            <br>
+          </div>
+        {% endfor %}
       {% endif %}
-      <br>
     </div>
-    {% endfor %}
-    {% endif %}
-  </div>
 
-</div>
+  </div>
 
 {% endblock %}

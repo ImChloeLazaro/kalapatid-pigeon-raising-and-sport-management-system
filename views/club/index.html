@@ -3,11 +3,7 @@
   <div class="container">
     <h1 class="display-5">Clubs</h1>
 
-    <div class="container club-form-container my-2">
-      <a class="btn btn-sm btn-success my-2" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create Your Own Club</a>
-    </div>
-
-    <div class="club-table-container container my-2">
+    <div class="club-container container my-2">
       <h4>Owned Club</h4>
       {% for c in clubs | sort(false, true, 'datetime') | reverse %}
         <div>
@@ -19,10 +15,13 @@
       {% for c in clubs | sort(false, true, 'datetime') | reverse %}
         <div>
           <a href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
+
         </div>
 
       {% endfor %}
     </div>
-
+    <div class="container club-form-container my-2">
+      <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create New Club</a>
+    </div>
   </div>
 {% endblock %}

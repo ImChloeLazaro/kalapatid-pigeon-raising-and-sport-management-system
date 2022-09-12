@@ -1,36 +1,38 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-<style>
+		<style></style>
+		<div class="container">
+				<h1 class="display-5">Dashboard</h1>
+				<h2>Forecast Days</h2>
+				<div id="forcast-container"></div>
+		</div>
+		<script>
+				if (navigator.geolocation) {
+						navigator
+								.geolocation
+								.getCurrentPosition(function (position) {
+										let {latitude, longitude} = position.coords;
+										getForcastWeather(`${latitude},${longitude}`)
 
-</style>
-<div class="container">
-	<h1 class="display-5">Dashboard</h1>
-	<h2>Forecast Days</h2>
-	<div id="forcast-container"></div>
-</div>
-<script>
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			let {
-				latitude,
-				longitude
-			} = position.coords;
-			getForcastWeather(`${latitude},${longitude}`)
-
-			async function getForcastWeather(location) {
-				fetch(
-						`https://api.weatherapi.com/v1/forecast.json?key=3f66c7588cc14f418bb11203220705&q=${location}&days=7`)
-					.then(response => response.json())
-					.then(data => {
-						console.log(data)
-						let currentday = data.current
-						let currentlocation = data.location
-						let forcastday = data.forecast.forecastday
-						$("#forcast-container").append(`
+										async function getForcastWeather(location) {
+												fetch(`https://api.weatherapi.com/v1/forecast.json?key=3f66c7588cc14f418bb11203220705&q=${location}&days=7`)
+														.then(response => response.json())
+														.then(data => {
+																console.log(data)
+																let currentday = data.current
+																let currentlocation = data.location
+																let forcastday = data
+																		.forecast
+																		.forecastday
+																		$("#forcast-container")
+																		.append(`
 							<div class='card m-2 p-2'>
 								<img style="width: 100px;height: 100px;" src="${currentday.condition.icon}"></img>
 								<h4>${currentday.condition.text}</h4>
 								<br>
+								<span>name: ${currentlocation.name}</span>
+								<span>region: ${currentlocation.region}</span>
+								<span>region: ${currentlocation.country}</span>
 								<span>humidity: ${currentday.humidity}</span>
 								<span>temperature(°C): ${currentday.temp_c}</span>
 								<span>temperature(°F ): ${currentday.temp_f}</span>
@@ -39,11 +41,10 @@
 							</div>
 							`)
 
-
-						forcastday.map((d, i) => {
-							currentdayindex = 0
-							if (i !== currentdayindex) {
-								$("#forcast-container").append(`
+																forcastday.map((d, i) => {
+																		currentdayindex = 0
+																		if (i !== currentdayindex) {
+																				$("#forcast-container").append(`
 								<div class='card m-2 p-2'>
 									<span>date: ${d.date}</span>
 									<span>humidity: ${d.day.avghumidity}</span>
@@ -55,12 +56,12 @@
 									<span>average velocity per miles: ${d.day.avgvis_miles}</span>
 								</div>
 							`)
-							}
+																		}
 
-						})
-					})
-			}
-		});
-	}
-</script>
+																})
+														})
+										}
+								});
+				}
+		</script>
 {% endblock %}

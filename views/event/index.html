@@ -1,22 +1,15 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-<div class="container">
-  <h1 class="display-5">Events</h1>
-  <div class="container event-form-container">
-    <a class="btn my-2" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
-  </div>
-  <div class="event-table-container container">
-    <table class="event-table table table-responsive  table-bordered">
-      <thead>
-        <th>Event Names</th>
-      </thead>
-      <tbody>
-        {% for e in events|reverse %}
-        <tr>
-          <td><a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">{{e.name}}</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  <div class="container">
+    <h1 class="display-5">Events</h1>
+    <div class="container event-form-container">
+      <a class="btn my-2" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
+    </div>
+    <div class="event-table-container container">
+      {% for e in events | reverse %}
+        <div>
+          <a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">{{e.name}}</a>
+        </div>
+      {% endfor %}
+    </div>
   {% endblock %}

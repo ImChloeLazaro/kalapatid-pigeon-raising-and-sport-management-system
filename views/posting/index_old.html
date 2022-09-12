@@ -1,0 +1,87 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+	<div class="container">
+		<h1 class="display-5">Questions and Answers</h1>
+		<h1>Post</h1>
+		<div id="post-area" class="box bg-light">
+			<form action="{{ctx.DOMAIN_NAME}}/posts" method="post" id="post-form">
+				<textarea class="form-control bg-white" name="post" id="" cols="100" rows="3"></textarea>
+				<button class="btn btn-sm btn-success my-2" type="submit">post</button>
+			</form>
+		</div>
+		<div class="post-container">
+			{% for p in posts | reverse %}
+				<div>
+					<div class="box bg-light">
+						<!-- id : {{p._id}} -->
+						<h4>Post</h4>
+						<div class="box bg-white">
+							<strong>
+								posted date:
+								{{p.datetime}}
+								account Id:
+								{{p.accountId}}</strong>
+							<p>
+								{{ p.post }}
+							</p>
+							{% set p1 = p
+								.accountId
+								.toString() %}
+							{% if p1 == accountId %}
+								<form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+									<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
+									<input class="btn btn-sm btn-danger" type="submit" value="delete">
+								</form>
+							{% endif %}
+
+						</div>
+						<div class="reply-form-container mx-5">
+							<form action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
+								<div class="input-group w-50">
+									<input class="form-control" name="postId" type="text" value="{{p._id}}" hidden="hidden">
+									<input class="form-control" name="comment" type="text" size="20">
+									<input class="btn btn-sm btn-success" type="submit" value="submit">
+								</div>
+							</form>
+							<div class="reply-container my-2">
+								<h4>Comments</h4>
+								{% for c in comments | sort(false, true, 'datetime') %}
+
+									{% set p1 = p
+										._id
+										.toString() %}
+									{% set p2 = c
+										.postId
+										.toString() %}
+
+									{% if (p1 == p2) %}
+										<!-- id: {{c._id }} -->
+										<div class="box">
+											<div>{{c.datetime}}</div>
+											<p>
+												{{ c.comment }}
+											</p>
+
+											{% set ca = c
+												.accountId
+												.toString() %}
+											{% if ca == accountId %}
+												<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+													<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
+													<input class="btn btn-sm btn-danger" type="submit" value="delete">
+												</form>
+											{% endif %}
+										</div>
+
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

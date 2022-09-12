@@ -5,12 +5,14 @@
   {% include 'initial/meta.html' %}
   {% include 'initial/dependency.html' %}
   {% include 'initial/custom.html' %}
+  
   <title>{{ctx.TITLE}}</title>
 </head>
 
 <body>
 
   {% include 'initial/navbar.html' %}
+
   {% block content %}
   {% endblock %}
 
