@@ -1,23 +1,24 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-	<div class="container">
-		<h1 class="display-5">Club Chats</h1>
-		<div class="chats-container scroll">
-			{% if data | is_empty %}
-				<p>No Club Live Chats available!</p>
-			{% else %}
 
-				<div id="oid" class="container my-2">
-					<h4>Clubs with Live Chats</h4>
-					{% for d in data | unique_chat | sort(false, true, "datetime") | reverse %}
-						<div class="chats-content">
-							<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}" title="{{d.datetime}}">{{d.clubName}}</a>
-						</div>
-					{% endfor %}
-				{% endif %}
-			</div>
+  <div class="container">
+    <h1 class="display-5">Club Chats</h1>
+    <div class="chats-container scroll">
+      {% if data | is_empty %}
+        <p>No Club Live Chats available!</p>
+      {% else %}
 
-		</div>
+        <div id="oid" class="container my-2">
+          <h4>Clubs with Live Chats</h4>
+          {% for d in data | unique_chat | sort(false, true, "datetime") | reverse %}
+            <div class="chats-content">
+              <a href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}" title="{{d.datetime}}">{{d.clubName}}</a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
 
-		<script defer="defer" src="/javascript/realtime.js"></script>
-	{% endblock %}
+    </div>
+
+    <script defer="defer" src="/javascript/realtime.js"></script>
+  {% endblock %}
