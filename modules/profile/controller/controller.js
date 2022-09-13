@@ -19,6 +19,7 @@ const GET_PROFILE = (req, res) => {
 				let addrData = docs
 				return res.render("profile/profile.html", {
 					ctx: globalConstants.ctx,
+					username: username,
 					othername: othername,
 					accData: accData,
 					addrData: addrData
@@ -44,6 +45,7 @@ const EDIT_PROFILE = (req, res) => {
 				let addrData = docs
 				return res.render("profile/edit-profile.html", {
 					ctx: globalConstants.ctx,
+					username: username,
 					othername: othername,
 					accData: accData,
 					addrData: addrData

@@ -59,7 +59,7 @@
 							}
 						});
 					</script>
-
+					<!-- Clubs -->
 					<div class="cards lg-mt-5">
 						<div class="card-header fw-bolder">Clubs</div>
 						<div class="card-body">
@@ -88,14 +88,14 @@
 				<main id="feed-post">
 					<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts" method="post" id="post-form">
 						<input type="text" name="post" class="form-control w-100 h-auto">
-						<button class="btn btn-primary" type="submit">Post</button>
+						<button class="btn btn-primary" id="post-submit-btn" type="submit">Post</button>
 					</form>
 				</main>
 				<!-- feed -->
 				<article id="feed-row" style="width: 100%;">
 					<table class="table">
 						<tbody>
-							{% for p in posts | reverse %}
+							{% for p in posts | sort(false, true, "datetime") | reverse %}
 								<tr>
 									<td>
 										<div class="card">
@@ -121,7 +121,7 @@
 											{% if p1 == accountId %}
 												<form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
 													<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
-													<button class="btn " type="submit">
+													<button class="btn" id="post-del-btn" type="submit">
 														<i class="fa-regular fa-trash-can"></i>
 													</button>
 
@@ -134,16 +134,17 @@
 														1.5k
 													</span>
 												</span >
-												<span data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+
+												<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
 													<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
 													<span class="text-muted">
-														{{comments.length}}
+														{{comments|sizeByPost(p._id)}}
 														Answers
 													</span>
 
 												</span >
 
-												<div class="collapse mt-2 row" id="collapseExample">
+												<div class="collapse mt-2 row" id="collapse-{{p._id}}">
 													{% for c in comments | sort(false, true, 'datetime') %}
 														{% set p1 = p
 															._id
@@ -172,20 +173,20 @@
 																		{{c.comment}}
 																	</article>
 																</div>
-																<div class="col-md-12 mt-1 mb-1">
-																	<span class="text-muted mr-2">
-																		<i class="fa fa-thumbs-up" aria-hidden="true"></i>100</span>
-																	<span class="text-muted">
-																		<i class="fa fa-thumbs-down" aria-hidden="true"></i>200</span>
+																{# <div class="col-md-12 mt-1 mb-1">
+																																		<span class="text-muted mr-2">
+																																				<i class="fa fa-thumbs-up" aria-hidden="true"></i>100</span>
+																																		<span class="text-muted">
+																																				<i class="fa fa-thumbs-down" aria-hidden="true"></i>200</span>
 
-																</div>
+																																</div> #}
 																{% set ca = c
 																	.accountId
 																	.toString() %}
 																{% if ca == accountId %}
 																	<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
 																		<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
-																		<input class="btn btn-sm btn-danger" type="submit" value="delete">
+																		<input class="btn btn-sm btn-danger" id="comment-del-btn" type="submit" value="delete">
 																	</form>
 																{% endif %}
 															</div>
@@ -194,7 +195,7 @@
 													<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
 														<input type="text" name="comment" class="form-control w-100 h-auto">
 														<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
-														<button class="btn btn-primary" type="submit">Reply</button>
+														<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>
 													</form>
 												</div>
 											</div>
@@ -206,30 +207,16 @@
 					</table>
 				</article>
 
-				<!-- acitve members -->
+				<!-- active members -->
 				<nav id="feed-members-navigation">
 					<div class="card lg-mt-5">
-						<div class="card-header  fw-bolder">Online Users</div>
+						<div class="card-header fw-bolder">
+							Online Users
+							<div id="online-user-label" class="badge bg-primary mx-2 px-2"></div>
+						</div>
 						<div class="card-body">
 							<table class="table table-borderless">
-								<tbody>
-									{% for c in clubs %}
-										{% for c in clubs %}
-											<tr>
-												<th scope="row">
-													<img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-												</th>
-												<td>
-													<a class="text-dark text-decoration-none" href="">Chloe Kim Lazaro</a >
-												</td>
-												<td>
-													<div class="badge bg-success">active</div>
-												</td>
-											</tr>
-										{% endfor %}
-									{% endfor %}
-
-								</tbody>
+								<tbody id="online-user-container" data-username="{{username}}"></tbody>
 							</table>
 						</div>
 					</div>

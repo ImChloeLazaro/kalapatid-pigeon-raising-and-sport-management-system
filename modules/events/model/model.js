@@ -15,4 +15,17 @@ function Event(accountId, name, date, long, lat, hourStart, hourEnd, type, descr
 	}
 }
 
+
+function EventParticipant(eventId, accountId, clubId, username) {
+	return {
+		_id: new ObjectId(),
+		eventId: new ObjectId(eventId),
+		accountId: new ObjectId(accountId),
+		clubId: new ObjectId(clubId),
+		username: username
+	}
+}
+
+
 module.exports.Event = Event
+module.exports.EventParticipant = EventParticipant

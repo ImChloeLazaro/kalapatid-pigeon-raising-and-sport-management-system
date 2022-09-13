@@ -62,6 +62,7 @@ function filters(env) {
 				data.push({
 					_id: d._id,
 					clubId: clubId,
+					clubName: d.clubName,
 					datetime: d.datetime,
 					username: d.username,
 				})
@@ -69,6 +70,18 @@ function filters(env) {
 
 		}
 		return data
+	})
+
+
+
+	env.addFilter('sizeByPost', function (arr, id) {
+		let size = 0
+		for (var d of arr) {
+			if (d.postId.toString() === id.toString()) {
+				size++;
+			}
+		}
+		return size
 	})
 
 }

@@ -24,6 +24,7 @@ const GET_EVENT = (req, res) => {
 		query(accountId, (events) => {
 			return res.render("event/index.html", {
 				ctx: globalConstants.ctx,
+				username: username,
 				events: events
 			})
 		})
@@ -42,14 +43,20 @@ const SHOW_EVENT_ID = (req, res) => {
 		dbf.getEventDataBy(filter, (err, docs) => {
 			if (err) return
 			let event = docs
-			fn(event)
+			dbf.getEventAllParticipantDataBy({ eventId: eventIdObj }, (err, docs) => {
+				if (err) return
+				let eventParticipants = docs
+				fn(event, eventParticipants)
+			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(accountId, req.params.id, (event) => {
+		query(accountId, req.params.id, (event, eventParticipants) => {
 			return res.render("event/show-event.html", {
 				ctx: globalConstants.ctx,
-				event: event
+				username: username,
+				event: event,
+				eventParticipants: eventParticipants
 			})
 		})
 	})
@@ -62,7 +69,9 @@ const SHOW_EVENT_ID = (req, res) => {
 const GET_CREATE_EVENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		return res.render("event/create-event.html", {
-			ctx: globalConstants.ctx
+			ctx: globalConstants.ctx,
+			username: username,
+
 		})
 	})
 }
@@ -93,10 +102,56 @@ const POST_CREATE_EVENT = (req, res) => {
 
 
 
+
+const GET_ADD_PARTICIPANT = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let eventId = req.params.eventId
+		dbf.getAllAcountData((err, docs) => {
+			let accounts = docs
+			let filter = { eventId: new ObjectId(eventId) }
+			dbf.getEventAllParticipantDataBy(filter, (err, docs) => {
+				let eventParticipants = docs
+				return res.render("event/add-participant.html", {
+					ctx: globalConstants.ctx,
+					eventId: eventId,
+					username: username,
+					accountId: accountId,
+					accounts: accounts,
+					eventParticipants: eventParticipants
+				})
+			})
+		})
+	})
+}
+
+
+const POST_ADD_PARTICIPANT = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let eventParticipants = []
+		let eventId = req.params.eventId
+		let participants = req.body.participants
+		if (participants instanceof Array) {
+			participants.forEach(participant => {
+				eventParticipants.push(model.EventParticipant(eventId, participant["accountId"], participant["accountId"], participant["username"]))
+			})
+		}
+		console.log(eventParticipants);
+		dbf.insertManyEventParticipantData(eventParticipants, (err) => {
+			console.log(err)
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show/" + eventId)
+		})
+	})
+}
+
+
+
+
 module.exports = {
 	GET_EVENT: GET_EVENT,
 	SHOW_EVENT_ID: SHOW_EVENT_ID,
 	GET_CREATE_EVENT: GET_CREATE_EVENT,
-	POST_CREATE_EVENT: POST_CREATE_EVENT
+	POST_CREATE_EVENT: POST_CREATE_EVENT,
+	POST_ADD_PARTICIPANT: POST_ADD_PARTICIPANT,
+	GET_ADD_PARTICIPANT: GET_ADD_PARTICIPANT
 }
 

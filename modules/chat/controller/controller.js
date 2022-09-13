@@ -1,4 +1,5 @@
 const dbf = require('../db/db-functions')
+const clubDbf = require("../../clubs/db/db-functions")
 const model = require('../model/models')
 const globalConstants = require("../../../constants/constants");
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
@@ -8,6 +9,7 @@ function template(res, username, docs) {
 	console.log(docs)
 	return res.render("chat/index.html", {
 		ctx: globalConstants.ctx,
+		username: username,
 		othername: username,
 		data: docs
 	})
@@ -23,7 +25,6 @@ function getAllChatData(res, username, filter) {
 
 const GET_CHATS = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		console.log('new ObjectId: ', new ObjectId())
 		getAllChatData(res, username, {})
 	})
 }
@@ -35,6 +36,7 @@ const GET_CHAT = (req, res) => {
 		dbf.getAllChatData(filter, (err, docs) => {
 			return res.render("chat/chat.html", {
 				ctx: globalConstants.ctx,
+				username: username,
 				clubId: clubId,
 				data: docs
 			})
@@ -48,12 +50,14 @@ const POST_CHAT = (req, res) => {
 		let chat = req.body.chat
 		let clubId = req.params.id
 		let datetime = datetimenow()
-
-		let chatModel = model.Chat(accountId, clubId, datetime, username, chat)
-		dbf.insertChatData(chatModel, (err) => {
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/club/" + clubId)
+		let filter = { _id: new ObjectId(clubId) }
+		clubDbf.getClubDataBy(filter, (err, docs) => {
+			let clubName = docs.name;
+			let chatModel = model.Chat(accountId, clubId, clubName, datetime, username, chat)
+			dbf.insertChatData(chatModel, (err) => {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/club/" + clubId)
+			})
 		})
-
 	})
 }
 

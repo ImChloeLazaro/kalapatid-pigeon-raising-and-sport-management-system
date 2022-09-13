@@ -16,7 +16,6 @@ function insertClubData(data, fn) {
 function getAllClubDataBy(filter, fn) {
 	db.getCollection("clubs", (col) => {
 		col.find(filter).toArray((err, docs) => {
-			console.log(docs)
 			if (err) console.log(err)
 			fn(err, docs)
 		})

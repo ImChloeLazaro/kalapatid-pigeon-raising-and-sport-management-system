@@ -2,14 +2,14 @@
 {% block content %}
   <div class="container">
     <h1 class="display-5">Events</h1>
-    <div class="container event-form-container">
-      <a class="btn my-2" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
-    </div>
     <div class="event-table-container container">
       {% for e in events | reverse %}
         <div>
           <a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">{{e.name}}</a>
         </div>
       {% endfor %}
+    </div>
+    <div class="container club-form-container my-2">
+      <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
     </div>
   {% endblock %}

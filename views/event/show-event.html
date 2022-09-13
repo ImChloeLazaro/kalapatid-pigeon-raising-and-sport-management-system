@@ -43,6 +43,19 @@
 														Time End</label>
 												<input readonly="readonly" class="form-control form-control-sm " name="hourEnd" value="{{event.hourEnd}}">
 										</div>
+
+										<div class="my-4">
+												<label for="description">
+														Participants</label>
+												<ul>
+														{% for participant in eventParticipants %}
+																<li>
+																		<a href="{{ctx.DOMAIN_NAME}}/profile?username={{participant.username}}">@{{participant.username}}</a>
+																</li>
+														{% endfor %}
+												</ul>
+												<a href="{{ctx.DOMAIN_NAME}}/events/add-participant/{{event._id}}" class="btn btn-sm btn-success m-2">add participant</a>
+										</div>
 								</div>
 						</form>
 				</div>

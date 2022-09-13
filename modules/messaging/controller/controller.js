@@ -70,6 +70,7 @@ const GET_MESSAGE_ID = (req, res) => {
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
 			otherusername: otherusername,
+			username: username1,
 			username1: username1,
 			username2: username2,
 			messages: messages,
@@ -126,27 +127,6 @@ const POST_MESSAGE_ID = (req, res) => {
 			}
 		})
 	}
-
-	const template = (req, res, username1, username2, messages) => {
-		let curuser = username1
-		if (messages.length !== 0) {
-			username1 = messages[0].username1
-			username2 = messages[0].username2
-		}
-		otherusername = username2
-		if (username2 == curuser) {
-			otherusername = username1
-		}
-		return res.render("messaging/message.html", {
-			ctx: globalConstants.ctx,
-			otherusername: otherusername,
-			username1: username1,
-			username2: username2,
-			messages: messages,
-			messageId: req.params.id
-		})
-	}
-
 	verifyLogin(req, res, (accountId, username) => {
 		let username1 = username
 		let username2 = req.query.username
@@ -154,7 +134,6 @@ const POST_MESSAGE_ID = (req, res) => {
 		let datetime = datetimenow()
 		let messageModel = model.Message(messageId, accountId, datetime, username1, username2, req.body.msg)
 		dbquery(messageId, accountId, username1, messageModel, (messages) => {
-			// template(req, res, username1, username2, messages)
 			let redirectUrl = `${globalConstants.ctx.DOMAIN_NAME}/messages/${messageId}/?username=${username2}`
 			return res.redirect(redirectUrl)
 		})

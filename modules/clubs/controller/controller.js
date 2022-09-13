@@ -18,6 +18,7 @@ const GET_CLUB = (req, res) => {
 		query((clubs) => {
 			return res.render("club/index.html", {
 				ctx: globalConstants.ctx,
+				username: username,
 				clubs: clubs
 			})
 		})
@@ -42,6 +43,7 @@ const SHOW_CLUB_ID = (req, res) => {
 		query(req.params.id, (club, clubMembers) => {
 			return res.render("club/show-club.html", {
 				ctx: globalConstants.ctx,
+				username, username,
 				club: club,
 				clubMembers: clubMembers
 			})
@@ -56,7 +58,8 @@ const SHOW_CLUB_ID = (req, res) => {
 const GET_CREATE_CLUB = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		return res.render("club/create-club.html", {
-			ctx: globalConstants.ctx
+			ctx: globalConstants.ctx,
+			username: username
 		})
 	})
 }

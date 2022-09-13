@@ -1,6 +1,7 @@
 const db = require('./db')
 const tk = require("../lib/toolkit")
 const bcryptjs = require('bcryptjs')
+const model = require('../model/model')
 
 
 function insertAccount(data, fn) {
@@ -76,6 +77,8 @@ function getAddressData(fn) {
 		})
 	})
 }
+
+
 function getAddressDataByID(id, fn) {
 	db.getCollection("addresses", (col) => {
 		col.find({ _id: id }).toArray((err, docs) => {
@@ -84,8 +87,6 @@ function getAddressDataByID(id, fn) {
 		})
 	})
 }
-
-
 
 
 
@@ -101,4 +102,7 @@ module.exports = {
 	insertAddress: insertAddress,
 	getAddressData: getAddressData,
 	getAddressDataByID: getAddressDataByID,
+
+
+
 }

@@ -20,15 +20,15 @@
 					</li>
 
 					{# hinide ko to chloe  #}
-					{# <li class="nav-item">
-												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/chats">Chats</a>
-										</li> #}
 
 					<li class="nav-item">
 						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/messages">Messages</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/clubs">Clubs</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/chats">Chats</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/events">Events</a>
@@ -53,7 +53,7 @@
 								</form>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/auth/logout">Logout</a>
+								<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">Logout</a>
 							</li>
 						</ul>
 					</li>

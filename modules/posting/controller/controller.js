@@ -2,6 +2,7 @@ const globalConstants = require("../../../constants/constants")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
 const { getAllClubDataBy } = require('../../clubs/db/db-functions')
+const { getAllAcountData } = require('../../authentication/db/db-operation')
 
 const model = require('../model/model')
 const dbf = require('../db/db-functions')
@@ -25,11 +26,13 @@ function getAllCommentData(filter, fn) {
 }
 
 function queries(filter, fn) {
-	getAllClubDataBy(filter, (err, clubs) => {
-		getAllEventDataBy(filter, (err, events) => {
-			getAllPostData(filter, (posts) => {
-				getAllCommentData(filter, (comments) => {
-					fn(posts, comments, events, clubs)
+	getAllAcountData((err, accounts) => {
+		getAllClubDataBy(filter, (err, clubs) => {
+			getAllEventDataBy(filter, (err, events) => {
+				getAllPostData(filter, (posts) => {
+					getAllCommentData(filter, (comments) => {
+						fn(accounts, posts, comments, events, clubs)
+					})
 				})
 			})
 		})
@@ -38,10 +41,12 @@ function queries(filter, fn) {
 
 
 // template renderString
-function renderTemplate(res, accountId, posts, comments, events, clubs) {
+function renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs) {
 	return res.render("posting/index.html", {
 		ctx: globalConstants.ctx,
 		accountId: accountId,
+		username: username,
+		accounts: accounts,
 		posts: posts,
 		comments: comments,
 		events: events,
@@ -54,7 +59,7 @@ function redirectToPostView(res, err) {
 	if (err == null) {
 		return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
 	} else {
-		renderTemplate(res, accountId, null, null, null, null)
+		renderTemplate(res, accountId, username, null, null, null, null)
 	}
 }
 
@@ -68,8 +73,8 @@ function redirectToPostView(res, err) {
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let filter = {}
-		queries(filter, (posts, comments, events, clubs) => {
-			renderTemplate(res, accountId, posts, comments, events, clubs)
+		queries(filter, (accounts, posts, comments, events, clubs) => {
+			renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs)
 		})
 	})
 }

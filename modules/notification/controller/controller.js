@@ -18,6 +18,7 @@ const GET_NOTIFICATION = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		return res.render("notification/index.html", {
 			ctx: globalConstants.ctx,
+			username: username,
 			notifications: notifications
 		})
 	})

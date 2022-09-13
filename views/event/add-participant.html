@@ -1,0 +1,59 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+		{% include 'search/add-participant-search.html' %}
+		{% set acc_usernames = accounts | toListItem %}
+		{% set paticipant_usernames = eventParticipants | toListItem %}
+		{%for username in paticipant_usernames | intersect(acc_usernames) %}
+				{% for a in accounts %}
+						{% if username == a.username %}
+								<div>
+										<p data-id="{{a._id}}">{{ a.username }}</p>
+										<input type="checkbox">
+								</div>
+						{% endif %}
+				{% endfor %}
+
+		{% endfor %}
+
+		{% if not paticipant_usernames | intersect(acc_usernames) | is_empty %}
+				<form id="add-participant-form" action="{{ctx.DOMAIN_NAME}}/events/add-participant/{{eventId}}" method="POST">
+						<input type="submit" value="submit">
+				</form>
+		{% else  %}
+				<p class="text-dark text-center">No Account available to add in the Club.</p>
+				<a href="{{ctx.DOMAIN_NAME}}/events/show/{{eventId}}" class="btn btn-sm btn-success">back</a>
+		{% endif %}
+
+		<script>
+				$(document).ready(function () {
+						function getParticipants() {
+								let members = []
+								let data = $('input[type="checkbox"]:checked')
+										.parent()
+										.find('p')
+								data.each(function () {
+										members.push({accountId: $(this).data('id'), username: $(this).text()})
+								})
+								return members
+						}
+
+						function sendJSONData(url, data) {
+								fetch(url, {
+										method: "post",
+										headers: {
+												"Content-Type": "application/json"
+										},
+										body: JSON.stringify(data)
+								}).catch(err => console.error(err))
+						}
+
+						$("#add-participant-form").submit(function () {
+								var data = {
+										participants: getParticipants()
+								}
+								alert($(this).attr("action"))
+								sendJSONData($(this).attr("action"), data)
+						})
+				});
+		</script>
+{% endblock %}

@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  {% include 'initial/meta.html' %}
-  {% include 'initial/dependency.html' %}
-  {% include 'initial/custom.html' %}
-  
-  <title>{{ctx.TITLE}}</title>
-</head>
+  <head>
+    {% include 'initial/meta.html' %}
+    {% include 'initial/dependency.html' %}
+    {% include 'initial/custom.html' %}
 
-<body>
+    <title>{{ctx.TITLE}}</title>
+  </head>
 
-  {% include 'initial/navbar.html' %}
+  <body>
+    {% include 'initial/info.html' %}
+    {% include 'initial/navbar.html' %}
+    {% block content %}{% endblock %}
 
-  {% block content %}
-  {% endblock %}
-
-</body>
+  </body>
 
 </html>

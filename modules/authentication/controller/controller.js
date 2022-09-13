@@ -39,6 +39,8 @@ const POST_LOGIN = (req, res) => {
 		req.session.accountId = accountId
 		req.session.username = username;
 		req.session.isAuthenticated = true
+
+		//insert data as online
 		return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/home')
 	}
 

@@ -28,6 +28,12 @@ function Address(acc_id, houseAddr, town, province) {
 
 }
 
+function OnlineUser(acc_id) {
+	return {
+		acc_id: acc_id
+	}
+}
+
 
 module.exports = {
 	Account: Account,
