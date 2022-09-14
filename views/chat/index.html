@@ -4,33 +4,33 @@
   <div class="container">
     <h1 class="display-5">Club Chats</h1>
     <div class="chats-container scroll">
-      {% if data | unique_chat(username) | is_empty %}
-        <p>No Club Chats available!</p>
-      {% else %}
-        <div id="oid" class="container w-75">
-          <h4>Your Clubs Chats</h4>
-          {% for d in data | unique_chat(username) | sort(false, true, "datetime") | reverse %}
-            {% if d.username == username %}
-              <span class="p-2 m-4" id="message">
-                <div class="d-flex " id="global-chat-participant">
-                  <a class="border border-sm border-white text-decoration-none text-success  rounded w-100 " href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}">
-                    <img src="https://th.bing.com/th/id/OIP.jDyDwJWi_aKDf6uWKnaFCwHaHa?pid=ImgDet&rs=1" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                    <span class="mx-4 h3 fw-bolder">{{d.clubName}}</span>
-                    <div>
-                      <sub class="mx-4">ID:
-                        {{d.clubId}}</sub>
-                      <sub class="mx-4">updated:
-                        {{d.datetime|datetime_formatter}}</sub>
-                    </div>
-                  </a>
-                </div>
-              </span>
-            {% endif %}
+
+      <div id="oid" class="container w-100">
+
+        <h4>Your Clubs Chats</h4>
+        {%set accountIdStr = accountId.toString()%}
+        {%if  data | unique_chat(accountIdStr) | is_empty %}
+          <p>No Chats.</p>
+          {%endif%}
+          {% for d in data | unique_chat(accountIdStr) | sort(false, true, "datetime") | reverse %}
+            <span class="p-2 m-4" id="message">
+              <div class="d-flex cards" id="global-chat-participant">
+                <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}">
+                  <img src="https://th.bing.com/th/id/OIP.jDyDwJWi_aKDf6uWKnaFCwHaHa?pid=ImgDet&rs=1" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                  <span class="mx-4 h3 fw-bolder">{{d.clubName}}</span>
+                  <div>
+                    <sub class="mx-4">ID:
+                      {{d.clubId}}</sub>
+                    <sub class="mx-4">updated:
+                      {{d.datetime|datetime_formatter}}</sub>
+                  </div>
+                </a>
+              </div>
+            </span>
           {% endfor %}
-        {% endif %}
+        </div>
+
       </div>
 
-    </div>
-
-    <script defer="defer" src="/javascript/realtime.js"></script>
-  {% endblock %}
+      <script defer="defer" src="/javascript/realtime.js"></script>
+    {% endblock %}

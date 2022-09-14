@@ -18,6 +18,7 @@ const GET_CLUB = (req, res) => {
 		query((clubs) => {
 			return res.render("club/index.html", {
 				ctx: globalConstants.ctx,
+				accountId: accountId,
 				username: username,
 				clubs: clubs
 			})

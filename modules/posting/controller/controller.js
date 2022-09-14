@@ -1,3 +1,5 @@
+
+
 const globalConstants = require("../../../constants/constants")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
@@ -10,7 +12,6 @@ const ObjectId = require('mongodb').ObjectId
 
 
 // database query functions
-
 function getAllPostData(filter, fn) {
 	dbf.getAllPostData(filter, (err, docs) => {
 		if (err) return

@@ -1,0 +1,57 @@
+{# ############################## Events ######################################### #}
+<!-- Swiper -->
+<div class="card mb-3" style="width: 30rem;" id="feed-event-card">
+		<div class="card-header  fw-bolder">Events</div>
+		<div class="card-body">
+				{%if events| is_empty %}
+						<p>No Events.</p>
+				{% endif %}
+				<div class="swiper mySwiper">
+						<div class="swiper-wrapper">
+								{% for e in events %}
+										<div class="swiper-slide">
+												<div class="card" style="all: unset;">
+														<div class="card-header fw-bolder">{{e.name}}</div>
+														<div class="card-body" style="background-color: #f2f2f2;">
+																<img src="/images/events.jpg" style="width: 100%; height: auto;">
+																<details >
+																		<summary>
+																				{{e.name}}
+																		</summary>
+																		<div>{{e.description}}</div>
+																</details>
+
+														</div>
+														<div class="card-footer">
+																<a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
+																		<button class="btn">Register</button>
+																</a>
+														</div>
+												</div>
+										</div>
+								{% endfor %}
+
+						</div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+						<div class="swiper-pagination"></div>
+				</div>
+		</div>
+</div>
+
+<!-- Initialize Swiper -->
+<script>
+		var swiper = new Swiper(".mySwiper", {
+				slidesPerView: 1,
+				spaceBetween: 30,
+				loop: true,
+				pagination: {
+						el: ".swiper-pagination",
+						clickable: true
+				},
+				navigation: {
+						nextEl: ".swiper-button-next",
+						prevEl: ".swiper-button-prev"
+				}
+		});
+</script>

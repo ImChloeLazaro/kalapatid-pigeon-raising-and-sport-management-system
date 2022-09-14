@@ -60,7 +60,7 @@ function GetCreateEventMap() {
 		map.entities.push(pin)
 
 		map.setView({
-			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
 			zoom: 16,
 			padding: 80,
@@ -137,7 +137,6 @@ function GetShowEventMap() {
 
 		lat = $('#showeventLocLat').val()
 		long = $('#showeventLocLong').val()
-		console.log(lat, long)
 		if (lat !== "" || long !== "") {
 			let loc = new Microsoft.Maps.Location(lat, long);
 			let pin = new Microsoft.Maps.Pushpin(loc, {
@@ -151,7 +150,7 @@ function GetShowEventMap() {
 			map.entities.push(pin)
 		}
 		map.setView({
-			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
 			zoom: 16,
 			padding: 80,

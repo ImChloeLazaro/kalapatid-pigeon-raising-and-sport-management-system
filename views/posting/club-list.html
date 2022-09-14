@@ -1,0 +1,28 @@
+<!-- Clubs -->
+<div class="cards lg-mt-5">
+		<div class="card-header fw-bolder">Clubs</div>
+		<div class="card-body">
+
+				{%if clubs| is_empty %}
+						<p>No Clubs.</p>
+				{% endif %}
+
+				<table class="table table-borderless">
+						<tbody>
+								{% for c in clubs %}
+										<tr>
+												<th scope="row">
+														<img src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+												</th>
+												<td>
+														<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a >
+												</td>
+												<td>
+														<div class="badge bg-primary">21</div>
+												</td>
+										</tr>
+								{% endfor %}
+						</tbody>
+				</table>
+		</div>
+</div>

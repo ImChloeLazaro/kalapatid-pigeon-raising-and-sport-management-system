@@ -3,30 +3,29 @@
   <div class="container">
     <h1 class="h1">Events</h1>
     <div class="container club-form-container my-2">
-      <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
+      <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create Event</a>
     </div>
     <div class="event-table-container container w-100">
-      <h4>List of All Events</h4>
+      <h4 class="fw-bolder">All Events</h4>
       {% if events | is_empty %}
         <p>No events found.</p>
       {% endif %}
       {% for e in events | reverse %}
-        <span class="p-2 m-4" id="message">
-          <div class="d-flex " id="global-chat-participant">
-            <a class="border border-sm border-white text-decoration-none text-success  rounded w-100 " href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
-              <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-              <span class="mx-4 h3 fw-bolder">{{e.name}}</span>
 
-              <div>
-                <sub class="mx-4">category:
-                  {{e.type}}</sub>
-                <sub class="mx-4">date:
-                  {{e.date}}</sub>
-                <span style="font-size: 8pt;">400k participants</span>
-              </div>
-            </a>
-          </div>
-        </span>
+        <div class="d-flex cards">
+          <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
+            <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+            <span class="mx-2 h5 fw-bolder">{{e.name}}</span>
+            <div>
+              <sub class="mx-2">category:
+                {{e.type}}</sub>
+              <sub class="mx-2">date:
+                {{e.date}}</sub>
+              <span style="font-size: 8pt;">400k participants</span>
+            </div>
+          </a>
+        </div>
+
       {% endfor %}
     </div>
 

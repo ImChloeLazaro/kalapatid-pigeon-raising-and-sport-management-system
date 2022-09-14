@@ -15,10 +15,11 @@ async function db() {
 		await client.connect()
 
 		let db = client.db(env.DB_NAME)
-		console.log('MongoDB server: Connected successfully.')
+		console.log("Database Connection: ".bgYellow.bold);
+		console.log('MongoDB server: Connected successfully.'.green)
 		return db
 	} catch (error) {
-		console.error('MongoDB server: Connected unsuccessfully.', error);
+		console.error('MongoDB server: Connected unsuccessfully.'.red, error);
 		process.exit();
 	}
 }

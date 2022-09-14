@@ -5,10 +5,11 @@ const globalConstants = require("../../../constants/constants");
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const ObjectId = require('mongodb').ObjectId
 
-function template(res, username, docs) {
-	console.log(docs)
+function template(res, accountId, username, docs) {
+	console.log("template accountId: ".bgWhite.red, accountId);
 	return res.render("chat/index.html", {
 		ctx: globalConstants.ctx,
+		accountId: accountId,
 		username: username,
 		othername: username,
 		data: docs
@@ -16,16 +17,16 @@ function template(res, username, docs) {
 }
 
 
-function getAllChatData(res, username, filter) {
+function getAllChatData(res, accountId, username, filter) {
 	dbf.getAllChatData(filter, (err, docs) => {
-		template(res, username, docs)
+		template(res, accountId, username, docs)
 	})
 }
 
 
 const GET_CHATS = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		getAllChatData(res, username, {})
+		getAllChatData(res, accountId, username, {})
 	})
 }
 
@@ -37,6 +38,7 @@ const GET_CHAT = (req, res) => {
 		dbf.getAllChatData(filter, (err, docs) => {
 			return res.render("chat/chat.html", {
 				ctx: globalConstants.ctx,
+				accountId: accountId,
 				username: username,
 				clubId: clubId,
 				data: docs

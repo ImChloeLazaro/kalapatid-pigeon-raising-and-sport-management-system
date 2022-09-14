@@ -1,4 +1,4 @@
-const db = require('./db')
+const db = require('../../../database/datatabase')
 
 
 function getAccountDataBy(filter, fn) {

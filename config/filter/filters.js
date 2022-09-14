@@ -1,4 +1,4 @@
-
+const colors = require('colors');
 
 function filters(env) {
 	env.addFilter('limit', function (arr, limit) {
@@ -17,7 +17,6 @@ function filters(env) {
 	})
 	env.addFilter('intersect', function (arr1, arr2) {
 		let arr = arr2.filter(val => !arr1.includes(val))
-		console.log(arr1, arr2, arr);
 		return arr
 	})
 	env.addFilter('toListItem', function (arr) {
@@ -27,7 +26,6 @@ function filters(env) {
 	})
 
 	env.addFilter('is_empty', function (arr) {
-		console.log(arr);
 		return arr.length === 0;
 	})
 	env.addFilter('is_empty_str', function (str) {
@@ -55,26 +53,37 @@ function filters(env) {
 		return data
 	})
 
-	env.addFilter('unique_chat', function (arr, username) {
+	env.addFilter('unique_chat', function (arr, accoundId) {
 		let data = []
 		for (var d of arr) {
 			let clubId = d.clubId.toString();
-			let fd = data.filter(data => {
-				return data.clubId == clubId && d.username == username
-			})
+			let accountId = d.accountId.toString();
+			let fd = data.filter(dd => (dd.clubId == clubId))
 			if (fd.length === 0) {
 				data.push({
 					_id: d._id,
 					clubId: clubId,
+					accoundId: accountId,
 					clubName: d.clubName,
 					datetime: d.datetime,
 					username: d.username,
 					chat: d.chat,
 				})
 			}
-
 		}
-		return data
+		let newData = []
+		for (var d of data) {
+			console.log("data:".red, d)
+			console.log("accoundId:".red, d.accoundId)
+			console.log("accoundId:".red, accoundId)
+			console.log("accoundId:".red, d.accoundId === accoundId)
+			if (d.accoundId === accoundId) {
+				newData.push(d)
+			}
+		}
+
+		console.log("newData".red, newData);
+		return newData
 	})
 
 
@@ -103,10 +112,5 @@ function filters(env) {
 		let newDate = new Date(date)
 		return newDate.toLocaleDateString("en-US", options)
 	})
-
-
 }
-
-
-
 module.exports = filters

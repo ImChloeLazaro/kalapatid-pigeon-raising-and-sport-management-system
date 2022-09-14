@@ -5,17 +5,21 @@
 
     <div class="club-container container my-2">
       <div class="container club-form-container my-2">
-        <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create New Club</a>
+        <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create Club</a>
       </div>
     </div>
     <div>
       <h4>All Clubs</h4>
       {% if not clubs | is_empty%}
         {% for c in clubs | sort(false, true, 'datetime') | reverse %}
-          <div>
-            <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
-            <span style="font-size: 7pt;">( 100k members)</span>
+          <div class="d-flex cards">
+            <a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">
+              <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              <span class="mx-3 h5 fw-bolder">{{c.name}}</span>
+              <span style="font-size: 7pt;">( 100k members)</span>
+            </a>
           </div>
+
         {% endfor %}
       {%else %}
         <p>No Clubs.</p>

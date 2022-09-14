@@ -1,6 +1,4 @@
-const db = require('./db')
-
-
+const db = require('../../../database/datatabase')
 
 function insertChatData(data, fn) {
 	db.getCollection("chats", (col) => {

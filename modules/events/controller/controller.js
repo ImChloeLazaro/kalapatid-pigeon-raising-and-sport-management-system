@@ -36,9 +36,9 @@ const GET_EVENT = (req, res) => {
 const SHOW_EVENT_ID = (req, res) => {
 	function query(accountId, eventId, fn) {
 		let eventIdObj = new ObjectId(eventId)
-		let accountIdObj = new ObjectId(accountId)
+
 		let filter = {
-			accountId: accountIdObj, _id: eventIdObj
+			_id: eventIdObj
 		}
 		dbf.getEventDataBy(filter, (err, docs) => {
 			if (err) return
@@ -52,6 +52,7 @@ const SHOW_EVENT_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.params.id, (event, eventParticipants) => {
+			console.log(event);
 			return res.render("event/show-event.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,

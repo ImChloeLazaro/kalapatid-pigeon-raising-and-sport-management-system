@@ -1,55 +1,83 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-	<div class="container">
-		<div class="container club-form-container">
-			<form>
-				<div class="form-group w-50">
-					<div class="my-1">
-						<p class="fw-bolder">Club Name</p>
-						<div class="h2">{{club.name}}</div>
-					</div>
-					<div class="my-1">
-						<p class="fw-bolder">Creation Date</p>
-						<div class="h5">{{club.date | date_formatter}}</div>
-					</div>
-					<div class="my-1">
-						<p class="fw-bolder">Description</p>
-						<div class="">{{club.description}}</div>
-					</div>
-				</div>
-				<div class="my-1">
-					<label for="description">Live Chats</label>
-					<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{club._id}}" class="btn btn-sm btn-success w-50">Club Chat</a>
-				</div>
-				<div>
-					<div class="my-1">
-						<label for="description">Club Events</label>
-						<p class="text-dark ">
-							No Club Event yet.
-						</p>
-						<a href="{{ctx.DOMAIN_NAME}}/events" class="btn btn-sm btn-success w-50">Club Events</a>
-					</div>
 
-					{% if club.creatorId == accountId %}
-						<div class="my-1">
-							<label for="description">Admin Options</label>
-							<a href="{{ctx.DOMAIN_NAME}}/clubs/add-member/{{club._id}}" class="btn btn-sm btn-success m-2 w-50">add member</a>
+		<div class="container-fluid">
+				<div class="row">
+
+						<div class="col-lg-4">
+								<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+										<h5 class="fw-bold">Club</h5>
+								</div>
+
+								<div class="card-body">
+										<div class="w-100 text-center my-3">
+												<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
+										</div>
+										<div class="w-auto">
+												<div >
+														<p class="fw-bolder">Club Name</p>
+														<div class="h2">{{club.name}}</div>
+
+														<p class="fw-bolder">Creation Date</p>
+														<div class="h5">{{club.date | date_formatter}}</div>
+
+														<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{club._id}}" class="btn btn-sm btn-success w-50">Club Chat</a>
+
+												</div>
+										</div>
+										<br>
+								</div>
 						</div>
-					{% endif %}
 
-					<div class="my-1">
-						<div>Club Members</div>
-						<ul>
-							{% for member in clubMembers %}
-								<li>
-									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">@{{member.username}}</a>
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
+						<div class="col-lg-8">
+								<div class="row">
+
+										<div class="col-lg-12">
+												<footer class="mt-3">
+														<div class="cards overflow-auto">
+																<div class="card-content mb-3">
+																		<h5 class="fw-bold">Description</h5>
+																</div>
+																<div class="card-body d-flex justify-content-between">
+																		{{club.description}}
+																</div>
+														</footer>
+												</div>
+
+												<div class="col-lg-12">
+														<main>
+																<div class="cards">
+																		<div class="card-content">
+																				<h5 class="fw-bold">Members</h5>
+																				{% if club.creatorId == accountId %}
+																						<div class="my-1">
+																								<label for="description">Admin Options</label>
+																								<a href="{{ctx.DOMAIN_NAME}}/clubs/add-member/{{club._id}}" class="btn btn-sm btn-success m-2 w-50">add member</a>
+																						</div>
+																				{% endif %}
+																		</div>
+																		<div class="card-body">
+																				{% if clubMembers | is_empty %}
+																						<p>No Member yet.</p>
+																				{% endif %}
+																				<div style="overflow-y: scroll; height: 200px;">
+																						<ul>
+																								{% for member in clubMembers %}
+																										<li>
+																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">@{{member.username}}</a>
+																										</li>
+																								{% endfor %}
+
+																						</ul>
+																				</div>
+																		</div>
+																</div>
+														</main>
+												</div>
+
+										</div>
+								</div>
+						</div>
 				</div>
-			</div>
-		</form>
-	</div>
-</div>
-{% endblock %}
+
+		{% endblock %}

@@ -1,4 +1,4 @@
-const db = require('./db')
+const db = require('../../../database/datatabase')
 const tk = require("../lib/toolkit")
 const bcryptjs = require('bcryptjs')
 const model = require('../model/model')

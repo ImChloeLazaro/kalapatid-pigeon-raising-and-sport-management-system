@@ -1,8 +1,3 @@
-//NOTE: This source file contains the database configuration of the system
-//where the database is configured.
-//for local tunnel database server hosting we use ngrok:
-//command: ngrok tcp 27017
-//result without tcp:// to access the database server
 
 require('dotenv').config()
 const { MongoClient } = require('mongodb');
@@ -15,10 +10,13 @@ async function db() {
 		await client.connect()
 
 		let db = client.db(env.DB_NAME)
-		console.log('MongoDB server: Connected successfully.')
+		console.log("Database Connection: ".bgYellow.bold);
+		console.log('MongoDB server: Connected successfully.'.green)
+		console.log("\n");
 		return db
 	} catch (error) {
-		console.error('MongoDB server: Connected unsuccessfully.', error);
+		console.error('MongoDB server: Connected unsuccessfully.'.red, error);
+		console.log("\n");
 		process.exit();
 	}
 }
@@ -32,3 +30,6 @@ function getCollection(name, fn) {
 	})
 }
 
+
+
+module.exports.getCollection = getCollection
