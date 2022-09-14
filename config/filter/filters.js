@@ -45,7 +45,8 @@ function filters(env) {
 					messageId: messageId,
 					datetime: d.datetime,
 					username1: d.username1,
-					username2: d.username2
+					username2: d.username2,
+					msg: d.msg,
 				})
 			}
 
@@ -65,6 +66,7 @@ function filters(env) {
 					clubName: d.clubName,
 					datetime: d.datetime,
 					username: d.username,
+					chat: d.chat,
 				})
 			}
 
@@ -83,6 +85,22 @@ function filters(env) {
 		}
 		return size
 	})
+
+
+	env.addFilter('datetime_formatter', function (str) {
+		let [date, time] = str.split(",")
+		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
+		let newDate = new Date(date)
+		let dateStr = `${newDate.toLocaleDateString("en-US", options)}, ${time}`
+		return dateStr
+	})
+
+	env.addFilter('date_formatter', function (date) {
+		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
+		let newDate = new Date(date)
+		return newDate.toLocaleDateString("en-US", options)
+	})
+
 
 }
 

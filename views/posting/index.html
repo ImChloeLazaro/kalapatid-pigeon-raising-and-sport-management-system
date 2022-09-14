@@ -106,14 +106,14 @@
 														<p>@{{p.username}}</p>
 													</a>
 
-													<small class="text-muted" style="position: relative; bottom: 20px">ID:
+													<small class="text-muted" style="position: relative; bottom: 20px;font-size: 8pt;">ID:
 														{{p.accountId}}</small >
 												</span>
 											</div>
 
 											<div class="card-body">
-												<p class="display-5">{{ p.post }}</p>
-												<small>{{p.datetime}}</small>
+												<p class="font-sizer">{{ p.post }}</p>
+												<small>{{p.datetime| datetime_formatter }}</small>
 											</div>
 											{% set p1 = p
 												.accountId
@@ -128,12 +128,12 @@
 												</form>
 											{% endif %}
 											<div class="col-12 mb-2">
-												<span >
+												{# <span >
 													<i class="fa fa-heart" aria-hidden="true" style="color: #2da380"></i >
 													<span class="text-muted">
 														1.5k
 													</span>
-												</span >
+												</span > #}
 
 												<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
 													<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
@@ -227,4 +227,6 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="/javascript/post-script.js"></script>
 {% endblock %}

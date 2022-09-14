@@ -130,14 +130,18 @@ const POST_REGISTER = (req, res) => {
 			console.log("Account Insertion Error:", err);
 		}
 
-		return res.render("auth/register.html",
-			{
-				ctx: globalConstants.ctx,
-				isRegistered: isSuccess,
-				isError: isError
-			}
-		)
+
+		return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/login');
+
+		// return res.render("auth/register.html",
+		// 	{
+		// 		ctx: globalConstants.ctx,
+		// 		isRegistered: isSuccess,
+		// 		isError: isError
+		// 	}
+		// )
 	})
+
 }
 
 

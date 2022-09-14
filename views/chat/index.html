@@ -8,8 +8,8 @@
         <p>No Club Live Chats available!</p>
       {% else %}
 
-        <div id="oid" class="container w-50">
-          <h4>Clubs with Live Chats</h4>
+        <div id="oid" class="container w-75">
+          <h4>Your Clubs with Live Chats</h4>
           {% for d in data | unique_chat | sort(false, true, "datetime") | reverse %}
             <span class="p-2 m-4" id="message">
               <div class="d-flex " id="global-chat-participant">
@@ -20,7 +20,7 @@
                     <sub class="mx-4">ID:
                       {{d.clubId}}</sub>
                     <sub class="mx-4">updated:
-                      {{d.datetime}}</sub>
+                      {{d.datetime|datetime_formatter}}</sub>
                   </div>
                 </a>
               </div>

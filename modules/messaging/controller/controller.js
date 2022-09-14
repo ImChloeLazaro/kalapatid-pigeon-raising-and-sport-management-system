@@ -64,13 +64,15 @@ const GET_MESSAGE_ID = (req, res) => {
 			username2 = messages[0].username2
 		}
 		otherusername = username2
+		username = username1
 		if (username2 == curuser) {
 			otherusername = username1
+			username = username2
 		}
 		return res.render("messaging/message.html", {
 			ctx: globalConstants.ctx,
 			otherusername: otherusername,
-			username: username1,
+			username: username,
 			username1: username1,
 			username2: username2,
 			messages: messages,

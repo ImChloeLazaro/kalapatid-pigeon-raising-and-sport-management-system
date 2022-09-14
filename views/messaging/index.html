@@ -11,26 +11,34 @@
         {% include 'search/convo-search.html' %}
 
         <div id="oid" data-name="{{data}}"></div>
-        {% for d in data | unique_msg | sort(false, true, "datetime") | reverse %}
+        {% for d in data | unique_msg | sort(false, false, "datetime") | reverse %}
           <div class="msg-content p-2">
             {% if d.username2 == username %}
-              <div class="d-flex" id="global-chat-participant">
-                <a class="border border-sm border-white text-decoration-none text-success  rounded   w-100 " href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+              <div class="d-flex bg-success border bg-success  rounded py-2 w-100" id="global-chat-participant">
+                <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
                   <img src="https://clipground.com/images/profile-logo-6.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                  <span class="mx-2 h3 fw-bolder">{{d.username1}}</span>
-                  <sub class="mx-2">date updated:
-                    {{d.datetime}}</sub>
+                </a>
+                <a class="text-decoration-none  text-white" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+                  <span class="mx-2 h3 fw-bolder" title="{{d.username1}}">youself</span>
+                  <div class="ms-2">
+                    <sub class="mx-2" title="{{d.datetime | datetime_formatter}}">{{d.username1}}:
+                      {{d.msg}}</sub>
+                  </div>
                 </a>
               </div>
 
             {% else %}
 
-              <div class="d-flex" id="global-chat-participant">
-                <a class="border border-sm border-white text-decoration-none text-success  rounded   w-100 " href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
+              <div class="d-flex border border-sm border-light py-2 rounded w-100" id="global-chat-participant">
+                <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username2}}">
                   <img src="https://clipground.com/images/profile-logo-6.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                </a>
+                <a class=" text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
                   <span class="mx-2 h3 fw-bolder">{{d.username2}}</span>
-                  <sub class="mx-2">date updated:
-                    {{d.datetime}}</sub>
+                  <div class="ms-2">
+                    <sub class="mx-2" title="{{d.datetime| datetime_formatter}}">{{d.username1}}:
+                      {{d.msg}}</sub>
+                  </div>
                 </a>
               </div>
 

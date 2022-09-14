@@ -16,7 +16,7 @@
               <div class="text-start" id="globalchat-message-wrapper">
                 <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
                 <span class="mx-2">{{d.username1}}</span>
-                <p class="mx-2 border border-success text-dark bg-transparent">
+                <p title="{{d.datetime|datetime_formatter}}" class="mx-2 border border-success text-dark bg-transparent">
                   {{d.msg}}
                 </p>
               </div>
@@ -32,7 +32,7 @@
               <div class="d-inline-block text-start" id="globalchat-message-wrapper">
                 <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
                 <span class="mx-2">{{d.username1}}</span>
-                <p class="mx-2">{{d.msg}}</p>
+                <p class="mx-2" title="{{d.datetime|datetime_formatter}}">{{d.msg}}</p>
               </div>
 
               <span class="d-inline-block">
