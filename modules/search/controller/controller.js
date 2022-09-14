@@ -11,7 +11,12 @@ const SEARCH = (req, res) => {
 const SEARCH_RESULT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		console.log(req.query)
-		return res.render('search/search-result.html', {})
+		return res.render('search/search-result.html', {
+			ctx: globalConstants.ctx,
+			accountId: accountId,
+			username: username,
+			query: req.query.q
+		})
 	})
 
 }

@@ -1,15 +1,12 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-  <div class="container">
-    <h1 class="display-5">Clubs</h1>
-
-    <div class="club-container container my-2">
-      <div class="container club-form-container my-2">
-        <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create Club</a>
-      </div>
+  <div class="container ">
+    <h1 class="h2 fw-bolder mt-2">Clubs</h1>
+    <div class="club-container container mt-4">
+      <a class="btn btn-sm btn-success w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create Club</a>
     </div>
-    <div>
-      <h4>All Clubs</h4>
+    <div class="club-table-container container w-100">
+      <p class="h5 fw-bold mt-2 ms-2">All Clubs</p>
       {% if not clubs | is_empty%}
         {% for c in clubs | sort(false, true, 'datetime') | reverse %}
           <div class="d-flex cards">

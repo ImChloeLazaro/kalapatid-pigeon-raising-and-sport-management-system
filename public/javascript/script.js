@@ -60,7 +60,7 @@ function GetCreateEventMap() {
 		map.entities.push(pin)
 
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
 			zoom: 16,
 			padding: 80,
@@ -150,7 +150,7 @@ function GetShowEventMap() {
 			map.entities.push(pin)
 		}
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
 			zoom: 16,
 			padding: 80,

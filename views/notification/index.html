@@ -1,11 +1,11 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
   <div class="container">
-    <h1 class="display-5">Notifications</h1>
-    <div class="notification">
+    <h1 class="h2 fw-bolder mt-2">Notifications</h1>
+    <div class="notification mt-2">
       <div class="box notif-content">
         {% if  notifications | is_empty%}
-          <p class="text-dark">No notifications.</p>
+          <p class="text-center">No notifications.</p>
         {% endif %}
       </div>
       {# {% for n in notifications | sort('datetime') | reverse %}

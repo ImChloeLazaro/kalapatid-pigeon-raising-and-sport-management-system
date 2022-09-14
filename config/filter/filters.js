@@ -103,8 +103,18 @@ function filters(env) {
 		let [date, time] = str.split(",")
 		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
 		let newDate = new Date(date)
-		let dateStr = `${newDate.toLocaleDateString("en-US", options)}, ${time}`
-		return dateStr
+		console.log(newDate, new Date(Date.now()))
+
+		let today = new Date(Date.now()).toLocaleDateString("en-US", options)
+		let yesterday = new Date(Date.now() - 864e5).toLocaleDateString("en-US", options)
+		let dateformated = newDate.toLocaleDateString("en-US", options)
+
+		if (dateformated === today) {
+			dateformated = "Today"
+		} else if (dateformated === yesterday) {
+			dateformated = "Yesterday"
+		}
+		return `${dateformated}, ${time}`
 	})
 
 	env.addFilter('date_formatter', function (date) {

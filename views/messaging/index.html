@@ -1,8 +1,8 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
   <div class="container">
-    <h1 class="display-5">Messages</h1>
-    <div class="msg-container scroll">
+    <h1 class="h2 fw-bolder mt-2">Messages</h1>
+    <div class="msg-container mt-4">
       {% if data | is_empty %}
         <p class="text-dark text-center">No Messaging available!</p>
       {% else %}
@@ -16,7 +16,7 @@
                   <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                 </a>
                 <a class="text-decoration-none  text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
-                  <span class="mx-2 h3 fw-bolder" title="{{d.username1}}">{{d.username1}}</span>
+                  <span class="mx-2 h5 fw-bolder" title="{{d.username1}}">{{d.username1}}</span>
                   <div class="ms-2">
                     <sub class="mx-2" title="{{d.datetime | datetime_formatter}}">{{d.username1}}:
                       {{d.msg}}</sub>
@@ -31,7 +31,7 @@
                   <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                 </a>
                 <a class=" text-decoration-none text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
-                  <span class="mx-2 h3 fw-bolder">{{d.username2}}</span>
+                  <span class="mx-2 h5 fw-bolder">{{d.username2}}</span>
                   <div class="ms-2">
                     <sub class="mx-2" title="{{d.datetime| datetime_formatter}}">{{d.username1}}:
                       {{d.msg}}</sub>

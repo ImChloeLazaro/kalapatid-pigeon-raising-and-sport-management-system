@@ -1,64 +1,73 @@
 <!-- Sample Header -->
 <div class="col-lg-12" id="header">
-	<header class="navbar navbar-expand-lg bg-light" id="feed-header">
-		<div class="container-fluid">
-			<!-- brands -->
-			<a class="navbar-brand fw-bold" href="#">Kalapatids</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerContent" aria-controls="headerContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<!-- header collapse -->
-			<div class="collapse navbar-collapse" id="headerContent">
-				<!-- ########################### Search ########################## -->
-				<ul class="w-100 navbar-nav m-auto my-2 mb-lg-0">
-					{% include 'search/search.html' %}
-				</ul>
-				<!-- ########################### Menu ########################## -->
-				<ul class="navbar-nav mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/posts">Home</a>
-					</li>
+		<header class="navbar navbar-expand-lg bg-light" id="feed-header">
+				<div class="container-fluid">
+						{# prev-next #}
+						<div>
+								<button style="border: none;background:none;" onclick="window.history.back()">
+										<i class="fa-sharp fa-solid fa-circle-arrow-left mx-2 h4"></i>
+								</button>
+								<button style="border: none;background:none;" onclick="window.history.next()">
+										<i class="fa-sharp fa-solid fa-circle-arrow-right mx-2 h4"></i>
+								</button>
+						</div>
+						<!-- brands -->
+						<a class="navbar-brand fw-bold" href="{{ctx.DOMAIN_NAME}}/dashboard">Kalapatids</a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerContent" aria-controls="headerContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+						</button>
+						<!-- header collapse -->
+						<div class="collapse navbar-collapse" id="headerContent">
+								<!-- ########################### Search ########################## -->
+								<ul class="w-100 navbar-nav m-auto my-2 mb-lg-0">
+										{% include 'search/search.html' %}
+								</ul>
+								<!-- ########################### Menu ########################## -->
+								<ul class="navbar-nav mb-2 mb-lg-0">
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/posts">Home</a>
+										</li>
 
-					{# hinide ko to chloe  #}
+										{# hinide ko to chloe  #}
 
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/messages">Messages</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/clubs">Clubs</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/chats">Chats</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/events">Events</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/notifications">Notifications</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link" href="#" id="account" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-						<ul class="dropdown-menu p-1" aria-labelledby="account" style="right: 0; left: auto;">
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/messages">Messages</a>
+										</li>
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/clubs">Clubs</a>
+										</li>
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/chats">Chats</a>
+										</li>
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/events">Events</a>
+										</li>
+										<li class="nav-item">
+												<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/notifications">Notifications</a>
+										</li>
+										<li class="nav-item dropdown">
+												<a class="nav-link" href="#" id="account" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+												<ul class="dropdown-menu p-1" aria-labelledby="account" style="right: 0; left: auto;">
 
-							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/profile">Profile</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/dashboard">Dashboard</a>
-							</li>
-							<li>
-								<form class="dropdown-item">
-									Night Mode
-									<input type="checkbox" name="night-mode" id="">
-								</form>
-							</li>
-							<li>
-								<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">Logout</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</header>
+														<li>
+																<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/profile">Profile</a>
+														</li>
+														<li>
+																<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/dashboard">Dashboard</a>
+														</li>
+														<li>
+																<form class="dropdown-item">
+																		Night Mode
+																		<input type="checkbox" name="night-mode" id="">
+																</form>
+														</li>
+														<li>
+																<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">Logout</a>
+														</li>
+												</ul>
+										</li>
+								</ul>
+						</div>
+				</div>
+		</header>
 </div>

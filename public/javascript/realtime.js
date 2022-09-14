@@ -53,8 +53,8 @@ $(function () {
 				</a>
 			</th>
 			<td>
-				<a class="text-dark text-decoration-none" 
-				href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">${username}</a>
+				<a class="text-dark text-decoration-none fw-bolder" 
+				href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">@${username}</a>
 			</td>
 			<td>
 				<div class="badge bg-success">active</div>

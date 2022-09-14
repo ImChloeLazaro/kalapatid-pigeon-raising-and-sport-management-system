@@ -2,26 +2,22 @@
 {% block content %}
 
   <div class="container">
-    <h1 class="display-5">Club Chats</h1>
-    <div class="chats-container scroll">
-
+    <h1 class="h2 fw-bolder mt-2">Club Chats</h1>
+    <div class="chats-container container mt-4">
       <div id="oid" class="container w-100">
-
-        <h4>Your Clubs Chats</h4>
+        <p class="h5 fw-bold mt-2 ms-2">Your Chats</p>
         {%set accountIdStr = accountId.toString()%}
         {%if  data | unique_chat(accountIdStr) | is_empty %}
-          <p>No Chats.</p>
+          <p class="text-center">No Chats.</p>
           {%endif%}
           {% for d in data | unique_chat(accountIdStr) | sort(false, true, "datetime") | reverse %}
             <span class="p-2 m-4" id="message">
               <div class="d-flex cards" id="global-chat-participant">
                 <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/chats/club/{{d.clubId}}">
                   <img src="https://th.bing.com/th/id/OIP.jDyDwJWi_aKDf6uWKnaFCwHaHa?pid=ImgDet&rs=1" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                  <span class="mx-4 h3 fw-bolder">{{d.clubName}}</span>
+                  <span class="mx-4 h5 fw-bolder">{{d.clubName}}</span>
                   <div>
-                    <sub class="mx-4">ID:
-                      {{d.clubId}}</sub>
-                    <sub class="mx-4">updated:
+                    <sub class=" mx-5">Updated:
                       {{d.datetime|datetime_formatter}}</sub>
                   </div>
                 </a>
