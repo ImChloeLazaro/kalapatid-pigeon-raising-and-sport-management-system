@@ -1,15 +1,14 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-<div class="container">
-  <h1 class="display-5">Notifications</h1>
-  <div class="notification">
-    {% for n in notifications|sort('datetime')|reverse %}
-    <div class="box notif-content">
-      {{n.datetime}}:
-      <a href="{{ctx.DOMAIN_NAME}}/notifications/{{n._id}}">{{n.content}}</a>
-    </div>
-    {% endfor %}
+  <div class="container">
+    <h1 class="display-5">Notifications</h1>
+    <div class="notification">
+      {% for n in notifications | sort('datetime') | reverse %}
+        <div class="box notif-content">
+          <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/notifications/{{n._id}}">{{n.content}}</a>
+        </div>
+      {% endfor %}
 
+    </div>
   </div>
-</div>
 {% endblock %}

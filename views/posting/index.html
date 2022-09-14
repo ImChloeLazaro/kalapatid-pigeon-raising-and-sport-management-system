@@ -186,7 +186,9 @@
 																{% if ca == accountId %}
 																	<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
 																		<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
-																		<input class="btn btn-sm btn-danger" id="comment-del-btn" type="submit" value="delete">
+																		<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
+																			<i class="fa-regular fa-trash-can"></i>
+																		</button>
 																	</form>
 																{% endif %}
 															</div>

@@ -2,14 +2,28 @@
 {% block content %}
   <div class="container">
     <h1 class="display-5">Events</h1>
-    <div class="event-table-container container">
-      {% for e in events | reverse %}
-        <div>
-          <a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">{{e.name}}</a>
-        </div>
-      {% endfor %}
-    </div>
     <div class="container club-form-container my-2">
       <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create New Event</a>
     </div>
+   
+    <div class="event-table-container container w-50">
+     <h4>List of Events</h4>
+      {% for e in events | reverse %}
+        <span class="p-2 m-4" id="message">
+          <div class="d-flex " id="global-chat-participant">
+            <a class="border border-sm border-white text-decoration-none text-success  rounded w-100 " href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
+              <img src="https://i.pinimg.com/originals/53/fe/fc/53fefcacff86d72e8891dce74a63a148.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              <span class="mx-4 h3 fw-bolder">{{e.name}}</span>
+              <div>
+                <sub class="mx-4">category:
+                  {{e.type}}</sub>
+                <sub class="mx-4">date:
+                  {{e.date}}</sub>
+              </div>
+            </a>
+          </div>
+        </span>
+      {% endfor %}
+    </div>
+
   {% endblock %}

@@ -1,45 +1,62 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-<div class="container">
-  <h1 class="display-5">{{otherusername}}</h1>
+  <div class="container">
+    <h1 class="display-5">{{otherusername}}</h1>
 
-  {% include 'search/message-search.html' %}
-  <div class="msg-box-container">
-    {% for d in messages %}
+    {% include 'search/message-search.html' %}
+    <div class="col-12" id="global-message">
+      {% for d in messages %}
 
-    {% if d.username2 != otherusername %}
+        {% if d.username2 != otherusername %}
+          <div class="d-flex" id="global-chat-participant">
+            <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
+              <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+            </a>
+            <span class="px-1 " id="message">
+              <div class="text-start" id="globalchat-message-wrapper">
+                <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
+                <span class="mx-2">{{d.username1}}</span>
+                <p class="mx-2 border border-success text-dark bg-transparent">
+                  {{d.msg}}
+                </p>
+              </div>
+            </div>
+          </span>
+        {% else %}
 
-    <div class="msg-content">
-      <div>{{d.datetime}}</div>
-      <div>{{d.username1}}</div>
-      <pre>{{d.msg}}</pre>
+          <div class="d-flex" id="global-chat-participant">
+            <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
+              <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+            </a>
+            <span class="p-1 " id="message">
+              <div class="d-inline-block text-start" id="globalchat-message-wrapper">
+                <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
+                <span class="mx-2">{{d.username1}}</span>
+                <p class="mx-2">{{d.msg}}</p>
+              </div>
+
+              <span class="d-inline-block">
+                <form method="post" action="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}/delete">
+                  <input name="username" type="text" hidden="hidden" value="{{d.username2}}">
+                  <input name="messageId" type="text" hidden="hidden" value="{{d.messageId}}">
+                  <input name="mid" type="text" hidden="hidden" value="{{d._id}}">
+                  <button class="border  border-white bg-transparent" id="msg-rm-form-btn" type="submit">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </form>
+              </span>
+            </span>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
 
-    {% else %}
-
-    <div class="msg-content text-white bg-dark">
-      <div>{{d.datetime}}</div>
-      <div>{{d.username1}}</div>
-      <pre>{{d.msg}}</pre>
-      <form method="post" action="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}/delete">
-        <input name="username" type="text" hidden="hidden" value="{{d.username2}}">
-        <input name="messageId" type="text" hidden="hidden" value="{{d.messageId}}">
-        <input name="mid" type="text" hidden="hidden" value="{{d._id}}">
-        <input id="msg-rm-form-btn" type="submit" value="remove" class="text-danger">
+    <div class="col-12" id="globalchat-form">
+      <form class="d-flex" method="post" id="chat-form">
+        <textarea class="form-control" name="msg"></textarea>
+        <button class="btn" id="chat-form-btn" type="submit">submit</button>
       </form>
     </div>
-    {% endif %}
-    {% endfor %}
   </div>
-
-
-  <div class="chat-form-container">
-    <form method="post" id="chat-form">
-      <textarea title="text-area" name="msg" id="" cols="20" rows="2"></textarea>
-      <button id="msg-form-btn" type="submit">submit</button>
-    </form>
-  </div>
-</div>
-
 
 {% endblock %}

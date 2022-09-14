@@ -7,14 +7,14 @@
       <h4>Owned Club</h4>
       {% for c in clubs | sort(false, true, 'datetime') | reverse %}
         <div>
-          <a href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
+          <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
         </div>
 
       {% endfor %}
       <h4>Joined Club</h4>
       {% for c in clubs | sort(false, true, 'datetime') | reverse %}
         <div>
-          <a href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
+          <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
 
         </div>
 

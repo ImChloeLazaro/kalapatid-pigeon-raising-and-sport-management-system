@@ -1,0 +1,27 @@
+{% extends 'initial/layout.html' %}
+{% block content %}
+<div class="container" id="global-chat-wrapper">
+  <div class="col-12 text-center p-3">
+    <h3>Chats</h3>
+  </div>
+  <div class="col-12" id="global-message">
+    {% for d in data %}
+    <div class="d-flex mb-2" id="global-chat-participant">
+      <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+      <div class="text-start" id="globalchat-message-wrapper">
+        <span class="mx-4">{{d.username}}</span>
+        <p class="mx-3" id="message">{{d.chat}}</p> 
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-12" id="globalchat-form">
+    <form class="d-flex" method="post" id="chat-form" redirect="/">
+      <textarea class="form-control" name="chat"></textarea>
+      <button class="btn" type="submit" id="chat-form-btn">submit</button>
+    </form>
+  </div>
+</div>
+
+<script defer src="/javascript/realtime.js"></script>
+{% endblock %}
