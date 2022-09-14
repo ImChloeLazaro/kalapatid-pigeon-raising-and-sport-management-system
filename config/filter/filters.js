@@ -27,6 +27,7 @@ function filters(env) {
 	})
 
 	env.addFilter('is_empty', function (arr) {
+		console.log(arr);
 		return arr.length === 0;
 	})
 	env.addFilter('is_empty_str', function (str) {
@@ -54,11 +55,13 @@ function filters(env) {
 		return data
 	})
 
-	env.addFilter('unique_chat', function (arr) {
+	env.addFilter('unique_chat', function (arr, username) {
 		let data = []
 		for (var d of arr) {
 			let clubId = d.clubId.toString();
-			let fd = data.filter(data => (data.clubId == clubId))
+			let fd = data.filter(data => {
+				return data.clubId == clubId && data.username == username
+			})
 			if (fd.length === 0) {
 				data.push({
 					_id: d._id,

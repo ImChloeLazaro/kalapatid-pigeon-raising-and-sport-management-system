@@ -100,9 +100,11 @@
 									<td>
 										<div class="card">
 											<div class="card-header d-flex">
-												<img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+												<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+													<img src="https://clipground.com/images/profile-logo-6.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+												</a>
 												<span class="mx-3">
-													<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+													<a class="text-dark fw-bold text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
 														<p>@{{p.username}}</p>
 													</a>
 
@@ -155,14 +157,14 @@
 														{% if (p1 == p2) %}
 															<div id="comment-container" class="col-sm-12">
 																<div class="col-sm-12 mt-2 d-flex">
-																	<img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" class="card-img" alt="Responsive image" style="
+																	<img src="https://clipground.com/images/profile-logo-6.jpg" class="card-img" alt="Responsive image" style="
                               height: 40px;
                               width: 40px;
                               border-radius: 50%;
                             "/>
 																	<span class="mx-3">
-																		<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
-																			<p>@{{c.username}}</p>
+																		<a class="text-dark  text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
+																			<p >@{{c.username}}</p>
 																		</a>
 																		<small class="text-muted" style="position: relative; bottom: 20px">ID:
 																			{{c.accountId}}</small >

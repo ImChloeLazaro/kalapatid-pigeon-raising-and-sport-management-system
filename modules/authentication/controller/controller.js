@@ -131,15 +131,13 @@ const POST_REGISTER = (req, res) => {
 		}
 
 
-		return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/login');
-
-		// return res.render("auth/register.html",
-		// 	{
-		// 		ctx: globalConstants.ctx,
-		// 		isRegistered: isSuccess,
-		// 		isError: isError
-		// 	}
-		// )
+		return res.render("auth/register.html",
+			{
+				ctx: globalConstants.ctx,
+				isRegistered: isSuccess,
+				isError: isError
+			}
+		)
 	})
 
 }

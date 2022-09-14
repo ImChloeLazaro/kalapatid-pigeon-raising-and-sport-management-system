@@ -46,12 +46,15 @@ $(function () {
 		function template(username) {
 			return `<tr>
 			<th scope="row">
+			<a class="text-dark text-decoration-none" 
+			href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">
 				<img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" 
 				class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+				</a>
 			</th>
 			<td>
 				<a class="text-dark text-decoration-none" 
-				href="{{ctx.DOMAIN_NAME}}/profile?username=${username}">${username}</a>
+				href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">${username}</a>
 			</td>
 			<td>
 				<div class="badge bg-success">active</div>
