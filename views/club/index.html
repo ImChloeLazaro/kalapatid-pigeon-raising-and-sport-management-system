@@ -7,52 +7,22 @@
       <div class="container club-form-container my-2">
         <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">Create New Club</a>
       </div>
-      <div>
-        <h4>Owned Club</h4>
-        {% if not clubs | is_empty%}
-          {% for c in clubs | sort(false, true, 'datetime') | reverse %}
-            <div>
-              <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
-              <span style="font-size: 7pt;">( 100k members)</span>
-            </div>
-
-          {% endfor %}
-        {%else %}
-          <p>No Club Owned.</p>
-        {% endif %}
-      </div>
-
-      <div>
-        <h4>Joined Club</h4>
-        {% if not clubs | is_empty%}
-          {% for c in clubs | sort(false, true, 'datetime') | reverse %}
-            <div>
-              <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
-              <span style="font-size: 7pt;">( 100k members)</span>
-            </div>
-
-          {% endfor %}
-        {%else %}
-
-          <p>No Club Joined.</p>
-        {% endif %}
-
-      </div>
-      <div>
-        <h4>All Clubs</h4>
-        {% if not clubs | is_empty%}
-          {% for c in clubs | sort(false, true, 'datetime') | reverse %}
-            <div>
-              <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
-              <span style="font-size: 7pt;">( 100k members)</span>
-            </div>
-          {% endfor %}
-        {%else %}
-          <p>No Clubs.</p>
-        {% endif %}
-
-      </div>
     </div>
+    <div>
+      <h4>All Clubs</h4>
+      {% if not clubs | is_empty%}
+        {% for c in clubs | sort(false, true, 'datetime') | reverse %}
+          <div>
+            <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a>
+            <span style="font-size: 7pt;">( 100k members)</span>
+          </div>
+        {% endfor %}
+      {%else %}
+        <p>No Clubs.</p>
+      {% endif %}
 
+    </div>
   </div>
+
+</div>
 {% endblock %}

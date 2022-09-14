@@ -5,10 +5,10 @@
     <h1 class="display-5">Club Chats</h1>
     <div class="chats-container scroll">
       {% if data | unique_chat(username) | is_empty %}
-        <p>No Club Live Chats available!</p>
+        <p>No Club Chats available!</p>
       {% else %}
         <div id="oid" class="container w-75">
-          <h4>Your Clubs with Live Chats</h4>
+          <h4>Your Clubs Chats</h4>
           {% for d in data | unique_chat(username) | sort(false, true, "datetime") | reverse %}
             {% if d.username == username %}
               <span class="p-2 m-4" id="message">

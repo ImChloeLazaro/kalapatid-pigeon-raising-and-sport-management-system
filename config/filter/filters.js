@@ -60,7 +60,7 @@ function filters(env) {
 		for (var d of arr) {
 			let clubId = d.clubId.toString();
 			let fd = data.filter(data => {
-				return data.clubId == clubId && data.username == username
+				return data.clubId == clubId && d.username == username
 			})
 			if (fd.length === 0) {
 				data.push({
@@ -102,13 +102,6 @@ function filters(env) {
 		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
 		let newDate = new Date(date)
 		return newDate.toLocaleDateString("en-US", options)
-	})
-
-
-	env.addFilter('getData', function (arr, memberStatus) {
-		let data = arr.filter(a => (a.memberStatus === memberStatus))
-		console.log(data);
-		return false
 	})
 
 

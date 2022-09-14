@@ -3,26 +3,29 @@
 		{% include 'search/add-participant-search.html' %}
 		{% set acc_usernames = accounts | toListItem %}
 		{% set paticipant_usernames = eventParticipants | toListItem %}
-		{%for username in paticipant_usernames | intersect(acc_usernames) %}
-				{% for a in accounts %}
-						{% if username == a.username %}
-								<div class="my-3">
-										<p data-id="{{a._id}}">{{ a.username }}</p>
-										<input type="checkbox">
-								</div>
-						{% endif %}
+		<div class="container">
+				<h1>Accounts</h1>
+				{%for username in paticipant_usernames | intersect(acc_usernames) %}
+						{% for a in accounts %}
+								{% if username == a.username %}
+										<div class="my-3">
+												<p data-id="{{a._id}}">{{ a.username }}</p>
+												<input type="checkbox">
+										</div>
+								{% endif %}
+						{% endfor %}
+
 				{% endfor %}
 
-		{% endfor %}
-
-		{% if not paticipant_usernames | intersect(acc_usernames) | is_empty %}
-				<form id="add-participant-form" action="{{ctx.DOMAIN_NAME}}/events/add-participant/{{eventId}}" method="POST">
-						<input type="submit" value="submit">
-				</form>
-		{% else  %}
-				<p class="text-dark text-center">No Account available to add in the Club.</p>
-				<a href="{{ctx.DOMAIN_NAME}}/events/show/{{eventId}}" class="btn btn-sm btn-success">back</a>
-		{% endif %}
+				{% if not paticipant_usernames | intersect(acc_usernames) | is_empty %}
+						<form id="add-participant-form" action="{{ctx.DOMAIN_NAME}}/events/add-participant/{{eventId}}" method="POST">
+								<input type="submit" value="submit">
+						</form>
+				{% else  %}
+						<p class="text-dark text-center">No Account available to add in the Club.</p>
+						<a href="{{ctx.DOMAIN_NAME}}/events/show/{{eventId}}" class="btn btn-sm btn-success">back</a>
+				{% endif %}
+		</div>
 
 		<script>
 				$(document).ready(function () {
