@@ -12,9 +12,9 @@ const model = require('../model/model')
 
 const GET_EVENT = (req, res) => {
 	function query(accountId, fn) {
-		let accountIdObj = new ObjectId(accountId)
-		let filter = { accountId: accountIdObj }
-		dbf.getAllEventDataBy(filter, (err, docs) => {
+		// let accountIdObj = new ObjectId(accountId)
+		// let filter = { accountId: accountIdObj }
+		dbf.getAllEventDataBy({}, (err, docs) => {
 			if (err) return
 			let events = docs
 			fn(events)
@@ -54,6 +54,7 @@ const SHOW_EVENT_ID = (req, res) => {
 		query(accountId, req.params.id, (event, eventParticipants) => {
 			return res.render("event/show-event.html", {
 				ctx: globalConstants.ctx,
+				accountId: accountId,
 				username: username,
 				event: event,
 				eventParticipants: eventParticipants

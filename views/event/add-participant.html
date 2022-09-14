@@ -6,7 +6,7 @@
 		{%for username in paticipant_usernames | intersect(acc_usernames) %}
 				{% for a in accounts %}
 						{% if username == a.username %}
-								<div>
+								<div class="my-3">
 										<p data-id="{{a._id}}">{{ a.username }}</p>
 										<input type="checkbox">
 								</div>

@@ -1,234 +1,243 @@
 {% extends 'initial/layout.html' %}
 {% block content %}
-	<div class="container-fluid">
-		<div class="row">
-			<div class="wrapper">
+		<div class="container-fluid">
+				<div class="row">
+						<div class="wrapper">
 
-				<!-- ########################### Events ########################## -->
-				<aside class="" id="feed-aside">
-					<!-- Swiper -->
-					<div class="card mb-3" style="width: 30rem;" id="feed-event-card">
-						<div class="card-header  fw-bolder">Events</div>
-						<div class="card-body">
-							<div class="swiper mySwiper">
-								<div class="swiper-wrapper">
-									{% for e in events %}
-										<div class="swiper-slide">
-											<div class="card" style="all: unset;">
-												<div class="card-header fw-bolder">{{e.name}}</div>
-												<div class="card-body" style="background-color: #f2f2f2;">
-													<img src="https://th.bing.com/th/id/OIP.boBJpniY5CEN9SOexC-bXgHaG3?pid=ImgDet&rs=1" style="width: 100%; height: auto;">
-													<details >
-														<summary>
-															{{e.name}}
-														</summary>
-														<div>{{e.description}}</div>
-													</details>
+								<!-- ########################### Events ########################## -->
+								<aside class="" id="feed-aside">
+										<!-- Swiper -->
+										<div class="card mb-3" style="width: 30rem;" id="feed-event-card">
+												<div class="card-header  fw-bolder">Events</div>
+												<div class="card-body">
+														{%if events| is_empty %}
+																<p>No Events.</p>
+														{% endif %}
+														<div class="swiper mySwiper">
+																<div class="swiper-wrapper">
 
+																		{% for e in events %}
+																				<div class="swiper-slide">
+																						<div class="card" style="all: unset;">
+																								<div class="card-header fw-bolder">{{e.name}}</div>
+																								<div class="card-body" style="background-color: #f2f2f2;">
+																										<img src="/images/events.jpg" style="width: 100%; height: auto;">
+																										<details >
+																												<summary>
+																														{{e.name}}
+																												</summary>
+																												<div>{{e.description}}</div>
+																										</details>
+
+																								</div>
+																								<div class="card-footer">
+																										<a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
+																												<button class="btn">Register</button>
+																										</a>
+																								</div>
+																						</div>
+																				</div>
+																		{% endfor %}
+
+																</div>
+																<div class="swiper-button-next"></div>
+																<div class="swiper-button-prev"></div>
+																<div class="swiper-pagination"></div>
+														</div>
 												</div>
-												<div class="card-footer">
-													<a href="{{ctx.DOMAIN_NAME}}/events/show/{{e._id}}">
-														<button class="btn">Register</button>
-													</a>
-												</div>
-											</div>
 										</div>
-									{% endfor %}
 
-								</div>
-								<div class="swiper-button-next"></div>
-								<div class="swiper-button-prev"></div>
-								<div class="swiper-pagination"></div>
-							</div>
-						</div>
-					</div>
+										<!-- Initialize Swiper -->
+										<script>
+												var swiper = new Swiper(".mySwiper", {
+														slidesPerView: 1,
+														spaceBetween: 30,
+														loop: true,
+														pagination: {
+																el: ".swiper-pagination",
+																clickable: true
+														},
+														navigation: {
+																nextEl: ".swiper-button-next",
+																prevEl: ".swiper-button-prev"
+														}
+												});
+										</script>
+										<!-- Clubs -->
+										<div class="cards lg-mt-5">
+												<div class="card-header fw-bolder">Clubs</div>
+												<div class="card-body">
 
-					<!-- Initialize Swiper -->
-					<script>
-						var swiper = new Swiper(".mySwiper", {
-							slidesPerView: 1,
-							spaceBetween: 30,
-							loop: true,
-							pagination: {
-								el: ".swiper-pagination",
-								clickable: true
-							},
-							navigation: {
-								nextEl: ".swiper-button-next",
-								prevEl: ".swiper-button-prev"
-							}
-						});
-					</script>
-					<!-- Clubs -->
-					<div class="cards lg-mt-5">
-						<div class="card-header fw-bolder">Clubs</div>
-						<div class="card-body">
-							<table class="table table-borderless">
-								<tbody>
-									{% for c in clubs %}
-										<tr>
-											<th scope="row">
-												<img src="https://th.bing.com/th/id/OIP.cDEX2jtvU-9PRI7Rh8GZRgHaHa?pid=ImgDet&rs=1" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-											</th>
-											<td>
-												<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a >
-											</td>
-											<td>
-												<div class="badge bg-primary">21</div>
-											</td>
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</aside>
+														{%if clubs| is_empty %}
+																<p>No Clubs.</p>
+														{% endif %}
 
-				<!-- ################### Create Post #################### -->
-				<main id="feed-post">
-					<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts" method="post" id="post-form">
-						<input type="text" name="post" class="form-control w-100 h-auto">
-						<button class="btn btn-primary" id="post-submit-btn" type="submit">Post</button>
-					</form>
-				</main>
-				<!-- feed -->
-				<article id="feed-row" style="width: 100%;">
-					<table class="table">
-						<tbody>
-							{% for p in posts | sort(false, true, "datetime") | reverse %}
-								<tr>
-									<td>
-										<div class="card">
-											<div class="card-header d-flex">
-												<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
-													<img src="https://clipground.com/images/profile-logo-6.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-												</a>
-												<span class="mx-3">
-													<a class="text-dark fw-bold text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
-														<p>@{{p.username}}</p>
-													</a>
+														<table class="table table-borderless">
+																<tbody>
+																		{% for c in clubs %}
+																				<tr>
+																						<th scope="row">
+																								<img src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																						</th>
+																						<td>
+																								<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a >
+																						</td>
+																						<td>
+																								<div class="badge bg-primary">21</div>
+																						</td>
+																				</tr>
+																		{% endfor %}
+																</tbody>
+														</table>
+												</div>
+										</div>
+								</aside>
 
-													<small class="text-muted" style="position: relative; bottom: 20px;font-size: 8pt;">ID:
-														{{p.accountId}}</small >
-												</span>
-											</div>
+								<!-- ################### Create Post #################### -->
+								<main id="feed-post">
+										<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts" method="post" id="post-form">
+												<input type="text" name="post" class="form-control w-100 h-auto">
+												<button class="btn btn-primary" id="post-submit-btn" type="submit">Post</button>
+										</form>
+								</main>
+								<!-- feed -->
+								<article id="feed-row" style="width: 100%;">
+										<table class="table">
+												<tbody>
+														{% for p in posts | sort(false, true, "datetime") | reverse %}
+																<tr>
+																		<td>
+																				<div class="card">
+																						<div class="card-header d-flex">
+																								<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+																										<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																								</a>
+																								<span class="mx-3">
+																										<a class="text-dark fw-bold text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+																												<p>@{{p.username}}</p>
+																										</a>
 
-											<div class="card-body">
-												<p class="font-sizer">{{ p.post }}</p>
-												<small>{{p.datetime| datetime_formatter }}</small>
-											</div>
-											{% set p1 = p
-												.accountId
-												.toString() %}
-											{% if p1 == accountId %}
-												<form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
-													<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
-													<button class="btn" id="post-del-btn" type="submit">
-														<i class="fa-regular fa-trash-can"></i>
-													</button>
+																										<small class="text-muted" style="position: relative; bottom: 20px;font-size: 8pt;">ID:
+																												{{p.accountId}}</small >
+																								</span>
+																						</div>
 
-												</form>
-											{% endif %}
-											<div class="col-12 mb-2">
-												{# <span >
+																						<div class="card-body">
+																								<p class="font-sizer">{{ p.post }}</p>
+																								<small>{{p.datetime| datetime_formatter }}</small>
+																						</div>
+																						{% set p1 = p
+																								.accountId
+																								.toString() %}
+																						{% if p1 == accountId %}
+																								<form action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+																										<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
+																										<button class="btn" id="post-del-btn" type="submit">
+																												<i class="fa-regular fa-trash-can"></i>
+																										</button>
+
+																								</form>
+																						{% endif %}
+																						<div class="col-12 mb-2">
+																								{# <span >
 													<i class="fa fa-heart" aria-hidden="true" style="color: #2da380"></i >
 													<span class="text-muted">
 														1.5k
 													</span>
 												</span > #}
 
-												<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
-													<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
-													<span class="text-muted">
-														{{comments|sizeByPost(p._id)}}
-														Answers
-													</span>
+																								<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
+																										<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
+																										<span class="text-muted">
+																												{{comments|sizeByPost(p._id)}}
+																												Answers
+																										</span>
 
-												</span >
+																								</span >
 
-												<div class="collapse mt-2 row" id="collapse-{{p._id}}">
-													{% for c in comments | sort(false, true, 'datetime') %}
-														{% set p1 = p
-															._id
-															.toString() %}
-														{% set p2 = c
-															.postId
-															.toString() %}
-														{% if (p1 == p2) %}
-															<div id="comment-container" class="col-sm-12">
-																<div class="col-sm-12 mt-2 d-flex">
-																	<img src="https://clipground.com/images/profile-logo-6.jpg" class="card-img" alt="Responsive image" style="
+																								<div class="collapse mt-2 row" id="collapse-{{p._id}}">
+																										{% for c in comments | sort(false, true, 'datetime') %}
+																												{% set p1 = p
+																														._id
+																														.toString() %}
+																												{% set p2 = c
+																														.postId
+																														.toString() %}
+																												{% if (p1 == p2) %}
+																														<div id="comment-container" class="col-sm-12">
+																																<div class="col-sm-12 mt-2 d-flex">
+																																		<img src="https://clipground.com/images/profile-logo-6.jpg" class="card-img" alt="Responsive image" style="
                               height: 40px;
                               width: 40px;
                               border-radius: 50%;
                             "/>
-																	<span class="mx-3">
-																		<a class="text-dark  text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
-																			<p >@{{c.username}}</p>
-																		</a>
-																		<small class="text-muted" style="position: relative; bottom: 20px">ID:
-																			{{c.accountId}}</small >
-																	</span>
-																</div>
-																<div class="col-md-12">
-																	<article class="replies-body mt-1 mb-1">
-																		{{c.comment}}
-																	</article>
-																</div>
-																{# <div class="col-md-12 mt-1 mb-1">
+																																		<span class="mx-3">
+																																				<a class="text-dark  text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
+																																						<p >@{{c.username}}</p>
+																																				</a>
+																																				<small class="text-muted" style="position: relative; bottom: 20px">ID:
+																																						{{c.accountId}}</small >
+																																		</span>
+																																</div>
+																																<div class="col-md-12">
+																																		<article class="replies-body mt-1 mb-1">
+																																				{{c.comment}}
+																																		</article>
+																																</div>
+																																{# <div class="col-md-12 mt-1 mb-1">
 																																		<span class="text-muted mr-2">
 																																				<i class="fa fa-thumbs-up" aria-hidden="true"></i>100</span>
 																																		<span class="text-muted">
 																																				<i class="fa fa-thumbs-down" aria-hidden="true"></i>200</span>
 
 																																</div> #}
-																{% set ca = c
-																	.accountId
-																	.toString() %}
-																{% if ca == accountId %}
-																	<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
-																		<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
-																		<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
-																			<i class="fa-regular fa-trash-can"></i>
-																		</button>
-																	</form>
-																{% endif %}
-															</div>
-														{% endif %}
-													{% endfor %}
-													<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
-														<input type="text" name="comment" class="form-control w-100 h-auto">
-														<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
-														<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>
-													</form>
+																																{% set ca = c
+																																		.accountId
+																																		.toString() %}
+																																{% if ca == accountId %}
+																																		<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+																																				<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
+																																				<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
+																																						<i class="fa-regular fa-trash-can"></i>
+																																				</button>
+																																		</form>
+																																{% endif %}
+																														</div>
+																												{% endif %}
+																										{% endfor %}
+																										<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
+																												<input type="text" name="comment" class="form-control w-100 h-auto">
+																												<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
+																												<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>
+																										</form>
+																								</div>
+																						</div>
+																				</div>
+																		</td>
+																</tr>
+														{% endfor %}
+												</tbody>
+										</table>
+								</article>
+
+								<!-- active members -->
+								<nav id="feed-members-navigation">
+										<div class="card lg-mt-5">
+												<div class="card-header fw-bolder">
+														Online Users
+														<div id="online-user-label" class="badge bg-primary mx-2 px-2"></div>
 												</div>
-											</div>
+												<div class="card-body">
+														<table class="table table-borderless">
+																<tbody id="online-user-container" data-username="{{username}}"></tbody>
+														</table>
+												</div>
 										</div>
-									</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</article>
+								</nav>
 
-				<!-- active members -->
-				<nav id="feed-members-navigation">
-					<div class="card lg-mt-5">
-						<div class="card-header fw-bolder">
-							Online Users
-							<div id="online-user-label" class="badge bg-primary mx-2 px-2"></div>
 						</div>
-						<div class="card-body">
-							<table class="table table-borderless">
-								<tbody id="online-user-container" data-username="{{username}}"></tbody>
-							</table>
-						</div>
-					</div>
-				</nav>
-
-			</div>
+				</div>
 		</div>
-	</div>
 
-	<script src="/javascript/post-script.js"></script>
+		<script src="/javascript/post-script.js"></script>
 {% endblock %}

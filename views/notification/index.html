@@ -3,11 +3,16 @@
   <div class="container">
     <h1 class="display-5">Notifications</h1>
     <div class="notification">
-      {% for n in notifications | sort('datetime') | reverse %}
+      <div class="box notif-content">
+        {% if  notifications | is_empty%}
+          <p class="text-dark">No notifications.</p>
+        {% endif %}
+      </div>
+      {# {% for n in notifications | sort('datetime') | reverse %}
         <div class="box notif-content">
           <a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/notifications/{{n._id}}">{{n.content}}</a>
         </div>
-      {% endfor %}
+      {% endfor %} #}
 
     </div>
   </div>

@@ -48,7 +48,7 @@ $(function () {
 			<th scope="row">
 			<a class="text-dark text-decoration-none" 
 			href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">
-				<img src="https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" 
+				<img src="/images/profile.jpg" 
 				class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 				</a>
 			</th>

@@ -105,6 +105,13 @@ function filters(env) {
 	})
 
 
+	env.addFilter('getData', function (arr, memberStatus) {
+		let data = arr.filter(a => (a.memberStatus === memberStatus))
+		console.log(data);
+		return false
+	})
+
+
 }
 
 

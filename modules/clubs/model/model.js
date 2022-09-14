@@ -1,11 +1,12 @@
 const ObjectId = require("mongodb").ObjectId
 
-function Club(name, date, description) {
+function Club(name, date, description, creatorId) {
 	return {
 		_id: new ObjectId(),
 		name: name,
 		date: date,
-		description: description
+		description: description,
+		creatorId: new ObjectId(creatorId)
 	}
 }
 

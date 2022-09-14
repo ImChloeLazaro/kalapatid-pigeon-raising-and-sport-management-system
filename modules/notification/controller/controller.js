@@ -19,7 +19,8 @@ const GET_NOTIFICATION = (req, res) => {
 		return res.render("notification/index.html", {
 			ctx: globalConstants.ctx,
 			username: username,
-			notifications: notifications
+			// notifications: notifications
+			notifications: []
 		})
 	})
 }

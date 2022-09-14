@@ -9,6 +9,13 @@ const hoverPinHandler = function (e) {
 		});
 	}
 }
+
+const outPinHandler = function () {
+	infobox.setOptions({
+		visible: false
+	})
+}
+
 function GetCreateEventMap() {
 	var map = new Microsoft.Maps.Map('#event-map', {
 		showDashboard: false,
@@ -45,7 +52,7 @@ function GetCreateEventMap() {
 		infobox.setMap(map);
 
 		var pin = new Microsoft.Maps.Pushpin(mylocation, {
-			icon: "https://docs.microsoft.com/en-us/bingmaps/v8-web-control/media/bmv8-poi-custom.png"
+			icon: "/images/pin.png"
 		});
 		pin.metadata = {
 			description: 'Your Current Location'
@@ -64,12 +71,15 @@ function GetCreateEventMap() {
 		});
 
 		Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
+		Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
+
+
 
 		Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
 			let lat = e.location.latitude
 			let long = e.location.longitude
 			var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(lat, long), {
-				icon: "/images/bmv8-poi-custom.png"
+				icon: "/images/pin.png"
 			});
 
 			map.entities.pop();
@@ -79,6 +89,7 @@ function GetCreateEventMap() {
 			}
 			map.entities.push(pin);
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
+			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 		});
 	}
 
@@ -122,6 +133,7 @@ function GetShowEventMap() {
 			description: 'Your Location'
 		}
 		Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
+		Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 
 		lat = $('#showeventLocLat').val()
 		long = $('#showeventLocLong').val()
@@ -129,12 +141,13 @@ function GetShowEventMap() {
 		if (lat !== "" || long !== "") {
 			let loc = new Microsoft.Maps.Location(lat, long);
 			let pin = new Microsoft.Maps.Pushpin(loc, {
-				icon: "/images/bmv8-poi-custom.png"
+				icon: "/images/pin.png"
 			})
 			pin.metadata = {
 				description: 'Event Location'
 			}
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
+			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 			map.entities.push(pin)
 		}
 		map.setView({
