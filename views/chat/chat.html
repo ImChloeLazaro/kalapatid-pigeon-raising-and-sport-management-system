@@ -19,7 +19,7 @@
       {% for d in data %}
         {% if d.username != username %}
           <div class="d-flex mb-2" id="global-chat-participant">
-            <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+            <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
             <div class="text-start" id="globalchat-message-wrapper">
               <span class="mx-4">{{d.username}}</span>
               <p title="{{d.datetime|datetime_formatter}}" class="mx-3 border border-success text-dark bg-transparent" id="message">{{d.chat}}</p>
@@ -27,7 +27,7 @@
           </div>
         {% else %}
           <div class="d-flex mb-2" id="global-chat-participant">
-            <img src="https://mario.wiki.gallery/images/thumb/a/a6/Super_Mushroom_Artwork_-_Super_Mario_3D_World.png/1200px-Super_Mushroom_Artwork_-_Super_Mario_3D_World.png" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+            <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
             <div class="text-start" id="globalchat-message-wrapper">
               <span class="mx-4">{{d.username}}</span>
               <p title="{{d.datetime|datetime_formatter}}" class="mx-3 " id="message">{{d.chat}}</p>

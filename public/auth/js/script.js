@@ -24,5 +24,15 @@ $(function () {
 			localStorage.chkbx = ''
 		}
 	})
+	if (!navigator.geolocation) {
+	} else {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			let { latitude, longitude } = position.coords;
+			$('#info-location').attr("data-lat", latitude);
+			$('#info-location').attr("data-long", longitude);
+		});
+	}
+
+
 })
 

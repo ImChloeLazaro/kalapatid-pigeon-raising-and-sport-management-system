@@ -1,6 +1,6 @@
 const ObjectId = require("mongodb").ObjectId
 
-function Club(name, date, description, creatorId) {
+module.exports.Club = function Club(name, date, description, creatorId) {
 	return {
 		_id: new ObjectId(),
 		name: name,
@@ -11,7 +11,7 @@ function Club(name, date, description, creatorId) {
 }
 
 
-function ClubMember(clubId, accountId, username, memberStatus) {
+module.exports.ClubMember = function ClubMember(clubId, accountId, username, memberStatus) {
 	return {
 		_id: new ObjectId(),
 		clubId: new ObjectId(clubId),
@@ -20,6 +20,3 @@ function ClubMember(clubId, accountId, username, memberStatus) {
 		memberStatus: memberStatus
 	}
 }
-
-module.exports.Club = Club
-module.exports.ClubMember = ClubMember

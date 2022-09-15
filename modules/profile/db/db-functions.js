@@ -31,6 +31,23 @@ function getAllMessageDataBy(filter, fn) {
 }
 
 
+function getProfileDataBy(filter, fn) {
+	db.getCollection("profiles", (col) => {
+		col.findOne(filter, (err, docs) => {
+			if (err) console.log(err);
+			fn(err, docs)
+		})
+	})
+}
+function insertProfileData(data, fn) {
+	db.getCollection("profiles", (col) => {
+		col.insert(data, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
 
 
 
@@ -38,5 +55,7 @@ function getAllMessageDataBy(filter, fn) {
 module.exports = {
 	getAccountDataBy: getAccountDataBy,
 	getAddressDataBy: getAddressDataBy,
-	getAllMessageDataBy: getAllMessageDataBy
+	getAllMessageDataBy: getAllMessageDataBy,
+	getProfileDataBy: getProfileDataBy,
+	insertProfileData: insertProfileData
 }

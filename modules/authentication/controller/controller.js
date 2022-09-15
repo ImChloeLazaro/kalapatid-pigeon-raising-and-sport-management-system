@@ -4,7 +4,12 @@ const tk = require("../lib/toolkit")
 const model = require("../model/model")
 const sendEmail = require('../lib/mail')
 const dbo = require("../db/db-operation")
+
 const globalConstants = require("../../../constants/constants");
+const { insertProfileData } = require("../../profile/db/db-functions")
+const { Profile } = require("../../profile/model/model")
+
+
 
 
 const ObjectId = require('mongodb').ObjectId;
@@ -104,9 +109,7 @@ const POST_REGISTER = (req, res) => {
 		bcryptjs.hashSync(req.body.password, 13)
 
 	), (err) => {
-
 		if (err == undefined) {
-
 			dbo.insertAddress(
 				new model.Address(
 					uid,
@@ -123,6 +126,11 @@ const POST_REGISTER = (req, res) => {
 				})
 			isSuccess = true;
 
+			insertProfileData(new Profile(uid.toString(), "hello world!" + req.body.username), (err) => {
+				if (err != undefined) {
+					console.log("Profile Insertion Error: ", err);
+				}
+			});
 
 		} else {
 			isError = true;
@@ -138,6 +146,7 @@ const POST_REGISTER = (req, res) => {
 				isError: isError
 			}
 		)
+		// return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/login')
 	})
 
 }

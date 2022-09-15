@@ -18,11 +18,16 @@
 														<p class="fw-bolder">Club Name</p>
 														<div class="h2">{{club.name}}</div>
 
+														<p class="fw-bolder">Club Founder</p>
+
+														<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
+																<p>@{{username}}</p>
+														</a>
 														<p class="fw-bolder">Creation Date</p>
-														<div class="h5">{{club.date | date_formatter}}</div>
+														<p>{{club.date | date_formatter}}</p>
 
-														<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{club._id}}" class="btn btn-sm btn-success w-50">Club Chat</a>
-
+														<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{club._id}}" class="btn btn-sm btn-success w-25">Club Chat</a>
+														<a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create Event</a>
 												</div>
 										</div>
 										<br>
@@ -48,6 +53,30 @@
 														<main>
 																<div class="cards">
 																		<div class="card-content">
+																				<h5 class="fw-bold">Events</h5>
+																		</div>
+																		<div class="card-body">
+																				{% if clubMembers | is_empty %}
+																						<p>No Member yet.</p>
+																				{% endif %}
+																				<div style="overflow-y: auto; height: 100px;">
+																						<ul>
+																								{% for member in clubMembers %}
+																										<li>
+																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">@{{member.username}}</a>
+																										</li>
+																								{% endfor %}
+
+																						</ul>
+																				</div>
+																		</div>
+																</div>
+														</main>
+												</div>
+												<div class="col-lg-12">
+														<main>
+																<div class="cards">
+																		<div class="card-content">
 																				<h5 class="fw-bold">Members</h5>
 																				{% if club.creatorId == accountId %}
 																						<div class="my-1">
@@ -60,7 +89,7 @@
 																				{% if clubMembers | is_empty %}
 																						<p>No Member yet.</p>
 																				{% endif %}
-																				<div style="overflow-y: scroll; height: 200px;">
+																				<div style="overflow-y: auto; height: 100px;">
 																						<ul>
 																								{% for member in clubMembers %}
 																										<li>

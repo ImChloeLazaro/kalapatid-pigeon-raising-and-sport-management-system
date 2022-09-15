@@ -81,7 +81,11 @@
 										{% if isRegistered %}
 												<script>
 														swal({title: "Registration Success!", icon: "success", button: "Done"}).then(function () {
-																window.location = "/login";
+																let lc = window.location;
+																let origin = lc.origin;
+																let domain = lc.pathname.split('/')[1];
+																let href = origin + '/' + domain + 'auth/login';
+																window.location.href =href;
 														});
 												</script>
 										{% endif %}
