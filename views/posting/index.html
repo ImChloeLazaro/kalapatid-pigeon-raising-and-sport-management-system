@@ -8,11 +8,21 @@
 										{% include 'posting/club-list.html' %}
 								</aside>
 
-								{% include 'posting/create-post.html'%}
+								<nav id="feed-post">
+									{% include 'posting/create-post.html'%}
+								</nav>
 
-								{% include 'posting/feed-post.html' %}
+								<main id="feed-row" class="overflow-auto" style="height:100vh;">
+									{% include 'posting/feed-post.html' %}
+								</main>
 
-								{% include 'posting/active-users.html'%}
+								<aside id="feed-members-navigation">
+
+									{% include 'posting/weather-forecast.html'%}
+
+									{% include 'posting/active-users.html'%}
+								
+								</aside>
 
 						</div>
 				</div>
