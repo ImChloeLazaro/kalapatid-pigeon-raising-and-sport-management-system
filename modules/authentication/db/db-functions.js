@@ -40,9 +40,9 @@ function getAcountDataByEmail(email, fn) {
 
 function getAcountDataByCode(recoveryCode, fn) {
 	db.getCollection("accounts", (col) => {
-		col.findOne({ recoveryCode: recoveryCode }, (err, docs) => {
+		col.findOne({ recoveryCode: recoveryCode }, (docs, err) => {
 			if (err) console.log(err);
-			fn(docs)
+			fn(docs, err)
 		})
 	})
 }
@@ -51,10 +51,9 @@ function updateAccount(recoveryCode, newPassword, fn) {
 		col.updateOne({ recoveryCode: recoveryCode },
 			{ $set: { recoveryCode: tk.codeGenerator(), password: bcryptjs.hashSync(newPassword, 13) } }, function (err) {
 				if (err) {
+					console.log("1 document updated");
 					fn(err)
-					return
 				}
-				console.log("1 document updated");
 			})
 	})
 }

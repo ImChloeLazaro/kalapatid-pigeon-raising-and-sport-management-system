@@ -1,0 +1,13 @@
+<html lang="en">
+  <head>
+    <title>{{ctx.TITLE}}</title>
+    {% include 'auth/__init__/meta.html' %}
+    {% include 'auth/__init__/dependencies.html' %}
+    {% include 'auth/__init__/custom.html' %}
+  </head>
+  <body>
+    {% include 'auth/__init__/info.html' %}
+    {% block content %}{% endblock %}
+  </body>
+
+</html>

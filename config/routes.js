@@ -6,7 +6,7 @@ const config = (app, express, constants) => {
 	main.use('/events', require("../modules/events"))
 	main.use('/messages', require("../modules/messaging"))
 	main.use('/notifications', require("../modules/notification"))
-	main.use('/posts', require("../modules/posting"))
+	main.use('/feeds', require("../modules/posting"))
 	main.use('/dashboard', require("../modules/dashboard"))
 	main.use('/profile', require("../modules/profile"))
 	main.use('/search', require("../modules/search"))

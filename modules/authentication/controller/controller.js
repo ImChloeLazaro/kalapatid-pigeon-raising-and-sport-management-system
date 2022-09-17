@@ -3,14 +3,11 @@ const bcryptjs = require('bcryptjs')
 const tk = require("../lib/toolkit")
 const model = require("../model/model")
 const sendEmail = require('../lib/mail')
-const dbo = require("../db/db-operation")
+const dbf = require("../db/db-functions")
 
 const globalConstants = require("../../../constants/constants");
 const { insertProfileData } = require("../../profile/db/db-functions")
 const { Profile } = require("../../profile/model/model")
-
-
-
 
 const ObjectId = require('mongodb').ObjectId;
 
@@ -57,7 +54,7 @@ const POST_LOGIN = (req, res) => {
 	}
 
 	const query = () => {
-		dbo.getAllAcountData((err, dataArray) => {
+		dbf.getAllAcountData((err, dataArray) => {
 			let isNotAuthenticated = true
 			if (dataArray == null) {
 				render(isNotAuthenticated)
@@ -96,7 +93,7 @@ const POST_REGISTER = (req, res) => {
 
 
 
-	dbo.insertAccount(model.Account(
+	dbf.insertAccount(model.Account(
 		uid,
 		req.body.firstname,
 		req.body.middlename,
@@ -110,7 +107,7 @@ const POST_REGISTER = (req, res) => {
 
 	), (err) => {
 		if (err == undefined) {
-			dbo.insertAddress(
+			dbf.insertAddress(
 				new model.Address(
 					uid,
 					req.body.houseStreet,
@@ -146,7 +143,6 @@ const POST_REGISTER = (req, res) => {
 				isError: isError
 			}
 		)
-		// return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/login')
 	})
 
 }
@@ -161,19 +157,19 @@ const GET_RECOVERY = (req, res) => {
 
 const POST_RECOVERY = (req, res) => {
 	const emailHandler = (docs) => {
+		console.log(`recovery code:`.bgGreen.white + `${docs.recoveryCode.toString()}`.yellow)
 		sendEmail(`Recovery code: ${docs.recoveryCode.toString()}`, req.body.email)
 			.then(result => {
-				console.log(result)
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/recovery/confirm')
 			})
 			.catch(err => {
 				console.error(err);
 				return res.render("auth/recovery.html", { ctx: globalConstants.ctx, HAS_EMAIL_VALUE: false })
 			})
-
 	}
+
 	const dbQuery = () => {
-		dbo.getAcountDataByEmail(req.body.email, (docs) => {
+		dbf.getAcountDataByEmail(req.body.email, (docs) => {
 			if (docs == null) {
 				return res.render("auth/recovery.html", { ctx: globalConstants.ctx, HAS_EMAIL_VALUE: false })
 			}
@@ -190,17 +186,11 @@ const GET_RECOVERY_CONFIRM = (req, res) => {
 }
 const POST_RECOVERY_CONFIRM = (req, res) => {
 	if (req.body.password1 === req.body.password2) {
-		dbo.getAcountDataByCode(req.body.recoverycode, () => {
-			let password = req.body.password1
-			let recoverycode = req.body.recoverycode
-
-			dbo.updateAccount(recoverycode, password, (err) => {
-				if (err !== undefined) {
-					console.log(err);
-				}
-			})
-		})
+		let password = req.body.password1
+		let recoverycode = req.body.recoverycode
+		dbf.updateAccount(recoverycode, password)
 	}
+
 	return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/auth/login")
 }
 

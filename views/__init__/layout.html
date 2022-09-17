@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include '__init__/meta.html' %}
+    {% include '__init__/dependency.html' %}
+    {% include '__init__/custom.html' %}
+
+    <title>{{ctx.TITLE}}</title>
+  </head>
+
+  <body>
+    {% include '__init__/info.html' %}
+    {% include '__init__/navbar.html' %}
+
+    {% block content %}{% endblock %}
+
+  </body>
+
+</html>

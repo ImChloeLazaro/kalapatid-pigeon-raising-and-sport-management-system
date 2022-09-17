@@ -9,27 +9,26 @@ oauth2.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
 
 // function for sending email
 async function sendEmail(data, email) {
-	try {
-		let ACCESS_TOKEN = oauth2.getAccessToken()
-		let auth = {
-			type: "OAuth2",
-			user: process.env.EMAIL,
-			pass: process.env.PASS,
-			clientId: process.env.CLIENT_ID,
-			clientSecret: process.env.CLIENT_SECRET,
-			refreshToken: process.env.REFRESH_TOKEN,
-			accessToken: ACCESS_TOKEN
-		}
-		let transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: auth,
-		});
-		let result = await transporter.sendMail({
-			from: process.env.EMAIL,
-			to: email,
-			subject: "Kalapatids Account Recovery",
-			text: data,
-			html: `
+	let ACCESS_TOKEN = oauth2.getAccessToken((err, a, b) => { console.log(err); })
+	let auth = {
+		type: "OAuth2",
+		user: process.env.EMAIL,
+		pass: process.env.PASS,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		refreshToken: process.env.REFRESH_TOKEN,
+		accessToken: ACCESS_TOKEN
+	}
+	let transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: auth,
+	});
+	let result = await transporter.sendMail({
+		from: process.env.EMAIL,
+		to: email,
+		subject: "Kalapatids Account Recovery",
+		text: data,
+		html: `
 			<div>
 			<p style="font-weight: bold">
 			${data}
@@ -40,11 +39,9 @@ async function sendEmail(data, email) {
 			</p>
 			</div>
 			`
-		});
-		return result
-	} catch (error) {
-		console.error(error);
-	}
+	});
+
+	return result
 }
 
 

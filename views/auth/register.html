@@ -1,4 +1,4 @@
-{% extends "auth/initial/layout.html" %}
+{% extends "auth/__init__/layout.html" %}
 {% block content %}
 
 		<div class="container center-layout">
@@ -83,9 +83,11 @@
 														swal({title: "Registration Success!", icon: "success", button: "Done"}).then(function () {
 																let lc = window.location;
 																let origin = lc.origin;
-																let domain = lc.pathname.split('/')[1];
+																let domain = lc
+																		.pathname
+																		.split('/')[1];
 																let href = origin + '/' + domain + 'auth/login';
-																window.location.href =href;
+																window.location.href = href;
 														});
 												</script>
 										{% endif %}

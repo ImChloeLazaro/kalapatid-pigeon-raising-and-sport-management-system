@@ -1,4 +1,4 @@
-{% extends 'initial/layout.html' %}
+{% extends '__init__/layout.html' %}
 {% block content %}
 
 		<div class="container-fluid">
@@ -59,14 +59,14 @@
 																				<h5 class="fw-bold">Events</h5>
 																		</div>
 																		<div class="card-body">
-																				{% if clubMembers | is_empty %}
-																						<p>No Member yet.</p>
+																				{% if events | is_empty %}
+																						<p>No Event yet.</p>
 																				{% endif %}
 																				<div style="overflow-y: auto; height: 100px;">
 																						<ul>
-																								{% for member in clubMembers %}
+																								{% for e in events %}
 																										<li>
-																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">@{{member.username}}</a>
+																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">{{e.name}}</a>
 																										</li>
 																								{% endfor %}
 																						</ul>

@@ -1,0 +1,53 @@
+{% extends '__init__/layout.html' %}
+{% block content %}
+	<div class="container-fluid" style="height: 100vh; position: fixed;">
+		<div class="row">
+			<aside class="d-none d-lg-block col-lg-3" style="height: 90vh;">
+				<div class="">
+					{% include 'feeds/events-swiper.html' %}
+				</div>
+				<div class="mt-2">
+					<div class="card" style="height: 45vh">
+						<div class="card-header fw-bold">
+							Clubs
+						</div>
+						<div class="card-body overflow-auto">
+							{% include 'feeds/club-list.html' %}
+						</div>
+					</div>
+				</div>
+			</aside>
+
+			<main class="col-lg-6 mt-2" style="height: 90vh;" ">
+				<nav id="feed-post">
+					{% include 'feeds/create-post.html'%}
+				</nav>
+				<main id="feed-row" class="overflow-auto" style="height:100vh;">
+					{% include 'feeds/feed-post.html' %}
+				</main>
+			</main>
+
+			<aside class="d-none d-lg-block col-lg-3">
+				<div>
+					<div id="forcast-container" class="card" style="height: 45vh">
+						{% include 'feeds/weather-forecast.html' %}
+					</div>
+				</div>
+				<div class="">
+					<div class="card mt-2" style="height: 45vh">
+						<div class="card-header fw-bold d-flex">
+							<span>Online Users</span>
+							<div id="online-user-label" class="badge bg-primary mx-2 px-2"></div>
+						</div>
+						<div class="card-body">
+							{% include 'feeds/active-users.html'%}
+						</div>
+					</div>
+				</div>
+			</aside>
+		</div>
+	</div>
+	<!-- Modal Container here for edit post. -->
+	{% include 'feeds/edit-post.html'%}
+	<script src="/javascript/post-script.js"></script>
+{% endblock %}

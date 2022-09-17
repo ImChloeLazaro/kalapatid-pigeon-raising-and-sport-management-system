@@ -1,0 +1,95 @@
+<script>
+function weekdayFormat(date) {
+var options = {
+        weekday: 'long'
+}
+console.log(date);
+let newDate = new Date()
+let today = new Date(Date.now()).toLocaleDateString("en-US", options)
+let yesterday = new Date(Date.now() - 864e5).toLocaleDateString("en-US", options)
+let dateformated = newDate.toLocaleDateString("en-US", options)
+if (dateformated === today) {
+        dateformated = "Today"
+} else if (dateformated === yesterday) {
+        dateformated = "Yesterday"
+}
+return dateformated
+}
+if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                                let {latitude, longitude} = position.coords;
+                                getForcastWeather(`${latitude},${longitude}`)
+                                async function getForcastWeather(location) {
+                                        fetch(`https://api.weatherapi.com/v1/forecast.json?key=3f66c7588cc14f418bb11203220705&q=${location}&days=7`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                        let currentday = data
+                                                                .current
+                                                                console
+                                                                .log(currentday)
+                                                        let currentlocation = data.location
+                                                        let forcastday = data
+                                                                .forecast
+                                                                .forecastday
+                                                                $("#forcast-container")
+                                                                .append(`
+                        <div class="card-header fw-bolder">
+                                Weather
+                                <div class="icon d-flex justify-content-between">
+                        
+                                        <span class="fw-normal">Date: ${weekdayFormat(currentday.last_updated)}</span>
+                                        <div style="position: absolute; right: 50px; top: 10px;">
+                                                <img class="m-0" src="${currentday.condition.icon}" alt="">
+                                                <p class="m-0 fw-normal">${currentday.condition.text}</p>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="card-body overflow-auto">
+                                <table class="table table-borderless table-hover">
+                                        <thead>
+                                                <th>Location</th>
+                                                <th>Humidity</th>
+                                                <th>Temperature</th>
+                                                <th>Wind</th>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        ${currentlocation.name}</p>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        ${currentlocation.region}</p>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        ${currentlocation.country}</p>
+                                                        </td>
+                                                        <td>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        ${currentday.humidity}</p>
+                                                        </td>
+                                                        <td>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        temperature(°C): ${currentday.temp_c}</p>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        temperature(°F ): ${currentday.temp_f}</p>
+                                                        </td>
+                                                        <td>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        wind speed(mph): ${currentday.wind_mph}</p>
+                                                                <p class="weather-data-table m-0" style="font-size: 12px;">
+                                                                        wind speed(kph): ${currentday.wind_kph}</p>
+                                                        </td>
+                                                </tr>
+
+                                        </tbody>
+                                </table>
+                </div>
+                
+        `)
+                                })
+                                .catch(err => {
+                                        console.log(err)
+                                })
+                        }
+        });
+}
+</script>

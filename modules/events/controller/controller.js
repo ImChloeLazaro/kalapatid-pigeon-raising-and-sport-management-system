@@ -4,28 +4,30 @@ const { verifyLogin } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
-
-
+const { getAllClubDataBy } = require("../../clubs/db/db-functions")
 
 
 
 
 const GET_EVENT = (req, res) => {
-	function query(accountId, fn) {
-		// let accountIdObj = new ObjectId(accountId)
-		// let filter = { accountId: accountIdObj }
+	function query(fn) {
 		dbf.getAllEventDataBy({}, (err, docs) => {
 			if (err) return
 			let events = docs
-			fn(events)
+			getAllClubDataBy({}, (err, docs) => {
+				if (err) return
+				let clubs = docs
+				fn(events, clubs)
+			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(accountId, (events) => {
+		query((events, clubs) => {
 			return res.render("event/index.html", {
 				ctx: globalConstants.ctx,
 				username: username,
-				events: events
+				events: events,
+				clubs: clubs
 			})
 		})
 	})
@@ -34,11 +36,13 @@ const GET_EVENT = (req, res) => {
 
 
 const SHOW_EVENT_ID = (req, res) => {
-	function query(accountId, eventId, fn) {
+	function query(accountId, eventId, clubId, fn) {
 		let eventIdObj = new ObjectId(eventId)
+		let clubIdObj = new ObjectId(clubId)
 
 		let filter = {
-			_id: eventIdObj
+			_id: eventIdObj,
+			clubId: clubIdObj
 		}
 		dbf.getEventDataBy(filter, (err, docs) => {
 			if (err) return
@@ -51,7 +55,7 @@ const SHOW_EVENT_ID = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(accountId, req.params.id, (event, eventParticipants) => {
+		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
 			console.log(event);
 			return res.render("event/show-event.html", {
 				ctx: globalConstants.ctx,

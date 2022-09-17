@@ -17,7 +17,7 @@
 																				</a>
 																		</span>
 																</div>
-																<form class="d-flex" action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+																<form class="d-flex" action="{{ctx.DOMAIN_NAME}}/feeds/delete" method="post" id="delete-post-form">
 																		<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
 
 																		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-post" style="height: 30px; width: 30px; border: none">
@@ -118,7 +118,7 @@
 																										.accountId
 																										.toString() %}
 																								{% if ca == accountId %}
-																										<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+																										<form action="{{ctx.DOMAIN_NAME}}/feeds/comments/delete" method="post" id="delete-comment-form">
 																												<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
 																												<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
 																														<i class="fa-regular fa-trash-can"></i>
@@ -128,7 +128,7 @@
 																						</div>
 																				{% endif %}
 																		{% endfor %}
-																		<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
+																		<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/feeds/comments" method="post" id="comment-form">
 																				<input type="text" name="comment" class="form-control w-100 h-auto">
 																				<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
 																				<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>

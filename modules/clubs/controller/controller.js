@@ -1,10 +1,11 @@
 const { ObjectId } = require("mongodb")
-const globalConstants = require("../../../constants/constants");
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
 
+const globalConstants = require("../../../constants/constants");
+const { getAllEventDataBy } = require("../../events/db/db-functions")
 
 const GET_CLUB = (req, res) => {
 	function query(fn) {
@@ -36,18 +37,24 @@ const SHOW_CLUB_ID = (req, res) => {
 			dbf.getClubAllMemberDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
 				if (err) return
 				let clubMembers = docs
-				fn(club, clubMembers)
+				getAllEventDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
+					if (err) return
+					let events = docs
+					console.log(events);
+					fn(club, clubMembers, events)
+				})
 			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.query.clubId, (club, clubMembers) => {
+		query(req.query.clubId, (club, clubMembers, events) => {
 			return res.render("club/show-club.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
 				username, username,
 				club: club,
-				clubMembers: clubMembers
+				clubMembers: clubMembers,
+				events: events
 			})
 		})
 	})

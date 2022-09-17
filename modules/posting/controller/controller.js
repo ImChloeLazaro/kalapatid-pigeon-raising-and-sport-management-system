@@ -4,7 +4,7 @@ const globalConstants = require("../../../constants/constants")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
 const { getAllClubDataBy, getClubAllMemberDataBy } = require('../../clubs/db/db-functions')
-const { getAllAcountData } = require('../../authentication/db/db-operation')
+const { getAllAcountData } = require('../../authentication/db/db-functions')
 
 const model = require('../model/model')
 const dbf = require('../db/db-functions')
@@ -45,7 +45,7 @@ function queries(filter, fn) {
 
 // template renderString
 function renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs, clubMembers) {
-	return res.render("posting/index.html", {
+	return res.render("feeds/index.html", {
 		ctx: globalConstants.ctx,
 		accountId: accountId,
 		username: username,
@@ -61,7 +61,7 @@ function renderTemplate(res, accountId, username, accounts, posts, comments, eve
 //redirect 
 function redirectToPostView(res, err) {
 	if (err == null) {
-		return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
+		return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/feeds")
 	} else {
 		renderTemplate(res, accountId, username, null, null, null, null, null)
 	}

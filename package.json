@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "msh": "mongosh --quiet -f mongo-script.msh",
+    "msh": "mongosh --quiet -f mongo-script.js",
     "test": "jest",
     "debug": "nodemon app.js",
     "dev1": "nodemon  app.js",

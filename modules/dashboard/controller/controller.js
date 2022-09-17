@@ -5,7 +5,7 @@ const GET_DASHBOARD = (req, res) => {
 
 	verifyLogin(req, res, (accountId, username) => {
 		console.log(accountId)
-		return res.render("dashboard.html", {
+		return res.render("dashboard/dashboard.html", {
 			ctx: globalConstants.ctx,
 			username: username,
 			accountId: accountId,

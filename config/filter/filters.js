@@ -127,10 +127,15 @@ function filters(env) {
 		return `${dateformated}, ${time}`
 	})
 
+
+
 	env.addFilter('date_formatter', function (date) {
 		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
 		let newDate = new Date(date)
 		return newDate.toLocaleDateString("en-US", options)
 	})
 }
+
+
+
 module.exports = filters

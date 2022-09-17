@@ -14,11 +14,21 @@ function dropCollections() {
 	}
 }
 
+function dropCollectionsExcept(name) {
+	for (var col of db.getCollectionNames()) {
+		if(col != name){
+			db.getCollection(col).drop()
+		}
+	}
+}
+
+
+
 function getData(colName){
 	printjson(db.getCollection(colName).find())
 }
 
+
 listCollections()
 
-getData("accounts")
-getData("profiles")
+printjson(	db.getCollection("accounts").find())

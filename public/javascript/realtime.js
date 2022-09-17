@@ -57,7 +57,7 @@ $(function () {
 				href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">@${username}</a>
 			</td>
 			<td>
-				<div class="badge bg-success">active</div>
+			<td style="color: #2DA380; font-size: 10px; position: relative; top: 8px;"><i class="fa-solid fa-circle"></i></td>
 			</td>
 		</tr>`
 		}
