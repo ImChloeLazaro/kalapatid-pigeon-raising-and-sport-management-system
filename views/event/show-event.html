@@ -16,6 +16,10 @@
 												<div >
 														<p class=" text-mute ">Event Name</p>
 														<div class="text-mute h3">{{event.name}}</div>
+														<p class="text-mute">Event Creator</p>
+														<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
+																<p>@{{username}}</p>
+														</a>
 														<p class="text-mute">Creation Date</p>
 														<div>{{event.date | date_formatter}}</div>
 
@@ -89,32 +93,34 @@
 														<div class="cards">
 																<div class="card-content">
 																		<h5 class="fw-bold">Participants</h5>
-																		<a href="">Register as Participant</a>
-																</div>
-																<div class="card-body">
-																		{% if eventParticipants | is_empty %}
-																				<p>No Participant yet.</p>
-																		{% endif %}
-																		<div style="overflow-y: auto; height: 80px;">
-																				<ul>
-																						{% for participant in eventParticipants %}
-																								<li>
-																										<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/profile?username={{participant.username}}">@{{participant.username}}</a>
-																								</li>
-																						{% endfor %}
+																		{% if event.accountId != accountId %}
+																				<a href="{{ctx.DOMAIN_NAME}}/events/participant/request?clubId={{clubId}}&partid={{accounId}}">Register as Participant</a>
+																				{%endif%}
+																		</div>
+																		<div class="card-body">
+																				{% if eventParticipants | is_empty %}
+																						<p>No Participant yet.</p>
+																				{% endif %}
+																				<div style="overflow-y: auto; height: 80px;">
+																						<ul>
+																								{% for participant in eventParticipants %}
+																										<li>
+																												<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/profile?username={{participant.username}}">@{{participant.username}}</a>
+																										</li>
+																								{% endfor %}
 
-																				</ul>
+																						</ul>
+																				</div>
 																		</div>
 																</div>
-														</div>
-												</main>
-										</div>
+														</main>
+												</div>
 
+										</div>
 								</div>
 						</div>
 				</div>
-		</div>
 
-		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-		<script type="text/javascript" src="/javascript/script.js"></script>
-{% endblock %}
+				<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+				<script type="text/javascript" src="/javascript/script.js"></script>
+		{% endblock %}
