@@ -73,7 +73,8 @@ const GET_CREATE_EVENT = (req, res) => {
 		return res.render("event/create-event.html", {
 			ctx: globalConstants.ctx,
 			username: username,
-
+			accountId: accountId,
+			clubId: req.query.clubId
 		})
 	})
 }
@@ -87,6 +88,8 @@ const POST_CREATE_EVENT = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
+		let clubId = req.query.clubId
+		let clubName = req.query.clubName
 		let name = req.body.name
 		let date = req.body.date
 		let long = req.body.long
@@ -95,9 +98,9 @@ const POST_CREATE_EVENT = (req, res) => {
 		let hourEnd = req.body.hourEnd
 		let type = req.body.type
 		let description = req.body.description
-		let EventModel = model.Event(accountId, name, date, long, lat, hourStart, hourEnd, type, description)
+		let EventModel = model.Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName)
 		query(accountId, EventModel, (err) => {
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
 	})
 }

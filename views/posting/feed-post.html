@@ -5,138 +5,137 @@
 						{% for p in posts | sort(false, true, "datetime") | reverse %}
 								<tr>
 										<td>
-											<div class="card">
-												<div class="card-header d-flex justify-content-between">
-														<div class="d-flex">
-															<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
-																	<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-															</a>
-															<span class="mx-3">
-																<a class="text-dark fw-bold text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
-																		<p>@{{p.username}}</p>
-																</a>
-															</span>
-														</div>
-														<form class="d-flex" action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
-															<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
-											
-															<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-post" style="height: 30px; width: 30px; border: none"> 
-																<i class="fa-solid fa-pen-to-square"></i>
-															</button>
-																
-															<button class="btn" id="post-del-btn" type="submit" style="height: 30px; width: 30px; border: none">
-																	<i class="fa-regular fa-trash-can"></i>
-															</button>
-														</form>
-
-														<div class="modal" id="edit-post">
-															<div class="modal-dialog">
-															<div class="modal-content">
-																<!-- Modal Header -->
-																<div class="modal-header">
-																<h5 class="modal-title fw-bolder">EDIT POST</h5>
-																<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+												<div class="card">
+														<div class="card-header d-flex justify-content-between">
+																<div class="d-flex">
+																		<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+																				<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																		</a>
+																		<span class="mx-3">
+																				<a class="text-dark fw-bold text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+																						<p>@{{p.username}}</p>
+																				</a>
+																		</span>
 																</div>
-														
-																<!-- Modal body -->
-																<div class="modal-body">
-																
-																	<form action="">
-																		<div class="form-group d-flex">
-																			<input type="text" class="form-control w-100">
-																			<button class="btn">Edit</button>
+																<form class="d-flex" action="{{ctx.DOMAIN_NAME}}/posts/delete" method="post" id="delete-post-form">
+																		<input type="text" name="postId" value="{{p._id}}" hidden="hidden">
+
+																		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-post" style="height: 30px; width: 30px; border: none">
+																				<i class="fa-solid fa-pen-to-square"></i>
+																		</button>
+
+																		<button class="btn" id="post-del-btn" type="submit" style="height: 30px; width: 30px; border: none">
+																				<i class="fa-regular fa-trash-can"></i>
+																		</button>
+																</form>
+
+																<div class="modal" id="edit-post">
+																		<div class="modal-dialog">
+																				<div class="modal-content">
+																						<!-- Modal Header -->
+																						<div class="modal-header">
+																								<h5 class="modal-title fw-bolder">EDIT POST</h5>
+																								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																						</div>
+
+																						<!-- Modal body -->
+																						<div class="modal-body">
+
+																								<form action="">
+																										<div class="form-group d-flex">
+																												<input type="text" class="form-control w-100">
+																												<button class="btn">Edit</button>
+																										</div>
+																								</form>
+																						</div>
+
+																				</div>
 																		</div>
-																	</form>
 																</div>
 
-															</div>
-															</div>
 														</div>
-												</div>
-
-												<div class="card-body">
-														<p class="font-sizer">{{ p.post }}</p>
-														<small>{{p.datetime| datetime_formatter }}</small>
-												</div>
-												{% set p1 = p
-														.accountId
-														.toString() %}
-												{% if p1 == accountId %}
-												{% endif %}
-												<div class="col-12 mb-2">
-														{# <span >
+														<div class="card-body">
+																<p class="font-sizer">{{ p.post }}</p>
+																<small>{{p.datetime| datetime_formatter }}</small>
+														</div>
+														{% set p1 = p
+																.accountId
+																.toString() %}
+														{% if p1 == accountId %}{% endif %}
+														<div class="col-12 mb-2">
+																{# <span >
 											<i class="fa fa-heart" aria-hidden="true" style="color: #2da380"></i >
 											<span class="text-muted">
 												1.5k
 											</span>
 										</span > #}
 
-														<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
-																<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
-																<span class="text-muted">
-																		{{comments|sizeByPost(p._id)}}
-																		Answers
-																</span>
+																<span data-bs-toggle="collapse" data-bs-target="#collapse-{{p._id}}" aria-expanded="false" aria-controls="collapse-{{p._id}}">
+																		<i class="fa fa-comment text-muted" style="cursor: pointer"></i >
+																		<span class="text-muted">
+																				{{comments|sizeByPost(p._id)}}
+																				Answers
+																		</span>
 
-														</span >
+																</span >
 
-														<div class="collapse mt-2 row" id="collapse-{{p._id}}">
-																{% for c in comments | sort(false, true, 'datetime') %}
-																		{% set p1 = p
-																				._id
-																				.toString() %}
-																		{% set p2 = c
-																				.postId
-																				.toString() %}
-																		{% if (p1 == p2) %}
-																				<div id="comment-container" class="col-sm-12">
-																						<div class="col-sm-12 mt-2 d-flex">
-																								<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="
+																<div class="collapse mt-2 row" id="collapse-{{p._id}}">
+																		{% for c in comments | sort(false, true, 'datetime') %}
+																				{% set p1 = p
+																						._id
+																						.toString() %}
+																				{% set p2 = c
+																						.postId
+																						.toString() %}
+																				{% if (p1 == p2) %}
+																						<div id="comment-container" class="col-sm-12">
+																								<div class="col-sm-12 mt-2 d-flex">
+																										<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="
 					  height: 40px;
 					  width: 40px;
 					  border-radius: 50%;
 					"/>
-																								<span class="mx-3">
-																										<a class="text-dark  text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
-																												<p >@{{c.username}}</p>
-																										</a>
+																										<span class="mx-3">
+																												<a class="text-dark  text-decoration-none" href="{{ctx.DOMAIN_NAME}}/profile?username={{c.username}}">
+																														<p >@{{c.username}}</p>
+																												</a>
 
-																								</span>
-																						</div>
-																						<div class="col-md-12">
-																								<article class="replies-body mt-1 mb-1">
-																										{{c.comment}}
-																								</article>
-																						</div>
-																						{# <div class="col-md-12 mt-1 mb-1">
+																										</span>
+																								</div>
+																								<div class="col-md-12">
+																										<article class="replies-body mt-1 mb-1">
+																												{{c.comment}}
+																										</article>
+																								</div>
+																								{# <div class="col-md-12 mt-1 mb-1">
 																																<span class="text-muted mr-2">
 																																		<i class="fa fa-thumbs-up" aria-hidden="true"></i>100</span>
 																																<span class="text-muted">
 																																		<i class="fa fa-thumbs-down" aria-hidden="true"></i>200</span>
 
 																														</div> #}
-																						{% set ca = c
-																								.accountId
-																								.toString() %}
-																						{% if ca == accountId %}
-																								<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
-																										<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
-																										<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
-																												<i class="fa-regular fa-trash-can"></i>
-																										</button>
-																								</form>
-																						{% endif %}
-																				</div>
-																		{% endif %}
-																{% endfor %}
-																<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
-																		<input type="text" name="comment" class="form-control w-100 h-auto">
-																		<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
-																		<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>
-																</form>
+																								{% set ca = c
+																										.accountId
+																										.toString() %}
+																								{% if ca == accountId %}
+																										<form action="{{ctx.DOMAIN_NAME}}/posts/comments/delete" method="post" id="delete-comment-form">
+																												<input class="form-control" name="commentId" type="text" value="{{c._id}}" hidden="hidden">
+																												<button class="btn btn-sm btn-danger" id="comment-del-btn" type="submit">
+																														<i class="fa-regular fa-trash-can"></i>
+																												</button>
+																										</form>
+																								{% endif %}
+																						</div>
+																				{% endif %}
+																		{% endfor %}
+																		<form class="d-flex form-group" style="height: 50px" action="{{ctx.DOMAIN_NAME}}/posts/comments" method="post" id="comment-form">
+																				<input type="text" name="comment" class="form-control w-100 h-auto">
+																				<input name="postId" type="text" value="{{p._id}}" hidden="hidden">
+																				<button class="btn btn-primary" id="post-comment-btn" type="submit">Answer</button>
+																		</form>
+																</div>
 														</div>
 												</div>
-										</div>	
 										</td>
 								</tr>
 						{% endfor %}

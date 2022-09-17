@@ -2,9 +2,6 @@
 {% block content %}
   <div class="container">
     <h1 class="h2 fw-bolder mt-2">Events</h1>
-    <div class="container club-form-container mt-4">
-      <a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create Event</a>
-    </div>
     <div class="event-table-container container w-100">
       <p class="h5 fw-bold mt-2 ms-2">All Events</p>
       {% if events | is_empty %}

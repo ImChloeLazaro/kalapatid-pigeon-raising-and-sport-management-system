@@ -41,7 +41,7 @@ const SHOW_CLUB_ID = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.params.id, (club, clubMembers) => {
+		query(req.query.clubId, (club, clubMembers) => {
 			return res.render("club/show-club.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
@@ -85,7 +85,7 @@ const POST_CREATE_CLUB = (req, res) => {
 		let name = req.body.clubName
 		let date = datetimenow()
 		let description = req.body.description
-		let clubModel = model.Club(name, date, description, accountId)
+		let clubModel = model.Club(name, date, description, accountId, username)
 		let clubMemberModel = model.ClubMember(clubModel._id.toString(), accountId, username, "admin")
 		query(clubModel, clubMemberModel, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")

@@ -3,7 +3,7 @@
 const globalConstants = require("../../../constants/constants")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
-const { getAllClubDataBy } = require('../../clubs/db/db-functions')
+const { getAllClubDataBy, getClubAllMemberDataBy } = require('../../clubs/db/db-functions')
 const { getAllAcountData } = require('../../authentication/db/db-operation')
 
 const model = require('../model/model')
@@ -29,10 +29,12 @@ function getAllCommentData(filter, fn) {
 function queries(filter, fn) {
 	getAllAcountData((err, accounts) => {
 		getAllClubDataBy(filter, (err, clubs) => {
-			getAllEventDataBy(filter, (err, events) => {
-				getAllPostData(filter, (posts) => {
-					getAllCommentData(filter, (comments) => {
-						fn(accounts, posts, comments, events, clubs)
+			getClubAllMemberDataBy(filter, (err, clubMembers) => {
+				getAllEventDataBy(filter, (err, events) => {
+					getAllPostData(filter, (posts) => {
+						getAllCommentData(filter, (comments) => {
+							fn(accounts, posts, comments, events, clubs, clubMembers)
+						})
 					})
 				})
 			})
@@ -42,7 +44,7 @@ function queries(filter, fn) {
 
 
 // template renderString
-function renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs) {
+function renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs, clubMembers) {
 	return res.render("posting/index.html", {
 		ctx: globalConstants.ctx,
 		accountId: accountId,
@@ -52,6 +54,7 @@ function renderTemplate(res, accountId, username, accounts, posts, comments, eve
 		comments: comments,
 		events: events,
 		clubs: clubs,
+		clubMembers: clubMembers
 	});
 }
 
@@ -60,7 +63,7 @@ function redirectToPostView(res, err) {
 	if (err == null) {
 		return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/posts")
 	} else {
-		renderTemplate(res, accountId, username, null, null, null, null)
+		renderTemplate(res, accountId, username, null, null, null, null, null)
 	}
 }
 
@@ -74,8 +77,8 @@ function redirectToPostView(res, err) {
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let filter = {}
-		queries(filter, (accounts, posts, comments, events, clubs) => {
-			renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs)
+		queries(filter, (accounts, posts, comments, events, clubs, clubMembers) => {
+			renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs, clubMembers)
 		})
 	})
 }

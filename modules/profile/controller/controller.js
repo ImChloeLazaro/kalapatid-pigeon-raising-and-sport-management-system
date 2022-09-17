@@ -17,12 +17,18 @@ const GET_PROFILE = (req, res) => {
 			let addressFilter = { acc_id: accData._id }
 			dbf.getAddressDataBy(addressFilter, (err, docs) => {
 				let addrData = docs
-				return res.render("profile/profile.html", {
-					ctx: globalConstants.ctx,
-					username: username,
-					othername: othername,
-					accData: accData,
-					addrData: addrData
+				let profileFilter = { accountId: accData._id }
+				dbf.getProfileDataBy(profileFilter, (err, docs) => {
+					let profileData = docs
+					return res.render("profile/profile.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username: username,
+						othername: othername,
+						accData: accData,
+						addrData: addrData,
+						profileData: profileData
+					})
 				})
 			})
 		})
@@ -43,12 +49,17 @@ const EDIT_PROFILE = (req, res) => {
 			let addressFilter = { acc_id: accData._id }
 			dbf.getAddressDataBy(addressFilter, (err, docs) => {
 				let addrData = docs
-				return res.render("profile/edit-profile.html", {
-					ctx: globalConstants.ctx,
-					username: username,
-					othername: othername,
-					accData: accData,
-					addrData: addrData
+				let profileFilter = { accountId: req.query.id }
+				dbf.getProfileDataBy(profileFilter, (err, docs) => {
+					let profileData = docs
+					return res.render("profile/edit-profile.html", {
+						ctx: globalConstants.ctx,
+						username: username,
+						othername: othername,
+						accData: accData,
+						addrData: addrData,
+						profileData: profileData
+					})
 				})
 			})
 		})

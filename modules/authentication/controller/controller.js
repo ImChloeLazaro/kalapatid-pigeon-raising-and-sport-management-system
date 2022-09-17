@@ -164,10 +164,10 @@ const POST_RECOVERY = (req, res) => {
 		sendEmail(`Recovery code: ${docs.recoveryCode.toString()}`, req.body.email)
 			.then(result => {
 				console.log(result)
-				res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/resetpassword')
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/recovery/confirm')
 			})
-			.catch(error => {
-				console.error(error);
+			.catch(err => {
+				console.error(err);
 				return res.render("auth/recovery.html", { ctx: globalConstants.ctx, HAS_EMAIL_VALUE: false })
 			})
 

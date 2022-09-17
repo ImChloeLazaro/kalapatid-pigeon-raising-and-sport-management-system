@@ -32,7 +32,7 @@ const GET_CHATS = (req, res) => {
 
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		let clubId = req.params.id
+		let clubId = req.query.clubId
 		let accountIdObj = new ObjectId(accountId)
 		let filter = { accountId: accountIdObj, clubId: new ObjectId(clubId) }
 		dbf.getAllChatData(filter, (err, docs) => {
@@ -51,14 +51,14 @@ const GET_CHAT = (req, res) => {
 const POST_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let chat = req.body.chat
-		let clubId = req.params.id
+		let clubId = req.query.clubId
 		let datetime = datetimenow()
 		let filter = { _id: new ObjectId(clubId) }
 		clubDbf.getClubDataBy(filter, (err, docs) => {
 			let clubName = docs.name;
 			let chatModel = model.Chat(accountId, clubId, clubName, datetime, username, chat)
 			dbf.insertChatData(chatModel, (err) => {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/club/" + clubId)
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/show?clubId=" + clubId)
 			})
 		})
 	})

@@ -10,9 +10,6 @@
 										</div>
 
 										<div>
-												<div class="w-100 text-center my-3">
-														<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
-												</div>
 
 												<div class="card-body">
 														<div class="w-100 text-center my-3">
@@ -24,14 +21,14 @@
 																		<div class="h2">{{club.name}}</div>
 
 																		<p class="fw-bolder">Club Founder</p>
-																		<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
-																				<p>@{{username}}</p>
+																		<a href="{{ctx.DOMAIN_NAME}}/profile?username={{club.founderName}}">
+																				<p>@{{club.founderName}}</p>
 																		</a>
 																		<p class="fw-bolder">Creation Date</p>
 																		<p>{{club.date | date_formatter}}</p>
 
-																		<a href="{{ctx.DOMAIN_NAME}}/chats/club/{{club._id}}" class="btn btn-sm btn-success w-25">Club Chat</a>
-																		<a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create">Create Event</a>
+																		<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" class="btn btn-sm btn-success w-25">Club Chat</a>
+																		<a class="btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create?clubName={{club.name}}&clubId={{club._id}}">Create Event</a>
 																</div>
 														</div>
 														<br>

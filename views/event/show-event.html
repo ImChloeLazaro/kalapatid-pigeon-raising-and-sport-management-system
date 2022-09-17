@@ -16,9 +16,11 @@
 												<div >
 														<p class=" text-mute ">Event Name</p>
 														<div class="text-mute h3">{{event.name}}</div>
+														<p class="text-mute">Club Name</p>
+														<div>{{event.clubName}}</div>
 														<p class="text-mute">Event Creator</p>
 														<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
-																<p>@{{username}}</p>
+																<p>@{{event.creatorName}}</p>
 														</a>
 														<p class="text-mute">Creation Date</p>
 														<div>{{event.date | date_formatter}}</div>

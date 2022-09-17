@@ -15,10 +15,10 @@
 														<img src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 												</th>
 												<td>
-														<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show/{{c._id}}">{{c.name}}</a >
+														<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">{{c.name}}</a >
 												</td>
 												<td>
-														<div class="badge bg-primary">21</div>
+														<div class="badge bg-primary">{{clubMembers | sizeByClub(c._id) }}</div>
 												</td>
 										</tr>
 								{% endfor %}

@@ -99,6 +99,18 @@ function filters(env) {
 	})
 
 
+
+	env.addFilter('sizeByClub', function (arr, id) {
+		let size = 0
+		for (var d of arr) {
+			if (d.clubId.toString() == id.toString()) {
+				size++;
+			}
+		}
+		return size
+	})
+
+
 	env.addFilter('datetime_formatter', function (str) {
 		let [date, time] = str.split(",")
 		var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric' }
