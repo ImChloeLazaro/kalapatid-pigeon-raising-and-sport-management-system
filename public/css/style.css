@@ -4,6 +4,11 @@ p {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+  z-index: 1000;
+}
+
 .icons {
   margin: 3px;
   color: #2D2626;
@@ -86,6 +91,12 @@ p {
   background: #F2F2F2;
   outline: none;
   box-shadow: none;
+}
+
+.badge {
+  background: #2DA380 !important;
+  height: 20px;
+  z-index: 1000;
 }
 
 #global-chat-wrapper {

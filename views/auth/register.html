@@ -1,83 +1,82 @@
 {% extends "auth/__init__/layout.html" %}
 {% block content %}
-
-		<div class="container center-layout">
-				<div class="row">
-						<div class="col-12">
-								<div class="registration-header">
-										<div class="logo-container">
-												<a href="#"><img src="/auth/img/pegion_request.png" class="img-fluid" alt="Account Required" style="height: 120px;"></a>
+<div class="container center-layout">
+	<div class="row">
+		<div class="col-12">
+			<div class="registration-header">
+					<div class="logo-container">
+							<a href="#"><img src="/auth/img/pegion_request.png" class="img-fluid" alt="Account Required" style="height: 120px;"></a>
+					</div>
+			</div>
+			<div class="card" id="registration-carousel">
+				<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" style="height: 400px; width: 550px;">
+					<div class="carousel-inner">
+						<form method="post">
+								<div class="carousel-item active">
+										<h5>Personal Information</h5>
+										<div class="form-container">
+												<input name="firstname" type="text" class="form-control" placeholder="Firstname" required="true">
+										</div>
+										<div class="form-container">
+												<input name="middlename" type="text" class="form-control" placeholder="Middlename" required="true">
+										</div>
+										<div class="form-container">
+												<input name="lastname" type="text" class="form-control" placeholder="Lastname" required="true">
 										</div>
 								</div>
-								<div class="card" id="registration-carousel">
-										<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" style="height: 400px; width: 550px;">
-												<div class="carousel-inner">
-														<form method="post">
-																<div class="carousel-item active">
-																		<h5>Personal Information</h5>
-																		<div class="form-container">
-																				<input name="firstname" type="text" class="form-control" placeholder="Firstname" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="middlename" type="text" class="form-control" placeholder="Middlename" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="lastname" type="text" class="form-control" placeholder="Lastname" required="true">
-																		</div>
-																</div>
-																<div class="carousel-item">
-																		<h5>Address</h5>
-																		<div class="form-container">
-																				<input name="houseStreet" type="text" class="form-control" placeholder="House/Street" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="townCity" type="text" class="form-control" placeholder="Town/City" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="province" type="text" class="form-control" placeholder="Province" required="true">
-																		</div>
-																</div>
-																<div class="carousel-item">
-																		<h5>Contacts</h5>
-																		<div class="form-container">
-																				<input name="birthday" type="date" class="form-control" placeholder="Birthday" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="phone" type="text" class="form-control" placeholder="Phone" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="email" type="email" class="form-control" placeholder="Email" required="true">
-																		</div>
-																</div>
-																<div class="carousel-item ">
-																		<h5>Account</h5>
-																		<div class="form-container">
-																				<input name="username" type="text" class="form-control" placeholder="Username" required="true">
-																		</div>
-																		<div class="form-container">
-																				<input name="password" type="password" class="form-control" placeholder="Password" required="true">
-																		</div>
-																		<div class="form-container my-4">
-																				<button type="submit" class="btn fa">&#xf061;</button>
-																		</div>
-																</div>
-																<div class="carousel-indicators">
-																		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-																		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-																		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-																		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-																</div>
-														</form>
-												</div>
-												<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-														<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-														<span class="visually-hidden">Previous</span>
-												</button>
-												<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-														<span class="carousel-control-next-icon" aria-hidden="true"></span>
-														<span class="visually-hidden">Next</span>
-												</button>
+								<div class="carousel-item">
+										<h5>Address</h5>
+										<div class="form-container">
+												<input name="houseStreet" type="text" class="form-control" placeholder="House/Street" required="true">
 										</div>
+										<div class="form-container">
+												<input name="townCity" type="text" class="form-control" placeholder="Town/City" required="true">
+										</div>
+										<div class="form-container">
+												<input name="province" type="text" class="form-control" placeholder="Province" required="true">
+										</div>
+								</div>
+								<div class="carousel-item">
+										<h5>Contacts</h5>
+										<div class="form-container">
+												<input name="birthday" type="date" class="form-control" placeholder="Birthday" required="true">
+										</div>
+										<div class="form-container">
+												<input name="phone" type="text" class="form-control" placeholder="Phone" required="true">
+										</div>
+										<div class="form-container">
+												<input name="email" type="email" class="form-control" placeholder="Email" required="true">
+										</div>
+								</div>
+								<div class="carousel-item ">
+										<h5>Account</h5>
+										<div class="form-container">
+												<input name="username" type="text" class="form-control" placeholder="Username" required="true">
+										</div>
+										<div class="form-container">
+												<input name="password" type="password" class="form-control" placeholder="Password" required="true">
+										</div>
+										<div class="form-container my-4">
+												<button type="submit" class="btn fa">&#xf061;</button>
+										</div>
+								</div>
+								<div class="carousel-indicators">
+										<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+										<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+										<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+										<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+								</div>
+						</form>
+					</div>
+						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+						</button>
+					</div>
 										{% if isRegistered %}
 												<script>
 														swal({title: "Registration Success!", icon: "success", button: "Done"}).then(function () {
@@ -93,14 +92,15 @@
 										{% endif %}
 
 										{% if isError %}
+
 												<script>
 														swal({title: "Registration Error!", icon: "warning", button: "Done"});
 												</script>
 
 										{% endif %}
-								</div>
-						</div>
-				</div>
+		</div>
+	</div>
+</div>
 				<script>
 						$(document).ready(function () {
 								$('.carousel').carousel({interval: false});
