@@ -53,17 +53,59 @@ function filters(env) {
 		return data
 	})
 
-	env.addFilter('unique_chat', function (arr, accoundId) {
+	env.addFilter('unique_chat', function (arr, username) {
 		let data = []
+
+		// for (var d of arr) {
+		// 	let clubId = d.clubId.toString();
+		// 	let accountId = d.accountId.toString();
+		// 	let fd = data.filter(dd => (dd.clubId == clubId))
+		// 	if (fd.length === 0) {
+		// 		data.push({
+		// 			_id: d._id,
+		// 			clubId: clubId,
+		// 			accoundId: accountId,
+		// 			clubName: d.clubName,
+		// 			datetime: d.datetime,
+		// 			username: d.username,
+		// 			chat: d.chat,
+		// 		})
+		// 	}
+		// }
+
+		// let newData = []
+		// for (var d of data) {
+		// 	console.log("data:".red, d)
+		// 	console.log("accoundId:".red, d.username)
+		// 	console.log("accoundId:".red, username)
+		// 	console.log("accoundId:".red, d.username === username)
+		// 	if (d.username === username) {
+		// 		newData.push(d)
+		// 	}
+
+
+		// }
+
+		// console.log("newData".red, newData);
+		// return newData
+
+
+
+
 		for (var d of arr) {
-			let clubId = d.clubId.toString();
-			let accountId = d.accountId.toString();
-			let fd = data.filter(dd => (dd.clubId == clubId))
+			if (d.username === username) {
+				data.push(d)
+			}
+		}
+		newData = []
+		for (var d of data) {
+			let clubId = d.clubId.toString()
+			let fd = newData.filter(dd => (dd.clubId == clubId))
 			if (fd.length === 0) {
-				data.push({
+				newData.push({
 					_id: d._id,
 					clubId: clubId,
-					accoundId: accountId,
+					accoundId: d.accountId,
 					clubName: d.clubName,
 					datetime: d.datetime,
 					username: d.username,
@@ -71,18 +113,6 @@ function filters(env) {
 				})
 			}
 		}
-		let newData = []
-		for (var d of data) {
-			console.log("data:".red, d)
-			console.log("accoundId:".red, d.accoundId)
-			console.log("accoundId:".red, accoundId)
-			console.log("accoundId:".red, d.accoundId === accoundId)
-			if (d.accoundId === accoundId) {
-				newData.push(d)
-			}
-		}
-
-		console.log("newData".red, newData);
 		return newData
 	})
 

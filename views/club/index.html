@@ -7,21 +7,22 @@
     </div>
     <div class="club-table-container container w-100">
       <p class="h5 fw-bold mt-2 ms-2">All Clubs</p>
-      {% if not clubs | is_empty%}
-        {% for c in clubs | sort(false, true, 'datetime') | reverse %}
-          <div class="d-flex cards">
-            <a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
-              <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-              <span class="mx-3 h5 fw-bolder">{{c.name}}</span>
-              <span style="font-size: 7pt;">( 100k members)</span>
-            </a>
-          </div>
+      <div class="cards">
+        {% if not clubs | is_empty%}
+          {% for c in clubs | sort(false, true, 'datetime') | reverse %}
+            <div class="d-flex my-2">
+              <a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
+                <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                <span class="mx-3 h5 fw-bolder">{{c.name}}</span>
+                <span style="font-size: 7pt;">( 100k members)</span>
+              </a>
+            </div>
 
-        {% endfor %}
-      {%else %}
-        <p>No Clubs.</p>
-      {% endif %}
-
+          {% endfor %}
+        {%else %}
+          <p>No Clubs.</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 

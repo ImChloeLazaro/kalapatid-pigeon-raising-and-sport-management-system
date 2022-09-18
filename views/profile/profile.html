@@ -5,48 +5,51 @@
     <div class="row">
 
       <div class="col-lg-4">
-        <div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-          <h5 class="fw-bold h2">Profile</h5>
-          <div class="d-flex">
-            {% if accData.username == username %}
-              <a href="{{ctx.DOMAIN_NAME}}/profile/edit?username={{accData.username}}&id={{profileData._id}}">
-                <i class="icons fa-solid fa-gear"></i>
+        <div class="cards">
+          <div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+            <h5 class="fw-bold h2">Profile</h5>
+            <div class="d-flex">
+              {% if accData.username == username %}
+                <a href="{{ctx.DOMAIN_NAME}}/profile/edit?username={{accData.username}}&id={{profileData._id}}">
+                  <i class="icons fa-solid fa-gear"></i>
+                </a>
+              {% endif %}
+              <a href="{{ctx.DOMAIN_NAME}}/profile/message/?username={{othername}}">
+                <i class="icons fa-solid fa-paper-plane"></i>
               </a>
-            {% endif %}
-            <a href="{{ctx.DOMAIN_NAME}}/profile/message/?username={{othername}}">
-              <i class="icons fa-solid fa-paper-plane"></i>
-            </a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="w-100 text-center my-3">
+              <img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
+            </div>
+            <p class="text-muted text-center" id="profile-id">{{accData.firstName}}
+              {{accData.middleName}}
+              {{accData.lastName}}
+              <span>({{accData.username}})</span>
+            </p>
+            <hr>
+            <div class="w-auto">
+
+              <h5 class="fw-bold">Account Info</h5>
+              <p class="fw-bold">Email</p>
+              <p class="text-muted">{{accData.email}}</p>
+              <p class="fw-bold">Contact Number</p>
+              <p>{{accData.phone}}</p>
+              <p class="fw-bold">Address</p>
+              <p>{{addrData.houseAddr}},
+                {{addrData.town}},{{addrData.province}}</p>
+              <p class="fw-bold">Birthday</p>
+              <p>{{accData.birthday| date_formatter}}</p>
+
+              <p class="fw-bold">Information</p>
+              <p>{{profileData.info}}</p>
+            </div>
+            <br>
           </div>
         </div>
 
-        <div class="card-body">
-          <div class="w-100 text-center my-3">
-            <img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
-          </div>
-          <p class="text-muted text-center" id="profile-id">{{accData.firstName}}
-            {{accData.middleName}}
-            {{accData.lastName}}
-            <span>({{accData.username}})</span>
-          </p>
-          <hr>
-          <div class="w-auto">
-
-            <h5 class="fw-bold">Account Info</h5>
-            <p class="fw-bold">Email</p>
-            <p class="text-muted">{{accData.email}}</p>
-            <p class="fw-bold">Contact Number</p>
-            <p>{{accData.phone}}</p>
-            <p class="fw-bold">Address</p>
-            <p>{{addrData.houseAddr}},
-              {{addrData.town}},{{addrData.province}}</p>
-            <p class="fw-bold">Birthday</p>
-            <p>{{accData.birthday| date_formatter}}</p>
-
-            <p class="fw-bold">Information</p>
-            <p>{{profileData.info}}</p>
-          </div>
-          <br>
-        </div>
       </div>
 
       <div class="col-lg-8">

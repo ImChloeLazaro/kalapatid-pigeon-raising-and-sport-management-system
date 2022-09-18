@@ -2,46 +2,48 @@
 {% block content %}
   <div class="container">
     <h1 class="h2 fw-bolder mt-2">Messages</h1>
-    <div class="msg-container mt-4">
+    <div class="msg-container  mt-4">
       {% if data | is_empty %}
         <p class="text-dark text-center">No Messaging available!</p>
       {% else %}
         {% include 'search/convo-search.html' %}
-        <div id="oid" data-name="{{data}}" class="my-2 p-2"></div>
-        {% for d in data | unique_msg | sort(false, false, "datetime") | reverse %}
-          <div class="my-2">
-            {% if d.username2 == username %}
-              <div class="d-flex cards  py-2 w-100">
-                <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-                  <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                </a>
-                <a class="text-decoration-none  text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
-                  <span class="mx-2 h5 fw-bolder" title="{{d.username1}}">{{d.username1}}</span>
-                  <div class="ms-2">
-                    <sub class="mx-2" title="{{d.datetime | datetime_formatter}}">{{d.username1}}:
-                      {{d.msg}}</sub>
-                  </div>
-                </a>
-              </div>
+        <div class="cards">
+          <div id="oid" data-name="{{data}}" class="  my-2 p-2"></div>
+          {% for d in data | unique_msg | sort(false, false, "datetime") | reverse %}
+            <div class="my-2 ">
+              {% if d.username2 == username %}
+                <div class="d-flex   py-2 w-100">
+                  <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
+                    <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                  </a>
+                  <a class="text-decoration-none  text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
+                    <span class="mx-2 h5 fw-bolder" title="{{d.username1}}">{{d.username1}}</span>
+                    <div class="ms-2">
+                      <sub class="mx-2" title="{{d.datetime | datetime_formatter}}">{{d.username1}}:
+                        {{d.msg}}</sub>
+                    </div>
+                  </a>
+                </div>
 
-            {% else %}
+              {% else %}
 
-              <div class="d-flex cards  py-2 w-100">
-                <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username2}}">
-                  <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                </a>
-                <a class=" text-decoration-none text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
-                  <span class="mx-2 h5 fw-bolder">{{d.username2}}</span>
-                  <div class="ms-2">
-                    <sub class="mx-2" title="{{d.datetime| datetime_formatter}}">{{d.username1}}:
-                      {{d.msg}}</sub>
-                  </div>
-                </a>
-              </div>
+                <div class="d-flex   py-2 w-100">
+                  <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username2}}">
+                    <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                  </a>
+                  <a class=" text-decoration-none text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
+                    <span class="mx-2 h5 fw-bolder">{{d.username2}}</span>
+                    <div class="ms-2">
+                      <sub class="mx-2" title="{{d.datetime| datetime_formatter}}">{{d.username1}}:
+                        {{d.msg}}</sub>
+                    </div>
+                  </a>
+                </div>
 
-            {% endif %}
-          </div>
-        {% endfor %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
 

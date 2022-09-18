@@ -33,9 +33,9 @@ const GET_CHATS = (req, res) => {
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
-		let accountIdObj = new ObjectId(accountId)
-		let filter = { accountId: accountIdObj, clubId: new ObjectId(clubId) }
+		let filter = { clubId: new ObjectId(clubId) }
 		dbf.getAllChatData(filter, (err, docs) => {
+			console.log(docs);
 			return res.render("chat/chat.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
