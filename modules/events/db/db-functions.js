@@ -45,6 +45,18 @@ function insertManyEventParticipantData(array, fn) {
 }
 
 
+
+function insertEventParticipantData(data, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.insertOne(data, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+
+
 function getEventAllParticipantDataBy(filter, fn) {
 	db.getCollection("eventParticipants", (col) => {
 		col.find(filter).toArray((err, docs) => {
@@ -71,5 +83,8 @@ module.exports = {
 	getAllEventDataBy: getAllEventDataBy,
 	insertEventData: insertEventData,
 	insertManyEventParticipantData: insertManyEventParticipantData,
-	getEventAllParticipantDataBy: getEventAllParticipantDataBy
+	getEventAllParticipantDataBy: getEventAllParticipantDataBy,
+
+	insertEventParticipantData: insertEventParticipantData,
+
 }

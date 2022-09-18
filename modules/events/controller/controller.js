@@ -56,11 +56,11 @@ const SHOW_EVENT_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
-			console.log(event);
 			return res.render("event/show-event.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
 				username: username,
+				clubId: req.query.clubId,
 				event: event,
 				eventParticipants: eventParticipants
 			})
@@ -158,6 +158,7 @@ const POST_ADD_PARTICIPANT = (req, res) => {
 
 const GET_PARTICIPANT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
+		let partuName = req.query.username
 		let clubId = req.query.clubId
 		let partId = req.query.partId
 		return res.render("event/participant.html", {
@@ -182,13 +183,22 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 
 
 const POST_PARTICIPANT_REQUEST = (req, res) => {
+	function query(data, fn) {
+		dbf.insertEventParticipantData(data, (err) => {
+			fn(err)
+		})
+	}
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
-		let partId = req.query.partId
-		return res.render("event/participant-request.html", {
-			ctx: globalConstants.ctx,
-			username: username,
-			accountId: accountId,
+		let eventId = req.query.eventId
+		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, "pending", req.body.description)
+		query(eventParticipant, (err) => {
+			console.log(err);
+			return res.render("event/participant-request.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				accountId: accountId,
+			})
 		})
 	})
 }

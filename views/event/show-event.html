@@ -1,128 +1,130 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
-		<div class="container-fluid">
-				<div class="row">
+	<div class="container-fluid">
+		<div class="row">
 
-						<div class="col-lg-3">
-								<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-										<h5 class="fw-bold">Event</h5>
-								</div>
-
-								<div class="card-body">
-										<div class="w-100 text-center my-3">
-												<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
-										</div>
-										<div class="w-auto">
-												<div >
-														<p class=" text-mute ">Event Name</p>
-														<div class="text-mute h3">{{event.name}}</div>
-														<p class="text-mute">Club Name</p>
-														<div>{{event.clubName}}</div>
-														<p class="text-mute">Event Creator</p>
-														<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
-																<p>@{{event.creatorName}}</p>
-														</a>
-														<p class="text-mute">Creation Date</p>
-														<div>{{event.date | date_formatter}}</div>
-
-														<p class="text-mute">Event Type</p>
-														<div class="h5">{{event.type}}</div>
-
-														<p class="text-mute">Description</p>
-														<div class="">{{event.description}}</div>
-
-														<p class="text-mute">Start Time</p>
-														<div class="">{{event.hourStart}}</div>
-
-														<p class="text-mute">End Time</p>
-														<div class="">{{event.hourEnd}}</div>
-												</div>
-										</div>
-										<br>
-								</div>
-						</div>
-
-						<div class="col-lg-8">
-								<div class="row">
-
-										<div class="col-lg-12">
-												<footer class="mt-3" id="profile-group">
-														<div class="cards overflow-auto">
-																<div class="card-content mb-3">
-																		<h5 class="fw-bold">Event Map</h5>
-																</div>
-																<div class="card-body d-flex justify-content-between">
-																		<div id="event-show-map" style="width: fit-content; height:300px;"></div>
-																		<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-																		<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
-																</div>
-														</div>
-												</footer>
-										</div>
-										{% if event.accountId == accountId %}
-												<div class="my-1">
-														<p class="fw-bolder">Creator Options</p>
-														<a href="{{ctx.DOMAIN_NAME}}/events/add-participant/{{event._id}}" class="btn btn-sm btn-success m-2 w-50">add participant</a>
-												</div>
-
-												<div class="col-lg-12">
-														<main>
-																<div class="cards">
-																		<div class="card-content">
-																				<h5 class="fw-bold">Participants Requests</h5>
-																		</div>
-																		<div class="card-body">
-																				{% if eventParticipants | is_empty %}
-																						<p>No Participant yet.</p>
-																				{% endif %}
-																				<div style="overflow-y: auto; height: 50px;">
-																						<ul>
-																								{% for participant in eventParticipants %}
-																										<li>
-																												<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/profile?username={{participant.username}}">@{{participant.username}}</a>
-																										</li>
-																								{% endfor %}
-
-																						</ul>
-																				</div>
-																		</div>
-																</div>
-														</main>
-												</div>
-										{% endif %}
-										<div class="col-lg-12">
-												<main>
-														<div class="cards">
-																<div class="card-content">
-																		<h5 class="fw-bold">Participants</h5>
-																		{% if event.accountId != accountId %}
-																				<a href="{{ctx.DOMAIN_NAME}}/events/participant/request?clubId={{clubId}}&partid={{accounId}}">Register as Participant</a>
-																				{%endif%}
-																		</div>
-																		<div class="card-body">
-																				{% if eventParticipants | is_empty %}
-																						<p>No Participant yet.</p>
-																				{% endif %}
-																				<div style="overflow-y: auto; height: 80px;">
-																						<ul>
-																								{% for participant in eventParticipants %}
-																										<li>
-																												<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/profile?username={{participant.username}}">@{{participant.username}}</a>
-																										</li>
-																								{% endfor %}
-
-																						</ul>
-																				</div>
-																		</div>
-																</div>
-														</main>
-												</div>
-
-										</div>
-								</div>
-						</div>
+			<div class="col-lg-3">
+				<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+					<h5 class="fw-bold">Event</h5>
 				</div>
 
-				<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-				<script type="text/javascript" src="/javascript/script.js"></script>
-		{% endblock %}
+				<div class="card-body">
+					<div class="w-100 text-center my-3">
+						<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
+					</div>
+					<div class="w-auto">
+						<div >
+							<p class=" text-mute ">Event Name</p>
+							<div class="text-mute h3">{{event.name}}</div>
+							<p class="text-mute">Club Name</p>
+							<div>{{event.clubName}}</div>
+							<p class="text-mute">Event Creator</p>
+							<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
+								<p>@{{event.creatorName}}</p>
+							</a>
+							<p class="text-mute">Creation Date</p>
+							<div>{{event.date | date_formatter}}</div>
+
+							<p class="text-mute">Event Type</p>
+							<div class="h5">{{event.type}}</div>
+
+							<p class="text-mute">Description</p>
+							<div class="">{{event.description}}</div>
+
+							<p class="text-mute">Start Time</p>
+							<div class="">{{event.hourStart}}</div>
+
+							<p class="text-mute">End Time</p>
+							<div class="">{{event.hourEnd}}</div>
+						</div>
+					</div>
+					<br>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<div class="row">
+
+					<div class="col-lg-12">
+						<footer class="mt-3" id="profile-group">
+							<div class="cards overflow-auto">
+								<div class="card-content mb-3">
+									<h5 class="fw-bold">Event Map</h5>
+								</div>
+								<div class="card-body d-flex justify-content-between">
+									<div id="event-show-map" style="width: fit-content; height:300px;"></div>
+									<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
+									<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
+								</div>
+							</div>
+						</footer>
+					</div>
+					{% if event.accountId == accountId %}
+						<div class="col-lg-12">
+							<main>
+								<div class="cards">
+									<div class="card-content">
+										<h5 class="fw-bold">Participants Requests</h5>
+									</div>
+									<div class="card-body">
+										{% if eventParticipants | is_empty %}
+											<p>No Participant Requests yet.</p>
+										{% endif %}
+										<div style="overflow-y: auto; height: 50px;">
+											<ul>
+												{% for participant in eventParticipants %}
+													{% if participant.status == "pending" %}
+														<li>
+															<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{participant.username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
+														</li>
+													{% endif %}
+												{% endfor %}
+
+											</ul>
+										</div>
+									</div>
+								</div>
+							</main>
+						</div>
+					{% endif %}
+					<div class="col-lg-12">
+						<main>
+							<div class="cards">
+								<div class="card-content">
+									<h5 class="fw-bold">Participants</h5>
+									{% if event.accountId != accountId %}
+										<a href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register as Participant</a>
+										{%endif%}
+									</div>
+									<div class="card-body">
+										{% if eventParticipants | is_empty %}
+											<p>No Participant yet.</p>
+										{% endif %}
+										<div style="overflow-y: auto; height: 80px;">
+											<ul>
+												{% for participant in eventParticipants %}
+
+													{% if participant.status == "accepted" %}
+														<li>
+															<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
+														</li>
+													{% else %}
+														<p>No Participant yet.</p>
+													{% endif %}
+												{% endfor %}
+
+											</ul>
+										</div>
+									</div>
+								</div>
+							</main>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+		<script type="text/javascript" src="/javascript/script.js"></script>
+	{% endblock %}
