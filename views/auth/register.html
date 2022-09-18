@@ -83,7 +83,9 @@
 						<script>
 							swal({title: "Registration Success!", icon: "success", button: "Done"}).then(function () {
 								let lc = window.location;
-								let href = lc.origin + '/' + lc.pathname.split('/')[1] + 'auth/login';
+								let href = lc.origin + '/' + lc
+									.pathname
+									.split('/')[1] + 'auth/login';
 								window.location.href = href;
 							});
 						</script>
