@@ -16,7 +16,7 @@ function dropCollections() {
 
 function dropCollectionsExcept(name) {
 	for (var col of db.getCollectionNames()) {
-		if(col != name){
+		if (col != name) {
 			db.getCollection(col).drop()
 		}
 	}
@@ -24,11 +24,11 @@ function dropCollectionsExcept(name) {
 
 
 
-function getData(colName){
+function getData(colName) {
 	printjson(db.getCollection(colName).find())
 }
 
 
 listCollections()
-
-printjson(	db.getCollection("accounts").find())
+printjson(db.getCollection("accounts").find())
+printjson(db.getCollection("posts").find())

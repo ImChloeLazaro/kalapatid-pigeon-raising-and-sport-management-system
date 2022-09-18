@@ -9,9 +9,23 @@
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<form action="">
+				<form method="POST" action="{{ctx.DOMAIN_NAME}}/feeds/edit">
 					<div class="form-group d-flex">
-						<input type="text" class="form-control w-100">
+						<script>
+							$(".post-btn").on("click", function (event) {
+								let id = event
+									.target
+									.parentNode
+									.id
+									.split("-")[2];
+								let content = $("#post-" + id).text()
+
+								$("#edit-form-postId").val(id)
+								$("#edit-form-post").val(content)
+							})
+						</script>
+						<input id="edit-form-postId" name="postId" hidden="true">
+						<input id="edit-form-post" name="post" type="text" class="form-control w-100">
 						<button class="btn">Edit</button>
 					</div>
 				</form>

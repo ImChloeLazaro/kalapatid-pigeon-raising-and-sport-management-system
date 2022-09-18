@@ -8,7 +8,7 @@
     "test": "jest",
     "debug": "nodemon app.js",
     "dev1": "nodemon  app.js",
-    "dev2": "wr http://localhost:9000 && nodemon app.js",
+    "dev2": "wr http://localhost:8080 && nodemon app.js",
     "tun": "lt -p 9000 -s kalapatid-developer",
     "tun1": "ngrok http 9000",
     "tun2": "loophole http 9000 --hostname kalapatid-developer",

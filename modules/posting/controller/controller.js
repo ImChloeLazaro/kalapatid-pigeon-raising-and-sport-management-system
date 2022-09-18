@@ -97,6 +97,18 @@ const POST_POSTING = (req, res) => {
 }
 
 
+const POST_POST_EDIT = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let filter = { _id: new ObjectId(req.body.postId) }
+		let setUpdate = { post: req.body.post }
+		dbf.updatePostData(filter, setUpdate, (err) => {
+			redirectToPostView(res, err)
+		})
+
+	})
+}
+
+
 const POST_POST_DELETE = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let filter = { _id: new ObjectId(req.body.postId) }
@@ -140,5 +152,6 @@ module.exports = {
 	POST_POSTING: POST_POSTING,
 	POST_POST_DELETE: POST_POST_DELETE,
 	POST_POSTING_COMMENT: POST_POSTING_COMMENT,
-	POST_POSTING_COMMENT_DELETE: POST_POSTING_COMMENT_DELETE
+	POST_POSTING_COMMENT_DELETE: POST_POSTING_COMMENT_DELETE,
+	POST_POST_EDIT: POST_POST_EDIT
 }

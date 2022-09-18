@@ -20,13 +20,25 @@ function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, typ
 }
 
 
-function EventParticipant(eventId, accountId, clubId, username) {
+
+function EventParticipantRequest(eventId, clubId, epId) {
+	return {
+		_id: new ObjectId(),
+		eventId: new ObjectId(eventId),
+		clubId: new ObjectId(clubId),
+		epId: new ObjectId(epId)
+	}
+}
+
+function EventParticipant(eventId, accountId, clubId, username, status, info) {
 	return {
 		_id: new ObjectId(),
 		eventId: new ObjectId(eventId),
 		accountId: new ObjectId(accountId),
 		clubId: new ObjectId(clubId),
-		username: username
+		username: username,
+		status: status,
+		info: info
 	}
 }
 

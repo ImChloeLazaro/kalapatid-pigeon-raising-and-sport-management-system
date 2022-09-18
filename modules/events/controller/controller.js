@@ -155,6 +155,7 @@ const POST_ADD_PARTICIPANT = (req, res) => {
 
 
 
+
 const GET_PARTICIPANT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
@@ -180,6 +181,19 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 }
 
 
+const POST_PARTICIPANT_REQUEST = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let clubId = req.query.clubId
+		let partId = req.query.partId
+		return res.render("event/participant-request.html", {
+			ctx: globalConstants.ctx,
+			username: username,
+			accountId: accountId,
+		})
+	})
+}
+
+
 
 
 
@@ -191,6 +205,7 @@ module.exports = {
 	POST_ADD_PARTICIPANT: POST_ADD_PARTICIPANT,
 	GET_ADD_PARTICIPANT: GET_ADD_PARTICIPANT,
 	GET_PARTICIPANT: GET_PARTICIPANT,
-	GET_PARTICIPANT_REQUEST: GET_PARTICIPANT_REQUEST
+	GET_PARTICIPANT_REQUEST: GET_PARTICIPANT_REQUEST,
+	POST_PARTICIPANT_REQUEST: POST_PARTICIPANT_REQUEST
 }
 
