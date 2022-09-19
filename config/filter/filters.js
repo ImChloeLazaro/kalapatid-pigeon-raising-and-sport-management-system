@@ -164,6 +164,11 @@ function filters(env) {
 		let newDate = new Date(date)
 		return newDate.toLocaleDateString("en-US", options)
 	})
+
+
+	env.addFilter('compare', function (str, str2) {
+		return str === str2
+	})
 }
 
 

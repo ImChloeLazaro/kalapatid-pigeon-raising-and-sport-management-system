@@ -68,7 +68,7 @@
 									</div>
 									<div class="card-body">
 										{% if eventParticipants | is_empty %}
-											<p>No Participant Requests yet.</p>
+											<p>No Participant Requests..</p>
 										{% endif %}
 										<div style="overflow-y: auto; height: 50px;">
 											<ul>
@@ -77,6 +77,8 @@
 														<li>
 															<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{participant.username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
 														</li>
+													{%else %}
+														<p>No Participant Requests.</p>
 													{% endif %}
 												{% endfor %}
 
@@ -94,37 +96,51 @@
 									<h5 class="fw-bold">Participants</h5>
 									{% if event.accountId != accountId %}
 										<a href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register as Participant</a>
-										{%endif%}
-									</div>
-									<div class="card-body">
-										{% if eventParticipants | is_empty %}
-											<p>No Participant yet.</p>
-										{% endif %}
-										<div style="overflow-y: auto; height: 80px;">
-											<ul>
-												{% for participant in eventParticipants %}
+										{% for participant in eventParticipants %}
+											{% set partId = participant
+												.accountId
+												.toString() %}
 
-													{% if participant.status == "accepted" %}
-														<li>
-															<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
-														</li>
-													{% else %}
-														<p>No Participant yet.</p>
-													{% endif %}
-												{% endfor %}
+											{% if partId == accountId and participant.status != "accepted" %}
+												<div>
+													request status:
+													<span class="bg-warning m-1 p-1">
+														{{participant.status}}</span>
+												</div>
+												{%endif%}
+											{% endfor %}
 
-											</ul>
+											{%endif%}
+
+										</div>
+										<div class="card-body">
+											{% if eventParticipants | is_empty %}
+												<p>No Participant.</p>
+											{% endif %}
+											<div style="overflow-y: auto; height: 80px;">
+												<ul>
+													{% for participant in eventParticipants %}
+														{% if participant.status == "accepted" %}
+															<li>
+																<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
+															</li>
+														{% else %}
+															<p>No Participant.</p>
+														{% endif %}
+													{% endfor %}
+
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-							</main>
-						</div>
+								</main>
+							</div>
 
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-		<script type="text/javascript" src="/javascript/script.js"></script>
-	{% endblock %}
+			<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+			<script type="text/javascript" src="/javascript/script.js"></script>
+		{% endblock %}

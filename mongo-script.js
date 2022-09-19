@@ -30,5 +30,6 @@ function getData(colName) {
 
 
 listCollections()
-printjson(db.getCollection("accounts").find())
-printjson(db.getCollection("posts").find())
+// printjson(db.getCollection("accounts").find())
+printjson(db.getCollection("eventParticipants").find())
+// print(db.getCollection("eventParticipants").drop())

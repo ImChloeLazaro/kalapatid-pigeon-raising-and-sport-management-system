@@ -4,7 +4,8 @@ const { verifyLogin } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
-const { getAllClubDataBy } = require("../../clubs/db/db-functions")
+const { getAllClubDataBy } = require("../../clubs/db/db-functions");
+const { ctx } = require("../../../constants/constants");
 
 
 
@@ -112,62 +113,101 @@ const POST_CREATE_EVENT = (req, res) => {
 
 
 
-const GET_ADD_PARTICIPANT = (req, res) => {
-	verifyLogin(req, res, (accountId, username) => {
-		let eventId = req.params.eventId
-		dbf.getAllAcountData((err, docs) => {
-			let accounts = docs
-			let filter = { eventId: new ObjectId(eventId) }
-			dbf.getEventAllParticipantDataBy(filter, (err, docs) => {
-				let eventParticipants = docs
-				return res.render("event/add-participant.html", {
-					ctx: globalConstants.ctx,
-					eventId: eventId,
-					username: username,
-					accountId: accountId,
-					accounts: accounts,
-					eventParticipants: eventParticipants
-				})
-			})
-		})
-	})
-}
+// const GET_ADD_PARTICIPANT = (req, res) => {
+// 	verifyLogin(req, res, (accountId, username) => {
+// 		let eventId = req.params.eventId
+// 		dbf.getAllAcountData((err, docs) => {
+// 			let accounts = docs
+// 			let filter = { eventId: new ObjectId(eventId) }
+// 			dbf.getEventAllParticipantDataBy(filter, (err, docs) => {
+// 				let eventParticipants = docs
+// 				return res.render("event/add-participant.html", {
+// 					ctx: globalConstants.ctx,
+// 					eventId: eventId,
+// 					username: username,
+// 					accountId: accountId,
+// 					accounts: accounts,
+// 					eventParticipants: eventParticipants
+// 				})
+// 			})
+// 		})
+// 	})
+// }
 
 
-const POST_ADD_PARTICIPANT = (req, res) => {
-	verifyLogin(req, res, (accountId, username) => {
-		let eventParticipants = []
-		let eventId = req.params.eventId
-		let participants = req.body.participants
-		if (participants instanceof Array) {
-			participants.forEach(participant => {
-				eventParticipants.push(model.EventParticipant(eventId, participant["accountId"], participant["accountId"], participant["username"]))
-			})
-		}
-		console.log(eventParticipants);
-		dbf.insertManyEventParticipantData(eventParticipants, (err) => {
-			console.log(err)
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show/" + eventId)
-		})
-	})
-}
+// const POST_ADD_PARTICIPANT = (req, res) => {
+// 	verifyLogin(req, res, (accountId, username) => {
+// 		let eventParticipants = []
+// 		let eventId = req.params.eventId
+// 		let participants = req.body.participants
+// 		if (participants instanceof Array) {
+// 			participants.forEach(participant => {
+// 				eventParticipants.push(model.EventParticipant(eventId, participant["accountId"], participant["accountId"], participant["username"]))
+// 			})
+// 		}
+// 		console.log(eventParticipants);
+// 		dbf.insertManyEventParticipantData(eventParticipants, (err) => {
+// 			console.log(err)
+// 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show/" + eventId)
+// 		})
+// 	})
+// }
 
 
 
 
 
 const GET_PARTICIPANT = (req, res) => {
+	function query(clubId, eventId, partuName, fn) {
+		filter = { username: partuName, clubId: new ObjectId(clubId), eventId: new ObjectId(eventId) }
+		dbf.getEventParticipantDataBy(filter, (err, docs) => {
+			fn(err, docs)
+		})
+	}
 	verifyLogin(req, res, (accountId, username) => {
 		let partuName = req.query.username
 		let clubId = req.query.clubId
-		let partId = req.query.partId
-		return res.render("event/participant.html", {
-			ctx: globalConstants.ctx,
-			username: username,
-			accountId: accountId,
+		let eventId = req.query.eventId
+
+		query(clubId, eventId, partuName, (err, docs) => {
+			console.log(docs)
+			return res.render("event/participant.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				accountId: accountId,
+				partuName: partuName,
+				eventId: eventId,
+				clubId: clubId,
+				participant: docs
+			})
+		})
+
+	})
+}
+
+const UPDATE_PARTICIPANT = (req, res) => {
+	function query(clubId, eventId, partuName, status, fn) {
+		filter = { username: partuName, clubId: new ObjectId(clubId), eventId: new ObjectId(eventId) }
+		let setData = { status: status }
+		dbf.updateEventParticipantDataBy(filter, setData, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let partuName = req.body.partuName
+		let clubId = req.body.clubId
+		let eventId = req.body.eventId
+		let status = req.body.status
+
+		query(clubId, eventId, partuName, status, (err) => {
+			return res.redirect(ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
 }
+
+
+
+
 
 const GET_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -191,7 +231,13 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
 		let eventId = req.query.eventId
-		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, "pending", req.body.description)
+		let info = req.body.description;
+		let pigeons = req.body.pigeons;
+		let lat = req.body.lat;
+		let long = req.body.long;
+		let status = "pending";
+		console.log(req.body);
+		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long)
 		query(eventParticipant, (err) => {
 			console.log(err);
 			return res.render("event/participant-request.html", {
@@ -204,17 +250,13 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 }
 
 
-
-
-
 module.exports = {
 	GET_EVENT: GET_EVENT,
 	SHOW_EVENT_ID: SHOW_EVENT_ID,
 	GET_CREATE_EVENT: GET_CREATE_EVENT,
 	POST_CREATE_EVENT: POST_CREATE_EVENT,
-	POST_ADD_PARTICIPANT: POST_ADD_PARTICIPANT,
-	GET_ADD_PARTICIPANT: GET_ADD_PARTICIPANT,
 	GET_PARTICIPANT: GET_PARTICIPANT,
+	UPDATE_PARTICIPANT: UPDATE_PARTICIPANT,
 	GET_PARTICIPANT_REQUEST: GET_PARTICIPANT_REQUEST,
 	POST_PARTICIPANT_REQUEST: POST_PARTICIPANT_REQUEST
 }

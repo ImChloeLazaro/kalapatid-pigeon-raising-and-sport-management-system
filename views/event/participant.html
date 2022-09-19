@@ -1,51 +1,76 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
-		<div class="container-fluid">
-				<div class="row">
+	<div class="container-fluid">
+		<div class="row">
 
-						<div class="col-lg-3">
-								<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-										<h5 class="fw-bold">Participant</h5>
-								</div>
-
-								<div class="card-body">
-										<div class="w-100 text-center my-3">
-												<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
-										</div>
-										<div class="w-auto">
-												<div >
-														<p class=" text-mute ">Name</p>
-														<div class="text-mute h3">{{event.name}}</div>
-														<p class="text-mute">Description</p>
-														<div class="">{{event.description}}</div>
-
-												</div>
-										</div>
-										<br>
-								</div>
-						</div>
-
-						<div class="col-lg-8">
-								<div class="row">
-										<div class="col-lg-12">
-												<footer class="mt-3" id="profile-group">
-														<div class="cards overflow-auto">
-																<div class="card-content mb-3">
-																		<h5 class="fw-bold">Map</h5>
-																</div>
-																<div class="card-body d-flex justify-content-between">
-																		<div id="event-participant-show-map" style="width: fit-content; height:300px;"></div>
-																		<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventPartLocLong" value="{{event.long}}">
-																		<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventPartLocLat" value="{{event.lat}}">
-																</div>
-														</div>
-												</footer>
-										</div>
-								</div>
-						</div>
+			<div class="col-lg-3">
+				<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+					<h5 class="fw-bold">Participant</h5>
 				</div>
-		</div>
 
-		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventParticipantMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-		<script type="text/javascript" src="/javascript/script.js"></script>
+				<div class="card-body">
+					<div class="w-100 text-center my-3">
+						<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
+					</div>
+					<div class="w-auto">
+						<div >
+							<p class=" text-mute ">Name</p>
+							<div class="text-mute h3">{{participant.username}}</div>
+							<p class="text-mute">Description</p>
+							<div class="">{{participant.info}}</div>
+							<p class="text-mute">Number of Pigeons</p>
+							<div class="">{{participant.pigeons}}</div>
+						</div>
+					</div>
+					<br>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<div class="row">
+					<div class="col-lg-12">
+						<footer class="mt-3" id="profile-group">
+							<div class="cards overflow-auto">
+								<div class="card-content mb-3">
+									<h5 class="fw-bold">Map</h5>
+								</div>
+								<div class="card-body d-flex justify-content-between">
+									<div id="event-participant-show-map" style="width: fit-content; height:300px;"></div>
+									<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventPartLocLong" value="{{participant.long}}">
+									<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventPartLocLat" value="{{participant.lat}}">
+								</div>
+							</div>
+						</footer>
+					</div>
+				</div>
+			</div>
+			<span class="btn-container">
+				<form method="POST" class="d-inline-block" action="{{ctx.DOMAIN_NAME}}/events/participant/update">
+					<input type="text" name="partuName" value="{{partuName}}" hidden="true">
+					<input type="text" name="clubId" value="{{clubId}}" hidden="true">
+					<input type="text" name="eventId" value="{{eventId}}" hidden="true">
+					<input type="text" name="status" value="accepted" hidden="true">
+					<input class="btn " type="submit" value="accept">
+				</form>
+				<input class="btn d-inline-block" id="part-cancel-btn" type="button" value="cancel">
+				<script>
+					$("#part-cancel-btn").click((e) => {
+						let domain = location
+							.href
+							.split("/")[3]
+						let origin = location.origin
+						let params = new URL(location.href).searchParams
+						let clubId = params.get("clubId")
+						let eventId = params.get("eventId")
+						let href = `${origin}/${domain}/events/show?eventId=${eventId}&clubId=${clubId}`
+						window.location.href = href
+
+					})
+				</script>
+			</div>
+		</div>
+	</div>
+
+	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventParticipantMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+	<script type="text/javascript" src="/javascript/script.js"></script>
 {% endblock %}

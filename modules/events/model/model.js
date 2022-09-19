@@ -22,7 +22,7 @@ function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, typ
 
 
 
-function EventParticipant(eventId, accountId, clubId, username, status, info) {
+function EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long) {
 	return {
 		_id: new ObjectId(),
 		eventId: new ObjectId(eventId),
@@ -30,7 +30,10 @@ function EventParticipant(eventId, accountId, clubId, username, status, info) {
 		clubId: new ObjectId(clubId),
 		username: username,
 		status: status,
-		info: info
+		info: info,
+		pigeons: pigeons,
+		lat: lat,
+		long: long
 	}
 }
 

@@ -1,6 +1,7 @@
 const globalConstants = require("../../../constants/constants")
 const { verifyLogin } = require("../../../lib/toolkit")
-
+const { getClubAllMemberDataBy, getAllClubDataBy } = require("../../clubs/db/db-functions")
+const { getEventAllParticipantDataBy, getAllEventDataBy } = require("../../events/db/db-functions")
 const dbf = require('../db/db-functions')
 
 
@@ -20,20 +21,38 @@ const GET_PROFILE = (req, res) => {
 				let profileFilter = { accountId: accData._id }
 				dbf.getProfileDataBy(profileFilter, (err, docs) => {
 					let profileData = docs
-					return res.render("profile/profile.html", {
-						ctx: globalConstants.ctx,
-						accountId: accountId,
-						username: username,
-						othername: othername,
-						accData: accData,
-						addrData: addrData,
-						profileData: profileData
+					getClubAllMemberDataBy(profileFilter, (err, docs) => {
+						let clubMembers = docs
+						getEventAllParticipantDataBy(profileFilter, (err, docs) => {
+							let eventParticipants = docs
+							getAllClubDataBy({}, (err, docs) => {
+								let clubs = docs
+								getAllEventDataBy({}, (err, docs) => {
+									let events = docs
+									return res.render("profile/profile.html", {
+										ctx: globalConstants.ctx,
+										accountId: accountId,
+										username: username,
+										othername: othername,
+										accData: accData,
+										addrData: addrData,
+										profileData: profileData,
+										clubMembers: clubMembers,
+										eventParticipants: eventParticipants,
+										clubs: clubs,
+										events: events
+									})
+								})
+							})
+						})
 					})
 				})
 			})
 		})
 	})
 }
+
+
 
 
 const EDIT_PROFILE = (req, res) => {

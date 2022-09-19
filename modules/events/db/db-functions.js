@@ -66,6 +66,25 @@ function getEventAllParticipantDataBy(filter, fn) {
 	})
 }
 
+
+function getEventParticipantDataBy(filter, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.findOne(filter, (err, docs) => {
+			if (err) console.log(err)
+			fn(err, docs)
+		})
+	})
+}
+function updateEventParticipantDataBy(filter, setData, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.updateOne(filter, { $set: setData }, (err) => {
+			fn(err)
+		})
+	})
+}
+
+
+
 function getAllAcountData(fn) {
 	db.getCollection("accounts", (col) => {
 		col.find().toArray((err, docs) => {
@@ -86,5 +105,6 @@ module.exports = {
 	getEventAllParticipantDataBy: getEventAllParticipantDataBy,
 
 	insertEventParticipantData: insertEventParticipantData,
-
+	getEventParticipantDataBy: getEventParticipantDataBy,
+	updateEventParticipantDataBy: updateEventParticipantDataBy
 }
