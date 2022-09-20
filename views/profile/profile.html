@@ -26,7 +26,7 @@
               <form method="post" class="position-relative" style="bottom: 20px; left: 120px; z-index: 100;">
                 <input class="opacity-0" type="file" name="" id="">
               </form>
-              <i class="fa-solid fa-camera position-absolute" style="top: 62%; right: 42%; font-size: 20px;" ></i>
+              <i class="fa-solid fa-camera position-absolute" style="top: 62%; right: 42%; font-size: 20px;"></i>
             </div>
             <p class="text-muted text-center" id="profile-id">{{accData.firstName}}
               {{accData.middleName}}
@@ -49,7 +49,7 @@
               <div class="d-flex px-2">
                 <p class="fw-bold me-2">Address</p>
                 <p>{{addrData.houseAddr}},
-                {{addrData.town}},{{addrData.province}}</p>
+                  {{addrData.town}},{{addrData.province}}</p>
               </div>
               <div class="d-flex px-2">
                 <p class="fw-bold me-2">Birthday</p>
@@ -113,30 +113,6 @@
                                     {% if p.status == "accepted" %}
                                       <p class="bg-success d-inline text-white m-1 p-1">
                                         {{p.status}}</p>
-                  <div class="col-lg-12">
-                    <footer class="mt-3" id="profile-group">
-                      <div class="cards overflow-auto">
-                        <div class="card-content mb-3">
-                          <h5 class="fw-bold">Clubs Joined</h5>
-                        </div>
-                        <div class="card-body d-flex justify-content-between">
-                          <table class="table table-borderless">
-                            <tbody id="profile-club">
-                              {% for c in clubs %}
-                                {% for m in clubMembers %}
-                                  {% if m
-                                    .clubId
-                                    .toString() | compare(c._id.toString()) %}
-
-                                    <tr>
-
-                                      <td>
-                                        <a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
-                                          <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
-                                        <span class="mx-2 text-dark">
-                                          {{c.name}}
-                                        </span>
-                                      </a>
 
                                     {% elif p.status == "pending" %}
                                       <p class="bg-warning d-inline text-white m-1 p-1">
