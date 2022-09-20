@@ -4,7 +4,7 @@ const { verifyLogin } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
-const { getAllClubDataBy } = require("../../clubs/db/db-functions");
+const { getAllClubDataBy, getClubAllMemberDataBy } = require("../../clubs/db/db-functions");
 const { ctx } = require("../../../constants/constants");
 
 
@@ -18,17 +18,23 @@ const GET_EVENT = (req, res) => {
 			getAllClubDataBy({}, (err, docs) => {
 				if (err) return
 				let clubs = docs
-				fn(events, clubs)
+				getClubAllMemberDataBy({}, (err, docs) => {
+					if (err) return
+					let clubMembers = docs
+					fn(events, clubs, clubMembers)
+				})
 			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query((events, clubs) => {
+		query((events, clubs, clubMembers) => {
 			return res.render("event/index.html", {
 				ctx: globalConstants.ctx,
+				accountId: accountId,
 				username: username,
 				events: events,
-				clubs: clubs
+				clubs: clubs,
+				clubMembers: clubMembers
 			})
 		})
 	})
@@ -109,52 +115,6 @@ const POST_CREATE_EVENT = (req, res) => {
 		})
 	})
 }
-
-
-
-
-// const GET_ADD_PARTICIPANT = (req, res) => {
-// 	verifyLogin(req, res, (accountId, username) => {
-// 		let eventId = req.params.eventId
-// 		dbf.getAllAcountData((err, docs) => {
-// 			let accounts = docs
-// 			let filter = { eventId: new ObjectId(eventId) }
-// 			dbf.getEventAllParticipantDataBy(filter, (err, docs) => {
-// 				let eventParticipants = docs
-// 				return res.render("event/add-participant.html", {
-// 					ctx: globalConstants.ctx,
-// 					eventId: eventId,
-// 					username: username,
-// 					accountId: accountId,
-// 					accounts: accounts,
-// 					eventParticipants: eventParticipants
-// 				})
-// 			})
-// 		})
-// 	})
-// }
-
-
-// const POST_ADD_PARTICIPANT = (req, res) => {
-// 	verifyLogin(req, res, (accountId, username) => {
-// 		let eventParticipants = []
-// 		let eventId = req.params.eventId
-// 		let participants = req.body.participants
-// 		if (participants instanceof Array) {
-// 			participants.forEach(participant => {
-// 				eventParticipants.push(model.EventParticipant(eventId, participant["accountId"], participant["accountId"], participant["username"]))
-// 			})
-// 		}
-// 		console.log(eventParticipants);
-// 		dbf.insertManyEventParticipantData(eventParticipants, (err) => {
-// 			console.log(err)
-// 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show/" + eventId)
-// 		})
-// 	})
-// }
-
-
-
 
 
 const GET_PARTICIPANT = (req, res) => {
@@ -239,12 +199,7 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		console.log(req.body);
 		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long)
 		query(eventParticipant, (err) => {
-			console.log(err);
-			return res.render("event/participant-request.html", {
-				ctx: globalConstants.ctx,
-				username: username,
-				accountId: accountId,
-			})
+			return res.redirect(ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
 }

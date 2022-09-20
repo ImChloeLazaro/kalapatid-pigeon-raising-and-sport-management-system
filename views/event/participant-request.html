@@ -47,6 +47,21 @@
 				</div>
 			</div>
 			<input class="my-4 btn btn-success" type="submit" value="Send Request">
+			<input class="btn d-inline-block" id="part-cancel-btn" type="button" value="cancel">
+			<script>
+				$("#part-cancel-btn").click((e) => {
+					let domain = location
+						.href
+						.split("/")[3]
+					let origin = location.origin
+					let params = new URL(location.href).searchParams
+					let clubId = params.get("clubId")
+					let eventId = params.get("eventId")
+					let href = `${origin}/${domain}/events/show?eventId=${eventId}&clubId=${clubId}`
+					window.location.href = href
+
+				})
+			</script>
 		</form>
 	</div>
 

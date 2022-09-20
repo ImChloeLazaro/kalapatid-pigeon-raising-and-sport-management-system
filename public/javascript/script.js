@@ -1,10 +1,20 @@
 
 console.log("This is Client-side Event Script..")
+
+function getAddressByLocation(lat, long, callback) {
+	fetch(`https://nominatim.openstreetmap.org/search.php?q=${lat},${long}&polygon_geojson=1&format=json`)
+		.then(response => response.json())
+		.then(j => {
+			callback(j[0].display_name)
+		})
+}
 const hoverPinHandler = function (e) {
 	if (e.target.metadata) {
 		infobox.setOptions({
 			location: e.target.getLocation(),
+			title: e.target.metadata.title,
 			description: e.target.metadata.description,
+			showCloseButton: false,
 			visible: true
 		});
 	}
@@ -12,7 +22,8 @@ const hoverPinHandler = function (e) {
 
 const outPinHandler = function () {
 	infobox.setOptions({
-		visible: false
+		visible: false,
+
 	})
 }
 
@@ -34,7 +45,6 @@ function GetCreateEventMap() {
 		});
 	}
 	getLocationFromMap(map, function (lat, long) {
-		console.log(lat, long)
 		$('#eventLocLat').val(lat)
 		$('#eventLocLong').val(long)
 	})
@@ -54,9 +64,13 @@ function GetCreateEventMap() {
 		var pin = new Microsoft.Maps.Pushpin(mylocation, {
 			icon: "/images/pin.png"
 		});
-		pin.metadata = {
-			description: 'Your Current Location'
-		}
+		getAddressByLocation(latitude, longitude, (address) => {
+			pin.metadata = {
+				title: "Choice Location",
+				description: address
+			}
+		})
+
 		map.entities.push(pin)
 
 		map.setView({
@@ -83,10 +97,16 @@ function GetCreateEventMap() {
 			});
 
 			map.entities.pop();
-			console.dir(map.entities)
-			pin.metadata = {
-				description: 'Selected Location'
-			}
+
+
+			getAddressByLocation(lat, long, (address) => {
+				pin.metadata = {
+					title: "Current Location",
+					description: address
+				}
+			})
+
+
 			map.entities.push(pin);
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
@@ -129,9 +149,14 @@ function GetShowEventMap() {
 
 		var pin = new Microsoft.Maps.Pushpin(mylocation);
 		map.entities.push(pin)
-		pin.metadata = {
-			description: 'Your Location'
-		}
+
+
+		getAddressByLocation(latitude, longitude, (address) => {
+			pin.metadata = {
+				title: "Current Location",
+				description: address
+			}
+		})
 		Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 		Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 
@@ -142,9 +167,14 @@ function GetShowEventMap() {
 			let pin = new Microsoft.Maps.Pushpin(loc, {
 				icon: "/images/pin.png"
 			})
-			pin.metadata = {
-				description: 'Event Location'
-			}
+
+			getAddressByLocation(lat, long, (address) => {
+				pin.metadata = {
+					title: $("#eventName").text(),
+					description: address
+				}
+			})
+
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 			map.entities.push(pin)
@@ -186,16 +216,22 @@ function GetShowEventParticipantMap() {
 		var mylocation = new Microsoft.Maps.Location(latitude, longitude);
 
 		infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
-			visible: false
+			visible: false,
 		});
 		infobox.setMap(map);
 
 
 		var pin = new Microsoft.Maps.Pushpin(mylocation);
 		map.entities.push(pin)
-		pin.metadata = {
-			description: 'Your Location'
-		}
+
+		getAddressByLocation(latitude, longitude, (address) => {
+			pin.metadata = {
+				title: "Current Location",
+				description: address
+			}
+		})
+
+
 		Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 		Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 
@@ -206,9 +242,13 @@ function GetShowEventParticipantMap() {
 			let pin = new Microsoft.Maps.Pushpin(loc, {
 				icon: "/images/pin.png"
 			})
-			pin.metadata = {
-				description: 'Event Location'
-			}
+
+			getAddressByLocation(lat, long, (address) => {
+				pin.metadata = {
+					title: "Current Location",
+					description: address
+				}
+			})
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 			map.entities.push(pin)
@@ -262,9 +302,12 @@ function GetShowProfileMap() {
 
 		var pin = new Microsoft.Maps.Pushpin(mylocation);
 		map.entities.push(pin)
-		pin.metadata = {
-			description: 'Your Location'
-		}
+		getAddressByLocation(latitude, longitude, (address) => {
+			pin.metadata = {
+				title: "Current Location",
+				description: address
+			}
+		})
 		Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 		Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 
@@ -275,9 +318,12 @@ function GetShowProfileMap() {
 			let pin = new Microsoft.Maps.Pushpin(loc, {
 				icon: "/images/pin.png"
 			})
-			pin.metadata = {
-				description: 'Event Location'
-			}
+			getAddressByLocation(lat, long, (address) => {
+				pin.metadata = {
+					title: "Current Location",
+					description: address
+				}
+			})
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)
 			Microsoft.Maps.Events.addHandler(pin, 'mouseout', outPinHandler)
 			map.entities.push(pin)
@@ -304,4 +350,3 @@ function GetShowProfileMap() {
 	}
 
 }
-

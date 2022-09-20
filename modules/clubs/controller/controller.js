@@ -40,7 +40,6 @@ const SHOW_CLUB_ID = (req, res) => {
 				getAllEventDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
 					if (err) return
 					let events = docs
-					console.log(events);
 					fn(club, clubMembers, events)
 				})
 			})
@@ -93,7 +92,7 @@ const POST_CREATE_CLUB = (req, res) => {
 		let date = datetimenow()
 		let description = req.body.description
 		let clubModel = model.Club(name, date, description, accountId, username)
-		let clubMemberModel = model.ClubMember(clubModel._id.toString(), accountId, username, "admin")
+		let clubMemberModel = model.ClubMember(clubModel._id.toString(), accountId, username, "admin", "accepted")
 		query(clubModel, clubMemberModel, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
 		})
@@ -102,44 +101,51 @@ const POST_CREATE_CLUB = (req, res) => {
 
 
 
-const GET_ADD_MEMBER = (req, res) => {
+const POST_MEMBERSHIP_REQUEST = (req, res) => {
+	function query(data, fn) {
+		dbf.insertClubMemberData(data, (err) => {
+			fn(err)
+		})
+
+	}
 	verifyLogin(req, res, (accountId, username) => {
-		let clubId = req.params.clubId
-		dbf.getAllAcountData((err, docs) => {
-			let accounts = docs
-			let filter = { clubId: new ObjectId(clubId) }
-			dbf.getClubAllMemberDataBy(filter, (err, docs) => {
-				let clubMembers = docs
-				return res.render("club/add-member.html", {
-					ctx: globalConstants.ctx,
-					clubId: clubId,
-					username: username,
-					accountId: accountId,
-					accounts: accounts,
-					clubMembers: clubMembers
-				})
-			})
+		let clubId = req.body.clubId
+		let clubMember = model.ClubMember(clubId, accountId.toString(), username, "user", "pending")
+		query(clubMember, (docs) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
 	})
 }
 
 
-const POST_ADD_MEMBER = (req, res) => {
-	verifyLogin(req, res, (accountId, username) => {
-		let clubmembers = []
-		let clubId = req.params.clubId
-		let members = req.body.members
-		if (members instanceof Array) {
-			members.forEach(member => {
-				clubmembers.push(model.ClubMember(clubId, member["accountId"], member["username"], member["memberStatus"]))
+const POST_MEMBERSHIP_HANDLE_REQUEST = (req, res) => {
+	function query(filter, setUpdate, fn) {
+		if (setUpdate.memberStatus === "declined") {
+			console.log(filter, setUpdate, "declined");
+			dbf.deleteClubMemberData(filter, (err) => {
+				fn(err)
+			})
+		} else if (setUpdate.memberStatus === "accepted") {
+			console.log(filter, setUpdate, "accepted");
+			dbf.updateClubMemberData(filter, setUpdate, (err) => {
+				fn(err)
 			})
 		}
-		dbf.insertManyClubMemberData(clubmembers, (err) => {
-			console.log(err)
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show/" + clubId)
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let id = req.body.id;
+		let accId = req.body.accId;
+		let clubId = req.body.clubId
+		let status = req.body.status;
+
+		let filter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
+		let setUpdate = { memberStatus: status }
+		query(filter, setUpdate, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
 	})
 }
+
 
 
 
@@ -148,7 +154,7 @@ module.exports = {
 	SHOW_CLUB_ID: SHOW_CLUB_ID,
 	GET_CREATE_CLUB: GET_CREATE_CLUB,
 	POST_CREATE_CLUB: POST_CREATE_CLUB,
-	GET_ADD_MEMBER: GET_ADD_MEMBER,
-	POST_ADD_MEMBER: POST_ADD_MEMBER
+	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,
+	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST
 }
 

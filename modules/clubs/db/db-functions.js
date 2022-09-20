@@ -68,9 +68,35 @@ function insertClubMemberData(data, fn) {
 
 
 
-function insertManyClubMemberData(array, fn) {
+function updateClubMemberData(filter, setUpdate, fn) {
 	db.getCollection("clubMembers", (col) => {
-		col.insertMany(array, (err) => {
+		col.findOne(filter, (err, docs) => {
+			console.log(docs);
+		})
+		col.updateOne(filter, { $set: setUpdate }, (err) => {
+			console.log("updateClubMembers Data.");
+			fn(err)
+		})
+	})
+}
+
+
+
+
+function deleteClubMemberData(filter, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.findOne(filter, (err, docs) => {
+			console.log(docs);
+		})
+		col.deleteOne(filter, (err) => {
+			console.log("deleteClubMember Data.");
+			fn(err)
+		})
+	})
+}
+function insertClubMemberData(data, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)
 		})
@@ -84,5 +110,7 @@ module.exports = {
 	insertClubData: insertClubData,
 	insertClubMemberData: insertClubMemberData,
 	getAllAcountData: getAllAcountData,
-	insertManyClubMemberData: insertManyClubMemberData
+	insertClubMemberData: insertClubMemberData,
+	updateClubMemberData: updateClubMemberData,
+	deleteClubMemberData: deleteClubMemberData
 }

@@ -1,24 +1,24 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
-		<div class="container">
-				<h1>Create Club</h1>
-				<div class="container club-form-container">
-						<form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
-								<div class="form-group w-50">
+	<div class="container">
+		<h1>Create Club</h1>
+		<div class="container club-form-container">
+			<form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
+				<div class="form-group w-50">
 
-										<div class="my-4">
-												<label for="clubName">Club Name</label>
-												<input class="form-control form-control-sm " name="clubName" type="text" placeholder="Club Name">
-										</div>
-										<div class="my-4">
-												<label for="description">
-														Description</label>
-												<textarea class="d-block" name="description" placeholder="Event Discription" id="" cols="80" rows="10"></textarea>
-										</div>
+					<div class="my-4">
+						<label for="clubName">Club Name</label>
+						<input class="form-control form-control-sm " name="clubName" type="text" placeholder="Club Name">
+					</div>
+					<div class="my-4">
+						<label for="description">
+							Description</label>
+						<textarea class="d-block" name="description" placeholder="Event Discription" id="" cols="80" rows="10"></textarea>
+					</div>
 
-										<input class="my-4" type="submit" value="Save">
-								</div>
-						</form>
+					<input class="btn btn-success my-4" type="submit" value="Save">
 				</div>
+			</form>
 		</div>
+	</div>
 {% endblock %}

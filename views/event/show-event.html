@@ -6,6 +6,13 @@
 			<div class="col-lg-3">
 				<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 					<h5 class="fw-bold">Event</h5>
+					<div class="d-flex">
+						{% if event.accountId == accountId %}
+							<a href="#">
+								<i class="icons fa-solid fa-gear"></i>
+							</a>
+						{% endif %}
+					</div>
 				</div>
 
 				<div class="card-body">
@@ -15,7 +22,7 @@
 					<div class="w-auto">
 						<div >
 							<p class=" text-mute ">Event Name</p>
-							<div class="text-mute h3">{{event.name}}</div>
+							<div id="eventName" class="text-mute h3">{{event.name}}</div>
 							<p class="text-mute">Club Name</p>
 							<div>{{event.clubName}}</div>
 							<p class="text-mute">Event Creator</p>
@@ -36,96 +43,67 @@
 
 							<p class="text-mute">End Time</p>
 							<div class="">{{event.hourEnd}}</div>
-						</div>
-					</div>
-					<br>
-				</div>
-			</div>
 
-			<div class="col-lg-8">
-				<div class="row">
+							{%set counter = 0 -%}
+							{%set isAccepted = false %}
+							{% for p in eventParticipants %}
+								{% if p.accountId != accountId %}
+									{%set counter = counter + s1 -%}
+								{% endif %}
 
-					<div class="col-lg-12">
-						<footer class="mt-3" id="profile-group">
-							<div class="cards overflow-auto">
-								<div class="card-content mb-3">
-									<h5 class="fw-bold">Event Map</h5>
-								</div>
-								<div class="card-body d-flex justify-content-between">
-									<div id="event-show-map" style="width: fit-content; height:300px;"></div>
-									<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-									<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
-								</div>
+								{% if p.status == "accepted"%}
+									{%set isAccepted = true %}
+								{% endif %}
+
+							{% endfor %}
+
+							{% if event.creatorName != username %}
+								{% if counter == 0 and not isAccepted %}
+									<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
+								{% endif %}
+								{%endif%}
+
 							</div>
-						</footer>
+						</div>
+						<br>
 					</div>
-					{% if event.accountId == accountId %}
-						<div class="col-lg-12">
-							<main>
-								<div class="cards">
-									<div class="card-content">
-										<h5 class="fw-bold">Participants Requests</h5>
-									</div>
-									<div class="card-body">
-										{% if eventParticipants | is_empty %}
-											<p>No Participant Requests..</p>
-										{% endif %}
-										<div style="overflow-y: auto; height: 50px;">
-											<ul>
-												{% for participant in eventParticipants %}
-													{% if participant.status == "pending" %}
-														<li>
-															<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{participant.username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
-														</li>
-													{%else %}
-														<p>No Participant Requests.</p>
-													{% endif %}
-												{% endfor %}
+				</div>
 
-											</ul>
-										</div>
+				<div class="col-lg-8">
+					<div class="row">
+
+						<div class="col-lg-12">
+							<footer class="mt-3" id="profile-group">
+								<div class="cards overflow-auto">
+									<div class="card-content mb-3">
+										<h5 class="fw-bold">Event Map</h5>
+									</div>
+									<div class="card-body d-flex justify-content-between">
+										<div id="event-show-map" style="width: fit-content; height:300px;"></div>
+										<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
+										<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
 									</div>
 								</div>
-							</main>
+							</footer>
 						</div>
-					{% endif %}
-					<div class="col-lg-12">
-						<main>
-							<div class="cards">
-								<div class="card-content">
-									<h5 class="fw-bold">Participants</h5>
-									{% if event.accountId != accountId %}
-										<a href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register as Participant</a>
-										{% for participant in eventParticipants %}
-											{% set partId = participant
-												.accountId
-												.toString() %}
-
-											{% if partId == accountId and participant.status != "accepted" %}
-												<div>
-													request status:
-													<span class="bg-warning m-1 p-1">
-														{{participant.status}}</span>
-												</div>
-												{%endif%}
-											{% endfor %}
-
-											{%endif%}
-
+						{% if event.accountId == accountId %}
+							<div class="col-lg-12">
+								<main>
+									<div class="cards">
+										<div class="card-content">
+											<h5 class="fw-bold">Participants Requests</h5>
 										</div>
 										<div class="card-body">
 											{% if eventParticipants | is_empty %}
-												<p>No Participant.</p>
+												<p>No Participant Requests..</p>
 											{% endif %}
-											<div style="overflow-y: auto; height: 80px;">
+											<div style="overflow-y: auto; height: 50px;">
 												<ul>
 													{% for participant in eventParticipants %}
-														{% if participant.status == "accepted" %}
-															<li>
-																<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
-															</li>
-														{% else %}
-															<p>No Participant.</p>
+														{% if participant.status != "pending" %}
+															<p class="text-center">No Participant Requests.</p>
+														{%else %}
+															<a href="{{ctx.DOMAIN_NAME}}/events/participant?username={{participant.username}}&clubId={{clubId}}&eventId={{participant.eventId}}">{{participant.username}}</a>
 														{% endif %}
 													{% endfor %}
 
@@ -135,12 +113,59 @@
 									</div>
 								</main>
 							</div>
+						{% endif %}
+						<div class="col-lg-12">
+							<main>
+								<div class="cards">
+									<div class="card-content">
+										<h5 class="fw-bold">Participants</h5>
+										{% if event.accountId != accountId %}
+											{% for participant in eventParticipants %}
+												{% set partId = participant
+													.accountId
+													.toString() %}
 
+												{% if partId == accountId and participant.status != "accepted" %}
+													<div>
+														request status:
+														<span class="bg-warning m-1 p-1">
+															{{participant.status}}</span>
+													</div>
+													{%endif%}
+
+												{% endfor %}
+
+												{%endif%}
+
+											</div>
+											<div class="card-body">
+												{% if eventParticipants | is_empty %}
+													<p>No Participant.</p>
+												{% endif %}
+												<div style="overflow-y: auto; height: 80px;">
+													<ul>
+														{% for participant in eventParticipants %}
+															{% if participant.status == "accepted" %}
+																<li>
+																	<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
+																</li>
+															{% else %}
+																<p>No Participant.</p>
+															{% endif %}
+														{% endfor %}
+
+													</ul>
+												</div>
+											</div>
+										</div>
+									</main>
+								</div>
+
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-			<script type="text/javascript" src="/javascript/script.js"></script>
-		{% endblock %}
+				<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+				<script type="text/javascript" src="/javascript/script.js"></script>
+			{% endblock %}

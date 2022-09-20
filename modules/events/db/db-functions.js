@@ -48,6 +48,7 @@ function insertManyEventParticipantData(array, fn) {
 
 function insertEventParticipantData(data, fn) {
 	db.getCollection("eventParticipants", (col) => {
+		col.createIndex({ "eventId": 1 }, { unique: true })
 		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)

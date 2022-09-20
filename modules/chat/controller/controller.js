@@ -30,6 +30,7 @@ const GET_CHATS = (req, res) => {
 	})
 }
 
+
 const GET_CHAT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId

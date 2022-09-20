@@ -14,13 +14,6 @@ function dropCollections() {
 	}
 }
 
-function dropCollectionsExcept(name) {
-	for (var col of db.getCollectionNames()) {
-		if (col != name) {
-			db.getCollection(col).drop()
-		}
-	}
-}
 
 
 
@@ -30,6 +23,11 @@ function getData(colName) {
 
 
 listCollections()
-// printjson(db.getCollection("accounts").find())
-printjson(db.getCollection("eventParticipants").find())
+// dropCollections()
+// // printjson(db.getCollection("accounts").find())
+// print(db.getCollection("events").drop())
+// print(db.getCollection("clubMembers").drop())
+// print(db.getCollection("clubs").drop())
 // print(db.getCollection("eventParticipants").drop())
+
+printjson(db.getCollection("eventParticipants").find())

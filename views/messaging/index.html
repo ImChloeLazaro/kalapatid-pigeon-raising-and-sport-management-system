@@ -4,7 +4,9 @@
     <h1 class="h2 fw-bolder mt-2">Messages</h1>
     <div class="msg-container  mt-4">
       {% if data | is_empty %}
-        <p class="text-dark text-center">No Messaging available!</p>
+        <div class="cards">
+          <p class="text-dark text-center">No Messaging available!</p>
+        </div>
       {% else %}
         {% include 'search/convo-search.html' %}
         <div class="cards">

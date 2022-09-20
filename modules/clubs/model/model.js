@@ -12,12 +12,13 @@ module.exports.Club = function Club(name, date, description, creatorId, founderN
 }
 
 
-module.exports.ClubMember = function ClubMember(clubId, accountId, username, memberStatus) {
+module.exports.ClubMember = function ClubMember(clubId, accountId, username, role, memberStatus) {
 	return {
 		_id: new ObjectId(),
 		clubId: new ObjectId(clubId),
 		accountId: new ObjectId(accountId),
 		username: username,
+		role: role,
 		memberStatus: memberStatus
 	}
 }
