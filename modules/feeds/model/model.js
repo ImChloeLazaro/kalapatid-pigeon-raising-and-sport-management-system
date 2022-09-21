@@ -1,5 +1,7 @@
 const ObjectId = require('mongodb').ObjectId
 
+
+
 function Post(accountId, username, datetime, post) {
 	return {
 		_id: new ObjectId(),
@@ -9,6 +11,10 @@ function Post(accountId, username, datetime, post) {
 		post: post
 	}
 }
+
+
+
+
 
 function Comment(accountId, postId, username, datetime, comment) {
 	return {

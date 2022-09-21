@@ -25,6 +25,7 @@ const GET_EVENT = (req, res) => {
 				})
 			})
 		})
+		
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query((events, clubs, clubMembers) => {
@@ -146,21 +147,29 @@ const GET_PARTICIPANT = (req, res) => {
 }
 
 const UPDATE_PARTICIPANT = (req, res) => {
-	function query(clubId, eventId, partuName, status, fn) {
-		filter = { username: partuName, clubId: new ObjectId(clubId), eventId: new ObjectId(eventId) }
-		let setData = { status: status }
-		dbf.updateEventParticipantDataBy(filter, setData, (err) => {
-			fn(err)
-		})
+	function query(filter, setUpdate, fn) {
+		if (setUpdate.status === "accepted") {
+			dbf.updateEventParticipantDataBy(filter, setUpdate, (err) => {
+				fn(err)
+			})
+		} else if (setUpdate.status === "declined") {
+			dbf.deleteEventParticipantDataBy(filter, (err) => {
+				fn(err)
+			})
+		}
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		let partuName = req.body.partuName
 		let clubId = req.body.clubId
 		let eventId = req.body.eventId
 		let status = req.body.status
+		console.log(req.body);
 
-		query(clubId, eventId, partuName, status, (err) => {
-			return res.redirect(ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
+		let filter = { username: partuName, clubId: new ObjectId(clubId), eventId: new ObjectId(eventId) }
+		let setUpdate = { status: status }
+
+		query(filter, setUpdate, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
 }
@@ -199,7 +208,7 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		console.log(req.body);
 		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long)
 		query(eventParticipant, (err) => {
-			return res.redirect(ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
 }

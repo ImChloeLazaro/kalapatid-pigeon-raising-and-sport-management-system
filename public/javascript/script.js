@@ -1,6 +1,43 @@
 
 console.log("This is Client-side Event Script..")
 
+var faded = {
+	"version": "1.0",
+	"settings": {
+		"landColor": "#35be95",
+		"shadedReliefVisible": false
+	},
+	"mapElement": {
+		"labelColor": "#FFFFFF",
+		"labelOutlineColor": "#000000"
+	},
+	"elements": {
+		"vegetation": {
+			"fillColor": "#20755c"
+		},
+		"naturalPoint": {
+			"visible": false,
+			"labelVisible": false
+		},
+		"transportation": {
+			"labelColor": "#000000"
+		},
+		"water": {
+			"fillColor": "#e2f5ff",
+			"labelColor": "#000000",
+		},
+		"structure": {
+			"fillColor": "#25483c"
+		},
+		"indigenousPeoplesReserve": {
+			"visible": true
+		},
+		"military": {
+			"visible": true
+		}
+	}
+}
+
 function getAddressByLocation(lat, long, callback) {
 	fetch(`https://nominatim.openstreetmap.org/search.php?q=${lat},${long}&polygon_geojson=1&format=json`)
 		.then(response => response.json())
@@ -28,12 +65,14 @@ const outPinHandler = function () {
 }
 
 function GetCreateEventMap() {
+
 	var map = new Microsoft.Maps.Map('#event-map', {
 		showDashboard: false,
 		showTermsLink: false,
 		showBreadcrumb: false,
 		enableClickableLogo: false,
-		liteMode: true
+		liteMode: true,
+		customMapStyle: faded
 	});
 
 
@@ -74,9 +113,9 @@ function GetCreateEventMap() {
 		map.entities.push(pin)
 
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			mapTypeIzd: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
-			zoom: 16,
+			zoom: 13,
 			padding: 80,
 			animate: true,
 			heading: 0,
@@ -130,12 +169,14 @@ function GetCreateEventMap() {
 
 
 function GetShowEventMap() {
+
 	var map = new Microsoft.Maps.Map('#event-show-map', {
 		showDashboard: false,
 		showTermsLink: false,
 		showBreadcrumb: false,
 		enableClickableLogo: false,
-		liteMode: true
+		liteMode: false,
+		customMapStyle: faded
 	});
 
 	function setLocationInMap(latitude, longitude) {
@@ -147,7 +188,9 @@ function GetShowEventMap() {
 		infobox.setMap(map);
 
 
-		var pin = new Microsoft.Maps.Pushpin(mylocation);
+		var pin = new Microsoft.Maps.Pushpin(mylocation, {
+			icon: '/images/cur-pin.png'
+		});
 		map.entities.push(pin)
 
 
@@ -180,14 +223,13 @@ function GetShowEventMap() {
 			map.entities.push(pin)
 		}
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
-			center: mylocation,
-			zoom: 16,
+			center: new Microsoft.Maps.Location(lat, long),
+			zoom: 13,
 			padding: 80,
 			animate: true,
 			heading: 0,
 			tilt: 0,
-			liteMode: true
+			liteMode: false
 		});
 	}
 
@@ -209,7 +251,8 @@ function GetShowEventParticipantMap() {
 		showTermsLink: false,
 		showBreadcrumb: false,
 		enableClickableLogo: false,
-		liteMode: true
+		liteMode: true,
+		customMapStyle: faded
 	});
 
 	function setLocationInMap(latitude, longitude) {
@@ -254,9 +297,8 @@ function GetShowEventParticipantMap() {
 			map.entities.push(pin)
 		}
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
-			center: mylocation,
-			zoom: 16,
+			center: new Microsoft.Maps.Location(lat, long),
+			zoom: 13,
 			padding: 80,
 			animate: true,
 			heading: 0,
@@ -288,7 +330,8 @@ function GetShowProfileMap() {
 		showTermsLink: false,
 		showBreadcrumb: false,
 		enableClickableLogo: false,
-		liteMode: true
+		liteMode: true,
+		customMapStyle: faded
 	});
 
 	function setLocationInMap(latitude, longitude) {
@@ -329,9 +372,9 @@ function GetShowProfileMap() {
 			map.entities.push(pin)
 		}
 		map.setView({
-			// mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+			mapTypeId: Microsoft.Maps.MapTypeId.aerial,
 			center: mylocation,
-			zoom: 16,
+			zoom: 13,
 			padding: 80,
 			animate: true,
 			heading: 0,

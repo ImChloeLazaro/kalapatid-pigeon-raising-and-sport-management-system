@@ -4,7 +4,10 @@
 		<div class="row">
 
 			<div class="col-lg-3">
-				<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+		
+				<div class="cards my-3">
+
+	<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 					<h5 class="fw-bold">Event</h5>
 					<div class="d-flex">
 						{% if event.accountId == accountId %}
@@ -15,7 +18,6 @@
 					</div>
 				</div>
 
-				<div class="card-body">
 					<div class="w-100 text-center my-3">
 						<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
 					</div>
@@ -23,25 +25,25 @@
 						<div >
 							<p class=" text-mute ">Event Name</p>
 							<div id="eventName" class="text-mute h3">{{event.name}}</div>
-							<p class="text-mute">Club Name</p>
+							<p class="text-mute fw-bold py-2">Club Name</p>
 							<div>{{event.clubName}}</div>
-							<p class="text-mute">Event Creator</p>
+							<p class="text-mute fw-bold py-2">Event Creator</p>
 							<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
 								<p>@{{event.creatorName}}</p>
 							</a>
-							<p class="text-mute">Creation Date</p>
+							<p class="text-mute fw-bold py-2">Creation Date</p>
 							<div>{{event.date | date_formatter}}</div>
 
-							<p class="text-mute">Event Type</p>
+							<p class="text-mute fw-bold py-2">Event Type</p>
 							<div class="h5">{{event.type}}</div>
 
-							<p class="text-mute">Description</p>
+							<p class="text-mute fw-bold py-2">Description</p>
 							<div class="">{{event.description}}</div>
 
-							<p class="text-mute">Start Time</p>
+							<p class="text-mute fw-bold py-2">Start Time</p>
 							<div class="">{{event.hourStart}}</div>
 
-							<p class="text-mute">End Time</p>
+							<p class="text-mute fw-bold py-2">End Time</p>
 							<div class="">{{event.hourEnd}}</div>
 
 							{%set counter = 0 -%}
@@ -95,7 +97,7 @@
 										</div>
 										<div class="card-body">
 											{% if eventParticipants | is_empty %}
-												<p>No Participant Requests..</p>
+												<p class="text-center">No Participant Requests..</p>
 											{% endif %}
 											<div style="overflow-y: auto; height: 50px;">
 												<ul>
@@ -128,8 +130,9 @@
 												{% if partId == accountId and participant.status != "accepted" %}
 													<div>
 														request status:
-														<span class="bg-warning m-1 p-1">
-															{{participant.status}}</span>
+														<div class="badge text-light" style="background: yellow!important">
+															{{participant.status}}
+														</div>
 													</div>
 													{%endif%}
 
@@ -140,17 +143,17 @@
 											</div>
 											<div class="card-body">
 												{% if eventParticipants | is_empty %}
-													<p>No Participant.</p>
+													<p class="text-center">No Participant.</p>
 												{% endif %}
 												<div style="overflow-y: auto; height: 80px;">
-													<ul>
+													<ul'>
 														{% for participant in eventParticipants %}
 															{% if participant.status == "accepted" %}
 																<li>
-																	<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
+																	<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{participant.username}}&clubId={{clubId}}&eventId={{event._id}}">@{{participant.username}}</a>
 																</li>
 															{% else %}
-																<p>No Participant.</p>
+																<p class="text-center">No Participant.</p>
 															{% endif %}
 														{% endfor %}
 

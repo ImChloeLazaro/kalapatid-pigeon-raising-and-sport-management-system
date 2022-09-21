@@ -83,7 +83,13 @@ function updateEventParticipantDataBy(filter, setData, fn) {
 		})
 	})
 }
-
+function deleteEventParticipantDataBy(filter, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.deleteOne(filter, (err) => {
+			fn(err)
+		})
+	})
+}
 
 
 function getAllAcountData(fn) {
@@ -107,5 +113,6 @@ module.exports = {
 
 	insertEventParticipantData: insertEventParticipantData,
 	getEventParticipantDataBy: getEventParticipantDataBy,
-	updateEventParticipantDataBy: updateEventParticipantDataBy
+	updateEventParticipantDataBy: updateEventParticipantDataBy,
+	deleteEventParticipantDataBy: deleteEventParticipantDataBy
 }

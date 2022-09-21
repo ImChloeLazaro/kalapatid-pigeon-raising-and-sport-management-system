@@ -21,13 +21,16 @@
           </div>
 
           <div class="card-body">
-            <div class="w-100 text-center my-3 position-relative">
+          <div class="w-100 text-center my-3">
+							<img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
+						</div>
+            {# <div class="w-100 text-center my-3 position-relative">
               <img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
               <form method="post" class="position-relative" style="bottom: 20px; left: 120px; z-index: 100;">
                 <input class="opacity-0" type="file" name="" id="">
               </form>
               <i class="fa-solid fa-camera position-absolute" style="top: 62%; right: 42%; font-size: 20px;"></i>
-            </div>
+            </div> #}
             <p class="text-muted text-center" id="profile-id">{{accData.firstName}}
               {{accData.middleName}}
               {{accData.lastName}}
@@ -109,16 +112,17 @@
                                     <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{p.eventId}}&clubId={{e.clubId}}">
                                       {{e.name}}</a>
                                   </td>
-                                  <td>participant status:
+                                  <td>
+                                      <p class='p-0 me-2 d-inline'>Participant Status:</p>
                                     {% if p.status == "accepted" %}
-                                      <p class="bg-success d-inline text-white m-1 p-1">
+                                      <p class="badge bg-sucess mb-1">
                                         {{p.status}}</p>
 
                                     {% elif p.status == "pending" %}
                                       <p class="bg-warning d-inline text-white m-1 p-1">
                                         {{p.status}}</p>
                                       {%endif%}
-                                    </td>
+                                  </td>
                                   </tr>
                                   {%endif%}
                                   {%endfor%}

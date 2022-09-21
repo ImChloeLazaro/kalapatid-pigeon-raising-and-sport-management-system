@@ -6,7 +6,7 @@ async function db() {
 	let client;
 	try {
 		let env = process.env
-		const client = new MongoClient(`mongodb://${env.DB_ADDR}:${env.DB_PORT}`)
+		const client = new MongoClient(env.MONGO_URL)
 		await client.connect()
 
 		let db = client.db(env.DB_NAME)
