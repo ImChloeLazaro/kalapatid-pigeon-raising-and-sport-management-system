@@ -11,7 +11,7 @@
 						<h5 class="fw-bold">Event</h5>
 						<div class="d-flex">
 							{% if event.accountId == accountId %}
-								<a href="#">
+								<a href="{{ctx.DOMAIN_NAME}}/events/edit?eventId={{event._id}}&clubId={{clubId}}">
 									<i class="icons fa-solid fa-gear"></i>
 								</a>
 							{% endif %}
@@ -158,30 +158,43 @@
 														<p class="text-center">No Participant.</p>
 													{% endif %}
 													<div style="overflow-y: auto; height: 80px;">
-														<ul class="list-unstyled">
-															{% for p in eventParticipants %}
-																{% if p.status == "accepted" %}
-																	<li>
-																		<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{event._id}}">
-																			<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																			<span>
-																				@{{p.username}}</span>
-																		</a>
-																	</li>
-																{% else %}
-																	<p class="text-center">no participant.</p>
-																{% endif %}
-															{% endfor %}
-														</ul>
+														<table class="table table-borderless">
+															<tbody>
+																{% for p in eventParticipants %}
+																	{% if p.status == "accepted" %}
+																		<tr>
+																			<td>
+																				<span>
+																					<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{event._id}}">
+																						<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																						<span>
+																							@{{p.username}}</span>
+																					</a>
+																				</span>
+																			</td>
+																			{% if event.creatorName == username %}
+																				<td>
+																					<button class="btn-sm btn-danger">remove</button>
+																				</td>
+																				{%endif%}
+																			</tr>
+																		{% else %}
+																			<tr>
+																				<p class="text-center">no participant.</p>
+																			</tr>
+																		{% endif %}
+																	{% endfor %}
+																</tbody>
+															</table>
+														</div>
 													</div>
 												</div>
-											</div>
-										</main>
+											</main>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-					<script type="text/javascript" src="/javascript/script.js"></script>
-				{% endblock %}
+						<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+						<script type="text/javascript" src="/javascript/script.js"></script>
+					{% endblock %}

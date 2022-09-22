@@ -80,6 +80,42 @@ const SHOW_EVENT_ID = (req, res) => {
 
 
 
+const EDIT_EVENT_ID = (req, res) => {
+	function query(accountId, eventId, clubId, fn) {
+		let eventIdObj = new ObjectId(eventId)
+		let clubIdObj = new ObjectId(clubId)
+
+		let filter = {
+			_id: eventIdObj,
+			clubId: clubIdObj
+		}
+		dbf.getEventDataBy(filter, (err, docs) => {
+			if (err) return
+			let event = docs
+			dbf.getEventAllParticipantDataBy({ eventId: eventIdObj }, (err, docs) => {
+				if (err) return
+				let eventParticipants = docs
+				fn(event, eventParticipants)
+			})
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
+			return res.render("event/edit-event.html", {
+				ctx: globalConstants.ctx,
+				accountId: accountId,
+				username: username,
+				clubId: req.query.clubId,
+				event: event,
+				eventParticipants: eventParticipants
+			})
+		})
+	})
+
+}
+
+
+
 
 const GET_CREATE_EVENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -232,6 +268,7 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 module.exports = {
 	GET_EVENT: GET_EVENT,
 	SHOW_EVENT_ID: SHOW_EVENT_ID,
+	EDIT_EVENT_ID: EDIT_EVENT_ID,
 	GET_CREATE_EVENT: GET_CREATE_EVENT,
 	POST_CREATE_EVENT: POST_CREATE_EVENT,
 	GET_PARTICIPANT: GET_PARTICIPANT,

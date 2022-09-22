@@ -12,16 +12,21 @@ const GET_CLUB = (req, res) => {
 		dbf.getAllClubDataBy({}, (err, docs) => {
 			if (err) return
 			let clubs = docs
-			fn(clubs)
+			dbf.getClubAllMemberDataBy({}, (err, docs) => {
+				if (err) return
+				let clubMembers = docs
+				fn(clubs, clubMembers)
+			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query((clubs) => {
+		query((clubs, clubMembers) => {
 			return res.render("club/index.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
 				username: username,
-				clubs: clubs
+				clubs: clubs,
+				clubMembers: clubMembers
 			})
 		})
 	})
@@ -58,6 +63,38 @@ const SHOW_CLUB_ID = (req, res) => {
 		})
 	})
 
+}
+
+
+
+const EDIT_CLUB_ID = (req, res) => {
+	function query(clubId, fn) {
+		dbf.getClubDataBy({ _id: new ObjectId(clubId) }, (err, docs) => {
+			if (err) return
+			let club = docs
+			dbf.getClubAllMemberDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
+				if (err) return
+				let clubMembers = docs
+				getAllEventDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
+					if (err) return
+					let events = docs
+					fn(club, clubMembers, events)
+				})
+			})
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		query(req.query.clubId, (club, clubMembers, events) => {
+			return res.render("club/edit-club.html", {
+				ctx: globalConstants.ctx,
+				accountId: accountId,
+				username, username,
+				club: club,
+				clubMembers: clubMembers,
+				events: events
+			})
+		})
+	})
 }
 
 
@@ -152,6 +189,7 @@ const POST_MEMBERSHIP_HANDLE_REQUEST = (req, res) => {
 module.exports = {
 	GET_CLUB: GET_CLUB,
 	SHOW_CLUB_ID: SHOW_CLUB_ID,
+	EDIT_CLUB_ID: EDIT_CLUB_ID,
 	GET_CREATE_CLUB: GET_CREATE_CLUB,
 	POST_CREATE_CLUB: POST_CREATE_CLUB,
 	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,

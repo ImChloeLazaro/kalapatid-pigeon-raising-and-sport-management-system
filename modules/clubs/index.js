@@ -4,10 +4,11 @@ const club = express.Router()
 
 club.get("/", controller.GET_CLUB)
 club.get("/show", controller.SHOW_CLUB_ID)
+club.get("/edit", controller.EDIT_CLUB_ID)
 club.get("/create", controller.GET_CREATE_CLUB)
 club.post("/create", controller.POST_CREATE_CLUB)
-// club.get("/add-member/:clubId", controller.GET_ADD_MEMBER)
-// club.post("/add-member/:clubId", controller.POST_ADD_MEMBER)
+
+
 club.post("/membership", controller.POST_MEMBERSHIP_HANDLE_REQUEST)
 club.post("/membership/request", controller.POST_MEMBERSHIP_REQUEST)
 module.exports = club;
