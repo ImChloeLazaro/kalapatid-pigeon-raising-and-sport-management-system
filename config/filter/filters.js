@@ -31,6 +31,10 @@ function filters(env) {
 	env.addFilter('is_empty_str', function (str) {
 		return str === null
 	})
+	env.addFilter('str', function (ob) {
+		return ob.toString()
+	})
+
 	env.addFilter('unique', function (arr) {
 		return [new Set(arr)]
 	})
@@ -132,7 +136,18 @@ function filters(env) {
 	env.addFilter('compare', function (str, str2) {
 		return str === str2
 	})
+
+
+	env.addFilter('isMatch', function (id1, id2) {
+		let id1str = id1.toString()
+		let id2str = id2.toString()
+		return id1str === id2str
+	})
+
+
+
 }
+
 
 
 

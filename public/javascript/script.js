@@ -168,6 +168,10 @@ function GetCreateEventMap() {
 
 
 
+
+
+
+
 function GetShowEventMap() {
 
 	var map = new Microsoft.Maps.Map('#event-show-map', {

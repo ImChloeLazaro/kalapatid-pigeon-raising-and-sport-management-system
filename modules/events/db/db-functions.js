@@ -3,6 +3,7 @@ const db = require('../../../database/datatabase')
 
 function insertEventData(data, fn) {
 	db.getCollection("events", (col) => {
+		col.createIndex({ "name": 1, "accountId": 1 }, { unique: true })
 		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)

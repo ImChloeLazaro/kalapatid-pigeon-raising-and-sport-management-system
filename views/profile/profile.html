@@ -21,9 +21,9 @@
           </div>
 
           <div class="card-body">
-          <div class="w-100 text-center my-3">
-							<img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
-						</div>
+            <div class="w-100 text-center my-3">
+              <img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
+            </div>
             {# <div class="w-100 text-center my-3 position-relative">
               <img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
               <form method="post" class="position-relative" style="bottom: 20px; left: 120px; z-index: 100;">
@@ -72,8 +72,9 @@
 
       <div class="col-lg-8">
         <div class="row">
+
           <div class="col-lg-12">
-            <footer class="mt-3" id="profile-group">
+            <footer class="mt-3">
               <div class="cards overflow-auto">
 
                 <div class="card-content mb-3">
@@ -103,9 +104,7 @@
                           {%set admin = true %}
                           {% for e in events %}
                             {% for p in eventParticipants %}
-                              {% if p
-                                .eventId
-                                .toString() | compare(e._id.toString()) %}
+                              {% if p.eventId | isMatch(e._id) %}
                                 {%set admin = false %}
                                 <tr>
                                   <td>
@@ -113,7 +112,7 @@
                                       {{e.name}}</a>
                                   </td>
                                   <td>
-                                      <p class='p-0 me-2 d-inline'>Participant Status:</p>
+                                    <p class='p-0 me-2 d-inline'>Participant Status:</p>
                                     {% if p.status == "accepted" %}
                                       <p class="badge bg-sucess mb-1">
                                         {{p.status}}</p>
@@ -122,7 +121,7 @@
                                       <p class="bg-warning d-inline text-white m-1 p-1">
                                         {{p.status}}</p>
                                       {%endif%}
-                                  </td>
+                                    </td>
                                   </tr>
                                   {%endif%}
                                   {%endfor%}
@@ -152,12 +151,8 @@
 
                                   {% for c in clubs %}
                                     {% for m in clubMembers %}
-                                      {% if m
-                                        .clubId
-                                        .toString() | compare(c._id.toString()) %}
-
+                                      {% if m.clubId | isMatch(c._id) %}
                                         <tr>
-
                                           <td>
                                             <a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
                                               <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>

@@ -9,33 +9,19 @@
         {% if events | is_empty %}
           <p>No events found.</p>
         {% endif %}
-
         {% set isAdmin=true%}
-        {% set isEmpty=false%}
+        {% set isClubMember=false%}
         {#  loop all clubs #}
         {% for c in clubs %}
           {# check if clubs is not empty then show club name #}
           {% for m in clubMembers %}
-
-            {% if c
-              ._id
-              .toString() == m
-              .clubId
-              .toString() %}
+            {% if c._id | isMatch(m.clubId) %}
               {# reverse loop  all events #}
               {% for e in events | reverse %}
-                {% if e.creatorName != username %}
-                  {% set isAdmin=false%}
-                {% endif %}
+
                 {# check if clubId is matched  with the clubId reference in event #}
-                {% if c
-                  ._id
-                  .toString() === e
-                  .clubId
-                  .toString()and m
-                  .accountId
-                  .toString() == accountId
-                  .toString() %}
+                {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId) %}
+                  {% set isClubMember = true%}
                   <div class="d-flex my-2">
                     <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id.toString()}}&clubId={{c._id.toString()}}">
                       <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
@@ -56,11 +42,11 @@
 
               {% endfor %}
             {% else %}
-              {% set isEmpty=true%}
+              {% set isEmpty = true %}
             {% endif %}
           {% endfor %}
         {% endfor %}
-        {% if not isAdmin and isEmpty %}
+        {% if not isClubMember %}
           <p class="text-center">No events.
           </p>
         {%endif %}

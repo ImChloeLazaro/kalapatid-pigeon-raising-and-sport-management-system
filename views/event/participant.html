@@ -8,18 +8,35 @@
 					<h5 class="fw-bold">Participant</h5>
 				</div>
 
-				<div class="card-body">
+				<div class="cards">
 					<div class="w-100 text-center my-3">
-						<img src="/images/events.jpg" style="width: 100px; height: 90px;" id="account-picture">
+						<img src="/images/profile.jpg" style="width: 100px; height: 90px;" id="account-picture">
 					</div>
 					<div class="w-auto">
 						<div >
-							<p class=" text-mute ">Name</p>
+							<p class=" text-mute ">Participant Name</p>
 							<div class="text-mute h3">{{participant.username}}</div>
 							<p class="text-mute">Description</p>
 							<div class="">{{participant.info}}</div>
 							<p class="text-mute">Number of Pigeons</p>
-							<div class="">{{participant.pigeons}}</div>
+							<div class="">{{participant.pigeons.length}}</div>
+							<p class="text-mute">Pigeons</p>
+							<div style="overflow-y: auto; height: 200px;">
+								<table class="table table-responsive">
+									<thead>
+										<th>#</th>
+										<th>SerialNo</th>
+									</thead>
+									<tbody>
+										{% for pigeon in participant.pigeons %}
+											<tr>
+												<td>{{pigeon.pigeonNumber}}</td>
+												<td>{{pigeon.serialNo}}</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					<br>

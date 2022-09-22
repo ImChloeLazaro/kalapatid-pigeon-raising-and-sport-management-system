@@ -1,6 +1,6 @@
 const ObjectId = require("mongodb").ObjectId
 
-function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName) {
+function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName, maxParticipants) {
 	return {
 		_id: new ObjectId(),
 		accountId: new ObjectId(accountId),
@@ -12,7 +12,7 @@ function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, typ
 		hourEnd: hourEnd,
 		type: type,
 		description: description,
-
+		maxParticipants: maxParticipants,
 		clubId: new ObjectId(clubId),
 		creatorName: username,
 		clubName: clubName
@@ -22,7 +22,7 @@ function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, typ
 
 
 
-function EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long) {
+function EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, pigeons) {
 	return {
 		_id: new ObjectId(),
 		eventId: new ObjectId(eventId),
@@ -31,12 +31,24 @@ function EventParticipant(eventId, accountId, clubId, username, status, info, pi
 		username: username,
 		status: status,
 		info: info,
-		pigeons: pigeons,
 		lat: lat,
-		long: long
+		long: long,
+		pigeons: pigeons,
+	}
+}
+
+function Pigeon(eventId, clubId, participantId, pigeonNumber, serialNo) {
+	return {
+		_id: new ObjectId(),
+		eventId: new ObjectId(eventId),
+		clubId: new ObjectId(clubId),
+		participantId: new ObjectId(participantId),
+		pigeonNumber: Number(pigeonNumber),
+		serialNo: serialNo
 	}
 }
 
 
 module.exports.Event = Event
 module.exports.EventParticipant = EventParticipant
+module.exports.Pigeon = Pigeon

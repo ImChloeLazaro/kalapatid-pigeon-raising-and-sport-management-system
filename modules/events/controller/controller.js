@@ -11,6 +11,7 @@ const { ctx } = require("../../../constants/constants");
 
 
 const GET_EVENT = (req, res) => {
+
 	function query(fn) {
 		dbf.getAllEventDataBy({}, (err, docs) => {
 			if (err) return
@@ -25,7 +26,7 @@ const GET_EVENT = (req, res) => {
 				})
 			})
 		})
-		
+
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query((events, clubs, clubMembers) => {
@@ -110,7 +111,8 @@ const POST_CREATE_EVENT = (req, res) => {
 		let hourEnd = req.body.hourEnd
 		let type = req.body.type
 		let description = req.body.description
-		let EventModel = model.Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName)
+		let maxParticipants = req.body.maxParticipants
+		let EventModel = model.Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName, maxParticipants)
 		query(accountId, EventModel, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
@@ -175,7 +177,7 @@ const UPDATE_PARTICIPANT = (req, res) => {
 }
 
 
-
+pigeonSerialGenerator("4")
 
 
 const GET_PARTICIPANT_REQUEST = (req, res) => {
@@ -190,6 +192,18 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 	})
 }
 
+function serialNoGenerator(number) {
+	return (number).toString().padStart(6, "0")
+}
+
+
+function pigeonSerialGenerator(eventId, clubId, participantId, numberOfPegions) {
+	let pigeons = []
+	for (let i = 1; i <= Number(numberOfPegions); i++) {
+		pigeons.push(model.Pigeon(eventId, clubId, participantId, i, serialNoGenerator(i)))
+	}
+	return pigeons;
+}
 
 const POST_PARTICIPANT_REQUEST = (req, res) => {
 	function query(data, fn) {
@@ -197,16 +211,17 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 			fn(err)
 		})
 	}
+
+
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
 		let eventId = req.query.eventId
 		let info = req.body.description;
-		let pigeons = req.body.pigeons;
 		let lat = req.body.lat;
 		let long = req.body.long;
 		let status = "pending";
-		console.log(req.body);
-		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, pigeons, lat, long)
+		let pigeons = pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons);
+		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, pigeons)
 		query(eventParticipant, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})

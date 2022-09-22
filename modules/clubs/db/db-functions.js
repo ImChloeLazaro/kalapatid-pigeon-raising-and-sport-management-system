@@ -96,6 +96,7 @@ function deleteClubMemberData(filter, fn) {
 }
 function insertClubMemberData(data, fn) {
 	db.getCollection("clubMembers", (col) => {
+		col.createIndex({ "clubId": 1, "username": 1, "accountId": 1 }, { unique: true })
 		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)
