@@ -73,6 +73,7 @@ const registrationSchema = {
 			},
 		}
 	},
+
 	password: {
 		isLength: { min: 5, max: 20 },
 		trim: true,
@@ -93,6 +94,8 @@ const registrationSchema = {
 		errorMessage: "Password must be at least 8 characters long, contain at least 1 lowercase, 1 uppercase, 1 number, and 1 symbol"
 	}
 }
+
+
 
 
 

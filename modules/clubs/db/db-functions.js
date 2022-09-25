@@ -103,6 +103,14 @@ function insertClubMemberData(data, fn) {
 		})
 	})
 }
+function removeClubMemberData(filter, fn) {
+	db.getCollection("clubMembers", (col) => {
+		col.deleteOne(filter, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
 
 module.exports = {
 	getAllClubDataBy: getAllClubDataBy,
@@ -113,5 +121,6 @@ module.exports = {
 	getAllAcountData: getAllAcountData,
 	insertClubMemberData: insertClubMemberData,
 	updateClubMemberData: updateClubMemberData,
-	deleteClubMemberData: deleteClubMemberData
+	deleteClubMemberData: deleteClubMemberData,
+	removeClubMemberData: removeClubMemberData
 }

@@ -6,6 +6,7 @@ const model = require('../model/model')
 
 const { getAllClubDataBy, getClubAllMemberDataBy } = require("../../clubs/db/db-functions");
 const { ctx } = require("../../../constants/constants");
+const { getEventAllParticipantDataBy } = require("../db/db-functions");
 
 
 
@@ -22,21 +23,27 @@ const GET_EVENT = (req, res) => {
 				getClubAllMemberDataBy({}, (err, docs) => {
 					if (err) return
 					let clubMembers = docs
-					fn(events, clubs, clubMembers)
+					getEventAllParticipantDataBy({}, (err, docs) => {
+						if (err) return
+						let eventParticipants = docs
+						fn(events, clubs, clubMembers, eventParticipants)
+					})
+
 				})
 			})
 		})
 
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query((events, clubs, clubMembers) => {
+		query((events, clubs, clubMembers, eventParticipants) => {
 			return res.render("event/index.html", {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
 				username: username,
 				events: events,
 				clubs: clubs,
-				clubMembers: clubMembers
+				clubMembers: clubMembers,
+				eventParticipants: eventParticipants
 			})
 		})
 	})
@@ -115,6 +122,24 @@ const EDIT_EVENT_ID = (req, res) => {
 }
 
 
+const POST_DELETE_EVENT = (req, res) => {
+	function query(accountId, eventId, clubId, fn) {
+		let eventIdObj = new ObjectId(eventId)
+		let clubIdObj = new ObjectId(clubId)
+		let filter = { _id: eventIdObj, clubId: clubIdObj }
+		let delAlPartfilter = { eventId: eventIdObj }
+		dbf.deleteEventDataBy(filter, (err) => {
+			dbf.deleteAllEventParticipantDataBy(delAlPartfilter, (err) => {
+				fn(err)
+			})
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		query(accountId, req.body.eventId, req.body.clubId, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + req.body.clubId)
+		})
+	})
+}
 
 
 const GET_CREATE_EVENT = (req, res) => {
@@ -269,6 +294,7 @@ module.exports = {
 	GET_EVENT: GET_EVENT,
 	SHOW_EVENT_ID: SHOW_EVENT_ID,
 	EDIT_EVENT_ID: EDIT_EVENT_ID,
+	POST_DELETE_EVENT: POST_DELETE_EVENT,
 	GET_CREATE_EVENT: GET_CREATE_EVENT,
 	POST_CREATE_EVENT: POST_CREATE_EVENT,
 	GET_PARTICIPANT: GET_PARTICIPANT,

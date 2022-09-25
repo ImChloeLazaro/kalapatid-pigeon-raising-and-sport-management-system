@@ -97,15 +97,27 @@ function filters(env) {
 
 
 
-	env.addFilter('sizeByClub', function (arr, id) {
+	env.addFilter('sizeByClubMember', function (arr, id) {
 		let size = 0
 		for (var d of arr) {
-			if (d.clubId.toString() == id.toString()) {
+			if (d.clubId.toString() == id.toString() && d.memberStatus === "accepted") {
 				size++;
 			}
 		}
 		return size
 	})
+
+	env.addFilter('sizeByEventParticipants', function (arr, id) {
+		let size = 0
+		for (var e of arr) {
+			if (e.eventId.toString() == id.toString() && e.status === "accepted") {
+				size++;
+			}
+		}
+		return size
+	})
+
+
 
 
 	env.addFilter('datetime_formatter', function (str) {

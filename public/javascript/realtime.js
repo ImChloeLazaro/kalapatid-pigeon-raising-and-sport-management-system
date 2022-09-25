@@ -45,14 +45,12 @@ $(function () {
 		//render text
 		function template(username) {
 			return `<tr>
-			<th scope="row">
-			<a class="text-dark text-decoration-none" 
+			<td>
+			<a class="text-dark text-decoration-none mx-2" 
 			href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">
-				<img src="/images/profile.jpg" 
+				<img src="/images/profile.jpg" id="account-picture"
 				class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 				</a>
-			</th>
-			<td>
 				<a class="text-dark text-decoration-none fw-bolder" 
 				href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">@${username}</a>
 			</td>

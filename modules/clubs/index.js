@@ -11,4 +11,7 @@ club.post("/create", controller.POST_CREATE_CLUB)
 
 club.post("/membership", controller.POST_MEMBERSHIP_HANDLE_REQUEST)
 club.post("/membership/request", controller.POST_MEMBERSHIP_REQUEST)
+club.post("/membership/unjoin", controller.POST_MEMBERSHIP_UNJOIN)
+
+
 module.exports = club;

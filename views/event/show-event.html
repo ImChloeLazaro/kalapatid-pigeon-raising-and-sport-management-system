@@ -26,175 +26,182 @@
 							<p class=" text-mute ">Event Name</p>
 							<div id="eventName" class="text-mute h3">{{event.name}}</div>
 							<p class="text-mute fw-bold py-2">Club Sponsored</p>
-							<div>{{event.clubName}}</div>
-							<p class="text-mute fw-bold py-2">Event Creator</p>
-							<a href="{{ctx.DOMAIN_NAME}}/profile?username={{username}}">
-								<div class="my-2">
-									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{club.founderName}}">
-										<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-										<span>
-											@{{event.creatorName}}</span>
-									</div>
-
-								</a>
-								<p class="text-mute fw-bold py-2">Creation Date</p>
-								<div>{{event.date | date_formatter}}</div>
-
-								<p class="text-mute fw-bold py-2">Event Type</p>
-								<div class="h5">{{event.type}}</div>
-
-								<p class="text-mute fw-bold py-2">Description</p>
-								<div class="">{{event.description}}</div>
-								<p class="text-mute fw-bold py-2">Maximum Pigeons per Participant</p>
-								<div class="">{{event.maxParticipants}}</div>
-
-								<p class="text-mute fw-bold py-2">Start Time</p>
-								<div class="">{{event.hourStart}}</div>
-
-								<p class="text-mute fw-bold py-2">End Time</p>
-								<div class="">{{event.hourEnd}}</div>
-
-								{%set counter = 0 -%}
-								{%set isAccepted = false %}
-								{% for p in eventParticipants %}
-									{% if p.accountId != accountId %}
-										{%set counter = counter + s1 -%}
-									{% endif %}
-
-									{% if p.status == "accepted"%}
-										{%set isAccepted = true %}
-									{% endif %}
-
-								{% endfor %}
-
-								{% if event.creatorName != username %}
-									{% if counter == 0 and not isAccepted %}
-										<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
-									{% endif %}
-									{%endif%}
-
+							<div>
+								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{event.clubId}}">
+									<img id="account-picture" src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+									<span>
+										@{{event.clubName}}</span>
 								</div>
-							</div>
-							<br>
-						</div>
-					</div>
-
-					<div class="col-lg-8">
-						<div class="row">
-
-							<div class="col-lg-12">
-								<footer class="mt-3" id="profile-group">
-									<div class="cards overflow-auto">
-										<div class="card-content mb-3">
-											<h5 class="fw-bold">Event Map</h5>
+								<p class="text-mute fw-bold py-2">Event Creator</p>
+								<a href="{{ctx.DOMAIN_NAME}}/profile?username={{event.creatorName}}">
+									<div class="my-2">
+										<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{event.creatorName}}">
+											<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+											<span>
+												@{{event.creatorName}}</span>
 										</div>
-										<div class="card-body d-flex justify-content-between">
-											<div id="event-show-map" style="width: fit-content; height:300px;"></div>
-											<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-											<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
-										</div>
+									</a>
+
+									<p class="text-mute fw-bold py-2">Creation Date</p>
+									<div>{{event.date | date_formatter}}</div>
+
+									<p class="text-mute fw-bold py-2">Event Type</p>
+									<div class="h5">{{event.type}}</div>
+
+									<p class="text-mute fw-bold py-2">Description</p>
+									<div class="">{{event.description}}</div>
+									<p class="text-mute fw-bold py-2">Maximum Pigeons per Participant</p>
+									<div class="">{{event.maxParticipants}}</div>
+
+									<p class="text-mute fw-bold py-2">Start Time</p>
+									<div class="">{{event.hourStart}}</div>
+
+									<p class="text-mute fw-bold py-2">End Time</p>
+									<div class="">{{event.hourEnd}}</div>
+
+									{%set counter = 0 -%}
+									{%set isAccepted = false %}
+									{% for p in eventParticipants %}
+										{% if p.accountId != accountId %}
+											{%set counter = counter + s1 -%}
+										{% endif %}
+
+										{% if p.status == "accepted"%}
+											{%set isAccepted = true %}
+										{% endif %}
+
+									{% endfor %}
+
+									{% if event.creatorName != username %}
+										{% if counter == 0 and not isAccepted %}
+											<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
+										{% endif %}
+										{%endif%}
+
 									</div>
-								</footer>
+								</div>
+								<br>
 							</div>
-							{% if event.accountId == accountId %}
+						</div>
+
+						<div class="col-lg-8">
+							<div class="row">
+
+								<div class="col-lg-12">
+									<footer class="mt-3" id="profile-group">
+										<div class="cards overflow-auto">
+											<div class="card-content mb-3">
+												<h5 class="fw-bold">Event Map</h5>
+											</div>
+											<div class="card-body d-flex justify-content-between">
+												<div id="event-show-map" style="width: fit-content; height:300px;"></div>
+												<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
+												<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
+											</div>
+										</div>
+									</footer>
+								</div>
+								{% if event.accountId == accountId %}
+									<div class="col-lg-12">
+										<main>
+											<div class="cards">
+												<div class="card-content">
+													<h5 class="fw-bold">Participants Requests</h5>
+												</div>
+												<div class="card-body">
+													{% if eventParticipants | is_empty %}
+														<p class="text-center">No Participant Requests..</p>
+													{% endif %}
+													<div style="overflow-y: auto; height: 50px;">
+														<ul>
+															{% for p in eventParticipants %}
+																{% if p.status != "pending" %}
+																	<p class="text-center">No Participant Requests.</p>
+																{%else %}
+																	<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{p.eventId}}">
+																		<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																		<span>
+																			@{{p.username}}</span>
+																	</a>
+																{% endif %}
+															{% endfor %}
+
+														</ul>
+													</div>
+												</div>
+											</div>
+										</main>
+									</div>
+								{% endif %}
 								<div class="col-lg-12">
 									<main>
 										<div class="cards">
 											<div class="card-content">
-												<h5 class="fw-bold">Participants Requests</h5>
-											</div>
-											<div class="card-body">
-												{% if eventParticipants | is_empty %}
-													<p class="text-center">No Participant Requests..</p>
-												{% endif %}
-												<div style="overflow-y: auto; height: 50px;">
-													<ul>
-														{% for p in eventParticipants %}
-															{% if p.status != "pending" %}
-																<p class="text-center">No Participant Requests.</p>
-															{%else %}
-																<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{p.eventId}}">
-																	<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																	<span>
-																		@{{p.username}}</span>
-																</a>
-															{% endif %}
+												<h5 class="fw-bold">Participants</h5>
+												{% if event.accountId != accountId %}
+													{% for participant in eventParticipants %}
+														{% set partId = participant
+															.accountId
+															.toString() %}
+
+														{% if partId == accountId and participant.status != "accepted" %}
+															<div>
+																request status:
+																<div class="badge text-light" style="background: yellow!important">
+																	{{participant.status}}
+																</div>
+															</div>
+															{%endif%}
+
 														{% endfor %}
 
-													</ul>
-												</div>
-											</div>
-										</div>
-									</main>
-								</div>
-							{% endif %}
-							<div class="col-lg-12">
-								<main>
-									<div class="cards">
-										<div class="card-content">
-											<h5 class="fw-bold">Participants</h5>
-											{% if event.accountId != accountId %}
-												{% for participant in eventParticipants %}
-													{% set partId = participant
-														.accountId
-														.toString() %}
-
-													{% if partId == accountId and participant.status != "accepted" %}
-														<div>
-															request status:
-															<div class="badge text-light" style="background: yellow!important">
-																{{participant.status}}
-															</div>
-														</div>
 														{%endif%}
 
-													{% endfor %}
-
-													{%endif%}
-
-												</div>
-												<div class="card-body">
-													{% if eventParticipants | is_empty %}
-														<p class="text-center">No Participant.</p>
-													{% endif %}
-													<div style="overflow-y: auto; height: 80px;">
-														<table class="table table-borderless">
-															<tbody>
-																{% for p in eventParticipants %}
-																	{% if p.status == "accepted" %}
-																		<tr>
-																			<td>
-																				<span>
-																					<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{event._id}}">
-																						<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																						<span>
-																							@{{p.username}}</span>
-																					</a>
-																				</span>
-																			</td>
-																			{% if event.creatorName == username %}
-																				<td>
-																					<button class="btn-sm btn-danger">remove</button>
-																				</td>
-																				{%endif%}
-																			</tr>
-																		{% else %}
+													</div>
+													<div class="card-body">
+														{% if eventParticipants | is_empty %}
+															<p class="text-center">No Participant.</p>
+														{% endif %}
+														<div style="overflow-y: auto; height: 80px;">
+															<table class="table table-borderless">
+																<tbody>
+																	{% for p in eventParticipants %}
+																		{% if p.status == "accepted" %}
 																			<tr>
-																				<p class="text-center">no participant.</p>
-																			</tr>
-																		{% endif %}
-																	{% endfor %}
-																</tbody>
-															</table>
+																				<td>
+																					<span>
+																						<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{p.username}}">
+																							<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																						</a>
+																						<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/participant?username={{p.username}}&clubId={{clubId}}&eventId={{event._id}}">
+																							<span>
+																								@{{p.username}}</span>
+																						</a>
+																					</span>
+																				</td>
+																				{% if event.creatorName == username %}
+																					<td>
+																						<button class="btn-sm btn-danger">remove</button>
+																					</td>
+																					{%endif%}
+																				</tr>
+																			{% else %}
+																				<tr>
+																					<p class="text-center">no participant.</p>
+																				</tr>
+																			{% endif %}
+																		{% endfor %}
+																	</tbody>
+																</table>
+															</div>
 														</div>
 													</div>
-												</div>
-											</main>
+												</main>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-						<script type="text/javascript" src="/javascript/script.js"></script>
-					{% endblock %}
+							<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+							<script type="text/javascript" src="/javascript/script.js"></script>
+						{% endblock %}

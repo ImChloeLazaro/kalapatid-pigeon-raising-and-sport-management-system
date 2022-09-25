@@ -85,180 +85,196 @@
 																		<input class="d-inline-block btn btn-sm btn-success my-2 w-25" type="submit" value="Join">
 																	</form>
 																	{%endif%}
-																{% endif %}
 
-															</span>
+																	{%if not isPending and isMemberAccepted%}
+																		<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
+																			<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+																			<input class="btn btn-sm btn-danger my-2 " type="submit" value="Unjoin">
+																		</form>
+																		{%endif%}
+																	{% endif %}
 
+																</span>
+
+															</div>
 														</div>
+														<br>
 													</div>
 													<br>
 												</div>
-												<br>
 											</div>
 										</div>
-									</div>
 
-									<div class="col-lg-8">
-										<div class="row">
-											{# accessable only if you are a member of the club #}
-											{# ===================================================== #}
-											{% for member in clubMembers %}
-												{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
-													<div class="col-lg-12">
-														<main>
-															<div class="cards">
-																<div class="card-content">
-																	<h5 class="fw-bold">Events</h5>
-																</div>
-																<div class="card-body">
-																	{% if events | is_empty %}
-																		<p class="text-center">No Event yet.</p>
-																	{% endif %}
-																	<div style="overflow-y: auto; height: 100px;">
-																		<table class="table table-borderless">
-																			<tbody>
-																				{% for e in events %}
-																					<tr>
-																						<td>
-																							<span>
-																								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">
-																									<img src="/images/events.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																									<span>
-																										{{e.name}}
-																									</span>
-																								</a>
-																							</span>
-																						</td>
-																						{% if club.creatorId == accountId %}
-																							<td>
-																								<button class="btn-sm btn-danger">delete</button>
-																							</td>
-																							{%endif%}
-																						</tr>
-																					{% endfor %}
-																				</tbody>
-																			</table>
-																		</div>
-																	</div>
-																</div>
-															</main>
-														</div>
-														{%endif%}
-													{% endfor %}
-													{# ===================================================== #}
-
-													{# accessable only if you are the creator of the clubs or the founder #}
-													{# ===================================================== #}
-
-													{% if club.creatorId == accountId %}
+										<div class="col-lg-8">
+											<div class="row">
+												{# accessable only if you are a member of the club #}
+												{# ===================================================== #}
+												{% for member in clubMembers %}
+													{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
 														<div class="col-lg-12">
 															<main>
 																<div class="cards">
 																	<div class="card-content">
-																		<h5 class="fw-bold">Membership Requests</h5>
+																		<h5 class="fw-bold">Events</h5>
 																	</div>
 																	<div class="card-body">
-																		{% if clubMembers | is_empty %}
-																			<p class="text-center">No Member Requests.</p>
+																		{% if events | is_empty %}
+																			<p class="text-center">No Event yet.</p>
 																		{% endif %}
-																		{% set count = 0 -%}
-																		<table class="table table-borderless">
-																			{% for member in clubMembers %}
-																				{% if member.memberStatus == "pending" %}
-																					{% set count =count + 1 -%}
-																					<form method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership">
+																		<div style="overflow-y: auto; height: 100px;">
+																			<table class="table table-borderless">
+																				<tbody>
+																					{% for e in events %}
 																						<tr>
 																							<td>
-																								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																									<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																									<span>
-																										@{{member.username}}</span>
-																								</a>
+																								<span>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">
+																										<img src="/images/events.jpg" id="account-picture" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																										<span>
+																											{{e.name}}
+																										</span>
+																									</a>
+																								</span>
 																							</td>
-																							<td>
-																								<input type="text" name="id" value="{{member._id}}" hidden="true">
-																								<input type="text" name="clubId" value="{{member.clubId}}" hidden="true">
-																								<input type="text" name="accountId" value="{{member.accountId}}" hidden="true">
-																								<input id="status-{{member._id}}" type="text" name="status" hidden="true">
-																								<button id="btn-accept-{{member._id}}" class="d-inline-block btn-sm btn-success">accept</button>
-																								<button id="btn-decline-{{member._id}}" class="d-inline-block btn-sm btn-danger">decline</button>
-																								<script>
-																									$("#btn-accept-{{member._id}}").click((e) => {
-																										$("#status-{{member._id}}").val("accepted")
-																									})
-																									$("#btn-decline-{{member._id}}").click((e) => {
-																										$("#status-{{member._id}}").val("declined")
-																									})
-																								</script>
-																							</td>
-																						</form>
-																					{%else %}
-
-																						{%endif%}
-																					</tr>
-																					{%endfor%}
-																				</div>
-																				{% if count == 0 %}
-																					<p class="text-center">No Member Requests.</p>
-																					{%endif%}
+																							{% if club.creatorId == accountId %}
+																								<td>
+																									<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/events/delete">
+																										<input type="text" name="eventId" value="{{e._id}}" hidden="true">
+																										<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+																										<button class="btn-sm btn-danger">delete</button>
+																									</form>
+																								</td>
+																								{%endif%}
+																							</tr>
+																						{% endfor %}
+																					</tbody>
 																				</table>
-
 																			</div>
 																		</div>
-																	</main>
-																</div>
-															{% endif %}
-															{# ===================================================== #}
+																	</div>
+																</main>
+															</div>
+															{%endif%}
+														{% endfor %}
+														{# ===================================================== #}
 
-															{# accessable to all user #}
-															{# ===================================================== #}
+														{# accessable only if you are the creator of the clubs or the founder #}
+														{# ===================================================== #}
+
+														{% if club.creatorId == accountId %}
 															<div class="col-lg-12">
 																<main>
 																	<div class="cards">
 																		<div class="card-content">
-																			<h5 class="fw-bold">Members</h5>
+																			<h5 class="fw-bold">Membership Requests</h5>
 																		</div>
 																		<div class="card-body">
 																			{% if clubMembers | is_empty %}
-																				<p class="text-center">No Members.</p>
+																				<p class="text-center">No Member Requests.</p>
 																			{% endif %}
-																			<div style="overflow-y: auto; height: 100px;">
-																				<table class="table table-borderless">
-																					<tbody>
-																						{% for member in clubMembers %}
-																							{% if member.memberStatus == "accepted" %}
-																								<tr>
-																									<td>
+																			{% set count = 0 -%}
+																			<table class="table table-borderless">
+																				{% for member in clubMembers %}
+																					{% if member.memberStatus == "pending" %}
+																						{% set count =count + 1 -%}
+																						<form method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership">
+																							<tr>
+																								<td>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																										<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 																										<span>
-																											<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																												<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																												<span>
-																													@{{member.username}}</span>
-																											</a>
-																										</span>
-																									</td>
-																									{% if club.creatorId == accountId %}
-																										<td>
-																											<span>
-																												<button class="d-inline-block btn-sm btn-danger">remove</button>
-																											</span>
-																										</td>
-																										{%endif%}
-																									</tr>
-																									{%endif%}
-																								{% endfor %}
-																							</tbody>
-																						</table>
+																											@{{member.username}}</span>
+																									</a>
+																								</td>
+																								<td>
+																									<input type="text" name="id" value="{{member._id}}" hidden="true">
+																									<input type="text" name="clubId" value="{{member.clubId}}" hidden="true">
+																									<input type="text" name="accountId" value="{{member.accountId}}" hidden="true">
+																									<input id="status-{{member._id}}" type="text" name="status" hidden="true">
+																									<button id="btn-accept-{{member._id}}" class="d-inline-block btn-sm btn-success">accept</button>
+																									<button id="btn-decline-{{member._id}}" class="d-inline-block btn-sm btn-danger">decline</button>
+																									<script>
+																										$("#btn-accept-{{member._id}}").click((e) => {
+																											$("#status-{{member._id}}").val("accepted")
+																										})
+																										$("#btn-decline-{{member._id}}").click((e) => {
+																											$("#status-{{member._id}}").val("declined")
+																										})
+																									</script>
+																								</td>
+																							</form>
+																						{%else %}
+
+																							{%endif%}
+																						</tr>
+																						{%endfor%}
 																					</div>
+																					{% if count == 0 %}
+																						<p class="text-center">No Member Requests.</p>
+																						{%endif%}
+																					</table>
+
 																				</div>
 																			</div>
 																		</main>
 																	</div>
-																	{# ===================================================== #}
+																{% endif %}
+																{# ===================================================== #}
 
+																{# accessable to all user #}
+																{# ===================================================== #}
+																<div class="col-lg-12">
+																	<main>
+																		<div class="cards">
+																			<div class="card-content">
+																				<h5 class="fw-bold">Members</h5>
+																			</div>
+																			<div class="card-body">
+																				{% if clubMembers | is_empty %}
+																					<p class="text-center">No Members.</p>
+																				{% endif %}
+																				<div style="overflow-y: auto; height: 100px;">
+																					<table class="table table-borderless">
+																						<tbody>
+																							{% for member in clubMembers %}
+																								{% if member.memberStatus == "accepted" %}
+																									<tr>
+																										<td>
+																											<span>
+																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																													<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																													<span>
+																														@{{member.username}}</span>
+																												</a>
+																											</span>
+																										</td>
+																										{% if club.creatorId == accountId and member.username != club.founderName %}
+																											<td>
+																												<span>
+																													<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
+																														<input type="text" name="username" value="{{member.username}}" hidden="true">
+																														<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+																														<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
+																													</form>
+
+																												</span>
+																											</td>
+																											{%endif%}
+																										</tr>
+																										{%endif%}
+																									{% endfor %}
+																								</tbody>
+																							</table>
+																						</div>
+																					</div>
+																				</div>
+																			</main>
+																		</div>
+																		{# ===================================================== #}
+
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
 
-												{% endblock %}
+													{% endblock %}

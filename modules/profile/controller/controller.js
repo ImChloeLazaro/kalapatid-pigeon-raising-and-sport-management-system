@@ -4,6 +4,7 @@ const { getClubAllMemberDataBy, getAllClubDataBy } = require("../../clubs/db/db-
 const { getEventAllParticipantDataBy, getAllEventDataBy } = require("../../events/db/db-functions")
 const dbf = require('../db/db-functions')
 
+const ObjectId = require("mongodb").ObjectId
 
 const GET_PROFILE = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -13,12 +14,14 @@ const GET_PROFILE = (req, res) => {
 		}
 		req.session.othername = othername
 		let accountFilter = { username: othername }
+
 		dbf.getAccountDataBy(accountFilter, (err, docs) => {
 			let accData = docs
-			let addressFilter = { acc_id: accData._id }
+
+			let addressFilter = { acc_id: new ObjectId(accData._id) }
 			dbf.getAddressDataBy(addressFilter, (err, docs) => {
 				let addrData = docs
-				let profileFilter = { accountId: accData._id }
+				let profileFilter = { accountId: new ObjectId(accData._id) }
 				dbf.getProfileDataBy(profileFilter, (err, docs) => {
 					let profileData = docs
 					getClubAllMemberDataBy(profileFilter, (err, docs) => {

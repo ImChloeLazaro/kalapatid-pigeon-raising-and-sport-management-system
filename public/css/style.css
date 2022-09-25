@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 p {
   color: #2D2626;
   margin: 0;
@@ -178,9 +179,10 @@ a {
   color: #2DA380;
 }
 
-#account-picture, #profile-club-picture {
+#account-picture,
+#profile-club-picture {
   background: #2DA380;
-  padding: 5px;
+  padding: 1px;
   border-radius: 50%;
 }
 

@@ -57,6 +57,7 @@
 							</div>
 							<br>
 						</div>
+
 					</div>
 
 					<div class="col-lg-8">
@@ -101,9 +102,19 @@
 									</div>
 								</main>
 							</div>
+
 						</div>
-					</form>
+					</div>
+					<span>
+						<button class="d-inline btn btn-sm btn-success">update</button>
+						<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/events/show?clubId={{clubId}}&eventId={{event._id}}">cancel</a>
+					</span>
 				</div>
-				<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-				<script type="text/javascript" src="/javascript/script.js"></script>
-			{% endblock %}
+
+			</div>
+
+		</form>
+	</div>
+	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+	<script type="text/javascript" src="/javascript/script.js"></script>
+{% endblock %}

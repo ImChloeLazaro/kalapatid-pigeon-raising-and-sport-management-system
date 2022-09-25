@@ -12,6 +12,7 @@
         {% endif %}
         {% set isAdmin=true%}
         {% set isClubMember=false%}
+        {% set isEmpty = false %}
         {#  loop all clubs #}
         {% for c in clubs %}
           {# check if clubs is not empty then show club name #}
@@ -19,10 +20,9 @@
             {% if c._id | isMatch(m.clubId) %}
               {# reverse loop  all events #}
               {% for e in events | reverse %}
-
                 {# check if clubId is matched  with the clubId reference in event #}
-                {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId) %}
-                  {% set isClubMember = true%}
+                {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId)and m.memberStatus == "accepted" %}
+                  {% set isClubMember = true %}
                   <div class="d-flex my-2">
                     <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id.toString()}}&clubId={{c._id.toString()}}">
                       <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
@@ -34,11 +34,16 @@
                           {{e.type}}</sub>
                         <sub class="mx-2">date:
                           {{e.date}}</sub>
-                        <span style="font-size: 8pt;" class="badge bg-success">400k participants</span>
+                        <span style="font-size: 8pt;" class="badge bg-success">
+                          {{eventParticipants|sizeByEventParticipants(e._id) }}
+                          participants
+                        </span>
                       </div>
                     </a>
                   </div>
 
+                  {%else%}
+                  {% set isEmpty = true %}
                 {% endif %}
 
               {% endfor %}

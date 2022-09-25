@@ -1,23 +1,22 @@
 <!-- Clubs -->
 
-				{%if clubs| is_empty %}
-						<p>No Clubs.</p>
-				{% endif %}
+{%if clubs| is_empty %}
+	<p>No Clubs.</p>
+{% endif %}
 
-				<table class="table table-borderless">
-						<tbody>
-								{% for c in clubs %}
-										<tr>
-												<th scope="row">
-														<img src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-												</th>
-												<td>
-														<a class="text-dark text-decoration-none" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">{{c.name}}</a >
-												</td>
-												<td>
-														<div class="badge bg-primary">{{clubMembers | sizeByClub(c._id) }}</div>
-												</td>
-										</tr>
-								{% endfor %}
-						</tbody>
-				</table>
+<table class="table table-borderless">
+	<tbody>
+		{% for c in clubs %}
+			<tr>
+				<td>
+					<img id="account-picture" src="/images/club.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+					<a class="text-dark text-decoration-none mx-5" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">{{c.name}}</a >
+				</td>
+				<td>
+					<div class="badge bg-primary m-2">{{clubMembers | sizeByClubMember(c._id) }}
+						members</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

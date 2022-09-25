@@ -183,6 +183,26 @@ const POST_MEMBERSHIP_HANDLE_REQUEST = (req, res) => {
 	})
 }
 
+const POST_MEMBERSHIP_UNJOIN = (req, res) => {
+	function query(filter, fn) {
+		dbf.removeClubMemberData(filter, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		if (req.body.username !== username) {
+			username = req.body.username
+		}
+		console.log("username: ".red, username);
+		let id = req.body.id;
+		let clubId = req.body.clubId
+		let filter = { username: username, clubId: new ObjectId(clubId) }
+		query(filter, (err) => {
+			console.log(err);
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+		})
+	})
+}
 
 
 
@@ -193,6 +213,7 @@ module.exports = {
 	GET_CREATE_CLUB: GET_CREATE_CLUB,
 	POST_CREATE_CLUB: POST_CREATE_CLUB,
 	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,
-	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST
+	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST,
+	POST_MEMBERSHIP_UNJOIN: POST_MEMBERSHIP_UNJOIN
 }
 

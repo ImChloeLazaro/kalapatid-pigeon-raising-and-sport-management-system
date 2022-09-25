@@ -9,7 +9,15 @@ function insertEventData(data, fn) {
 			fn(err)
 		})
 	})
+}
 
+function deleteEventDataBy(filter, fn) {
+	db.getCollection("events", (col) => {
+		col.deleteOne(filter, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
 }
 
 
@@ -92,6 +100,14 @@ function deleteEventParticipantDataBy(filter, fn) {
 	})
 }
 
+function deleteAllEventParticipantDataBy(filter, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.deleteMany(filter, (err) => {
+			fn(err)
+		})
+	})
+}
+
 
 function getAllAcountData(fn) {
 	db.getCollection("accounts", (col) => {
@@ -115,5 +131,7 @@ module.exports = {
 	insertEventParticipantData: insertEventParticipantData,
 	getEventParticipantDataBy: getEventParticipantDataBy,
 	updateEventParticipantDataBy: updateEventParticipantDataBy,
-	deleteEventParticipantDataBy: deleteEventParticipantDataBy
+	deleteEventParticipantDataBy: deleteEventParticipantDataBy,
+	deleteEventDataBy: deleteEventDataBy,
+	deleteAllEventParticipantDataBy: deleteAllEventParticipantDataBy
 }
