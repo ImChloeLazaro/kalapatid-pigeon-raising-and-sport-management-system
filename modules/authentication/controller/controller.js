@@ -1,5 +1,7 @@
 require("dotenv").config()
 const bcryptjs = require('bcryptjs')
+const { validationResult } = require('express-validator');
+
 const tk = require("../lib/toolkit")
 const model = require("../model/model")
 const sendEmail = require('../lib/mail')
@@ -90,60 +92,70 @@ const POST_REGISTER = (req, res) => {
 	let isError = false;
 	let isSuccess = false;
 	const uid = new ObjectId()
+	let errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log(req.body);
+		console.log(errors.array())
+		isError = true;
+		return res.render("auth/register.html", {
+			ctx: globalConstants.ctx,
+			isRegistered: isSuccess,
+			isError: true,
+			errors: errors.array()
+		})
+	} else {
+		dbf.insertAccount(model.Account(
+			uid,
+			req.body.firstname,
+			req.body.middlename,
+			req.body.lastname,
+			req.body.birthday,
+			tk.codeGenerator(),
+			req.body.phone,
+			req.body.email,
+			req.body.username,
+			bcryptjs.hashSync(req.body.password, 13)
 
+		), (err) => {
+			if (err == undefined) {
+				dbf.insertAddress(
+					new model.Address(
+						uid,
+						req.body.barangay,
+						req.body.townCity,
+						req.body.province
+					),
+					(err) => {
+						if (err != undefined) {
+							isError = true;
+							isSuccess = false;
+							console.log("Address Insertion Error: ", err);
+						}
+					})
+				isSuccess = true;
 
-
-	dbf.insertAccount(model.Account(
-		uid,
-		req.body.firstname,
-		req.body.middlename,
-		req.body.lastname,
-		req.body.birthday,
-		tk.codeGenerator(),
-		req.body.phone,
-		req.body.email,
-		req.body.username,
-		bcryptjs.hashSync(req.body.password, 13)
-
-	), (err) => {
-		if (err == undefined) {
-			dbf.insertAddress(
-				new model.Address(
-					uid,
-					req.body.houseStreet,
-					req.body.townCity,
-					req.body.province
-				),
-				(err) => {
+				insertProfileData(new Profile(uid.toString(), "hello world!" + req.body.username), (err) => {
 					if (err != undefined) {
-						isError = true;
-						isSuccess = false;
-						console.log("Address Insertion Error: ", err);
+						console.log("Profile Insertion Error: ", err);
 					}
-				})
-			isSuccess = true;
+				});
 
-			insertProfileData(new Profile(uid.toString(), "hello world!" + req.body.username), (err) => {
-				if (err != undefined) {
-					console.log("Profile Insertion Error: ", err);
-				}
-			});
-
-		} else {
-			isError = true;
-			isSuccess = false;
-			console.log("Account Insertion Error:", err);
-		}
-
-
-		return res.render("auth/register.html",
-			{
-				ctx: globalConstants.ctx,
-				isRegistered: isSuccess,
-				isError: isError
+			} else {
+				isError = true;
+				isSuccess = false;
+				console.log("Account Insertion Error:", err);
 			}
-		)
-	})
+
+
+			return res.render("auth/register.html",
+				{
+					ctx: globalConstants.ctx,
+					isRegistered: isSuccess,
+					isError: isError
+				}
+			)
+		})
+	}
 
 }
 

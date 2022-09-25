@@ -18,10 +18,10 @@ function Account(id, firstName, middleName, lastName, birthday, recoveryCode, ph
 
 }
 
-function Address(acc_id, houseAddr, town, province) {
+function Address(acc_id, barangay, town, province) {
 	return {
 		acc_id: acc_id,
-		houseAddr: houseAddr,
+		barangay: barangay,
 		town: town,
 		province: province,
 	}

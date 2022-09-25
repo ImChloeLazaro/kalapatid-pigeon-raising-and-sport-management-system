@@ -23,11 +23,11 @@ function getData(colName) {
 
 
 listCollections()
-// dropCollections()
+dropCollections()
 // // printjson(db.getCollection("accounts").find())
 // print(db.getCollection("events").drop())
 // print(db.getCollection("clubMembers").drop())
 // print(db.getCollection("clubs").drop())
 // print(db.getCollection("eventParticipants").drop())
 
-printjson(db.getCollection("eventParticipants").find())
+// printjson(db.getCollection("eventParticipants").find())

@@ -1,6 +1,10 @@
 require("dotenv").config()
 const express = require("express")
+const { checkSchema } = require('express-validator');
+
+
 const controller = require('../controller/controller')
+const registrationSchema = require("../validation/registration/registrationSchema")
 
 let loginRoute = express.Router();
 
@@ -9,7 +13,7 @@ loginRoute.post("/", controller.POST_LOGIN)
 
 let registerRoute = express.Router();
 registerRoute.get("/", controller.GET_REGISTER)
-registerRoute.post("/", controller.POST_REGISTER)
+registerRoute.post("/", checkSchema(registrationSchema), controller.POST_REGISTER)
 
 
 let recoveryRoute = express.Router();

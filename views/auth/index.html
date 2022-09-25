@@ -55,7 +55,10 @@
             </div>
           </form>
           {% if isNotAuthenticated %}
-            <p class="text-danger">Wrong username or password!</p>
+            <p class="text-danger"></p>
+            <script>
+              swal({title: "Login Failed!", text: "Wrong username or password!", icon: "warning", button: "Try Again!"});
+            </script>
           {% endif %}
         </div>
       </div>

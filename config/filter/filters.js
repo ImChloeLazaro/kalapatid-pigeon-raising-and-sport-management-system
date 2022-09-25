@@ -144,6 +144,10 @@ function filters(env) {
 		return id1str === id2str
 	})
 
+	env.addFilter('join', function (arr) {
+		let msg = Object.keys(arr).map(key => `${arr[key].msg}`).join(",")
+		return msg
+	})
 
 
 }

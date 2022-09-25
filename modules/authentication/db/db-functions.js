@@ -86,8 +86,24 @@ function getAddressDataByID(id, fn) {
 		})
 	})
 }
+function checkEmail(value, fn) {
+	db.getCollection("accounts", (col) => {
+		col.findOne({ email: value }, (err, docs) => {
+			if (err) console.log(err);
+			fn(err, docs)
+		})
+	})
+}
 
 
+function checkUsername(value, fn) {
+	db.getCollection("accounts", (col) => {
+		col.findOne({ username: value }, (err, docs) => {
+			if (err) console.log(err);
+			fn(err, docs)
+		})
+	})
+}
 
 
 
@@ -101,7 +117,6 @@ module.exports = {
 	insertAddress: insertAddress,
 	getAddressData: getAddressData,
 	getAddressDataByID: getAddressDataByID,
-
-
-
+	checkEmail: checkEmail,
+	checkUsername: checkUsername
 }
