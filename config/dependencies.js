@@ -4,7 +4,7 @@ const session = require("express-session")
 const nunjucks = require("nunjucks")
 const logger = require('morgan')
 const filters = require('./filter/filters')
-
+const fileupload = require("express-fileupload")
 
 
 
@@ -38,6 +38,10 @@ const configuration = (app, express, constants, dirname) => {
 
 	//STATIC FILES
 	app.use(express.static(path.join(dirname, constants.STATIC_FOLDER)))
+
+
+	//FILEUPLOAD
+	app.use(fileupload())
 }
 
 

@@ -5,7 +5,7 @@ const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
 const { getAllClubDataBy, getClubAllMemberDataBy } = require('../../clubs/db/db-functions')
 const { getAllAcountData } = require('../../authentication/db/db-functions')
-
+const { getAllProfileDataBy } = require("../../profile/db/db-functions")
 const model = require('../model/model')
 const dbf = require('../db/db-functions')
 const ObjectId = require('mongodb').ObjectId
@@ -28,12 +28,14 @@ function getAllCommentData(filter, fn) {
 
 function queries(filter, fn) {
 	getAllAcountData((err, accounts) => {
-		getAllClubDataBy(filter, (err, clubs) => {
-			getClubAllMemberDataBy(filter, (err, clubMembers) => {
-				getAllEventDataBy(filter, (err, events) => {
-					getAllPostData(filter, (posts) => {
-						getAllCommentData(filter, (comments) => {
-							fn(accounts, posts, comments, events, clubs, clubMembers)
+		getAllProfileDataBy(filter, (err, profiles) => {
+			getAllClubDataBy(filter, (err, clubs) => {
+				getClubAllMemberDataBy(filter, (err, clubMembers) => {
+					getAllEventDataBy(filter, (err, events) => {
+						getAllPostData(filter, (posts) => {
+							getAllCommentData(filter, (comments) => {
+								fn(accounts, profiles, posts, comments, events, clubs, clubMembers)
+							})
 						})
 					})
 				})
@@ -44,12 +46,13 @@ function queries(filter, fn) {
 
 
 // template renderString
-function renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs, clubMembers) {
+function renderTemplate(res, accountId, username, accounts, profiles, posts, comments, events, clubs, clubMembers) {
 	return res.render("feeds/index.html", {
 		ctx: globalConstants.ctx,
 		accountId: accountId,
 		username: username,
 		accounts: accounts,
+		profiles: profiles,
 		posts: posts,
 		comments: comments,
 		events: events,
@@ -77,8 +80,8 @@ function redirectToPostView(res, err) {
 const GET_POSTING = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let filter = {}
-		queries(filter, (accounts, posts, comments, events, clubs, clubMembers) => {
-			renderTemplate(res, accountId, username, accounts, posts, comments, events, clubs, clubMembers)
+		queries(filter, (accounts, profiles, posts, comments, events, clubs, clubMembers) => {
+			renderTemplate(res, accountId, username, accounts, profiles, posts, comments, events, clubs, clubMembers)
 		})
 	})
 }

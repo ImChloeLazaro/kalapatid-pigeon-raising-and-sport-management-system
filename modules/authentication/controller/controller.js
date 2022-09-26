@@ -91,6 +91,8 @@ const GET_REGISTER = (req, res) => {
 const POST_REGISTER = (req, res) => {
 	let isError = false;
 	let isSuccess = false;
+	let isNoError = undefined;
+
 	const uid = new ObjectId()
 	let errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -117,7 +119,7 @@ const POST_REGISTER = (req, res) => {
 			bcryptjs.hashSync(req.body.password, 13)
 
 		), (err) => {
-			if (err == undefined) {
+			if (err == isNoError) {
 				dbf.insertAddress(
 					new model.Address(
 						uid,
@@ -126,7 +128,7 @@ const POST_REGISTER = (req, res) => {
 						req.body.province
 					),
 					(err) => {
-						if (err != undefined) {
+						if (err != isNoError) {
 							isError = true;
 							isSuccess = false;
 							console.log("Address Insertion Error: ", err);
@@ -134,8 +136,11 @@ const POST_REGISTER = (req, res) => {
 					})
 				isSuccess = true;
 
-				insertProfileData(new Profile(uid.toString(), "hello world!" + req.body.username), (err) => {
-					if (err != undefined) {
+				let profileId = uid.toString();
+				let description = "This is your profile description";
+				let profileURL = '/images/profile.jpg';
+				insertProfileData(new Profile(profileId, description, profileURL), (err) => {
+					if (err != isNoError) {
 						console.log("Profile Insertion Error: ", err);
 					}
 				});

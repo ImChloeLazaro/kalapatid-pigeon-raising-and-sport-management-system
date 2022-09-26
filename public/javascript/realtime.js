@@ -22,6 +22,7 @@ $(function () {
 	socket.on('connect', function () {
 		console.log('HOTRELOAD => connected to server.');
 		let username = $("#info-content").data("username")
+
 		socket.emit("isConnected", { isConnected: true, username: username })
 	})
 
@@ -38,17 +39,16 @@ $(function () {
 		console.log(data.onlineUsers)
 		// filter unique data
 		let onlineUsersList = [...new Set(data.onlineUsers)]
-
+		let imagecloud = $("#info-content").data("imagecloud")
 		// set numbers of online users
 		$("#online-user-label").text(onlineUsersList.length)
-
 		//render text
 		function template(username) {
 			return `<tr>
 			<td>
 			<a class="text-dark text-decoration-none mx-2" 
 			href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">
-				<img src="/images/profile.jpg" id="account-picture"
+				<img src="${imagecloud}/profiles/${username}/profile" id="account-picture"
 				class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 				</a>
 				<a class="text-dark text-decoration-none fw-bolder" 
@@ -57,6 +57,8 @@ $(function () {
 			<td>
 			<td style="color: #2DA380; font-size: 10px; position: relative; top: 8px;"><i class="fa-solid fa-circle"></i></td>
 			</td>
+			{% endif %}
+			{%endfor%}
 		</tr>`
 		}
 		innerHTMLtext = ""

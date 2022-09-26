@@ -1,10 +1,11 @@
 
 const ObjectId = require("mongodb").ObjectId
 
-module.exports.Profile = function Profile(accId, info) {
+module.exports.Profile = function Profile(accId, info, profileURL) {
 	return {
 		_id: new ObjectId(),
 		accountId: new ObjectId(accId),
-		info: info
+		info: info,
+		profileURL: profileURL,
 	}
 }

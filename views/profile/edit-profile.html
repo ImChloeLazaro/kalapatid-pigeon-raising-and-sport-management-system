@@ -1,11 +1,9 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
 	<div class="container-fluid">
-		<form>
+		<form method="POST" enctype="multipart/form-data">
 			<div class="row">
-
 				<div class="col-lg-4">
-
 					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 						<h5 class="fw-bold">Edit Profile</h5>
 					</div>
@@ -13,11 +11,10 @@
 					<div class="card-body">
 
 						<div class="w-100 text-center my-3">
-							<img src="/images/profile.jpg" style="width: 100px; height: 100px;" id="account-picture">
+							<img src="{{profileData.profileURL}}" style="width: 100px; height: 100px;" id="account-picture">
+							<input type="file" name="profile" id="profile-upload">
 						</div>
-						<p class="text-muted text-center" id="profile-id">Id:
-							{{accData._id}}</p>
-						<hr>
+
 						<div class="w-auto">{{accData.firstName}}
 							{{accData.middleName}}
 							{{accData.lastName}}
@@ -36,10 +33,10 @@
 								<div class="cards">
 
 									<div class="card-content">
-										<h5 class="fw-bold">Information</h5>
+										<h5 class="fw-bold">Profile Description</h5>
 									</div>
 									<div class="card-body">
-										<p content-editable="content-editable">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti atque et suscipit consectetur fugiat veritatis, similique ullam sed iste eos minus quisquam, amet facilis at repellat nam. Odio, corrupti dolor!</p>
+										<textarea class="w-100" name="description">{{profileData.info}}</textarea>
 									</div>
 								</div>
 							</main>

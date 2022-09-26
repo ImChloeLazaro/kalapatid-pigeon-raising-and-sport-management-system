@@ -6,6 +6,11 @@ const dbf = require('../db/db-functions')
 
 const ObjectId = require("mongodb").ObjectId
 
+const path = require("path")
+const { error } = require("console")
+
+
+
 const GET_PROFILE = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let othername = req.query.username
@@ -58,7 +63,7 @@ const GET_PROFILE = (req, res) => {
 
 
 
-const EDIT_PROFILE = (req, res) => {
+const GET_EDIT_PROFILE = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let othername = req.query.username
 		if (othername === undefined || othername === username) {
@@ -71,9 +76,10 @@ const EDIT_PROFILE = (req, res) => {
 			let addressFilter = { acc_id: accData._id }
 			dbf.getAddressDataBy(addressFilter, (err, docs) => {
 				let addrData = docs
-				let profileFilter = { accountId: req.query.id }
+				let profileFilter = { accountId: new ObjectId(accountId) }
 				dbf.getProfileDataBy(profileFilter, (err, docs) => {
 					let profileData = docs
+					console.log("profile data: ".yellow, profileData);
 					return res.render("profile/edit-profile.html", {
 						ctx: globalConstants.ctx,
 						username: username,
@@ -83,6 +89,27 @@ const EDIT_PROFILE = (req, res) => {
 						profileData: profileData
 					})
 				})
+			})
+		})
+	})
+}
+
+
+
+const POST_EDIT_PROFILE = (req, res) => {
+	function query(filter, setUpdate, callback) {
+		dbf.updateProfileData(filter, setUpdate, (err) => {
+			callback(err);
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		const imagekit = require("../../../lib/imagekit");
+		console.log(req.files);
+		imagekit.profileUpload("user", username, global.__basedir, req.files, (err, url) => {
+			let filter = { accountId: new ObjectId(accountId) }
+			let setUpdate = { description: req.body.description, profileURL: url }
+			query(filter, setUpdate, (err) => {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/profile")
 			})
 		})
 	})
@@ -125,7 +152,8 @@ const GET_PROFILE_MESSAGEME_ID = (req, res) => {
 
 module.exports = {
 	GET_PROFILE: GET_PROFILE,
-	EDIT_PROFILE: EDIT_PROFILE,
+	GET_EDIT_PROFILE: GET_EDIT_PROFILE,
+	POST_EDIT_PROFILE: POST_EDIT_PROFILE,
 	GET_PROFILE_MESSAGEME_ID: GET_PROFILE_MESSAGEME_ID
 }
 

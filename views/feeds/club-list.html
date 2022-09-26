@@ -13,8 +13,7 @@
 					<a class="text-dark text-decoration-none mx-5" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">{{c.name}}</a >
 				</td>
 				<td>
-					<div class="badge bg-primary m-2">{{clubMembers | sizeByClubMember(c._id) }}
-						members</div>
+					<div class="badge bg-primary m-2">{{clubMembers | sizeByClubMember(c._id) }}</div>
 				</td>
 			</tr>
 		{% endfor %}

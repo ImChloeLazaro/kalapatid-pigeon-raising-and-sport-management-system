@@ -160,11 +160,7 @@ function filters(env) {
 		let msg = Object.keys(arr).map(key => `${arr[key].msg}`).join(",")
 		return msg
 	})
-
-
 }
-
-
 
 
 module.exports = filters

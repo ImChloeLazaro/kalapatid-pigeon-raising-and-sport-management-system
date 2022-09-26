@@ -7,3 +7,4 @@ const app = express()
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 config(app, express, server, io, constants, __dirname)
+global.__basedir = __dirname;

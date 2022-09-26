@@ -10,7 +10,7 @@
         {% if d.username2 != otherusername %}
           <div class="d-flex" id="global-chat-participant">
             <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-              <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username1}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
             </a>
             <span class="px-1 " id="message">
               <div class="text-start" id="globalchat-message-wrapper">
@@ -26,7 +26,7 @@
 
           <div class="d-flex" id="global-chat-participant">
             <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-              <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username1}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
             </a>
             <span class="p-1 " id="message">
               <div class="d-inline-block text-start" id="globalchat-message-wrapper">

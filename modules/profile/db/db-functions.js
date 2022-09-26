@@ -41,9 +41,26 @@ function getProfileDataBy(filter, fn) {
 }
 function insertProfileData(data, fn) {
 	db.getCollection("profiles", (col) => {
-		col.insert(data, (err) => {
+		col.insertOne(data, (err) => {
 			if (err) console.log(err);
 			fn(err)
+		})
+	})
+}
+function updateProfileData(filter, setUpdate, fn) {
+	db.getCollection("profiles", (col) => {
+		col.updateOne(filter, { $set: setUpdate }, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+function getAllProfileDataBy(filter, fn) {
+	db.getCollection("profiles", (col) => {
+		col.find(filter).toArray((err, docs) => {
+			if (err) console.log(err);
+			fn(err, docs)
 		})
 	})
 }
@@ -57,5 +74,7 @@ module.exports = {
 	getAddressDataBy: getAddressDataBy,
 	getAllMessageDataBy: getAllMessageDataBy,
 	getProfileDataBy: getProfileDataBy,
-	insertProfileData: insertProfileData
+	insertProfileData: insertProfileData,
+	updateProfileData: updateProfileData,
+	getAllProfileDataBy: getAllProfileDataBy
 }
