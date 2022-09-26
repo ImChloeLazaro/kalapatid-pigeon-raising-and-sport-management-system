@@ -5,9 +5,11 @@ const event = express.Router()
 
 event.get("/", controller.GET_EVENT)
 event.get("/show", controller.SHOW_EVENT_ID)
-event.get("/edit", controller.EDIT_EVENT_ID)
+event.get("/edit", controller.GET_EDIT_EVENT_ID)
+event.post("/edit", controller.POST_EDIT_EVENT_ID)
 event.get("/create", controller.GET_CREATE_EVENT)
 event.post("/create", controller.POST_CREATE_EVENT)
+event.get("/delete", controller.GET_DELETE_EVENT)
 event.post("/delete", controller.POST_DELETE_EVENT)
 
 // event.get("/add-participant/:eventId", controller.GET_ADD_PARTICIPANT)

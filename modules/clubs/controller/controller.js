@@ -67,7 +67,7 @@ const SHOW_CLUB_ID = (req, res) => {
 
 
 
-const EDIT_CLUB_ID = (req, res) => {
+const GET_EDIT_CLUB_ID = (req, res) => {
 	function query(clubId, fn) {
 		dbf.getClubDataBy({ _id: new ObjectId(clubId) }, (err, docs) => {
 			if (err) return
@@ -78,6 +78,7 @@ const EDIT_CLUB_ID = (req, res) => {
 				getAllEventDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
 					if (err) return
 					let events = docs
+					console.log(events);
 					fn(club, clubMembers, events)
 				})
 			})
@@ -97,6 +98,41 @@ const EDIT_CLUB_ID = (req, res) => {
 	})
 }
 
+
+
+const POST_EDIT_CLUB_ID = (req, res) => {
+	function query(filter, setUpdate, fn) {
+		dbf.updateClubDataBy(filter, { $set: setUpdate }, (err) => {
+			fn(err)
+		})
+
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let clubId = req.query.clubId;
+		let clubName = req.body.clubName;
+		let description = req.body.description;
+		let filter = { _id: new ObjectId(clubId) };
+		let setUpdate = { name: clubName, description: description };
+		query(filter, setUpdate, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
+		})
+	})
+}
+
+const GET_DELETE_CLUB_ID = (req, res) => {
+	function query(filter, fn) {
+		dbf.deleteClubDataBy(filter, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let clubId = req.query.clubId;
+		let filter = { _id: new ObjectId(clubId) }
+		query(filter, (err) => {
+			res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+		});
+	})
+}
 
 
 
@@ -209,11 +245,13 @@ const POST_MEMBERSHIP_UNJOIN = (req, res) => {
 module.exports = {
 	GET_CLUB: GET_CLUB,
 	SHOW_CLUB_ID: SHOW_CLUB_ID,
-	EDIT_CLUB_ID: EDIT_CLUB_ID,
+	GET_EDIT_CLUB_ID: GET_EDIT_CLUB_ID,
+	POST_EDIT_CLUB_ID: POST_EDIT_CLUB_ID,
 	GET_CREATE_CLUB: GET_CREATE_CLUB,
 	POST_CREATE_CLUB: POST_CREATE_CLUB,
+	GET_DELETE_CLUB_ID: GET_DELETE_CLUB_ID,
 	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,
 	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST,
-	POST_MEMBERSHIP_UNJOIN: POST_MEMBERSHIP_UNJOIN
+	POST_MEMBERSHIP_UNJOIN: POST_MEMBERSHIP_UNJOIN,
 }
 

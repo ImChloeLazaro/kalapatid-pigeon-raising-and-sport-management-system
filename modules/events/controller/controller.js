@@ -7,6 +7,7 @@ const model = require('../model/model')
 const { getAllClubDataBy, getClubAllMemberDataBy } = require("../../clubs/db/db-functions");
 const { ctx } = require("../../../constants/constants");
 const { getEventAllParticipantDataBy } = require("../db/db-functions");
+const { bgBlack } = require("colors");
 
 
 
@@ -87,7 +88,7 @@ const SHOW_EVENT_ID = (req, res) => {
 
 
 
-const EDIT_EVENT_ID = (req, res) => {
+const GET_EDIT_EVENT_ID = (req, res) => {
 	function query(accountId, eventId, clubId, fn) {
 		let eventIdObj = new ObjectId(eventId)
 		let clubIdObj = new ObjectId(clubId)
@@ -120,6 +121,65 @@ const EDIT_EVENT_ID = (req, res) => {
 	})
 
 }
+
+const POST_EDIT_EVENT_ID = (req, res) => {
+	function query(filter, setUpdate, fn) {
+		dbf.updateEventDataBy(filter, { $set: setUpdate }, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let eventId = req.query.eventId;
+		let clubId = req.query.clubId;
+
+		let name = req.body.name;
+		let type = req.body.type;
+		let hourStart = req.body.hourStart;
+		let hourEnd = req.body.hourEnd;
+		let description = req.body.description;
+		let long = req.body.long;
+		let lat = req.body.lat;
+
+
+
+		let filter = { _id: new ObjectId(eventId), clubId: new ObjectId(clubId) }
+		let setUpdate = {
+			name: name,
+			type: type,
+			hourStart: hourStart,
+			hourEnd: hourEnd,
+			description: description,
+			lat: lat,
+			long: long
+		}
+		query(filter, setUpdate, (err) => {
+			console.log("route edit event:".bgBlack.red, globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId);
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId)
+		})
+	})
+}
+
+const GET_DELETE_EVENT = (req, res) => {
+	function query(eventId, clubId, fn) {
+		let eventIdObj = new ObjectId(eventId)
+		let clubIdObj = new ObjectId(clubId)
+		let filter = { _id: eventIdObj, clubId: clubIdObj }
+		let delAlPartfilter = { eventId: eventIdObj }
+		dbf.deleteEventDataBy(filter, (err) => {
+			dbf.deleteAllEventParticipantDataBy(delAlPartfilter, (err) => {
+				fn(err)
+			})
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let clubId = req.query.clubId;
+		let eventId = req.query.eventId;
+		query(eventId, clubId, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
+		})
+	})
+}
+
 
 
 const POST_DELETE_EVENT = (req, res) => {
@@ -157,7 +217,7 @@ const GET_CREATE_EVENT = (req, res) => {
 
 const POST_CREATE_EVENT = (req, res) => {
 	function query(accountId, data, fn) {
-		dbf.insertEventData(data, (err) => {
+		dbf.insertEventDataBy(data, (err) => {
 			fn(err)
 		})
 	}
@@ -293,7 +353,9 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 module.exports = {
 	GET_EVENT: GET_EVENT,
 	SHOW_EVENT_ID: SHOW_EVENT_ID,
-	EDIT_EVENT_ID: EDIT_EVENT_ID,
+	GET_EDIT_EVENT_ID: GET_EDIT_EVENT_ID,
+	POST_EDIT_EVENT_ID: POST_EDIT_EVENT_ID,
+	GET_DELETE_EVENT: GET_DELETE_EVENT,
 	POST_DELETE_EVENT: POST_DELETE_EVENT,
 	GET_CREATE_EVENT: GET_CREATE_EVENT,
 	POST_CREATE_EVENT: POST_CREATE_EVENT,

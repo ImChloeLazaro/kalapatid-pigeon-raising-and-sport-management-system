@@ -41,7 +41,12 @@ const configuration = (app, express, constants, dirname) => {
 
 
 	//FILEUPLOAD
-	app.use(fileupload())
+	app.use(fileupload({
+		limits: {
+			fileSize: 1000000 //1mb
+		},
+		abortOnLimit: true
+	}))
 }
 
 

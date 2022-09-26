@@ -2,8 +2,7 @@
 {% block content %}
 
 	<div class="container-fluid">
-		<form action="">
-
+		<form method="POST">
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="cards">
@@ -20,7 +19,6 @@
 									<div >
 										<p class="fw-bolder">Club Name</p>
 										<input type="text" name="clubName" value="{{club.name}}">
-
 									</div>
 								</div>
 								<br>
@@ -53,7 +51,7 @@
 										<h5 class="fw-bold">Administrative Options</h5>
 									</div>
 									<div class="card-body">
-										<button class="btn-danger">delete club</button>
+										<a type="submit" class="btn-danger" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
 									</div>
 								</div>
 							</main>
@@ -64,7 +62,7 @@
 
 			</div>
 			<span>
-				<button class="d-inline btn btn-sm btn-success">update</button>
+				<button class="d-inline btn btn-sm btn-success" type="submit">update</button>
 				<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{club._id}}">cancel</a>
 			</span>
 		</form>

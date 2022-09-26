@@ -1,7 +1,7 @@
 const db = require('../../../database/datatabase')
 
 
-function insertEventData(data, fn) {
+function insertEventDataBy(data, fn) {
 	db.getCollection("events", (col) => {
 		col.createIndex({ "name": 1, "accountId": 1 }, { unique: true })
 		col.insertOne(data, (err) => {
@@ -10,6 +10,15 @@ function insertEventData(data, fn) {
 		})
 	})
 }
+function updateEventDataBy(filter, setUpdate, fn) {
+	db.getCollection("events", (col) => {
+		col.updateOne(filter, setUpdate, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
 
 function deleteEventDataBy(filter, fn) {
 	db.getCollection("events", (col) => {
@@ -124,7 +133,8 @@ module.exports = {
 	getAllAcountData: getAllAcountData,
 	getEventDataBy: getEventDataBy,
 	getAllEventDataBy: getAllEventDataBy,
-	insertEventData: insertEventData,
+	insertEventDataBy: insertEventDataBy,
+	updateEventDataBy: updateEventDataBy,
 	insertManyEventParticipantData: insertManyEventParticipantData,
 	getEventAllParticipantDataBy: getEventAllParticipantDataBy,
 

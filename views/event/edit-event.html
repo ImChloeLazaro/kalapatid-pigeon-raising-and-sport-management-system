@@ -1,7 +1,7 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
 	<div class="container-fluid">
-		<form action="">
+		<form method="post">
 			<div class="row">
 				<div class="col-lg-3">
 
@@ -24,9 +24,6 @@
 
 								<p class="text-mute fw-bold py-2">Event Type</p>
 								<input type="text" name="type" value="{{event.type}}">
-
-								<p class="text-mute fw-bold py-2">Description</p>
-								<div class="">{{event.description}}</div>
 
 								<p class="text-mute fw-bold py-2">Start Time</p>
 								<input type="time" name="hourStart" value="{{event.hourStart}}">
@@ -71,8 +68,8 @@
 										</div>
 										<div class="card-body d-flex justify-content-between">
 											<div id="event-show-map" style="width: fit-content; height:300px;"></div>
-											<input hidden="hidden" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-											<input hidden="hidden" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
+											<input hidden="true" name="long" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
+											<input hidden="true" name="lat" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
 										</div>
 									</div>
 								</footer>
@@ -97,7 +94,7 @@
 											<h5 class="fw-bold">Administrative Options</h5>
 										</div>
 										<div class="card-body">
-											<button class="btn-danger">delete event</button>
+											<a class="btn-danger" href="{{ctx.DOMAIN_NAME}}/events/delete?eventId={{event._id}}&clubId={{clubId}}">delete event</a>
 										</div>
 									</div>
 								</main>
