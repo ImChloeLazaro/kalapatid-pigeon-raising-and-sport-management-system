@@ -4,59 +4,65 @@
     <h1 class="h2 fw-bolder mt-2">Events</h1>
     <div class="event-table-container container w-100">
       <p class="h5 fw-bold mt-2 ms-2">All Events</p>
-      <div class="cards">
-        {# if events is empty then show no events found #}
-        {% if events | is_empty %}
-          <p class="text-center">No events.
-          </div>
-        {% endif %}
-        {% set isAdmin=true%}
-        {% set isClubMember=false%}
-        {% set isEmpty = false %}
-        {#  loop all clubs #}
-        {% for c in clubs %}
-          {# check if clubs is not empty then show club name #}
-          {% for m in clubMembers %}
-            {% if c._id | isMatch(m.clubId) %}
-              {# reverse loop  all events #}
-              {% for e in events | reverse %}
-                {# check if clubId is matched  with the clubId reference in event #}
-                {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId)and m.memberStatus == "accepted" %}
-                  {% set isClubMember = true %}
-                  <div class="d-flex my-2">
-                    <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id.toString()}}&clubId={{c._id.toString()}}">
-                      <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-                      <span class="mx-2 h5 fw-bolder">{{e.name}}</span>
-                      <div>
-                        <sub class="mx-2">club:
-                          {{c.name}}</sub>
-                        <sub class="mx-2">category:
-                          {{e.type}}</sub>
-                        <sub class="mx-2">date:
-                          {{e.date}}</sub>
-                        <span style="font-size: 8pt;" class="badge bg-success">
-                          {{eventParticipants|sizeByEventParticipants(e._id) }}
-                          participants
-                        </span>
-                      </div>
-                    </a>
-                  </div>
 
-                  {%else%}
-                  {% set isEmpty = true %}
-                {% endif %}
-
-              {% endfor %}
-            {% else %}
-              {% set isEmpty = true %}
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
-        {% if not isClubMember and isEmpty %}
+      {# if events is empty then show no events found #}
+      {% if events | is_empty %}
+        <div class="cards">
           <p class="d-flex content-justify-center align-items-center">No events.
           </p>
-        {%endif %}
-      </div>
-    </div>
+        </div>
+      {%endif %}
+      {% set isAdmin=true%}
+      {% set isClubMember=false%}
+      {% set isEmpty = false %}
+      {#  loop all clubs #}
+      {% for c in clubs %}
+        {# check if clubs is not empty then show club name #}
+        {% for m in clubMembers %}
+          {% if c._id | isMatch(m.clubId) %}
+            {# reverse loop  all events #}
+            {% for e in events | reverse %}
+              {# check if clubId is matched  with the clubId reference in event #}
+              {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId)and m.memberStatus == "accepted" %}
+                {% set isClubMember = true %}
+                <div class="d-flex my-2">
+                  <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id.toString()}}&clubId={{c._id.toString()}}">
+                    <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                    <span class="mx-2 h5 fw-bolder">{{e.name}}</span>
+                    <div>
+                      <sub class="mx-2">club:
+                        {{c.name}}</sub>
+                      <sub class="mx-2">category:
+                        {{e.type}}</sub>
+                      <sub class="mx-2">date:
+                        {{e.date}}</sub>
+                      <span style="font-size: 8pt;" class="badge bg-success">
+                        {{eventParticipants|sizeByEventParticipants(e._id) }}
+                        participants
+                      </span>
+                    </div>
+                  </a>
+                </div>
 
-  {% endblock %}
+                {%else%}
+                {% set isEmpty = true %}
+              {% endif %}
+
+            {% endfor %}
+          {% else %}
+            {% set isEmpty = true %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% if (not isClubMember and isEmpty) %}
+
+        <div class="cards">
+          <p class="d-flex content-justify-center align-items-center">No events.
+          </p>
+        </div>
+      {%endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -37,6 +37,7 @@ const SEARCH_RESULT = (req, res) => {
 			console.log(clubs);
 			return res.render('search/search-result.html', {
 				ctx: globalConstants.ctx,
+				q: req.query.q,
 				accountId: accountId,
 				username: username,
 				accounts: accounts,

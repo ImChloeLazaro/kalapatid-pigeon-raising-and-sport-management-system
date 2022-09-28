@@ -8,7 +8,6 @@
           <p class="text-dark text-center">No Messaging available!</p>
         </div>
       {% else %}
-        {% include 'search/convo-search.html' %}
         <div class="cards">
           <div id="oid" data-name="{{data}}" class="  my-2 p-2"></div>
           {% for d in data | unique_msg | sort(false, false, "datetime") | reverse %}

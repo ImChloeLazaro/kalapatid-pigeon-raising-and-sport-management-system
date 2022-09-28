@@ -5,62 +5,59 @@
 
 		<table>
 			<tbody>
-				<tr>
-					<td>
-						<h6 class="fw-bold my-3">Accounts</h6>
-					</td>
-				</tr>
-				{%if accounts|is_empty %}
+
+				{% if not accounts | is_empty %}
 					<tr>
 						<td>
-							<p class="text-dark text-center">No Result Found.
-							</p>
+							<h6 class="fw-bold my-3">Accounts</h6>
 						</td>
 					</tr>
-					{%endif%}
 					{% for a in accounts %}
 						<tr>
 							<td>@{{a.username}}</td>
 						</tr>
 						{%endfor%}
-						<tr>
-							<td>
-								<h6 class="fw-bold my-3">Events</h6>
-							</td>
-						</tr>
-						{%if events|is_empty %}
+						{%endif%}
+
+						{% if not events | is_empty %}
 							<tr>
 								<td>
-									<p class="text-dark text-center">No Result Found.
-									</p>
+									<h6 class="fw-bold my-3">Events</h6>
 								</td>
 							</tr>
-							{%endif%}
+
 							{% for e in events %}
 								<tr>
 									<td>{{e.name}}</td>
 								</tr>
 								{%endfor%}
-								<tr>
-									<td>
-										<h6 class="fw-bold my-3">Clubs</h6>
-									</td>
-								</tr>
-								{%if clubs |is_empty %}
+								{%endif%}
+
+								{% if not clubs | is_empty %}
 									<tr>
 										<td>
-											<p class="text-dark text-center">No Result Found.
-											</p>
+											<h6 class="fw-bold my-3">Clubs</h6>
 										</td>
 									</tr>
-									{%endif%}
+
 									{% for c in clubs %}
 										<tr>
 											<td>@{{c.name}}</td>
 										</tr>
 										{%endfor%}
-									</tbody>
-								</table>
-							</div>
+										{%endif%}
 
-						{% endblock %}
+										{% if clubs | is_empty and events | is_empty and accounts | is_empty %}
+											<tr>
+												<td>
+													<h6 class="fw-bold text-danger my-3">Searching '{{q}}' not found.
+													</h6>
+												</td>
+											</tr>
+											{%endif%}
+
+										</tbody>
+									</table>
+								</div>
+
+							{% endblock %}
