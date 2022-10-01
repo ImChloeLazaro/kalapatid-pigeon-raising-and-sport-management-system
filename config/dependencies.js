@@ -5,7 +5,9 @@ const nunjucks = require("nunjucks")
 const logger = require('morgan')
 const filters = require('./filter/filters')
 const fileupload = require("express-fileupload")
+const MongoStore = require('connect-mongo')
 
+const toolkit = require("../lib/toolkit")
 
 
 const configuration = (app, express, constants, dirname) => {
@@ -28,12 +30,13 @@ const configuration = (app, express, constants, dirname) => {
 	app.use(express.json())
 	app.use(express.urlencoded({ extended: true }))
 
-
 	//SESSIONS
 	app.use(session({
 		secret: constants.SESSION_SECRET,
 		saveUninitialized: true,
-		resave: false
+		resave: false,
+		expires: new Date(Date.now() + toolkit.getMillisecondsByDays(45)),
+		store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, dbName: process.env.DB_NAME })
 	}))
 
 	//STATIC FILES
