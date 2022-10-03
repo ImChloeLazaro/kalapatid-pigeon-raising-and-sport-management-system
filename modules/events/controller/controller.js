@@ -73,14 +73,18 @@ const SHOW_EVENT_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
-			return res.render("event/show-event.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubId: req.query.clubId,
-				event: event,
-				eventParticipants: eventParticipants
-			})
+			if (event != null && eventParticipants != null) {
+				return res.render("event/show-event.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					clubId: req.query.clubId,
+					event: event,
+					eventParticipants: eventParticipants
+				})
+			} else {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
+			}
 		})
 	})
 
@@ -109,14 +113,18 @@ const GET_EDIT_EVENT_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
-			return res.render("event/edit-event.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubId: req.query.clubId,
-				event: event,
-				eventParticipants: eventParticipants
-			})
+			if (event != null && eventParticipants != null) {
+				return res.render("event/edit-event.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					clubId: req.query.clubId,
+					event: event,
+					eventParticipants: eventParticipants
+				})
+			} else {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
+			}
 		})
 	})
 
@@ -153,7 +161,6 @@ const POST_EDIT_EVENT_ID = (req, res) => {
 			long: long
 		}
 		query(filter, setUpdate, (err) => {
-			console.log("route edit event:".bgBlack.red, globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId);
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId)
 		})
 	})
@@ -210,6 +217,7 @@ const GET_CREATE_EVENT = (req, res) => {
 			accountId: accountId,
 			clubId: req.query.clubId
 		})
+
 	})
 }
 
@@ -254,16 +262,21 @@ const GET_PARTICIPANT = (req, res) => {
 		let eventId = req.query.eventId
 
 		query(clubId, eventId, partuName, (err, docs) => {
-			console.log(docs)
-			return res.render("event/participant.html", {
-				ctx: globalConstants.ctx,
-				username: username,
-				accountId: accountId,
-				partuName: partuName,
-				eventId: eventId,
-				clubId: clubId,
-				participant: docs
-			})
+			if (docs != null) {
+
+
+				return res.render("event/participant.html", {
+					ctx: globalConstants.ctx,
+					username: username,
+					accountId: accountId,
+					partuName: partuName,
+					eventId: eventId,
+					clubId: clubId,
+					participant: docs
+				})
+			} else {
+				res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
+			}
 		})
 
 	})
@@ -299,7 +312,6 @@ const UPDATE_PARTICIPANT = (req, res) => {
 
 
 pigeonSerialGenerator("4")
-
 
 const GET_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {

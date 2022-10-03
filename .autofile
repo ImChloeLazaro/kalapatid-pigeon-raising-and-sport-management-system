@@ -9,3 +9,8 @@
 # - mongod
 # - npm run tun2
 # - npm start
+
+# heroku
+# - mongod
+# - heroku local
+# - heroku open -a kalapatid

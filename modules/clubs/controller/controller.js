@@ -21,13 +21,17 @@ const GET_CLUB = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query((clubs, clubMembers) => {
-			return res.render("club/index.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubs: clubs,
-				clubMembers: clubMembers
-			})
+			if (clubs != null && clubMembers != null) {
+				return res.render("club/index.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					clubs: clubs,
+					clubMembers: clubMembers
+				})
+			} else {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME)
+			}
 		})
 	})
 
@@ -52,14 +56,18 @@ const SHOW_CLUB_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(req.query.clubId, (club, clubMembers, events) => {
-			return res.render("club/show-club.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username, username,
-				club: club,
-				clubMembers: clubMembers,
-				events: events
-			})
+			if (club != null && clubMembers != null && events != null) {
+				return res.render("club/show-club.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username, username,
+					club: club,
+					clubMembers: clubMembers,
+					events: events
+				})
+			} else {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+			}
 		})
 	})
 
@@ -86,14 +94,18 @@ const GET_EDIT_CLUB_ID = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(req.query.clubId, (club, clubMembers, events) => {
-			return res.render("club/edit-club.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username, username,
-				club: club,
-				clubMembers: clubMembers,
-				events: events
-			})
+			if (club != null && clubMembers != null && events != null) {
+				return res.render("club/edit-club.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username, username,
+					club: club,
+					clubMembers: clubMembers,
+					events: events
+				})
+			} else {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+			}
 		})
 	})
 }

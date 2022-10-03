@@ -7,8 +7,6 @@ const filters = require('./filter/filters')
 const fileupload = require("express-fileupload")
 const MongoStore = require('connect-mongo')
 
-const toolkit = require("../lib/toolkit")
-
 
 const configuration = (app, express, constants, dirname) => {
 	//VIEWS ENGINE| NUNJUCKS
@@ -20,11 +18,8 @@ const configuration = (app, express, constants, dirname) => {
 	})
 	filters(env)
 
-
-
 	//LOGGING 
 	app.use(logger('dev', {}))
-
 
 	//BODY PARSING
 	app.use(express.json())
@@ -34,14 +29,12 @@ const configuration = (app, express, constants, dirname) => {
 	app.use(session({
 		secret: constants.SESSION_SECRET,
 		saveUninitialized: true,
-		resave: false,
-		expires: new Date(Date.now() + toolkit.getMillisecondsByDays(45)),
+		resave: true,
 		store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, dbName: process.env.DB_NAME })
 	}))
 
 	//STATIC FILES
 	app.use(express.static(path.join(dirname, constants.STATIC_FOLDER)))
-
 
 	//FILEUPLOAD
 	app.use(fileupload({

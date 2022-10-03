@@ -5,13 +5,6 @@
     <div class="event-table-container container w-100">
       <p class="h5 fw-bold mt-2 ms-2">All Events</p>
 
-      {# if events is empty then show no events found #}
-      {% if events | is_empty %}
-        <div class="cards">
-          <p class="d-flex content-justify-center align-items-center">No events.
-          </p>
-        </div>
-      {%endif %}
       {% set isAdmin=true%}
       {% set isClubMember=false%}
       {% set isEmpty = false %}
@@ -54,14 +47,20 @@
           {% endif %}
         {% endfor %}
       {% endfor %}
-      {% if (not isClubMember and isEmpty) %}
-
+      {# if events is empty then show no events found #}
+      {% if events | is_empty %}
         <div class="cards">
           <p class="d-flex content-justify-center align-items-center">No events.
           </p>
         </div>
+      {%else %}
+        {% if (not isClubMember and isEmpty) %}
+          <div class="cards">
+            <p class="d-flex content-justify-center align-items-center">No events.
+            </p>
+          </div>
+        {%endif %}
       {%endif %}
-
     </div>
   </div>
 
