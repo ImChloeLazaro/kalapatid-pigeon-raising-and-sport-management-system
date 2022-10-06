@@ -3,28 +3,28 @@ require('dotenv').config()
 const { MongoClient } = require('mongodb');
 
 async function db() {
-	let client;
+	let env = process.env
+	let client = new MongoClient(env.MONGO_URL)
 	try {
-		let env = process.env
-		const client = new MongoClient(env.MONGO_URL)
 		await client.connect()
-
 		let db = client.db(env.DB_NAME)
 		console.log("Database Connection: ".bgYellow.bold);
 		console.log('MongoDB server: Connected successfully.'.green)
 		console.log("\n");
-		return db
-	} catch (error) {
-		console.error('MongoDB server: Connected unsuccessfully.'.red, error);
-		console.log("\n");
-		process.exit();
-	}
+		return db;
+	} catch (e) {
+		console.error('MongoDB server: Connected unsuccessfully.'.red, e);
+	} 
 }
 
 
-function getCollection(name, fn) {
-	db().then(c => {
-		fn(c.collection(name))
+async function getCollection(name, fn) {
+	await db().then(c => {
+		try {
+			fn(c.collection(name))
+		} catch (err) {
+			console.log(err)
+		} 
 	}).catch(err => {
 		console.log(err)
 	})

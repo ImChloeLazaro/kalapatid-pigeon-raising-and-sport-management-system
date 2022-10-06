@@ -5,6 +5,7 @@ const { verifyLogin } = require("../../../lib/toolkit")
 const { getAccountDataBy } = require('../db/db-functions')
 const { getAllClubDataBy } = require("../../clubs/db/db-functions")
 const { getAllEventDataBy } = require("../../events/db/db-functions")
+const { getAllProfileDataBy } = require("../../profile/db/db-functions")
 
 const SEARCH = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -23,7 +24,11 @@ const SEARCH_RESULT = (req, res) => {
 				let events = docs;
 				getAllClubDataBy(filter, (err, docs) => {
 					let clubs = docs;
-					fn(accounts, events, clubs);
+					getAllProfileDataBy({}, (err, docs) => {
+						let profile = docs;
+						fn(accounts, profile, events, clubs);
+					})
+
 				})
 			})
 		})
@@ -31,14 +36,16 @@ const SEARCH_RESULT = (req, res) => {
 
 
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.query.q, (accounts, events, clubs) => {
+		query(req.query.q, (accounts, profile, events, clubs) => {
 			console.log(accounts);
 			console.log(events);
 			console.log(clubs);
+			console.log(profile);
 			return res.render('search/search-result.html', {
 				ctx: globalConstants.ctx,
 				q: req.query.q,
 				accountId: accountId,
+				profile: profile,
 				username: username,
 				accounts: accounts,
 				events: events,
@@ -48,6 +55,8 @@ const SEARCH_RESULT = (req, res) => {
 	})
 
 }
+
+
 
 module.exports = {
 	SEARCH: SEARCH,

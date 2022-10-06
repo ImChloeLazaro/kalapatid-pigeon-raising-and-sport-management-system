@@ -5,7 +5,7 @@ const model = require('../model/model')
 
 
 const globalConstants = require("../../../constants/constants");
-const { getAllEventDataBy } = require("../../events/db/db-functions")
+const { getAllEventDataBy, deleteAllEventParticipantDataBy, deleteEventDataBy } = require("../../events/db/db-functions")
 
 const GET_CLUB = (req, res) => {
 	function query(fn) {
@@ -134,7 +134,11 @@ const POST_EDIT_CLUB_ID = (req, res) => {
 const GET_DELETE_CLUB_ID = (req, res) => {
 	function query(filter, fn) {
 		dbf.deleteClubDataBy(filter, (err) => {
-			fn(err)
+			deleteEventDataBy({ clubId: filter._id }, (err) => {
+				deleteAllEventParticipantDataBy({ clubId: filter._id }, (err) => {
+					fn(err)
+				})
+			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {

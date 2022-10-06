@@ -2,34 +2,34 @@
 {% block content %}
 	<div class="container">
 		<h1 class="display-5">Search Result</h1>
+		<div class="cards">
 
-		<table>
-			<tbody>
+			<table>
+				<tbody>
 
-				{% if not accounts | is_empty %}
-					<tr>
-						<td>
-							<h6 class="fw-bold my-3">Accounts</h6>
-						</td>
-					</tr>
-					{% for a in accounts %}
+					{% if not accounts | is_empty %}
 						<tr>
-							<td>@{{a.username}}</td>
+							<td>
+								<h6 class="fw-bold my-3">Accounts</h6>
+							</td>
 						</tr>
-						{%endfor%}
-						{%endif%}
-
-						{% if not events | is_empty %}
-							<tr>
-								<td>
-									<h6 class="fw-bold my-3">Events</h6>
-								</td>
-							</tr>
-
-							{% for e in events %}
+						{% for a in accounts %}
+							{% for p in profile %}
 								<tr>
-									<td>{{e.name}}</td>
+									<td>
+										<div class="d-flex my-2">
+											<a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/profile?username={{a.username}}">
+												<img src="{{p.profileURL}}" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+												<span class="mx-3 h5 fw-bolder">{{c.name}}</span>
+												<span style="font-size: 8pt;" class="badge bg-success">
+													@{{a.username}}
+												</span>
+											</a>
+										</div>
+									</td>
 								</tr>
+
+								{%endfor%}
 								{%endfor%}
 								{%endif%}
 
@@ -42,7 +42,15 @@
 
 									{% for c in clubs %}
 										<tr>
-											<td>@{{c.name}}</td>
+											<td>
+												<div class="d-flex my-2">
+													<a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
+														<img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+														<span class="mx-3 h5 fw-bolder">{{c.name}}</span>
+													</a>
+												</div>
+											</td>
+
 										</tr>
 										{%endfor%}
 										{%endif%}
@@ -59,5 +67,6 @@
 										</tbody>
 									</table>
 								</div>
+							</div>
 
-							{% endblock %}
+						{% endblock %}

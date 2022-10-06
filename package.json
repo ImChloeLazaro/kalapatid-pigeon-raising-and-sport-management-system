@@ -9,7 +9,7 @@
     "debug": "nodemon app.js",
     "dev1": "nodemon  app.js",
     "dev2": "wr http://localhost:8080 && nodemon app.js",
-    "tun": "lt -p 9000 -s kalapatid-developer",
+    "tun": "lt -p 8080 -s kalapatid-developer",
     "tun1": "ngrok http 8080",
     "tun2": "loophole http 8080 --hostname kalapatid-developer",
     "tun3": "loclx tunnel http --to localhost:8080",
