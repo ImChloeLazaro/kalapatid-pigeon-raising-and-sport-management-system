@@ -31,7 +31,7 @@
               {# check if clubId is matched  with the clubId reference in event #}
               {% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId)and m.memberStatus == "accepted" %}
                 {% set isClubMember = true %}
-                <div class="d-flex my-2">
+                <div class="d-flex my-2 cards">
                   <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id.toString()}}&clubId={{c._id.toString()}}">
                     <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                     <span class="mx-2 h5 fw-bolder">{{e.name}}</span>
@@ -41,7 +41,7 @@
                       <sub class="mx-2">category:
                         {{e.type}}</sub>
                       <sub class="mx-2">date:
-                        {{e.date}}</sub>
+                        {{e.date | date_formatter }}</sub>
                       <span style="font-size: 8pt;" class="badge bg-success">
                         {{eventParticipants|sizeByEventParticipants(e._id) }}
                         participants
