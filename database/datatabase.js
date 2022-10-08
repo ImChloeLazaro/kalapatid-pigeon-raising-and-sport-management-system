@@ -14,17 +14,17 @@ async function db() {
 		return db;
 	} catch (e) {
 		console.error('MongoDB server: Connected unsuccessfully.'.red, e);
-	} 
+	}
 }
 
 
-async function getCollection(name, fn) {
-	await db().then(c => {
+function getCollection(name, fn) {
+	db().then(c => {
 		try {
 			fn(c.collection(name))
 		} catch (err) {
 			console.log(err)
-		} 
+		}
 	}).catch(err => {
 		console.log(err)
 	})
