@@ -1,0 +1,502 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+p {
+  color: #2D2626;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.icons {
+  margin: 3px;
+  color: #2D2626;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.icons:hover {
+  color: #2DA380;
+  border-radius: 50%;
+}
+
+.card {
+  padding: 20px;
+  height: auto;
+  width: auto;
+  margin: 5px;
+  background: #F2F2F2;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.card-header {
+  border: none;
+  background: #F2F2F2;
+}
+
+.card-footer {
+  border: none;
+  background: #F2F2F2;
+}
+
+.form-control {
+  height: auto;
+  width: auto;
+  margin: 5px;
+  background: #F2F2F2;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+.form-control:focus {
+  color: #2D2626;
+  border-color: #2DA380;
+  background: #F2F2F2;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control::-moz-placeholder {
+  color: #C5C3C3;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #C5C3C3;
+}
+
+.form-control::placeholder {
+  color: #C5C3C3;
+}
+
+textarea {
+  color: #2DA380 2px solid;
+}
+
+.btn {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 50%;
+  background: #2DA380 !important;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+  z-index: 1000;
+}
+
+.btn:hover {
+  color: #2DA380;
+  background: #F2F2F2 !important;
+}
+
+.btn:focus {
+  border-color: #2DA380;
+  background: #F2F2F2;
+  outline: none;
+  box-shadow: none;
+}
+
+.badge {
+  background: #2DA380 !important;
+  height: 20px;
+  z-index: 1000;
+}
+
+:root {
+  --primary-color: #f2f2f2;
+  --secondary-color: #2DA380;
+  --typography: #2D2626;
+  --placeholder: #C5C3C3;
+}
+
+/* global */
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+/* LAYOUTS */
+/* center layout */
+.center-layout {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* COMPONENTS */
+/* default card */
+.card {
+  height: auto;
+  width: 600px;
+  background: #F2F2F2;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 2rem;
+  box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
+}
+
+/* form input */
+.form-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container input {
+  height: 40px;
+  width: 350px;
+  color: var(--typography);
+  border-radius: 50px;
+  background: #F2F2F2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  border: 2px #ffffff solid;
+}
+
+.form-container input::-moz-placeholder {
+  color: #C5C3C3;
+}
+
+.form-container input:-ms-input-placeholder {
+  color: #C5C3C3;
+}
+
+.form-container input::placeholder {
+  color: #C5C3C3;
+}
+
+.form-container input:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: var(--placeholder);
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* default round button */
+.btn {
+  height: 45px;
+  width: 45px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  color: var(--placeholder);
+  background: var(--secondary-color);
+}
+
+.btn:hover {
+  color: var(--secondary-color);
+  background: var(--primary-color);
+  border: 3px var(--secondary-color) solid;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+/* login */
+.logo-container {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container #identify-logo,
+#auth-logo {
+  width: 170px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner {
+  margin: 10px auto;
+  font-size: 25px;
+  color: #2D2626;
+}
+
+.input-group {
+  width: 320px;
+  margin: 10px;
+}
+
+.input-group .input-group-prepend {
+  height: auto;
+}
+
+.input-group .input-group-prepend .custom-input {
+  background: #F2F2F2;
+  border: none;
+}
+
+.input-group .input-group-prepend .custom-input .fa {
+  height: 25px;
+  width: 25px;
+  position: relative;
+  font-size: 20px;
+  top: 5px;
+}
+
+.form-group input[type=text] {
+  all: unset;
+  width: 250px;
+  border-bottom: 3px #2DA380 solid;
+}
+
+.form-group input[type=text]::-moz-placeholder {
+  color: #C5C3C3;
+}
+
+.form-group input[type=text]:-ms-input-placeholder {
+  color: #C5C3C3;
+}
+
+.form-group input[type=text]::placeholder {
+  color: #C5C3C3;
+}
+
+.checkbox {
+  margin: 10px 0;
+}
+
+.checkbox input[type=checkbox] {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #F2F2F2;
+  border: 2px #2DA380 solid;
+  transition: 0.5s;
+}
+
+.checkbox input[type=checkbox]:checked {
+  background: #2DA380;
+  outline: none;
+  box-shadow: none;
+}
+
+.checkbox input[type=checkbox]:focus {
+  box-shadow: none;
+}
+
+.checkbox p {
+  font-size: 15px;
+}
+
+.checkbox,
+.btn-container {
+  width: 285px;
+  position: relative;
+  left: 26px;
+}
+
+.btn-container input[type=submit] {
+  margin: 10px 0;
+  background: #2DA380;
+  border: 2px #F2F2F2 solid;
+  color: #C5C3C3 !important;
+}
+
+.auth {
+  width: 285px;
+  position: relative;
+  left: 26px;
+  font-size: 14px;
+}
+
+.auth div {
+  margin: 10px 0 0 0;
+  cursor: pointer;
+}
+
+.auth :nth-child(1) {
+  color: #2DA380;
+}
+
+/* identify page */
+.identify {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.action-banner p {
+  color: #C5C3C3;
+  font-size: 14px;
+}
+
+/* registration */
+.registration-header {
+  position: relative;
+  top: 60px;
+  z-index: 2;
+}
+
+.carousel-item {
+  padding: 60px;
+}
+
+#registration-carousel {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: auto;
+}
+
+.carousel-indicators {
+  position: relative;
+  top: 310px;
+}
+
+.carousel-indicators [data-bs-target] {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 3px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  background-clip: padding-box;
+  border: 2px solid var(--placeholder);
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+}
+
+.carousel-indicators .active {
+  background: none;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-image: none;
+}
+
+/* breakpoints */
+@media (max-width: 575px) {
+  .card {
+    height: 100vh;
+    width: 100vw;
+    border: none;
+    border-radius: 0%;
+  }
+  .checkbox,
+.btn-container {
+    width: 285px;
+    position: relative;
+    left: 26px;
+  }
+}
+#global-chat-wrapper {
+  height: 90vh;
+}
+
+#global-message {
+  overflow-y: auto;
+  height: 70vh;
+}
+
+#global-chat-participant {
+  display: flex;
+  align-items: center;
+}
+
+#globalchat-participant-picture {
+  padding: 3px;
+  margin-right: 10px;
+  background: #2DA380;
+  border-radius: 50%;
+}
+
+#globalchat-message-wrapper {
+  width: auto;
+}
+
+#globalchat-message-wrapper span {
+  font-weight: 600;
+  color: #2D2626;
+}
+
+#globalchat-message-wrapper p {
+  padding: 10px;
+  width: auto;
+  color: #F2F2F2;
+  background: #2DA380;
+  border-radius: 1rem;
+}
+
+#globalchat-form form textarea {
+  width: 100%;
+  max-height: 70vh;
+}
+
+#globalchat-form form button {
+  max-height: 40px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #C5C3C3;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2DA380;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  color: #2D2626;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link:hover {
+  color: #2DA380;
+}
+
+#account-picture, #profile-club-picture {
+  background: #2DA380;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+#profile-link #profile-icons {
+  font-size: 18px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}/*# sourceMappingURL=style.css.map */
