@@ -135,7 +135,7 @@ body {
   top: 5px;
 }
 
-.form-group input[type=text] {
+.login-input {
   all: unset;
   width: 250px;
   border-bottom: 3px #2DA380 solid;

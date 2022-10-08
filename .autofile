@@ -1,6 +1,6 @@
 # development mode
 - mongod
-- npm run dev2
+- npm run dev1
 # - npm run tun2
 - mongo
 # - scrcpy
