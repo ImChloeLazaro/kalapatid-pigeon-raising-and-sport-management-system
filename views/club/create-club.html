@@ -1,24 +1,37 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
 	<div class="container">
-		<h1>Create Club</h1>
 		<div class="container club-form-container">
-			<form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
-				<div class="form-group w-50">
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center">
+					<div class="col-12 col-lg-6 mt-5">
+						<div class="cards w-auto">
+							<h5 class="fw-bold">Create Club</h5>
+							<div class="card-body">
+								<form action="{{ctx.DOMAIN_NAME}}/clubs/create" method="post">
+									<div class="form-group">
+					
+										<div>
+											<label for="clubName">Club Name</label>
+											<input class="form-control form-control-sm position-relative" style="width: 100%; right: 5px;" name="clubName" type="text" placeholder="Club Name">
+										</div>
 
-					<div class="my-4">
-						<label for="clubName">Club Name</label>
-						<input class="form-control form-control-sm " name="clubName" type="text" placeholder="Club Name">
+										<div class="my-4 form-group">
+											<label for="description">
+												Description</label>
+											<textarea class="d-block w-100"  name="description" placeholder="Club Description"></textarea>
+										</div>
+					
+										<div class="w-100 d-flex justify-content-end">
+											<input class="btn btn-success" type="submit" value="Save">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-					<div class="my-4">
-						<label for="description">
-							Description</label>
-						<textarea class="d-block" name="description" placeholder="Event Description"></textarea>
-					</div>
-
-					<input class="btn btn-success my-4" type="submit" value="Save">
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 {% endblock %}
