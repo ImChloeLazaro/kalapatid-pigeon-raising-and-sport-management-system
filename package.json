@@ -39,5 +39,8 @@
     "nodemon": "^2.0.15",
     "nunjucks": "^3.2.3",
     "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "sass": "^1.55.0"
   }
 }

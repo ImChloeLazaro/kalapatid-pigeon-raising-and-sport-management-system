@@ -190,5 +190,20 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
+textarea
+{
+  all:unset;
+  width: 26rem!important;
+  border: 3px solid #FFFFFF;
+  border-radius: 1rem;
+  color: #2DA380;
+}
+textarea:focus, textarea::placeholder
+{
+  padding-left: 7px;
+}
+textarea::placeholder
+{
+  color: #C5C3C3;
+}
 /*# sourceMappingURL=style.css.map */
