@@ -44,12 +44,12 @@
 									<span>
 										{% for member in clubMembers %}
 											{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
-												<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" class="d-inline-block btn btn-sm btn-success w-25">Club Chat</a>
+												<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" class="d-inline-block btn btn-sm btn-success w-25"><i class="fa-solid fa-comment"></i> Chat</a>
 												{# and if account is the founder you have this option  #}
 												{# ===================================================== #}
 
 												{% if club.creatorId | isMatch(accountId) %}
-													<a class="d-inline-block btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create?clubName={{club.name}}&clubId={{club._id}}">Create Event</a>
+													<a class="d-inline-block btn btn-sm btn-success my-2 w-25" href="{{ctx.DOMAIN_NAME}}/events/create?clubName={{club.name}}&clubId={{club._id}}"><i class="fa-solid fa-plus fw-bold"></i> Event</a>
 													{% endif%}
 													{% endif%}
 													{# ===================================================== #}
@@ -194,7 +194,7 @@
 																									<input id="status-{{member._id}}" type="text" name="status" hidden="true">
 																									<div class="float-end">
 																										<button id="btn-accept-{{member._id}}" class="d-inline-block  btn btn-sm btn-success me-1">accept</button>
-																										<button id="decline btn-decline-{{member._id}}" class="d-inline-block btn btn-sm btn-danger" style="background:red!important">decline</button>
+																										<button id="decline btn-decline-{{member._id}}" class="d-inline-block btn btn-sm btn-danger" onmouseover="hoverin(this)" onmouseout="hoverout(this)">decline</button>
 																									</div>
 																									<script>
 																										$("#btn-accept-{{member._id}}").click((e) => {
@@ -204,10 +204,16 @@
 																											$("#status-{{member._id}}").val("declined")
 																										})
 																										// decline btn.
-																										document.getElementById('decline').addEventListener('mouseover', function()
+																										function hoverin(decline)
 																										{
-																											alert('hello')
-																										})
+																											decline.style.color = '#DC3545';
+																											decline.style.background = 'white';
+																										}
+																										function hoverout(decline)
+																										{
+																											decline.style.background = '#DC3545';
+																											decline.style.color = 'white';
+																										}
 																									</script>
 																								</td>
 																							</form>
