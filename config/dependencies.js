@@ -29,6 +29,7 @@ const configuration = (app, express, constants, dirname) => {
 	app.use(session({
 		secret: constants.SESSION_SECRET,
 		saveUninitialized: true,
+		resave: true,
 		store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, dbName: process.env.DB_NAME })
 	}))
 

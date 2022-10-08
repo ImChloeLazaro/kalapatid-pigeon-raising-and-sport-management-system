@@ -16,7 +16,8 @@
 				<!-- ########################### Menu ########################## -->
 				<ul class="navbar-nav mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/posts">Home</a>
+						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/posts">
+							Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ctx.DOMAIN_NAME}}/messages">Messages</a>
@@ -41,21 +42,32 @@
 							Account
 						</a>
 						<ul class="dropdown-menu p-1" aria-labelledby="account" style="right: 0; left: auto;">
+							<li>
+								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/profile">
+									<i class="fa-solid fa-user"></i>
+									Profile</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/dashboard">
+									<i class="fa-solid fa-gauge"></i>
+									Dashboard</a>
+							</li>
 
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/profile">Profile</a>
+								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/about">
+									<i class="fa-sharp fa-solid fa-circle-info"></i>
+
+									About Us</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/dashboard">Dashboard</a>
+								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/help">
+									<i class="fa-sharp fa-solid fa-question"></i>
+									Help</a>
 							</li>
 							<li>
-								<form class="dropdown-item">
-									Night Mode
-									<input type="checkbox" name="night-mode" id="">
-								</form>
-							</li>
-							<li>
-								<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">Logout</a>
+								<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">
+									<i class="fa-solid fa-right-from-bracket"></i>
+									Logout</a>
 							</li>
 						</ul>
 					</li>

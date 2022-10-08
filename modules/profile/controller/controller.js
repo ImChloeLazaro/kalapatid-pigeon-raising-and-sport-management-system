@@ -104,10 +104,15 @@ const POST_EDIT_PROFILE = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		const imagekit = require("../../../lib/imagekit");
+
 		imagekit.profileUpload("user", username, global.__basedir, req.files, (err, url) => {
 			let imageError = err;
 			let filter = { accountId: new ObjectId(accountId) }
 			let setUpdate = { description: req.body.description, profileURL: url }
+			if (url === null) {
+				setUpdate = { description: req.body.description }
+			}
+			console.log(setUpdate);
 			query(filter, setUpdate, (err) => {
 				if (err || imageError) {
 					return res.status(404).send("Server Error. ")
@@ -116,6 +121,7 @@ const POST_EDIT_PROFILE = (req, res) => {
 				}
 			})
 		})
+
 	})
 }
 

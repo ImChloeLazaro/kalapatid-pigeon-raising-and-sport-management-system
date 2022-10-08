@@ -28,7 +28,7 @@
     "express": "^4.17.3",
     "express-fileupload": "^1.4.0",
     "express-flash": "^0.0.2",
-    "express-session": "^1.17.2",
+    "express-session": "^1.17.3",
     "express-validator": "^6.14.1",
     "googleapis": "^100.0.0",
     "imagekit": "^4.1.1",
