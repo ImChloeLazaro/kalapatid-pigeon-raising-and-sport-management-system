@@ -135,11 +135,11 @@ body {
   top: 5px;
 }
 
-.form-group input[type=text] {
+/* .form-group input[type=text] {
   all: unset;
   width: 250px;
   border-bottom: 3px #2DA380 solid;
-}
+} */
 
 .form-group input[type=text]::placeholder {
   color: #C5C3C3;
