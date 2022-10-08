@@ -13,18 +13,45 @@
 						<div>
 							<div class="card-body">
 								<div class="w-100 text-center my-3">
-									<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
 									<div>
-										<input type="file" name="clubProfile" id="profile-upload">
-										<p class="fw-lighter">NOTE: picture upload should be limited to 60 kilobytes</p>
+										<div>
+											<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
+											<div class="position-relative">
+												<style>
+													.my_file
+													{
+														color: transparent;
+														position: relative;
+														bottom: 20px;
+														left: 187px;
+													}
+													.my_file::-webkit-file-upload-button
+													{
+														visibility: hidden;
+													}
+													.my_file::before{
+														content: '\f030';
+														font-family: 'fontAwesome';
+														color: #F2F2F2;
+														-webkit-text-stroke: 1px #2DA380;
+														cursor: pointer;
+													}
+												</style>
+												<input class="my_file" type="file" name="clubProfile" id="profile-upload">
+											</div>
+										</div>
+										<small class="text-muted fw-lighter">NOTE: picture upload should be limited to 60 kilobytes</small>
 									</div>
 								</div>
 								<div class="w-auto">
 									<div >
-										<p class="fw-bolder">Club Name</p>
-										<input type="text" name="clubName" value="{{club.name}}">
-
+										<p class="fw-bolder px-2">Club Name</p>
+										<input class="form-control w-100" type="text" name="clubName" value="{{club.name}}">
 									</div>
+									<span class="w-100 position-relative" style="left: 15vw;">
+										<button class="d-inline btn btn-sm btn-success" type="submit">update</button>
+										<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{club._id}}">cancel</a>
+									</span>
 								</div>
 								<br>
 							</div>
@@ -53,10 +80,21 @@
 							<main>
 								<div class="cards">
 									<div class="card-content">
-										<h5 class="fw-bold">Administrative Options</h5>
+										<h5 class="fw-bold text-center">Administrative Options</h5>
 									</div>
 									<div class="card-body">
-										<a type="submit" class="btn-danger" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
+										<style>
+											#danger
+											{
+												background: #DC3646!important;
+											}
+											#danger:hover
+											{
+												color: #DC3646!important;
+												background: #F2F2F2!important;
+											}
+										</style>
+										<a type="submit" id="danger" class="btn btn-danger"  href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
 									</div>
 								</div>
 							</main>
@@ -66,10 +104,7 @@
 				</div>
 
 			</div>
-			<span>
-				<button class="d-inline btn btn-sm btn-success" type="submit">update</button>
-				<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{club._id}}">cancel</a>
-			</span>
+
 		</form>
 	</div>
 

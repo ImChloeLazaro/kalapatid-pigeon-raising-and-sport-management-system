@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="cards">
+				<div class="cards animate__animated animate__fadeIn">
 					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 						<h5 class="fw-bold">Club</h5>
 						{% if club.founderName == username %}
@@ -41,7 +41,7 @@
 									<div class="text-muted">{{club.description}}</div>
 									{# accessable only if you are a member of the club #}
 									{# ===================================================== #}
-									<span>
+									<span class="position-relative" style="left: 185px;">
 										{% for member in clubMembers %}
 											{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
 												<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" class="d-inline-block btn btn-sm btn-success w-25"><i class="fa-solid fa-comment"></i> Chat</a>
@@ -114,7 +114,7 @@
 													{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
 														<div class="col-lg-12">
 															<main>
-																<div class="cards">
+																<div class="cards animate__animated animate__fadeIn">
 																	<div class="card-content">
 																		<h5 class="fw-bold">Events</h5>
 																	</div>
@@ -165,7 +165,7 @@
 														{% if club.creatorId == accountId %}
 															<div class="col-lg-12">
 																<main>
-																	<div class="cards">
+																	<div class="cards animate__animated animate__fadeIn">
 																		<div class="card-content">
 																			<h5 class="fw-bold">Membership Requests</h5>
 																		</div>
@@ -239,7 +239,7 @@
 																{# ===================================================== #}
 																<div class="col-lg-12">
 																	<main>
-																		<div class="cards">
+																		<div class="cards animate__animated animate__fadeIn">
 																			<div class="card-content">
 																				<h5 class="fw-bold">Members</h5>
 																			</div>
@@ -264,14 +264,14 @@
 																										</td>
 																										{% if club.creatorId == accountId and member.username != club.founderName %}
 																											<td>
-																												<span>
+																												<div class="d-flex justify-content-end me-3">
 																													<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
 																														<input type="text" name="username" value="{{member.username}}" hidden="true">
 																														<input type="text" name="clubId" value="{{club._id}}" hidden="true">
-																														<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
+																														<button class="d-inline-block border-0" type="submit"><i class="fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove"></i></button>
 																													</form>
 
-																												</span>
+																												</div>
 																											</td>
 																											{%endif%}
 																										</tr>
