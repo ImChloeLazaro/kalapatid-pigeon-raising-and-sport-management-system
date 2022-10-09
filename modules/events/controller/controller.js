@@ -74,7 +74,7 @@ const SHOW_EVENT_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
 			if (event != null && eventParticipants != null) {
-				return res.render("event/show-event.html", {
+				return res.render("event/manage-event/show-event.html", {
 					ctx: globalConstants.ctx,
 					accountId: accountId,
 					username: username,
@@ -114,7 +114,7 @@ const GET_EDIT_EVENT_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
 			if (event != null && eventParticipants != null) {
-				return res.render("event/edit-event.html", {
+				return res.render("event/manage-event/edit-event.html", {
 					ctx: globalConstants.ctx,
 					accountId: accountId,
 					username: username,
@@ -147,7 +147,7 @@ const POST_EDIT_EVENT_ID = (req, res) => {
 		let description = req.body.description;
 		let long = req.body.long;
 		let lat = req.body.lat;
-
+		let accessability = req.body.accessability
 
 
 		let filter = { _id: new ObjectId(eventId), clubId: new ObjectId(clubId) }
@@ -158,7 +158,8 @@ const POST_EDIT_EVENT_ID = (req, res) => {
 			hourEnd: hourEnd,
 			description: description,
 			lat: lat,
-			long: long
+			long: long,
+			accessability: accessability
 		}
 		query(filter, setUpdate, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId)
@@ -211,7 +212,7 @@ const POST_DELETE_EVENT = (req, res) => {
 
 const GET_CREATE_EVENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		return res.render("event/create-event.html", {
+		return res.render("event/manage-event/create-event.html", {
 			ctx: globalConstants.ctx,
 			username: username,
 			accountId: accountId,
@@ -241,7 +242,16 @@ const POST_CREATE_EVENT = (req, res) => {
 		let type = req.body.type
 		let description = req.body.description
 		let maxParticipants = req.body.maxParticipants
-		let EventModel = model.Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName, maxParticipants)
+		let accessability = req.body.accessability
+
+		let EventModel = model.Event(
+			accountId,
+			clubId,
+			name, date, long, lat, hourStart, hourEnd,
+			type, description, username, clubName,
+			maxParticipants, accessability)
+
+
 		query(accountId, EventModel, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
@@ -265,7 +275,7 @@ const GET_PARTICIPANT = (req, res) => {
 			if (docs != null) {
 
 
-				return res.render("event/participant.html", {
+				return res.render("event/manage-participant/participant.html", {
 					ctx: globalConstants.ctx,
 					username: username,
 					accountId: accountId,
@@ -317,7 +327,7 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
 		let partId = req.query.partId
-		return res.render("event/participant-request.html", {
+		return res.render("event/manage-participant/participant-request.html", {
 			ctx: globalConstants.ctx,
 			username: username,
 			accountId: accountId,

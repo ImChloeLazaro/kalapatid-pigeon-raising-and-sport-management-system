@@ -160,7 +160,41 @@ function filters(env) {
 		let msg = Object.keys(arr).map(key => `${arr[key].msg}`).join(",")
 		return msg
 	})
+
+
+	env.addFilter('isPublicEventEmpty', function (arr) {
+		let counter = 0;
+		arr.forEach(e => {
+			if (e.accessability === "Public") {
+				counter++;
+			}
+		})
+
+		if (counter === 0) {
+			return true
+		}
+		return false
+	})
+
+
+
+
+	env.addFilter('isPrivateEventEmpty', function (arr) {
+		let counter = 0;
+		arr.forEach(e => {
+			if (e.accessability === "Private") {
+				counter++;
+			}
+		})
+
+		if (counter === 0) {
+			return true
+		}
+		return false
+	})
 }
+
+
 
 
 module.exports = filters

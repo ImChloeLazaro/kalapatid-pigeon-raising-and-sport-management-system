@@ -1,6 +1,6 @@
 const ObjectId = require("mongodb").ObjectId
 
-function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName, maxParticipants) {
+function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, type, description, username, clubName, maxParticipants, accessability) {
 	return {
 		_id: new ObjectId(),
 		accountId: new ObjectId(accountId),
@@ -15,7 +15,8 @@ function Event(accountId, clubId, name, date, long, lat, hourStart, hourEnd, typ
 		maxParticipants: maxParticipants,
 		clubId: new ObjectId(clubId),
 		creatorName: username,
-		clubName: clubName
+		clubName: clubName,
+		accessability: accessability
 	}
 }
 

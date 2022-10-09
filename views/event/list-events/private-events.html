@@ -1,0 +1,41 @@
+<div class="event-table-container container w-100">
+	<p class="h5 fw-bold mt-2 ms-2">Private Events</p>
+	{% set isAdmin=true%}
+	{% set isClubMember=false%}
+	{% set isEmpty = false %}
+	{#  loop all clubs #}
+	{% for c in clubs %}
+		{# check if clubs is not empty then show club name #}
+		{% for m in clubMembers %}
+			{% if c._id | isMatch(m.clubId) %}
+				{# reverse loop  all events #}
+				{% for e in events | reverse %}
+					{# check if clubId is matched  with the clubId reference in event #}
+					{% if c._id | isMatch(e.clubId)and m.accountId | isMatch(accountId)and m.memberStatus == "accepted" and  e.accessability == "Private"%}
+						{% set isClubMember = true %}
+						{%include "event/list-events/event-container.html"%}
+						{%else%}
+						{% set isEmpty = true %}
+					{% endif %}
+
+				{% endfor %}
+			{% else %}
+				{% set isEmpty = true %}
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+
+	{% if events | is_empty %}
+		<div class="cards">
+			<p class="text-center">No Private Events.
+			</p>
+		</div>
+	{%else %}
+		{% if (not isClubMember and isEmpty) %}
+			<div class="cards">
+				<p class="text-center">No Private Events.
+				</p>
+			</div>
+		{%endif %}
+	{%endif %}
+</div>

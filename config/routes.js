@@ -10,9 +10,10 @@ const config = (app, express, constants) => {
 	main.use('/dashboard', require("../modules/dashboard"))
 	main.use('/profile', require("../modules/profile"))
 	main.use('/search', require("../modules/search"))
+	main.use('/about', require("../modules/about"))
+	main.use('/help', require("../modules/help"))
 	main.use('/', require("../modules/root"))
 	main.use('/**', require("../modules/root"))
-
 
 
 	app.use(constants.ctx.DOMAIN_NAME, main)

@@ -1,0 +1,29 @@
+<div class="event-table-container container w-100">
+
+	<p class="h5 fw-bold mt-2 ms-2">Public Events</p>
+
+	{% set isEmpty = false %}
+	{#  loop all clubs #}
+	{% for c in clubs %}
+		{# check if clubs is not empty then show club name #}
+		{# reverse loop  all events #}
+		{% for e in events | reverse %}
+			{# check if clubId is matched  with the clubId reference in event #}
+			{% if c._id | isMatch(e.clubId)and e.accessability == "Public" %}
+
+				{%include "event/list-events/event-container.html"%}
+
+				{%else%}
+				{% set isEmpty = true %}
+			{% endif %}
+
+		{% endfor %}
+	{% endfor %}
+
+	{% if events | isPublicEventEmpty %}
+		<div class="cards">
+			<p class="text-center">No Public Events.
+			</p>
+		</div>
+	{%endif %}
+</div>

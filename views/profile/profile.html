@@ -87,114 +87,80 @@
                   <i class="fa-solid fa-calendar-days"></i>
                   Events
                 </h5>
-                <div class="card-content mb-3">
-                  <p class="fw-bold">
 
-                    Managed Events
-                  </p>
-                </div>
+                {# ADMIN OR MODERATOR #}
                 <div class="card-body">
+                  <div class="card-content mb-3">
+                    <p class="fw-bold">
+                      Managed Events
+                    </p>
+                  </div>
+                  {# ADMIN  #}
                   {%set admin = false %}
                   {% for e in events%}
-                    {%if username == e.creatorName %}
+                    {%if  e.creatorName == username %}
                       {%set admin = true %}
                       <div class="card-content mb-3">
                         <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
                         <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
                       </div>
-                      {%endif%}
-                      {%endfor%}
-                      {% if not admin %}
-                        <p>Not an admin or moderator</p>
-                      {% endif %}
-                    </div>
-
-                    <div class="card-content mb-3">
-                      <p class="fw-bold">
-                        Participated Events</p>
-                    </div>
-                    <div class="card-body d-flex justify-content-between">
-                      <table class="table table-borderless">
-                        <tbody id="profile-club">
-                          {%set admin = true %}
-                          {% for e in events %}
-                            {% for p in eventParticipants %}
-                              {% if p.eventId | isMatch(e._id) %}
-                                {%set admin = false %}
-                                <tr>
-                                  <td>
-                                    <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{p.eventId}}&clubId={{e.clubId}}">
-                                      {{e.name}}</a>
-                                  </td>
-                                  <td>
-                                    <p class='p-0 me-2 d-inline'>Participant Status:</p>
-                                    {% if p.status == "accepted" %}
-                                      <p class="badge bg-sucess mb-1">
-                                        {{p.status}}</p>
-
-                                    {% elif p.status == "pending" %}
-                                      <p class="bg-warning d-inline text-white m-1 p-1">
-                                        {{p.status}}</p>
-                                      {%endif%}
-                                    </td>
-                                  </tr>
-                                  {%endif%}
-                                  {%endfor%}
-
-                                  {%endfor%}
-                                  {% if admin %}
-                                    <td>
-                                      <p>admin not allow to participate</p>
-                                    </td>
-                                  {% endif %}
-                                </tbody>
-                              </table>
-                            </div>
+                    {%else %}
+                      {# MODERATOR  #}
+                      {% for m in clubMembers %}
+                        {%if m.clubId == e.clubId %}
+                          <div class="card-content mb-3">
+                            <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
+                            <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
                           </div>
-                        </footer>
-                      </div>
+                          {%endif%}
+                          {%endfor%}
 
-                      <div class="col-lg-12">
-                        <footer class="mt-3" id="profile-group">
-                          <div class="cards overflow-auto">
-                            <div class="card-content mb-3">
-                              <h5 class="fw-bold">
-                                <i class="fa-regular fa-club"></i>
-                                Clubs
-                              </h5>
+                          {%endif%}
+                          {%endfor%}
 
-                              <p class="fw-bold">Joined Clubs</p>
-                            </div>
-                            <div class="card-body d-flex justify-content-between">
-                              <table class="table table-borderless">
-                                <tbody id="profile-club">
+                          {% if not admin %}
+                            <p>Not an admin or moderator</p>
+                          {% endif %}
+                        </div>
+                        {# NORMAL USER #}
+                        <div class="card-body">
+                          <div class="card-content mb-3">
+                            <p class="fw-bold">
+                              Participated Events</p>
+                          </div>
+                          <table class="table table-borderless">
+                            <tbody id="profile-club">
+                              {%set admin = true %}
+                              {% for e in events %}
+                                {% for p in eventParticipants %}
+                                  {% if p.eventId | isMatch(e._id) %}
+                                    {%set admin = false %}
+                                    <tr>
+                                      <td>
+                                        <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{p.eventId}}&clubId={{e.clubId}}">
+                                          {{e.name}}</a>
+                                      </td>
+                                      <td>
+                                        <p class='p-0 me-2 d-inline'>Participant Status:</p>
+                                        {% if p.status == "accepted" %}
+                                          <p class="badge bg-sucess mb-1">
+                                            {{p.status}}</p>
 
-                                  {% for c in clubs %}
-                                    {% for m in clubMembers %}
-                                      {% if m.clubId | isMatch(c._id) %}
-                                        <tr>
-                                          <td>
-                                            <a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
-                                              <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
-                                            <span class="mx-2">
-                                              {{c.name}}
-                                            </span>
-                                          </a>
-
+                                        {% elif p.status == "pending" %}
+                                          <p class="bg-warning d-inline text-white m-1 p-1">
+                                            {{p.status}}</p>
+                                          {%endif%}
                                         </td>
-                                        <td>
-                                          <div id="profile-link">
-                                            <a class="text-dark" href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{c._id}}" data-toggle="tooltip" data-placement="top" title="Club Chat">
-                                              <i class="icons fa-solid fa-comment" id="profile-icons"></i>
-                                            </a>
-                                          </div>
-                                        </td>
-
                                       </tr>
                                       {%endif%}
                                       {%endfor%}
-                                      {%endfor%}
 
+                                      {%endfor%}
+                                      {% if admin %}
+                                        <td>
+                                          <p>admin not allow to participate</p>
+                                        </td>
+                                      {% endif %}
                                     </tbody>
                                   </table>
                                 </div>
@@ -202,11 +168,59 @@
                             </footer>
                           </div>
 
+                          <div class="col-lg-12">
+                            <footer class="mt-3" id="profile-group">
+                              <div class="cards overflow-auto">
+                                <div class="card-content mb-3">
+                                  <h5 class="fw-bold">
+                                    <i class="fa-regular fa-club"></i>
+                                    Clubs
+                                  </h5>
+
+                                  <p class="fw-bold">Joined Clubs</p>
+                                </div>
+                                <div class="card-body d-flex justify-content-between">
+                                  <table class="table table-borderless">
+                                    <tbody id="profile-club">
+
+                                      {% for c in clubs %}
+                                        {% for m in clubMembers %}
+                                          {% if m.clubId | isMatch(c._id) %}
+                                            <tr>
+                                              <td>
+                                                <a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
+                                                  <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
+                                                <span class="mx-2">
+                                                  {{c.name}}
+                                                </span>
+                                              </a>
+
+                                            </td>
+                                            <td>
+                                              <div id="profile-link">
+                                                <a class="text-dark" href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{c._id}}" data-toggle="tooltip" data-placement="top" title="Club Chat">
+                                                  <i class="icons fa-solid fa-comment" id="profile-icons"></i>
+                                                </a>
+                                              </div>
+                                            </td>
+
+                                          </tr>
+                                          {%endif%}
+                                          {%endfor%}
+                                          {%endfor%}
+
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </footer>
+                              </div>
+
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowProfileMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-                  <script type="text/javascript" src="/javascript/script.js"></script>
-                {% endblock %}
+                      <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetShowProfileMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+                      <script type="text/javascript" src="/javascript/script.js"></script>
+                    {% endblock %}
