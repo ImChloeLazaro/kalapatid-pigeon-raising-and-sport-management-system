@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="cards">
+				<div class="cards animate__animated animate__fadeIn">
 					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 						<h5 class="fw-bold">Club</h5>
 						{% if club.founderName == username %}
@@ -41,7 +41,7 @@
 									<div class="text-muted">{{club.description}}</div>
 									{# accessable only if you are a member of the club #}
 									{# ===================================================== #}
-									<span>
+									<span class="position-relative" style="left: 185px;">
 										{% for member in clubMembers %}
 											{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
 												<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" class="d-inline-block btn btn-sm btn-success w-25">
@@ -112,135 +112,116 @@
 
 										<div class="col-lg-8">
 											<div class="row">
-												{% if club.creatorId == accountId %}
-													<div class="col-lg-12">
-														<main>
-															<div class="cards">
-																<div class="card-content">
-																	<h5 class="fw-bold">
-																		<i class="fa-solid fa-bullhorn"></i>
-																		Announcements</h5>
-																</div>
-																<div class="card-body">
-																	sddsd
-																</div>
-															</div>
-														</main>
-													</div>
-													{%endif%}
-													{# accessable only if you are a member of the club #}
-													{# ===================================================== #}
-													{% for member in clubMembers %}
-														{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
-															<div class="col-lg-12">
-																<main>
-																	<div class="cards">
-																		<div class="card-content">
-																			<h5 class="fw-bold">
-																				<i class="fa-solid fa-calendar-days"></i>
-																				Events</h5>
-																		</div>
-																		<div class="card-body">
-																			{% if events | is_empty %}
-																				<p class="text-center">No Event yet.</p>
-																			{% endif %}
-																			<div style="overflow-y: auto; height: 100px;">
-																				<table class="table table-borderless">
-																					<tbody>
-																						{% for e in events %}
-																							<tr>
-																								<td>
-																									<div class=" d-flex justify-content-between w-100">
-																										<span>
-																											<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">
-																												<img src="/images/events.jpg" id="account-picture" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																												<span>
-																													{{e.name}}
-																												</span>
-																											</a>
-																										</span>
-																										{% if club.creatorId == accountId %}
-																											<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/events/delete">
-																												<input type="text" name="eventId" value="{{e._id}}" hidden="true">
-																												<input type="text" name="clubId" value="{{club._id}}" hidden="true">
-																												<button class="btn-sm icons" style="border: none;">
-																													<i class="fa-solid fa-trash text-danger"></i>
-																												</button>
-																											</form>
-																										</div>
-																									</td>
-																									{%endif%}
-																								</tr>
-																							{% endfor %}
-																						</tbody>
-																					</table>
-																				</div>
+												{# accessable only if you are a member of the club #}
+												{# ===================================================== #}
+												{% for member in clubMembers %}
+													{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
+														<div class="col-lg-12">
+															<main>
+																<div class="cards">
+																	<div class="card-content">
+																		<h5 class="fw-bold">Events</h5>
+																	</div>
+																	<div class="card-body">
+																		{% if events | is_empty %}
+																			<p class="text-center">No Event yet.</p>
+																		{% endif %}
+																		<div style="overflow-y: auto; height: 100px;">
+																			<table class="table table-borderless">
+																				<tbody>
+																					{% for e in events %}
+																						<tr>
+																							<td>
+																								<div class=" d-flex justify-content-between w-100">
+																									<span>
+																										<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">
+																											<img src="/images/events.jpg" id="account-picture" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																											<span>
+																												{{e.name}}
+																											</span>
+																										</a>
+																									</span>
+																								{% if club.creatorId == accountId %}
+																										<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/events/delete">
+																											<input type="text" name="eventId" value="{{e._id}}" hidden="true">
+																											<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+																											<button class="btn-sm icons" style="border: none;"><i class="fa-solid fa-trash text-danger"></i></button>
+																										</form>
+																								</div>
+																							</td>
+																								{%endif%}
+																							</tr>
+																						{% endfor %}
+																					</tbody>
+																				</table>
 																			</div>
 																		</div>
-																	</main>
-																</div>
-																{%endif%}
-															{% endfor %}
-															{# ===================================================== #}
+																	</div>
+																</main>
+															</div>
+															{%endif%}
+														{% endfor %}
+														{# ===================================================== #}
 
 															{# accessable only if you are the creator of the clubs or the founder #}
 															{# ===================================================== #}
 
-															{% if club.creatorId == accountId %}
-
-																<div class="col-lg-12">
-																	<main>
-																		<div class="cards">
-																			<div class="card-content">
-																				<h5 class="fw-bold">Membership Requests</h5>
-																			</div>
-																			<div class="card-body">
-																				{% if clubMembers | is_empty %}
-																					<p class="text-center">No Member Requests.</p>
-																				{% endif %}
-																				{% set count = 0 -%}
-																				<table class="table table-borderless">
-																					{% for member in clubMembers %}
-																						{% if member.memberStatus == "pending" %}
-																							{% set count =count + 1 -%}
-																							<form method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership">
-																								<tr>
-																									<td>
-																										<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																											<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																											<span>
-																												@{{member.username}}</span>
-																										</a>
-																									</td>
-																									<td>
-																										<input type="text" name="id" value="{{member._id}}" hidden="true">
-																										<input type="text" name="clubId" value="{{member.clubId}}" hidden="true">
-																										<input type="text" name="accountId" value="{{member.accountId}}" hidden="true">
-																										<input id="status-{{member._id}}" type="text" name="status" hidden="true">
-																										<div class="float-end">
-																											<button id="btn-accept-{{member._id}}" class="d-inline-block  btn btn-sm btn-success me-1">accept</button>
-																											<button id="decline btn-decline-{{member._id}}" class="d-inline-block btn btn-sm btn-danger" onmouseover="hoverin(this)" onmouseout="hoverout(this)">decline</button>
-																										</div>
-																										<script>
-																											$("#btn-accept-{{member._id}}").click((e) => {
-																												$("#status-{{member._id}}").val("accepted")
-																											})
-																											$("#btn-decline-{{member._id}}").click((e) => {
-																												$("#status-{{member._id}}").val("declined")
-																											})
-																											// decline btn.
-																											function hoverin(decline) {
-																												decline.style.color = '#DC3545';
-																												decline.style.background = 'white';
-																											}
-																											function hoverout(decline) {
-																												decline.style.background = '#DC3545';
-																												decline.style.color = 'white';
-																											}
-																										</script>
-																									</td>
-																								</form>
-																							{%else %}
+														{% if club.creatorId == accountId %}
+															<div class="col-lg-12">
+																<main>
+																	<div class="cards">
+																		<div class="card-content">
+																			<h5 class="fw-bold">Membership Requests</h5>
+																		</div>
+																		<div class="card-body">
+																			{% if clubMembers | is_empty %}
+																				<p class="text-center">No Member Requests.</p>
+																			{% endif %}
+																			{% set count = 0 -%}
+																			<table class="table table-borderless">
+																				{% for member in clubMembers %}
+																					{% if member.memberStatus == "pending" %}
+																						{% set count =count + 1 -%}
+																						<form method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership">
+																							<tr>
+																								<td>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																										<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																										<span>
+																											@{{member.username}}</span>
+																									</a>
+																								</td>
+																								<td>
+																									<input type="text" name="id" value="{{member._id}}" hidden="true">
+																									<input type="text" name="clubId" value="{{member.clubId}}" hidden="true">
+																									<input type="text" name="accountId" value="{{member.accountId}}" hidden="true">
+																									<input id="status-{{member._id}}" type="text" name="status" hidden="true">
+																									<div class="float-end">
+																										<button id="btn-accept-{{member._id}}" class="d-inline-block  btn btn-sm btn-success me-1">accept</button>
+																										<button id="decline btn-decline-{{member._id}}" class="d-inline-block btn btn-sm btn-danger" onmouseover="hoverin(this)" onmouseout="hoverout(this)">decline</button>
+																									</div>
+																									<script>
+																										$("#btn-accept-{{member._id}}").click((e) => {
+																											$("#status-{{member._id}}").val("accepted")
+																										})
+																										$("#btn-decline-{{member._id}}").click((e) => {
+																											$("#status-{{member._id}}").val("declined")
+																										})
+																										// decline btn.
+																										function hoverin(decline)
+																										{
+																											decline.style.color = '#DC3545';
+																											decline.style.background = 'white';
+																										}
+																										function hoverout(decline)
+																										{
+																											decline.style.background = '#DC3545';
+																											decline.style.color = 'white';
+																										}
+																									</script>
+																								</td>
+																							</form>
+																						{%else %}
 
 																								{%endif%}
 																							</tr>
@@ -258,56 +239,56 @@
 																	{% endif %}
 																	{# ===================================================== #}
 
-																	{# accessable to all user #}
-																	{# ===================================================== #}
-																	<div class="col-lg-12">
-																		<main>
-																			<div class="cards">
-																				<div class="card-content">
-																					<h5 class="fw-bold">Members</h5>
-																				</div>
-																				<div class="card-body">
-																					{% if clubMembers | is_empty %}
-																						<p class="text-center">No Members.</p>
-																					{% endif %}
-																					<div style="overflow-y: auto; height: 100px;">
-																						<table class="table table-borderless">
-																							<tbody>
-																								{% for member in clubMembers %}
-																									{% if member.memberStatus == "accepted" %}
-																										<tr>
+																{# accessable to all user #}
+																{# ===================================================== #}
+																<div class="col-lg-12">
+																	<main>
+																		<div class="cards">
+																			<div class="card-content">
+																				<h5 class="fw-bold">Members</h5>
+																			</div>
+																			<div class="card-body">
+																				{% if clubMembers | is_empty %}
+																					<p class="text-center">No Members.</p>
+																				{% endif %}
+																				<div style="overflow-y: auto; height: 100px;">
+																					<table class="table table-borderless">
+																						<tbody>
+																							{% for member in clubMembers %}
+																								{% if member.memberStatus == "accepted" %}
+																									<tr>
+																										<td>
+																											<span>
+																												<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																													<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																													<span>
+																														@{{member.username}}</span>
+																												</a>
+																											</span>
+																										</td>
+																										{% if club.creatorId == accountId and member.username != club.founderName %}
 																											<td>
 																												<span>
-																													<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																														<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																														<span>
-																															@{{member.username}}</span>
-																													</a>
+																													<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
+																														<input type="text" name="username" value="{{member.username}}" hidden="true">
+																														<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+																														<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
+																													</form>
+
 																												</span>
 																											</td>
-																											{% if club.creatorId == accountId and member.username != club.founderName %}
-																												<td>
-																													<span>
-																														<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
-																															<input type="text" name="username" value="{{member.username}}" hidden="true">
-																															<input type="text" name="clubId" value="{{club._id}}" hidden="true">
-																															<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
-																														</form>
-
-																													</span>
-																												</td>
-																												{%endif%}
-																											</tr>
 																											{%endif%}
-																										{% endfor %}
-																									</tbody>
-																								</table>
-																							</div>
+																										</tr>
+																										{%endif%}
+																									{% endfor %}
+																								</tbody>
+																							</table>
 																						</div>
 																					</div>
-																				</main>
-																			</div>
-																			{# ===================================================== #}
+																				</div>
+																			</main>
+																		</div>
+																		{# ===================================================== #}
 
 																		</div>
 																	</div>
