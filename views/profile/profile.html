@@ -99,6 +99,7 @@
                     {%if username == e.creatorName %}
                       {%set admin = true %}
                       <div class="card-content mb-3">
+                        <img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
                         <a href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
                       </div>
                       {%endif%}

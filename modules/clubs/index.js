@@ -14,5 +14,7 @@ club.post("/membership", controller.POST_MEMBERSHIP_HANDLE_REQUEST)
 club.post("/membership/request", controller.POST_MEMBERSHIP_REQUEST)
 club.post("/membership/unjoin", controller.POST_MEMBERSHIP_UNJOIN)
 
+club.post("/membership/moderator/set", controller.POST_MODERATOR_SET)
+club.post("/membership/moderator/remove", controller.POST_MODERATOR_REMOVE)
 
 module.exports = club;

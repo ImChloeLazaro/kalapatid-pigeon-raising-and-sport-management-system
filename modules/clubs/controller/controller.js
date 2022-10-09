@@ -252,7 +252,54 @@ const POST_MEMBERSHIP_UNJOIN = (req, res) => {
 		let filter = { username: username, clubId: new ObjectId(clubId) }
 		query(filter, (err) => {
 			console.log(err);
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
+		})
+	})
+}
+
+
+
+const POST_MODERATOR_SET = (req, res) => {
+	function query(filter, setUpdate, fn) {
+		dbf.updateClubMemberData(filter, setUpdate, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		if (req.body.username !== username) {
+			username = req.body.username
+		}
+		console.log("username: ".red, username);
+		let id = req.body.id;
+		let clubId = req.body.clubId
+		let filter = { username: username, clubId: new ObjectId(clubId) }
+		let setUpdate = { role: "moderator" }
+		query(filter, setUpdate, (err) => {
+			console.log(err);
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
+		})
+	})
+}
+
+
+const POST_MODERATOR_REMOVE = (req, res) => {
+	function query(filter, setUpdate, fn) {
+		dbf.updateClubMemberData(filter, setUpdate, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		if (req.body.username !== username) {
+			username = req.body.username
+		}
+		console.log("username: ".red, username);
+		let id = req.body.id;
+		let clubId = req.body.clubId
+		let filter = { username: username, clubId: new ObjectId(clubId) }
+		let setUpdate = { role: "user" }
+		query(filter, setUpdate, (err) => {
+			console.log(err);
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
 	})
 }
@@ -270,5 +317,7 @@ module.exports = {
 	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,
 	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST,
 	POST_MEMBERSHIP_UNJOIN: POST_MEMBERSHIP_UNJOIN,
+	POST_MODERATOR_SET: POST_MODERATOR_SET,
+	POST_MODERATOR_REMOVE: POST_MODERATOR_REMOVE
 }
 
