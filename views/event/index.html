@@ -46,6 +46,31 @@
                         {{eventParticipants|sizeByEventParticipants(e._id) }}
                         participants
                       </span>
+                      <span class="mx-2 inline-block">
+                        <p id="eventLocLat" hidden="true">{{e.lat}}</p>
+                        <p id="eventLocLong" hidden="true">{{e.long}}</p>
+                        <p id="address" style="font-size: 10pt;"></p>
+                        <script>
+                          $(function () {
+                            function getAddressByLocation(lat, long, callback) {
+
+                              fetch(`https://nominatim.openstreetmap.org/search.php?q=${lat},${long}&polygon_geojson=1&format=json`)
+                                .then(response => response.json())
+                                .then(j => {
+
+                                  callback(j[0].display_name)
+                                })
+                            }
+                            let elt = $("#eventLocLat").text()
+                            let ell = $("#eventLocLong").text()
+                            console.log(elt, ell)
+                            getAddressByLocation(elt, ell, (address) => {
+                              console.log(address)
+                              $("#address").text(address)
+                            })
+                          })
+                        </script>
+                      </span>
                     </div>
                   </a>
                 </div>

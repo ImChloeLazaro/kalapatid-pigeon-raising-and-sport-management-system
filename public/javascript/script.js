@@ -143,6 +143,7 @@ function GetCreateEventMap() {
 					title: "Current Location",
 					description: address
 				}
+				$("#description").text("Address: " + address)
 			})
 
 
@@ -167,7 +168,7 @@ function GetCreateEventMap() {
 
 
 function GetEditEventMap() {
-	var map = new Microsoft.Maps.Map('#edit-event-map', {
+	var map = new Microsoft.Maps.Map('#event-edit-map', {
 		showDashboard: false,
 		showTermsLink: false,
 		showBreadcrumb: false,
@@ -185,16 +186,16 @@ function GetEditEventMap() {
 		});
 	}
 	getLocationFromMap(map, function (lat, long) {
-		$('#eventLocLat').val(lat)
-		$('#eventLocLong').val(long)
+		$('#editeventLocLat').val(lat)
+		$('#editeventLocLong').val(long)
 	})
 
 
 
 	function setLocationInMap(latitude, longitude) {
+
 		var mylocation = new Microsoft.Maps.Location(latitude, longitude);
-		$('#eventLocLat').val(latitude)
-		$('#eventLocLong').val(longitude)
+
 
 		infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
 			visible: false
@@ -254,13 +255,10 @@ function GetEditEventMap() {
 	}
 
 
-	if (!navigator.geolocation) {
-	} else {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			let { latitude, longitude } = position.coords;
-			setLocationInMap(latitude, longitude)
-		});
-	}
+	let latitude = $('#editeventLocLat').val()
+	let longitude = $('#editeventLocLong').val()
+	setLocationInMap(latitude, longitude)
+
 }
 
 
@@ -312,6 +310,7 @@ function GetShowEventMap() {
 					title: $("#eventName").text(),
 					description: address
 				}
+				$("#address").text(address)
 			})
 
 			Microsoft.Maps.Events.addHandler(pin, 'mouseover', hoverPinHandler)

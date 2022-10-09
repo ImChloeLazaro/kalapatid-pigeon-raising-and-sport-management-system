@@ -71,9 +71,9 @@
 											<h5 class="fw-bold">Event Map</h5>
 										</div>
 										<div class="card-body d-flex justify-content-between">
-											<div id="event-show-map" style="width: fit-content; height:300px;"></div>
-											<input hidden="true" name="long" class="form-control form-control-sm mx-1 " id="showeventLocLong" value="{{event.long}}">
-											<input hidden="true" name="lat" class="form-control form-control-sm  mx-1" id="showeventLocLat" value="{{event.lat}}">
+											<div id="event-edit-map" style="width: fit-content; height:300px;"></div>
+											<input hidden="true" name="long" class="form-control form-control-sm mx-1 " id="editeventLocLong" value="{{event.long}}">
+											<input hidden="true" name="lat" class="form-control form-control-sm  mx-1" id="editeventLocLat" value="{{event.lat}}">
 										</div>
 									</div>
 								</footer>
@@ -86,7 +86,7 @@
 											<h5 class="fw-bold">Description</h5>
 										</div>
 										<div class="card-body">
-											<textarea name="description" class="w-100 h-50">{{event.description}}</textarea>
+											<textarea id="description" name="description" class="w-100 h-50">{{event.description}}</textarea>
 										</div>
 									</div>
 								</main>

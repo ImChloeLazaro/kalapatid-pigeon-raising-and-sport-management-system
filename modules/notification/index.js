@@ -4,7 +4,7 @@ const controller = require("./controller/controller")
 
 const notification = express.Router()
 
-notification.get("/", controller.GET_NOTIFICATION)
+notification.post("/", controller.POST_NOTIFICATION)
 
 module.exports = notification;
 
