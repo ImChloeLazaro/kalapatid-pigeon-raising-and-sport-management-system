@@ -1,0 +1,50 @@
+<div class="col-lg-12">
+	<main>
+		<div class="cards">
+			<div class="card-content">
+				<h5 class="fw-bold">Events</h5>
+				{% if club.creatorId | isMatch(accountId) %}
+					<a class="d-inline-block btn btn-sm btn-success my-2" style="font-size: 7pt;" href="{{ctx.DOMAIN_NAME}}/events/create?clubName={{club.name}}&clubId={{club._id}}">
+						<i class="fa-solid fa-plus fw-bold"></i>
+						Add Event</a>
+					{% endif%}
+				</div>
+				<div class="card-body">
+					{% if events | is_empty %}
+						<p class="text-center">No Event yet.</p>
+					{% endif %}
+					<div style="overflow-y: auto; height: 100px;">
+						<table class="table table-borderless">
+							<tbody>
+								{% for e in events %}
+									<tr >
+										<td>
+											<div class=" d-flex justify-content-between w-100">
+												<span>
+													<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{club._id}}">
+														<img src="/images/events.jpg" id="account-picture" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+														<span>
+															{{e.name}}
+														</span>
+													</a>
+												</span>
+												{% if club.creatorId == accountId %}
+													<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/events/delete">
+														<input type="text" name="eventId" value="{{e._id}}" hidden="true">
+														<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+														<button class="btn-sm icons" style="border: none;">
+															<i class="fa-solid fa-trash text-danger"></i>
+														</button>
+													</form>
+												</div>
+											</td>
+											{%endif%}
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>

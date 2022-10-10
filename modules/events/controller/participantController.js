@@ -120,9 +120,30 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 }
 
 
+
+const GET_PARTICIPANT_REMOVE = (req, res) => {
+	function query(filter, fn) {
+		dbf.deleteEventParticipantDataBy(filter, (err) => {
+			fn(err)
+		})
+	}
+	verifyLogin(req, res, (accountId, username) => {
+		let id = req.query.id
+		let eventId = req.query.eventId;
+		let clubId = req.query.clubId
+		let filter = { _id: new ObjectId(id), eventId: new ObjectId(eventId), clubId: new ObjectId(clubId) }
+		query(filter, (err) => {
+			console.log(err);
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
+		})
+	})
+}
+
+
 module.exports = {
 	GET_PARTICIPANT: GET_PARTICIPANT,
 	UPDATE_PARTICIPANT: UPDATE_PARTICIPANT,
 	GET_PARTICIPANT_REQUEST: GET_PARTICIPANT_REQUEST,
-	POST_PARTICIPANT_REQUEST: POST_PARTICIPANT_REQUEST
+	POST_PARTICIPANT_REQUEST: POST_PARTICIPANT_REQUEST,
+	GET_PARTICIPANT_REMOVE: GET_PARTICIPANT_REMOVE
 }

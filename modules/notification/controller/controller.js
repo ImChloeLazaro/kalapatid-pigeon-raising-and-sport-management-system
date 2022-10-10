@@ -3,12 +3,18 @@ const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 
 
 let datenow = datetimenow()
-const POST_NOTIFICATION = (req, res) => {
+const GET_NOTIFICATION = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		return res.redirect(globalConstants.ctx)
+		return res.render("notification/index.html", {
+			ctx: globalConstants.ctx,
+			accountId: accountId,
+			username: username
+		})
 	})
 }
 
+
+
 module.exports = {
-	POST_NOTIFICATION: POST_NOTIFICATION
+	GET_NOTIFICATION: GET_NOTIFICATION
 }

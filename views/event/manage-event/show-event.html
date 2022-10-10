@@ -188,7 +188,7 @@
 																				</td>
 																				{% if event.creatorName == username %}
 																					<td>
-																						<button class="btn-sm btn-danger">remove</button>
+																						<a href="{{ctx.DOMAIN_NAME}}/events/participant/remove?id={{p._id}}&clubId={{clubId}}&eventId={{event._id}}" class="btn-sm btn-danger">remove</a>
 																					</td>
 																					{%endif%}
 																				</tr>

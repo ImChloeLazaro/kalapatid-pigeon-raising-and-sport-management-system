@@ -1,7 +1,13 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
   <div class="container">
-    <h1 class="display-5">{{otherusername}}</h1>
+    <div id="message-title-container" class="d-flex my-2">
+      <a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/profile?username={{otherusername}}">
+        <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+        <span class="mx-3 h3 fw-bolder">{{otherusername}}</span>
+      </a>
+    </div>
+
     <div class="col-12" id="global-message">
       {% for d in messages %}
 

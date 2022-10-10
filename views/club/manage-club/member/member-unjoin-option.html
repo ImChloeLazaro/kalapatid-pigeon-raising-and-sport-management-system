@@ -1,0 +1,5 @@
+<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
+	<input type="text" name="username" value="{{username}}" hidden="true">
+	<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+	<input class="btn btn-sm btn-danger my-2 " type="submit" value="Unjoin">
+</form>

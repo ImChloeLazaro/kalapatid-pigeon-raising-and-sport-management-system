@@ -12,11 +12,8 @@ event.post("/create", controller.POST_CREATE_EVENT)
 event.get("/delete", controller.GET_DELETE_EVENT)
 event.post("/delete", controller.POST_DELETE_EVENT)
 
-// event.get("/add-participant/:eventId", controller.GET_ADD_PARTICIPANT)
-// event.post("/add-participant/:eventId", controller.POST_ADD_PARTICIPANT)
-
-
 event.get("/participant", controller.GET_PARTICIPANT)
+event.get("/participant/remove", controller.GET_PARTICIPANT_REMOVE)
 event.post("/participant/update", controller.UPDATE_PARTICIPANT)
 event.get("/participant/request", controller.GET_PARTICIPANT_REQUEST)
 event.post("/participant/request", controller.POST_PARTICIPANT_REQUEST)

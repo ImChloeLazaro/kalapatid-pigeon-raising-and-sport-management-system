@@ -1,0 +1,69 @@
+<div class="col-lg-12">
+	<main>
+		<div class="cards">
+			<div class="card-content">
+				<h5 class="fw-bold">Membership Requests</h5>
+			</div>
+			<div class="card-body">
+				{% if clubMembers | is_empty %}
+					<p class="text-center">No Member Requests.</p>
+				{% endif %}
+				{% set count = 0 -%}
+				<table class="table table-borderless">
+					{% for member in clubMembers %}
+						{% if member.memberStatus == "pending" %}
+							{% set count =count + 1 -%}
+							<form method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership">
+								<tr>
+
+									<td>
+										<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+											<img src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+											<span>
+												@{{member.username}}</span>
+										</a>
+									</td>
+
+									<td>
+										<input type="text" name="id" value="{{member._id}}" hidden="true">
+										<input type="text" name="clubId" value="{{member.clubId}}" hidden="true">
+										<input type="text" name="accountId" value="{{member.accountId}}" hidden="true">
+										<input id="status-{{member._id}}" type="text" name="status" hidden="true">
+										<div class="float-end">
+											<button id="btn-accept-{{member._id}}" class="d-inline-block  btn btn-sm btn-success me-1">accept</button>
+											<button id="btn-decline-{{member._id}}" class="d-inline-block btn btn-sm btn-danger" onmouseover="hoverin(this)" onmouseout="hoverout(this)">decline</button>
+										</div>
+										<script>
+											$("#btn-accept-{{member._id}}").click((e) => {
+												$("#status-{{member._id}}").val("accepted")
+											})
+											$("#btn-decline-{{member._id}}").click((e) => {
+												$("#status-{{member._id}}").val("declined")
+											})
+											// decline btn.
+											function hoverin(decline) {
+												decline.style.color = '#DC3545';
+												decline.style.background = 'white';
+											}
+											function hoverout(decline) {
+												decline.style.background = '#DC3545';
+												decline.style.color = 'white';
+											}
+										</script>
+									</td>
+								</form>
+							{%else %}
+
+								{%endif%}
+							</tr>
+							{%endfor%}
+						</div>
+						{% if count == 0 %}
+							<p class="text-center">No Member Requests.</p>
+							{%endif%}
+						</table>
+
+					</div>
+				</div>
+			</main>
+		</div>

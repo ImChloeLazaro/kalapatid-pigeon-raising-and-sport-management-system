@@ -1,0 +1,12 @@
+{% if member.accountId == accountId and member.role == "moderator" %}
+	<td>
+		<span>
+			<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
+				<input type="text" name="username" value="{{member.username}}" hidden="true">
+				<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+				<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
+			</form>
+
+		</span>
+	</td>
+	{%endif%}

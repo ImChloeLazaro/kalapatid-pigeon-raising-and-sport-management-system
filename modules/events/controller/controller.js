@@ -277,6 +277,7 @@ module.exports = {
 	GET_PARTICIPANT: require("./participantController").GET_PARTICIPANT,
 	UPDATE_PARTICIPANT: require("./participantController").UPDATE_PARTICIPANT,
 	GET_PARTICIPANT_REQUEST: require("./participantController").GET_PARTICIPANT_REQUEST,
-	POST_PARTICIPANT_REQUEST: require("./participantController").POST_PARTICIPANT_REQUEST
+	POST_PARTICIPANT_REQUEST: require("./participantController").POST_PARTICIPANT_REQUEST,
+	GET_PARTICIPANT_REMOVE: require("./participantController").GET_PARTICIPANT_REMOVE,
 }
 

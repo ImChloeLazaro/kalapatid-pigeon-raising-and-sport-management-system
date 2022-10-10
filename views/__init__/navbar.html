@@ -36,36 +36,39 @@
 					<li class="nav-item dropdown">
 						{% include "notification/notification.html" %}
 					</li>
+				</ul>
 
+				<!-- ########################### Profile Extension ########################## -->
+				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link" href="#" id="account" data-bs-toggle="dropdown" aria-expanded="false">
-							Account
+							<img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
 						</a>
 						<ul class="dropdown-menu p-1" aria-labelledby="account" style="right: 0; left: auto;">
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/profile">
+								<a class=" nav-link" href="{{ctx.DOMAIN_NAME}}/profile">
 									<i class="fa-solid fa-user"></i>
 									Profile</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/dashboard">
+								<a class=" nav-link" href="{{ctx.DOMAIN_NAME}}/dashboard">
 									<i class="fa-solid fa-gauge"></i>
-									Dashboard</a>
+									Forecast</a>
 							</li>
 
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/about">
+								<a class=" nav-link" href="{{ctx.DOMAIN_NAME}}/about">
 									<i class="fa-sharp fa-solid fa-circle-info"></i>
 
 									About Us</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ctx.DOMAIN_NAME}}/help">
+								<a class=" nav-link" href="{{ctx.DOMAIN_NAME}}/help">
 									<i class="fa-sharp fa-solid fa-question"></i>
 									Help</a>
 							</li>
 							<li>
-								<a class="dropdown-item" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">
+								<a class=" nav-link text-danger" id="logout-btn" href="{{ctx.DOMAIN_NAME}}/auth/logout">
 									<i class="fa-solid fa-right-from-bracket"></i>
 									Logout</a>
 							</li>

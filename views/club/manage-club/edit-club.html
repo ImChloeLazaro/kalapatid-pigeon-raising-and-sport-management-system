@@ -18,18 +18,16 @@
 											<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
 											<div class="position-relative">
 												<style>
-													.my_file
-													{
+													.my_file {
 														color: transparent;
 														position: relative;
 														bottom: 20px;
 														left: 187px;
 													}
-													.my_file::-webkit-file-upload-button
-													{
+													.my_file::-webkit-file-upload-button {
 														visibility: hidden;
 													}
-													.my_file::before{
+													.my_file::before {
 														content: '\f030';
 														font-family: 'fontAwesome';
 														color: #F2F2F2;
@@ -70,7 +68,7 @@
 										<h5 class="fw-bold">Description</h5>
 									</div>
 									<div class="card-body">
-										<textarea name="description" class="w-100 h-50">{{club.description}}</textarea>
+										<textarea name="description" class="w-100 h-100">{{club.description}}</textarea>
 									</div>
 								</div>
 							</main>
@@ -84,17 +82,15 @@
 									</div>
 									<div class="card-body">
 										<style>
-											#danger
-											{
+											#danger {
 												background: #DC3646!important;
 											}
-											#danger:hover
-											{
+											#danger:hover {
 												color: #DC3646!important;
 												background: #F2F2F2!important;
 											}
 										</style>
-										<a type="submit" id="danger" class="btn btn-danger"  href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
+										<a type="submit" id="danger" class="btn btn-danger" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
 									</div>
 								</div>
 							</main>

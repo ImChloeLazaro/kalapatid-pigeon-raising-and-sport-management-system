@@ -1,0 +1,39 @@
+<div class="col-lg-12">
+	<main>
+		<div class="cards">
+			<div class="card-content">
+				<h5 class="fw-bold">Announcements</h5>
+				{% if club.creatorId | isMatch(accountId) %}
+					<a class="d-inline-block btn btn-sm btn-success" style="font-size: 7pt;" href="{{ctx.DOMAIN_NAME}}/clubs/announcement/create?clubId={{club._id}}">
+						<i class="fa-solid fa-plus fw-bold"></i>Add Announcement
+					</a>
+					{%endif%}
+				</div>
+				<div class="card-body">
+					{% if announcements | is_empty %}
+						<p class="text-center">No Announcements.</p>
+					{% endif %}
+					<div style="overflow-y: auto; height: 100px;">
+						<table class="table table-borderless">
+							{% for ann in announcements %}
+								<tr>
+									<td>#{{ann.title}}</td>
+									<td>
+										<a href="{{ctx.DOMAIN_NAME}}/clubs/announcement/show?id={{ann._id}}&clubId={{club._id}}" class="mx-2 text-success">
+											<i class="fa-solid fa-eye"></i>
+										</a>
+										<a href="{{ctx.DOMAIN_NAME}}/clubs/announcement/edit?id={{ann._id}}&clubId={{club._id}}" class="mx-2 text-warning">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+										<a href="{{ctx.DOMAIN_NAME}}/clubs/announcement/delete?id={{ann._id}}&clubId={{club._id}}" class="mx-2 text-danger">
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>

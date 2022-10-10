@@ -6,27 +6,30 @@
     <div class="chats-container container mt-4">
       <div id="oid" class="container w-100">
         <p class="h5 fw-bold mt-2 ms-2">Your Chats</p>
-        <div class="cards">
-          {%set accountIdStr = accountId.toString()%}
-          {%if  data | unique_chat(username,clubId) | is_empty %}
+
+        {%set accountIdStr = accountId.toString()%}
+        {%if  data | unique_chat(username,clubId) | is_empty %}
+          <div class="cards mx-2">
             <p class="text-center">No Chats.</p>
-            {%endif%}
-            {% for d in data | unique_chat(username, clubId) | sort(false, true, "datetime") | reverse %}
-              <span class="p-2 m-4" id="message">
+          </div>
+          {%endif%}
+          {% for d in data | unique_chat(username, clubId) | sort(false, true, "datetime") | reverse %}
+            <div class="cards mx-2">
+              <span id="message">
                 <div class="d-flex my-2" id="global-chat-participant">
                   <a class=" text-decoration-none text-dark  w-100 " href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{d.clubId}}">
                     <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                     <span class="mx-4 h5 fw-bolder">{{d.clubName}}</span>
                     <div>
-                      <sub class=" mx-5">Updated:
+                      <sub class="mx-5 px-5">Updated:
                         {{d.datetime|datetime_formatter}}</sub>
                     </div>
                   </a>
                 </div>
               </span>
-            {% endfor %}
+            </div>
+          {% endfor %}
 
-          </div>
         </div>
 
       </div>

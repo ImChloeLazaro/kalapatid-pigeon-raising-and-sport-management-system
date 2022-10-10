@@ -12,6 +12,7 @@ const config = (app, express, constants) => {
 	main.use('/search', require("../modules/search"))
 	main.use('/about', require("../modules/about"))
 	main.use('/help', require("../modules/help"))
+	main.use('/faqs', require("../modules/faq"))
 	main.use('/', require("../modules/root"))
 	main.use('/**', require("../modules/root"))
 

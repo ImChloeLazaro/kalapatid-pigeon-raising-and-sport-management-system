@@ -9,9 +9,10 @@
     </div>
     <div class="club-table-container container w-100">
       <p class="h5 fw-bold mt-2 ms-2">All Clubs</p>
-      <div class="cards">
-        {% if not clubs | is_empty%}
-          {% for c in clubs | sort(false, true, 'datetime') | reverse %}
+
+      {% if not clubs | is_empty%}
+        {% for c in clubs | sort(false, true, 'datetime') | reverse %}
+          <div class="cards">
             <div class="d-flex my-2">
               <a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
                 <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
@@ -22,18 +23,17 @@
                   members
                 </span>
 
-                <div class="m-2">
-                  <p class="fw-bolder">Description</p>
+                <div class="m-4">
+                  <p class="fw-bolder">Short Description</p>
                   <p>{{c.description}}</p>
                 </div>
               </a>
             </div>
-
-          {% endfor %}
-        {%else %}
-          <p>No Clubs.</p>
-        {% endif %}
-      </div>
+          </div>
+        {% endfor %}
+      {%else %}
+        <p>No Clubs.</p>
+      {% endif %}
     </div>
   </div>
 

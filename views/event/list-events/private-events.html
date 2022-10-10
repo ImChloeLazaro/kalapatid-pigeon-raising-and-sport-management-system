@@ -27,13 +27,13 @@
 
 	{% if events | is_empty %}
 		<div class="cards">
-			<p class="text-center">No Private Events.
+			<p class="text-center fw-bold">No Private Events.
 			</p>
 		</div>
 	{%else %}
 		{% if (not isClubMember and isEmpty) %}
 			<div class="cards">
-				<p class="text-center">No Private Events.
+				<p class="text-center fw-bold">No Private Events.
 				</p>
 			</div>
 		{%endif %}
