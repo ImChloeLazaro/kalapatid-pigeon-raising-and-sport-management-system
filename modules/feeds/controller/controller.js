@@ -1,5 +1,3 @@
-
-
 const globalConstants = require("../../../constants/constants")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const { getAllEventDataBy } = require('../../events/db/db-functions')
@@ -123,6 +121,13 @@ const POST_POST_DELETE = (req, res) => {
 }
 
 
+
+
+
+
+
+
+
 const POST_POSTING_COMMENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let comment = req.body.comment
@@ -153,8 +158,9 @@ const POST_POSTING_COMMENT_DELETE = (req, res) => {
 module.exports = {
 	GET_POSTING: GET_POSTING,
 	POST_POSTING: POST_POSTING,
+	POST_POST_EDIT: POST_POST_EDIT,
 	POST_POST_DELETE: POST_POST_DELETE,
+
 	POST_POSTING_COMMENT: POST_POSTING_COMMENT,
-	POST_POSTING_COMMENT_DELETE: POST_POSTING_COMMENT_DELETE,
-	POST_POST_EDIT: POST_POST_EDIT
+	POST_POSTING_COMMENT_DELETE: POST_POSTING_COMMENT_DELETE
 }

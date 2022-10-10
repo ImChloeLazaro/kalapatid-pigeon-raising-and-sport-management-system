@@ -21,9 +21,11 @@
                   {{clubMembers | sizeByClubMember(c._id) }}
                   members
                 </span>
-                <span style="font-size: 8pt;">
-                  {{c.description}}
-                </span>
+
+                <div class="m-2">
+                  <p class="fw-bolder">Description</p>
+                  <p>{{c.description}}</p>
+                </div>
               </a>
             </div>
 

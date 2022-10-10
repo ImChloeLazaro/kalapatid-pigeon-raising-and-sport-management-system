@@ -15,20 +15,22 @@
 						</tr>
 						{% for a in accounts %}
 							{% for p in profile %}
-								<tr>
-									<td>
-										<div class="d-flex my-2">
-											<a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/profile?username={{a.username}}">
-												<img src="{{p.profileURL}}" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-												<span class="mx-3 h5 fw-bolder">{{c.name}}</span>
-												<span style="font-size: 8pt;" class="badge bg-success">
-													@{{a.username}}
-												</span>
-											</a>
-										</div>
-									</td>
-								</tr>
 
+								{% if a._id | str == p.accountId | str %}
+									<tr>
+										<td>
+											<div class="d-flex my-2">
+												<a class="text-decoration-none text-dark  w-100" href="{{ctx.DOMAIN_NAME}}/profile?username={{a.username}}">
+													<img src="{{p.profileURL}}" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+													<span class="mx-3 h5 fw-bolder">{{c.name}}</span>
+													<span style="font-size: 8pt;" class="badge bg-success">
+														@{{a.username}}
+													</span>
+												</a>
+											</div>
+										</td>
+									</tr>
+								{% endif %}
 								{%endfor%}
 								{%endfor%}
 								{%endif%}

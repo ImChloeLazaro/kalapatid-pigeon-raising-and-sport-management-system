@@ -1,0 +1,29 @@
+{% extends '__init__/layout.html' %}
+{% block content %}
+	<div class="container">
+		<div class="container club-form-container">
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center">
+					<div class="col-12 col-lg-6 mt-5">
+						<div class="cards w-auto">
+							<h5 class="fw-bold">Club Announcement</h5>
+							<div class="card-body">
+								<div class="form-group">
+									<div>
+										<label for="clubAnnouncement">{{announcement.title}}</label>
+									</div>
+									<div class="my-4 form-group">
+										<textarea class="d-block w-100" name="description" placeholder="Announcement Description" readonly="true">{{announcement.content}}</textarea>
+									</div>
+									<div class="w-100 d-flex justify-content-end">
+										<a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{clubId}}">return to club</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

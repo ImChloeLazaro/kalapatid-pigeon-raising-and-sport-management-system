@@ -7,6 +7,7 @@ const model = require('../model/model')
 
 const globalConstants = require("../../../constants/constants");
 const { getAllEventDataBy, deleteAllEventParticipantDataBy, deleteEventDataBy } = require("../../events/db/db-functions")
+const { getAllClubAnnouncementDataBy } = require("../db/db-functions")
 
 const GET_CLUB = (req, res) => {
 	function query(fn) {
@@ -39,7 +40,7 @@ const GET_CLUB = (req, res) => {
 }
 
 
-const SHOW_CLUB_ID = (req, res) => {
+const GET_SHOW_CLUB_ID = (req, res) => {
 	function query(clubId, fn) {
 		dbf.getClubDataBy({ _id: new ObjectId(clubId) }, (err, docs) => {
 			if (err) return
@@ -50,21 +51,26 @@ const SHOW_CLUB_ID = (req, res) => {
 				getAllEventDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
 					if (err) return
 					let events = docs
-					fn(club, clubMembers, events)
+					getAllClubAnnouncementDataBy({ clubId: new ObjectId(clubId) }, (err, docs) => {
+						if (err) return
+						let announcements = docs
+						fn(club, clubMembers, events, announcements)
+					})
 				})
 			})
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.query.clubId, (club, clubMembers, events) => {
-			if (club != null && clubMembers != null && events != null) {
-				return res.render("club/show-club.html", {
+		query(req.query.clubId, (club, clubMembers, events, announcements) => {
+			if (club != null && clubMembers != null && events != null && announcements != null) {
+				return res.render("club/manage-club/show-club.html", {
 					ctx: globalConstants.ctx,
 					accountId: accountId,
 					username, username,
 					club: club,
 					clubMembers: clubMembers,
-					events: events
+					events: events,
+					announcements: announcements
 				})
 			} else {
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
@@ -96,7 +102,7 @@ const GET_EDIT_CLUB_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		query(req.query.clubId, (club, clubMembers, events) => {
 			if (club != null && clubMembers != null && events != null) {
-				return res.render("club/edit-club.html", {
+				return res.render("club/manage-club/edit-club.html", {
 					ctx: globalConstants.ctx,
 					accountId: accountId,
 					username, username,
@@ -155,7 +161,7 @@ const GET_DELETE_CLUB_ID = (req, res) => {
 
 const GET_CREATE_CLUB = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		return res.render("club/create-club.html", {
+		return res.render("club/manage-club/create-club.html", {
 			ctx: globalConstants.ctx,
 			username: username
 		})
@@ -191,133 +197,30 @@ const POST_CREATE_CLUB = (req, res) => {
 
 
 
-const POST_MEMBERSHIP_REQUEST = (req, res) => {
-	function query(data, fn) {
-		dbf.insertClubMemberData(data, (err) => {
-			fn(err)
-		})
-
-	}
-	verifyLogin(req, res, (accountId, username) => {
-		let clubId = req.body.clubId
-		let clubMember = model.ClubMember(clubId, accountId.toString(), username, "user", "pending")
-		query(clubMember, (docs) => {
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
-		})
-	})
-}
-
-
-const POST_MEMBERSHIP_HANDLE_REQUEST = (req, res) => {
-	function query(filter, setUpdate, fn) {
-		if (setUpdate.memberStatus === "declined") {
-			console.log(filter, setUpdate, "declined");
-			dbf.deleteClubMemberData(filter, (err) => {
-				fn(err)
-			})
-		} else if (setUpdate.memberStatus === "accepted") {
-			console.log(filter, setUpdate, "accepted");
-			dbf.updateClubMemberData(filter, setUpdate, (err) => {
-				fn(err)
-			})
-		}
-	}
-	verifyLogin(req, res, (accountId, username) => {
-		let id = req.body.id;
-		let accId = req.body.accId;
-		let clubId = req.body.clubId
-		let status = req.body.status;
-
-		let filter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
-		let setUpdate = { memberStatus: status }
-		query(filter, setUpdate, (err) => {
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
-		})
-	})
-}
-
-const POST_MEMBERSHIP_UNJOIN = (req, res) => {
-	function query(filter, fn) {
-		dbf.removeClubMemberData(filter, (err) => {
-			fn(err)
-		})
-	}
-	verifyLogin(req, res, (accountId, username) => {
-		if (req.body.username !== username) {
-			username = req.body.username
-		}
-		console.log("username: ".red, username);
-		let id = req.body.id;
-		let clubId = req.body.clubId
-		let filter = { username: username, clubId: new ObjectId(clubId) }
-		query(filter, (err) => {
-			console.log(err);
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
-		})
-	})
-}
-
-
-
-const POST_MODERATOR_SET = (req, res) => {
-	function query(filter, setUpdate, fn) {
-		dbf.updateClubMemberData(filter, setUpdate, (err) => {
-			fn(err)
-		})
-	}
-	verifyLogin(req, res, (accountId, username) => {
-		if (req.body.username !== username) {
-			username = req.body.username
-		}
-		console.log("username: ".red, username);
-		let id = req.body.id;
-		let clubId = req.body.clubId
-		let filter = { username: username, clubId: new ObjectId(clubId) }
-		let setUpdate = { role: "moderator" }
-		query(filter, setUpdate, (err) => {
-			console.log(err);
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
-		})
-	})
-}
-
-
-const POST_MODERATOR_REMOVE = (req, res) => {
-	function query(filter, setUpdate, fn) {
-		dbf.updateClubMemberData(filter, setUpdate, (err) => {
-			fn(err)
-		})
-	}
-	verifyLogin(req, res, (accountId, username) => {
-		if (req.body.username !== username) {
-			username = req.body.username
-		}
-		console.log("username: ".red, username);
-		let id = req.body.id;
-		let clubId = req.body.clubId
-		let filter = { username: username, clubId: new ObjectId(clubId) }
-		let setUpdate = { role: "user" }
-		query(filter, setUpdate, (err) => {
-			console.log(err);
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
-		})
-	})
-}
-
-
-
 module.exports = {
 	GET_CLUB: GET_CLUB,
-	SHOW_CLUB_ID: SHOW_CLUB_ID,
+	GET_SHOW_CLUB_ID: GET_SHOW_CLUB_ID,
 	GET_EDIT_CLUB_ID: GET_EDIT_CLUB_ID,
-	POST_EDIT_CLUB_ID: POST_EDIT_CLUB_ID,
 	GET_CREATE_CLUB: GET_CREATE_CLUB,
-	POST_CREATE_CLUB: POST_CREATE_CLUB,
 	GET_DELETE_CLUB_ID: GET_DELETE_CLUB_ID,
-	POST_MEMBERSHIP_REQUEST: POST_MEMBERSHIP_REQUEST,
-	POST_MEMBERSHIP_HANDLE_REQUEST: POST_MEMBERSHIP_HANDLE_REQUEST,
-	POST_MEMBERSHIP_UNJOIN: POST_MEMBERSHIP_UNJOIN,
-	POST_MODERATOR_SET: POST_MODERATOR_SET,
-	POST_MODERATOR_REMOVE: POST_MODERATOR_REMOVE
+
+
+	POST_CREATE_CLUB: POST_CREATE_CLUB,
+	POST_EDIT_CLUB_ID: POST_EDIT_CLUB_ID,
+
+	POST_MEMBERSHIP_REQUEST: require("./clubMemberController").POST_MEMBERSHIP_REQUEST,
+	POST_MEMBERSHIP_HANDLE_REQUEST: require("./clubMemberController").POST_MEMBERSHIP_HANDLE_REQUEST,
+	POST_MEMBERSHIP_UNJOIN: require("./clubMemberController").POST_MEMBERSHIP_UNJOIN,
+	POST_MODERATOR_SET: require("./clubMemberController").POST_MODERATOR_SET,
+	POST_MODERATOR_REMOVE: require("./clubMemberController").POST_MODERATOR_REMOVE,
+
+	GET_CLUB_ANNOUNCEMENT_SHOW: require("./clubAnnouncementController").GET_CLUB_ANNOUNCEMENT_SHOW,
+	GET_CLUB_ANNOUNCEMENT_CREATE: require("./clubAnnouncementController").GET_CLUB_ANNOUNCEMENT_CREATE,
+	GET_CLUB_ANNOUNCEMENT_EDIT: require("./clubAnnouncementController").GET_CLUB_ANNOUNCEMENT_EDIT,
+	GET_CLUB_ANNOUNCEMENT_DELETE: require("./clubAnnouncementController").GET_CLUB_ANNOUNCEMENT_DELETE,
+
+
+	POST_CLUB_ANNOUNCEMENT_CREATE: require("./clubAnnouncementController").POST_CLUB_ANNOUNCEMENT_CREATE,
+	POST_CLUB_ANNOUNCEMENT_EDIT: require("./clubAnnouncementController").POST_CLUB_ANNOUNCEMENT_EDIT,
 }
 

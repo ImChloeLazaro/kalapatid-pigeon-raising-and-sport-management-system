@@ -15,7 +15,6 @@
 									<i class="icons fa-solid fa-gear"></i>
 								</a>
 
-								<i class="icons fa-solid fa-comment" id="profile-icons"></i>
 							{% endif %}
 						</div>
 					</div>
@@ -63,11 +62,12 @@
 									<div class="">{{event.hourEnd}}</div>
 									<p class="text-mute fw-bold py-2">Accessability</p>
 									<div class="">{{event.accessability}}</div>
-									{%set counter = 0 -%}
+									{%set pcounter = 0 -%}
+									{%set mcounter = 0 -%}
 									{%set isAccepted = false %}
 									{% for p in eventParticipants %}
 										{% if p.accountId != accountId %}
-											{%set counter = counter + s1 -%}
+											{%set pcounter = pcounter + 1 -%}
 										{% endif %}
 
 										{% if p.status == "accepted"%}
@@ -77,7 +77,7 @@
 									{% endfor %}
 
 									{% if event.creatorName != username %}
-										{% if counter == 0 and not isAccepted %}
+										{% if pcounter == 0 and not isAccepted %}
 											<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
 										{% endif %}
 										{%endif%}

@@ -24,101 +24,105 @@
 						<div class="w-auto">
 							<div >
 								<p class=" text-mute ">Event Name</p>
-								<input type="text" name="name" value="{{event.name}}">
+								<input class="w-100 py-2" type="text" name="name" value="{{event.name}}">
 
 								<p class="text-mute fw-bold py-2">Event Type</p>
-								<input type="text" name="type" value="{{event.type}}">
-
+								<select class="form-select form-select-sm py-2" name="type" type="text" selected="{{event.type}}" required="true" aria-label=".form-select-sm ">
+									<option value="Event type 1">Event Type 1</option>
+									<option value="Event type 2">Event Type 2</option>
+									<option value="Event type 3">Event Type 3</option>
+								</select>
 								<p class="text-mute fw-bold py-2">Start Time</p>
 								<input type="time" name="hourStart" value="{{event.hourStart}}">
 
 								<p class="text-mute fw-bold py-2">End Time</p>
-								<input type="time" name="hourEnd" value="{{event.hourEnd}}">
-								<input class="form-control form-control-sm w-100" list="acc-types" name="accessability" type="text" required="true" value="{{event.accessability}}">
-								<datalist id="acc-types">
-									<option value="Public">
-										<option value="Private"></datalist>
-										{%set counter = 0 -%}
-										{%set isAccepted = false %}
-										{% for p in eventParticipants %}
-											{% if p.accountId != accountId %}
-												{%set counter = counter + s1 -%}
-											{% endif %}
+								<input class="w-100 py-2" type="time" name="hourEnd" value="{{event.hourEnd}}">
+								<p class="text-mute fw-bold py-2">Accessability</p>
+								<select class="form-select form-select-sm py-2" name="accessability" type="text" required="true" aria-label=".form-select-sm" selected="{{event.accessability}}">
+									<option value="Public">Public</option>
+									<option value="Private">Private</option>
+								</select>
+								{%set counter = 0 -%}
+								{%set isAccepted = false %}
+								{% for p in eventParticipants %}
+									{% if p.accountId != accountId %}
+										{%set counter = counter + s1 -%}
+									{% endif %}
 
-											{% if p.status == "accepted"%}
-												{%set isAccepted = true %}
-											{% endif %}
+									{% if p.status == "accepted"%}
+										{%set isAccepted = true %}
+									{% endif %}
 
-										{% endfor %}
+								{% endfor %}
 
-										{% if event.creatorName != username %}
-											{% if counter == 0 and not isAccepted %}
-												<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
-											{% endif %}
-											{%endif%}
-
-										</div>
-									</div>
-									<br>
-								</div>
-
-							</div>
-
-							<div class="col-lg-8">
-								<div class="row">
-
-									<div class="col-lg-12">
-										<footer class="mt-3" id="profile-group">
-											<div class="cards overflow-auto">
-												<div class="card-content mb-3">
-													<h5 class="fw-bold">Event Map</h5>
-												</div>
-												<div class="card-body d-flex justify-content-between">
-													<div id="event-edit-map" style="width: fit-content; height:300px;"></div>
-													<input hidden="true" name="long" class="form-control form-control-sm mx-1 " id="editeventLocLong" value="{{event.long}}">
-													<input hidden="true" name="lat" class="form-control form-control-sm  mx-1" id="editeventLocLat" value="{{event.lat}}">
-												</div>
-											</div>
-										</footer>
-									</div>
-
-									<div class="col-lg-12">
-										<main>
-											<div class="cards">
-												<div class="card-content">
-													<h5 class="fw-bold">Description</h5>
-												</div>
-												<div class="card-body">
-													<textarea id="description" name="description" class="w-100 h-50">{{event.description}}</textarea>
-												</div>
-											</div>
-										</main>
-									</div>
-									<div class="col-lg-12">
-										<main>
-											<div class="cards">
-												<div class="card-content">
-													<h5 class="fw-bold">Administrative Options</h5>
-												</div>
-												<div class="card-body">
-													<a class="btn-danger" href="{{ctx.DOMAIN_NAME}}/events/delete?eventId={{event._id}}&clubId={{clubId}}">delete event</a>
-												</div>
-											</div>
-										</main>
-									</div>
+								{% if event.creatorName != username %}
+									{% if counter == 0 and not isAccepted %}
+										<a class="btn btn-success" href="{{ctx.DOMAIN_NAME}}/events/participant/request?username={{username}}&clubId={{clubId}}&eventId={{event._id}}">Register</a>
+									{% endif %}
+									{%endif%}
 
 								</div>
 							</div>
-							<span>
-								<button class="d-inline btn btn-sm btn-success">update</button>
-								<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/events/show?clubId={{clubId}}&eventId={{event._id}}">cancel</a>
-							</span>
+							<br>
 						</div>
 
 					</div>
 
-				</form>
+					<div class="col-lg-8">
+						<div class="row">
+
+							<div class="col-lg-12">
+								<footer class="mt-3" id="profile-group">
+									<div class="cards overflow-auto">
+										<div class="card-content mb-3">
+											<h5 class="fw-bold">Event Map</h5>
+										</div>
+										<div class="card-body d-flex justify-content-between">
+											<div id="event-edit-map" style="width: fit-content; height:300px;"></div>
+											<input hidden="true" name="long" class="form-control form-control-sm mx-1 " id="editeventLocLong" value="{{event.long}}">
+											<input hidden="true" name="lat" class="form-control form-control-sm  mx-1" id="editeventLocLat" value="{{event.lat}}">
+										</div>
+									</div>
+								</footer>
+							</div>
+
+							<div class="col-lg-12">
+								<main>
+									<div class="cards">
+										<div class="card-content">
+											<h5 class="fw-bold">Description</h5>
+										</div>
+										<div class="card-body">
+											<textarea id="description" name="description" class="w-100 h-50">{{event.description}}</textarea>
+										</div>
+									</div>
+								</main>
+							</div>
+							<div class="col-lg-12">
+								<main>
+									<div class="cards">
+										<div class="card-content">
+											<h5 class="fw-bold">Administrative Options</h5>
+										</div>
+										<div class="card-body">
+											<a class="btn-danger" href="{{ctx.DOMAIN_NAME}}/events/delete?eventId={{event._id}}&clubId={{clubId}}">delete event</a>
+										</div>
+									</div>
+								</main>
+							</div>
+
+						</div>
+					</div>
+					<span>
+						<button class="d-inline btn btn-sm btn-success">update</button>
+						<a class="d-inline btn btn-sm btn-success" href="{{ctx.DOMAIN_NAME}}/events/show?clubId={{clubId}}&eventId={{event._id}}">cancel</a>
+					</span>
+				</div>
+
 			</div>
-			<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetEditEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
-			<script type="text/javascript" src="/javascript/script.js"></script>
-		{% endblock %}
+
+		</form>
+	</div>
+	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetEditEventMap&key=Avdjdh0dcTQygVUUyePmkfhJrLB2zOS-hAej45Sw9C2vc0EZg_A8TmY1Yk3ggewJ' async="async" defer="defer"></script>
+	<script type="text/javascript" src="/javascript/script.js"></script>
+{% endblock %}

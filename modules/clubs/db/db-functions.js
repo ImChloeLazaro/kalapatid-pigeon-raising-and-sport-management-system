@@ -126,6 +126,58 @@ function removeClubMemberData(filter, fn) {
 	})
 }
 
+
+
+function getAllClubAnnouncementDataBy(filter, fn) {
+	db.getCollection("clubAnnouncements", (col) => {
+		col.find(filter).toArray((err, docs) => {
+			if (err) console.log(err)
+			fn(err, docs)
+		})
+	})
+}
+
+
+
+function insertClubAnnouncementData(data, fn) {
+	db.getCollection("clubAnnouncements", (col) => {
+		col.insertOne(data, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
+
+function getClubAnnouncementDataBy(filter, fn) {
+	db.getCollection("clubAnnouncements", (col) => {
+		col.findOne(filter, (err, docs) => {
+			if (err) console.log(err)
+			fn(err, docs)
+		})
+	})
+}
+
+function updateClubAnnouncementDataBy(filter, setUpdate, fn) {
+	db.getCollection("clubAnnouncements", (col) => {
+		col.updateOne(filter, { $set: setUpdate }, (err) => {
+			fn(err);
+		})
+	})
+}
+
+
+
+
+function deleteClubAnnouncementDataBy(filter, fn) {
+	db.getCollection("clubAnnouncements", (col) => {
+		col.deleteOne(filter, (err) => {
+			fn(err);
+		})
+	})
+}
+
+
+
 module.exports = {
 	getAllClubDataBy: getAllClubDataBy,
 	getClubDataBy: getClubDataBy,
@@ -138,5 +190,13 @@ module.exports = {
 	insertClubMemberData: insertClubMemberData,
 	updateClubMemberData: updateClubMemberData,
 	deleteClubMemberData: deleteClubMemberData,
-	removeClubMemberData: removeClubMemberData
+	removeClubMemberData: removeClubMemberData,
+
+
+	getAllClubAnnouncementDataBy: getAllClubAnnouncementDataBy,
+	insertClubAnnouncementData: insertClubAnnouncementData,
+	getClubAnnouncementDataBy: getClubAnnouncementDataBy,
+	updateClubAnnouncementDataBy: updateClubAnnouncementDataBy,
+	deleteClubAnnouncementDataBy: deleteClubAnnouncementDataBy,
+
 }

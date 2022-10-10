@@ -22,3 +22,16 @@ module.exports.ClubMember = function ClubMember(clubId, accountId, username, rol
 		memberStatus: memberStatus
 	}
 }
+
+
+
+module.exports.ClubAnnouncement = function ClubAnnouncement(data) {
+	return {
+		_id: new ObjectId(),
+		clubId: new ObjectId(data.clubId),
+		accountId: new ObjectId(data.accountId),
+		username: data.username,
+		title: data.title,
+		content: data.content
+	}
+}
