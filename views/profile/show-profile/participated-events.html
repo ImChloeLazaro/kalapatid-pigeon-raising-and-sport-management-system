@@ -1,0 +1,41 @@
+<div class="card-body">
+	<div class="card-content mb-3">
+		<p class="fw-bold">
+			Participated Events</p>
+	</div>
+	<table class="table table-borderless">
+		<tbody id="profile-club">
+			{%set admin = true %}
+			{% for e in events %}
+				{% for p in eventParticipants %}
+					{% if p.eventId | isMatch(e._id) %}
+						{%set admin = false %}
+						<tr>
+							<td>
+								<a class="text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{p.eventId}}&clubId={{e.clubId}}">
+									{{e.name}}</a>
+							</td>
+							<td>
+								<p class='p-0 me-2 d-inline'>Participant Status:</p>
+								{% if p.status == "accepted" %}
+									<p class="badge bg-sucess mb-1">
+										{{p.status}}</p>
+
+								{% elif p.status == "pending" %}
+									<p class="bg-warning d-inline text-white m-1 p-1">
+										{{p.status}}</p>
+									{%endif%}
+								</td>
+							</tr>
+							{%endif%}
+							{%endfor%}
+
+							{%endfor%}
+							{% if admin %}
+								<td>
+									<p>admin not allow to participate</p>
+								</td>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>

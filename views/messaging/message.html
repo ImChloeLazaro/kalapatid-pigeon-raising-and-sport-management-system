@@ -7,60 +7,61 @@
         <span class="mx-3 h3 fw-bolder">{{otherusername}}</span>
       </a>
     </div>
+    <div class="cards">
 
-    <div class="col-12" id="global-message">
-      {% for d in messages %}
+      <div class="col-12 " id="global-message">
+        {% for d in messages %}
 
-        {% if d.username2 != otherusername %}
-          <div class="d-flex" id="global-chat-participant">
-            <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-              <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username1}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-            </a>
-            <span class="px-1 " id="message">
-              <div class="text-start" id="globalchat-message-wrapper">
-                <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
-                <span class="mx-2">{{d.username1}}</span>
-                <p title="{{d.datetime|datetime_formatter}}" class="mx-2 border border-success text-dark bg-transparent">
-                  {{d.msg}}
-                </p>
+          {% if d.username2 != otherusername %}
+            <div class="d-flex" id="global-chat-participant">
+              <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
+                <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              </a>
+              <span class="px-1 " id="message">
+                <div class="text-start" id="globalchat-message-wrapper">
+                  <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
+                  <span class="mx-2">{{d.username1}}</span>
+                  <p title="{{d.datetime|datetime_formatter}}" class="mx-2 border border-success text-dark bg-transparent">
+                    {{d.msg}}
+                  </p>
+                </div>
               </div>
-            </div>
-          </span>
-        {% else %}
-
-          <div class="d-flex" id="global-chat-participant">
-            <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-              <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username1}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
-            </a>
-            <span class="p-1 " id="message">
-              <div class="d-inline-block text-start" id="globalchat-message-wrapper">
-                <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
-                <span class="mx-2">{{d.username1}}</span>
-                <p class="mx-2" title="{{d.datetime|datetime_formatter}}">{{d.msg}}</p>
-              </div>
-
-              <span class="d-inline-block">
-                <form method="post" action="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}/delete">
-                  <input name="username" type="text" hidden="hidden" value="{{d.username2}}">
-                  <input name="messageId" type="text" hidden="hidden" value="{{d.messageId}}">
-                  <input name="mid" type="text" hidden="hidden" value="{{d._id}}">
-                  <button class="border border-white bg-transparent" id="msg-rm-form-btn" type="submit">
-                    <i class="fa-regular fa-trash-can"></i>
-                  </button>
-                </form>
-              </span>
             </span>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+          {% else %}
 
-    <div class="col-12" id="globalchat-form">
-      <form class="d-flex" method="post" id="chat-form">
-        <textarea class="form-control" name="msg"></textarea>
-        <button class="btn" id="chat-form-btn" type="submit">submit</button>
-      </form>
+            <div class="d-flex" id="global-chat-participant">
+              <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
+                <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+              </a>
+              <span class="p-1 " id="message">
+                <div class="d-inline-block text-start" id="globalchat-message-wrapper">
+                  <span class="mx-2" hidden="hidden">{{d.datetime}}</span>
+                  <span class="mx-2">{{d.username1}}</span>
+                  <p class="mx-2" title="{{d.datetime|datetime_formatter}}">{{d.msg}}</p>
+                </div>
+
+                <span class="d-inline-block">
+                  <form method="post" action="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}/delete">
+                    <input name="username" type="text" hidden="hidden" value="{{d.username2}}">
+                    <input name="messageId" type="text" hidden="hidden" value="{{d.messageId}}">
+                    <input name="mid" type="text" hidden="hidden" value="{{d._id}}">
+                    <button class="border border-white bg-transparent" id="msg-rm-form-btn" type="submit">
+                      <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                  </form>
+                </span>
+              </span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="col-12" id="globalchat-form">
+        <form class="d-flex" method="post" id="chat-form">
+          <textarea class="form-control w-75" style="height: 30px;" name="msg"></textarea>
+          <button class="form-control btn btn-lg  mt-3" type="submit" style="height: 40px;" id="chat-form-btn">Send</button>
+        </form>
+      </div>
     </div>
   </div>
-
 {% endblock %}

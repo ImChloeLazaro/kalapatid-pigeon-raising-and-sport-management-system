@@ -1,0 +1,34 @@
+<div class="card-body">
+	<div class="card-content mb-3">
+		<p class="fw-bold">
+			Managed Events
+		</p>
+	</div>
+	{# ADMIN  #}
+	{%set admin = false %}
+	{% for e in events%}
+		{%if  e.creatorName == username %}
+			{%set admin = true %}
+			<div class="card-content mb-3">
+				<img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
+				<a class="text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
+			</div>
+		{%else %}
+			{# MODERATOR  #}
+			{% for m in clubMembers %}
+				{%if  e.clubId == m.clubId %}
+					<div class="card-content mb-3">
+						<img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
+						<a class="text-success" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
+					</div>
+					{%endif%}
+					{%endfor%}
+
+					{%endif%}
+					{%endfor%}
+
+					{# NORMAL USER #}
+					{% if not admin %}
+						<p>Not an admin or moderator</p>
+					{% endif %}
+				</div>

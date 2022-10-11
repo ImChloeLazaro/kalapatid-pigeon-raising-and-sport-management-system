@@ -1,0 +1,47 @@
+<div class="card-body">
+	<div class="card-content mb-3">
+		<p class="fw-bold">Joined Clubs</p>
+	</div>
+	<table class="table table-borderless">
+		<tbody id="profile-club">
+			{% set counter = 0 -%}
+			{% for c in clubs %}
+				{% for m in clubMembers %}
+					{% if m.clubId | isMatch(c._id)and m.memberStatus == "accepted" %}
+						<tr>
+							<td>
+								<a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
+									<img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
+								<span class="mx-2 fw-bold badge text-white">
+									{{c.name}}
+								</span>
+							</a>
+
+						</td>
+						<td>
+							<div id="profile-link">
+								<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{c._id}}" data-toggle="tooltip" data-placement="top" title="Club Chat">
+									<i class="icons fa-solid fa-comment" id="profile-icons"></i>
+
+								</a>
+							</div>
+						</td>
+					</tr>
+				{%elif m.memberStatus == "accepted" %}
+					{% set counter = counter + 1 -%}
+					{%endif%}
+					{%endfor%}
+					{%endfor%}
+
+					{% if counter == 0 %}
+						<tr>
+							<td>
+								<span class="mx-2 text-success">
+									No clubs joined yet
+								</span>
+							</td>
+						</tr>
+						{%endif%}
+					</tbody>
+				</table>
+			</div>

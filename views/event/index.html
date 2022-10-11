@@ -2,9 +2,14 @@
 {% block content %}
   <div class="container">
     <h1 class="h2 fw-bolder mt-2">Events</h1>
-    {% include "event/list-events/private-events.html" %}
-    {% include "event/list-events/public-events.html" %}
-
+    <div class="row">
+      <div class="col-lg-6">
+        {% include "event/list-events/public-events.html" %}
+      </div>
+      <div class="col-lg-6">
+        {% include "event/list-events/private-events.html" %}
+      </div>
+    </div>
   </div>
 
 {% endblock %}

@@ -1,17 +1,17 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
-  <div class="container" id="global-chat-wrapper">
-    <div class="col-12 text-center p-3">
+
+  <div class="container">
+    <h1 class="h2 fw-bolder mt-2">
       {%if not data | is_empty %}
-        <h3>{{data[0].clubName}}
-          Chats</h3>
-      {% else %}
-        <h3>Chats</h3>
-      {%endif %}
-
-    </div>
-    <div class="col-12" id="global-message">
-
+        {{data[0].clubName}}
+        Chats</h3>
+    {% else %}
+      >Chats
+    {%endif %}
+  </h1>
+  <div class="cards">
+    <div class="col-8" id="global-message">
       {%if data| is_empty %}
         <p class="text-center">No Chats.</p>
       {%endif %}
@@ -24,23 +24,35 @@
               <span class="mx-4">{{d.username}}</span>
               <p title="{{d.datetime|datetime_formatter}}" class="mx-3 border border-success text-dark bg-transparent" id="message">{{d.chat}}</p>
             </div>
+
           </div>
         {% else %}
           <div class="d-flex mb-2" id="global-chat-participant">
             <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
             <div class="text-start" id="globalchat-message-wrapper">
               <span class="mx-4">{{d.username}}</span>
-              <p title="{{d.datetime|datetime_formatter}}" class="mx-3 " id="message">{{d.chat}}</p>
+              <p title="{{d.datetime|datetime_formatter}}" class=" mx-3 " id="message">
+                {{d.chat}}
+              </p>
             </div>
+            <span class="d-inline-block">
+              <form method="post" action="{{ctx.DOMAIN_NAME}}/chats/delete">
+                <input name="id" type="text" hidden="hidden" value="{{d._id}}">
+                <input name="clubId" type="text" hidden="hidden" value="{{d.clubId}}">
+                <button class="border border-white bg-transparent" id="msg-rm-form-btn" type="submit">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </form>
+            </span>
           </div>
           {%endif%}
         {% endfor %}
 
       </div>
       <div class="col-12" id="globalchat-form">
-        <form class="d-flex" method="post" id="chat-form" redirect="/">
-          <textarea class="form-control" name="chat"></textarea>
-          <button class="btn" type="submit" id="chat-form-btn">submit</button>
+        <form class="d-flex" method="post" id="chat-form">
+          <textarea class="form-control w-75" style="height: 30px;" name="chat"></textarea>
+          <button class="form-control btn btn-lg  mt-3" type="submit" style="height: 40px;" id="chat-form-btn">Send</button>
         </form>
       </div>
     </div>

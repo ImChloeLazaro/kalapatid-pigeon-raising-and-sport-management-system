@@ -46,9 +46,31 @@ function verifyEmail(url) {
 	console.log(url);
 	$.getJSON(fullUrl, function (data) {
 		if (data.deliverability === "DELIVERABLE") {
-			swal({ title: "Email Varified!", icon: "success", button: "Done" })
+			emailVerifier(data.deliverability)
 		} else {
-			swal({ title: "Email Not Valid!", icon: "error", button: "Done" })
+			emailVerifier(data.deliverability)
 		}
 	})
+}
+
+
+function emailVerifier(value) {
+	let icheck = $('<i class="bi bi-check2-circle">')
+	let ierror = $('<i class="bi bi-x-circle-fill">')
+
+	let emailValid = "Email verified";
+	let emailInvalid = "Email invalid";
+
+	if (value === "DELIVERABLE") {
+		let p = $('<p class="text-success">')
+		p.text(emailValid)
+		p.append(icheck)
+		$("#email-verifier").html(p)
+	} else {
+		let p = $("<p>")
+		p.addClass("text-danger")
+		p.append(emailInvalid)
+		p.append(ierror)
+		$("#email-verifier").html(p)
+	}
 }

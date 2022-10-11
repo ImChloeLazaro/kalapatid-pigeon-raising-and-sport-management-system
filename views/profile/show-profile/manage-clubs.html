@@ -1,0 +1,44 @@
+<div class="card-body">
+	<div class="card-content mb-3">
+		<p class="fw-bold">Manage Clubs</p>
+	</div>
+	<table class="table table-borderless">
+		<tbody id="profile-club">
+			{% set counter = 0 -%}
+			{% for c in clubs %}
+				{% if c.founderName == username %}
+					<tr>
+						<td>
+							<a href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">
+								<img src="/images/club.jpg" style="width: 50px; height: 50px;" id="profile-club-picture"></th>
+							<span class="mx-2 fw-bold badge text-white">
+								{{c.name}}
+							</span>
+						</a>
+
+					</td>
+					<td>
+						<div id="profile-link">
+							<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{c._id}}" data-toggle="tooltip" data-placement="top" title="Club Chat">
+								<i class="icons fa-solid fa-comment" id="profile-icons"></i>
+							</a>
+						</div>
+					</td>
+				</tr>
+				{%else%}
+				{% set counter = counter + 1 -%}
+				{%endif%}
+				{%endfor%}
+
+				{%if counter == clubs.length%}
+					<tr>
+						<td>
+							<span class="mx-2 text-success">
+								No managed clubs found
+							</span>
+						</td>
+					</tr>
+					{%endif%}
+				</tbody>
+			</table>
+		</div>

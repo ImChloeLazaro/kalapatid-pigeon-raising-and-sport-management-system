@@ -7,9 +7,17 @@ function insertChatData(data, fn) {
 			fn(err)
 		})
 	})
-
 }
 
+
+function removeChatDataBy(filter, fn) {
+	db.getCollection("chats", (col) => {
+		col.deleteOne(filter, (err) => {
+			if (err) console.log(err);
+			fn(err)
+		})
+	})
+}
 
 
 function getAllChatData(filter, fn) {
@@ -24,5 +32,4 @@ function getAllChatData(filter, fn) {
 
 module.exports.getAllChatData = getAllChatData
 module.exports.insertChatData = insertChatData
-
-
+module.exports.removeChatDataBy = removeChatDataBy

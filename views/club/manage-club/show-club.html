@@ -7,172 +7,185 @@
 				<div class="cards animate__animated animate__fadeIn">
 					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 						<h5 class="fw-bold">Club</h5>
-						{% if club.founderName == username %}
-							{% include "club/manage-club/admin/admin-setting-options.html" %}
-						{% endif %}
-					</div>
-					<div>
-						<div class="card-body">
-							<div class="w-100 text-center my-3">
-								<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
+
+						<div id="admin-setting-btns">
+							<div class="d-flex">
+								{% if club.founderName == username %}
+									{% include "club/manage-club/admin/admin-setting-options.html" %}
+								{% endif %}
+								{% for member in clubMembers %}
+									{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
+										<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}">
+											<i class="icons fa-solid fa-comment"></i>
+										</a>
+										{% endif%}
+									{% endfor %}
+								</div>
 							</div>
-							<div class="w-auto">
-								<div >
-									<p class="fw-bolder">Club Name</p>
-									<div class="text-muted">{{club.name}}</div>
 
-									<p class="fw-bolder">Club Founder</p>
-									<div class="my-2">
-										<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{club.founderName}}">
-											<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-											<span>
-												@{{club.founderName}}</span>
-										</div>
-									</a>
-									<p class="fw-bolder">Creation Date</p>
-									<p class="text-muted">{{club.date | date_formatter}}</p>
+						</div>
+						<div>
+							<div class="card-body">
+								<div class="w-100 text-center my-3">
+									<img src="/images/club.jpg" style="width: 100px; height: 90px;" id="account-picture">
+								</div>
+								<div class="w-auto">
+									<div >
+										<p class="fw-bolder">Club Name</p>
+										<div class="text-muted">{{club.name}}</div>
 
-									<p class="fw-bolder">Description</p>
-									<div class="text-muted">{{club.description}}</div>
+										<p class="fw-bolder">Club Founder</p>
+										<div class="my-2">
+											<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{club.founderName}}">
+												<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+												<span>
+													@{{club.founderName}}</span>
+											</div>
+										</a>
+										<p class="fw-bolder">Creation Date</p>
+										<p class="text-muted">{{club.date | date_formatter}}</p>
 
-									<span class="position-relative" style="left: 185px;">
+										<p class="fw-bolder">Description</p>
+										<div class="text-muted">{{club.description}}</div>
 
-										{# ===================================================== #}
+										<span class="position-relative" style="left: 185px;">
 
-										{# accessable only if you are not creator of the clubs or the founder #}
-										{# ===================================================== #}
-										{%set isPending = false %}
-										{%set isMemberAccepted = false %}
-										{% for member in clubMembers %}
-											{# check if account is not a clubCreator #}
-											{% if not club.creatorId | isMatch(accountId) %}
+											{# ===================================================== #}
 
-												{# check if current account is a member and a pending member #}
-												{% if member.accountId | isMatch(accountId)and member.memberStatus == "pending" %}
-													{%set isPending = true %}
-													<p class="fw-bold">Membership Request Sent.</p>
-													{%endif%}
-													{# check if current account is a member and a accepted member #}
-													{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
-														{%set isMemberAccepted = true %}
+											{# accessable only if you are not creator of the clubs or the founder #}
+											{# ===================================================== #}
+											{%set isPending = false %}
+											{%set isMemberAccepted = false %}
+											{% for member in clubMembers %}
+												{# check if account is not a clubCreator #}
+												{% if not club.creatorId | isMatch(accountId) %}
+
+													{# check if current account is a member and a pending member #}
+													{% if member.accountId | isMatch(accountId)and member.memberStatus == "pending" %}
+														{%set isPending = true %}
+														<p class="fw-bold">Membership Request Sent.</p>
 														{%endif%}
-														{% endif%}
-													{% endfor %}
-
-													{# show this join button if not club creator and not pending member and not accepted member #}
-													{% if not club.creatorId | isMatch(accountId) %}
-														{% if not isPending and not isMemberAccepted %}
-
-															{% include "club/manage-club/user/user-membership-join-option.html" %}
+														{# check if current account is a member and a accepted member #}
+														{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
+															{%set isMemberAccepted = true %}
 															{%endif%}
+															{% endif%}
+														{% endfor %}
 
-															{%if not isPending and isMemberAccepted%}
-																{% include "club/manage-club/member/member-unjoin-option.html" %}
+														{# show this join button if not club creator and not pending member and not accepted member #}
+														{% if not club.creatorId | isMatch(accountId) %}
+															{% if not isPending and not isMemberAccepted %}
+
+																{% include "club/manage-club/user/user-membership-join-option.html" %}
 																{%endif%}
-															{% endif %}
 
-														</span>
+																{%if not isPending and isMemberAccepted%}
+																	{% include "club/manage-club/member/member-unjoin-option.html" %}
+																	{%endif%}
+																{% endif %}
 
+															</span>
+
+														</div>
 													</div>
+													<br>
 												</div>
 												<br>
 											</div>
-											<br>
 										</div>
 									</div>
-								</div>
 
-								<div class="col-lg-8">
-									<div class="row">
+									<div class="col-lg-8">
+										<div class="row">
 
-										{# accessable only if you are a member of the club #}
-										{# ===================================================== #}
-										{% for member in clubMembers %}
-											{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
-												{%include "club/manage-club/member/announcement-listing.html" %}
-												{%include "club/manage-club/member/event-listing.html" %}
-												{%endif%}
-											{% endfor %}
+											{# accessable only if you are a member of the club #}
 											{# ===================================================== #}
-
-											{# accessable only if you are the creator of the clubs or the founder #}
-											{# ===================================================== #}
-											{% if club.creatorId == accountId %}
-												{%include "club/manage-club/admin/membership-request-management.html" %}
-											{%else %}
-
-												{# MODERATOR #}
-												{%for member in clubMembers %}
-													{% if club.creatorId == accountId or member.role == "moderator" %}
-														{%include "club/manage-club/moderator/membership-request-management.html" %}
-													{% endif %}
+											{% for member in clubMembers %}
+												{% if member.accountId | isMatch(accountId)and member.memberStatus == "accepted" %}
+													{%include "club/manage-club/member/announcement-listing.html" %}
+													{%include "club/manage-club/member/event-listing.html" %}
+													{%endif%}
 												{% endfor %}
-											{% endif %}
+												{# ===================================================== #}
 
-											{# ===================================================== #}
+												{# accessable only if you are the creator of the clubs or the founder #}
+												{# ===================================================== #}
+												{% if club.creatorId == accountId %}
+													{%include "club/manage-club/admin/membership-request-management.html" %}
+												{%else %}
 
-											{# accessable to all user #}
-											{# ===================================================== #}
-											<div class="col-lg-12">
-												<main>
-													<div class="cards">
-														<div class="card-content">
-															<h5 class="fw-bold">Members</h5>
-														</div>
-														<div class="card-body">
-															{% if clubMembers | is_empty %}
-																<p class="text-center">No Members.</p>
-															{% endif %}
-															<div style="overflow-y: auto; height: 100px;">
-																<table class="table table-borderless">
-																	<tbody>
-																		{% for member in clubMembers %}
-																			{% if member.memberStatus == "accepted" %}
-																				<tr>
-																					<td>
-																						{% if member.role == "moderator"%}
-																							<span>
-																								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																									<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																									<span>@{{member.username}}
-																										<span class="badge">officer</span></span>
-																								</a>
-																							</span>
+													{# MODERATOR #}
+													{%for member in clubMembers %}
+														{% if club.creatorId == accountId or member.role == "moderator" %}
+															{%include "club/manage-club/moderator/membership-request-management.html" %}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
 
-																						{% elif member.role == "admin"%}
-																							<span>
-																								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																									<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																									<span>@{{member.username}}
-																										<span class="badge">founder</span></span>
-																								</a>
-																							</span>
-																						{% else %}
-																							<span>
-																								<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
-																									<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
-																									<span>@{{member.username}}</span>
-																								</a>
-																							</span>
-																							{%endif%}
-																						</td>
-																						{% include "club/manage-club/admin/member-management.html" %}
-																						{% include "club/manage-club/moderator/member-management.html" %}
-																					</tr>
-																					{%endif%}
-																				{% endfor %}
-																			</tbody>
-																		</table>
+												{# ===================================================== #}
+
+												{# accessable to all user #}
+												{# ===================================================== #}
+												<div class="col-lg-12">
+													<main>
+														<div class="cards">
+															<div class="card-content">
+																<h5 class="fw-bold">Members</h5>
+															</div>
+															<div class="card-body">
+																{% if clubMembers | is_empty %}
+																	<p class="text-center">No Members.</p>
+																{% endif %}
+																<div style="overflow-y: auto; height: 100px;">
+																	<table class="table table-borderless">
+																		<tbody>
+																			{% for member in clubMembers %}
+																				{% if member.memberStatus == "accepted" %}
+																					<tr>
+																						<td>
+																							{% if member.role == "moderator"%}
+																								<span>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																										<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																										<span>@{{member.username}}
+																											<span class="badge">officer</span></span>
+																									</a>
+																								</span>
+
+																							{% elif member.role == "admin"%}
+																								<span>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																										<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																										<span>@{{member.username}}
+																											<span class="badge">founder</span></span>
+																									</a>
+																								</span>
+																							{% else %}
+																								<span>
+																									<a class="text-decoration-none text-success" href="{{ctx.DOMAIN_NAME}}/profile?username={{member.username}}">
+																										<img id="account-picture" src="/images/profile.jpg" class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
+																										<span>@{{member.username}}</span>
+																									</a>
+																								</span>
+																								{%endif%}
+																							</td>
+																							{% include "club/manage-club/admin/member-management.html" %}
+																							{% include "club/manage-club/moderator/member-management.html" %}
+																						</tr>
+																						{%endif%}
+																					{% endfor %}
+																				</tbody>
+																			</table>
+																		</div>
 																	</div>
 																</div>
-															</div>
-														</main>
-													</div>
-													{# ===================================================== #}
+															</main>
+														</div>
+														{# ===================================================== #}
 
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
 
-								{% endblock %}
+									{% endblock %}

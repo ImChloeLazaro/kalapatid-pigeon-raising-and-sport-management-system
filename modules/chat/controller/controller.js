@@ -67,9 +67,24 @@ const POST_CHAT = (req, res) => {
 
 
 
+const POST_CHAT_DELETE = (req, res) => {
+	verifyLogin(req, res, (accountId, username) => {
+		let chatId = req.body.id
+		let clubId = req.body.clubId
+
+		let filter = { _id: new ObjectId(chatId) }
+		dbf.removeChatDataBy(filter, (err) => {
+			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/chats/show?clubId=" + clubId)
+		})
+	})
+}
+
+
+
 
 module.exports = {
 	GET_CHATS: GET_CHATS,
 	GET_CHAT: GET_CHAT,
 	POST_CHAT: POST_CHAT,
+	POST_CHAT_DELETE: POST_CHAT_DELETE
 }

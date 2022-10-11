@@ -47,6 +47,7 @@
 									</div>
 									<div class="form-container">
 										<input onfocusout='verifyEmail("{{ctx.EMAIL_VERIFIER}}")' id="email" name="email" type="email" class="form-control text-center" placeholder="Email" required="true">
+										<span id="email-verifier"></span>
 									</div>
 								</div>
 
@@ -93,7 +94,7 @@
 
 					{% if isError %}
 						<script>
-							swal({title: "Registration Error!", text: "{{errors|join }}", icon: "warning", button: "Done"});
+							swal({title: "Registration Error!", text: "{{errors|join }}", icon: "error", button: "Done"});
 						</script>
 					{% endif %}
 				</div>

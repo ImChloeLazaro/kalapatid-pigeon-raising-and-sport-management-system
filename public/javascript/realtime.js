@@ -43,12 +43,15 @@ $(function () {
 		// set numbers of online users
 		$("#online-user-label").text(onlineUsersList.length)
 		//render text
+
+		// <img src="${imagecloud}/profiles/${username}/profile" id="account-picture"
+		// class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 		function template(username) {
 			return `<tr>
 			<td>
 			<a class="text-dark text-decoration-none mx-2" 
 			href="${window.location.origin}/${window.location.pathname.split("/")[1]}/profile?username=${username}">
-				<img src="${imagecloud}/profiles/${username}/profile" id="account-picture"
+				<img src="/images/profile.jpg" id="account-picture"
 				class="card-img" alt="Responsive image" style="height: 40px; width: 40px; border-radius: 50%"/>
 				</a>
 				<a class="text-dark text-decoration-none fw-bolder" 

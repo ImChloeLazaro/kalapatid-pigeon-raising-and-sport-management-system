@@ -5,7 +5,7 @@
     <div class="msg-container  mt-4">
       {% if data | is_empty %}
         <div class="cards">
-          <p class="text-dark text-center">No Messaging available!</p>
+          <p class="text-dark text-center">You have no messages available!</p>
         </div>
       {% else %}
         <div class="cards">
@@ -15,7 +15,7 @@
               {% if d.username2 == username %}
                 <div class="d-flex   py-2 w-100">
                   <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username1}}">
-                    <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username1}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                    <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                   </a>
                   <a class="text-decoration-none  text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username1}}">
                     <span class="mx-2 h5 fw-bolder" title="{{d.username1}}">{{d.username1}}</span>
@@ -30,7 +30,7 @@
 
                 <div class="d-flex   py-2 w-100">
                   <a href="{{ctx.DOMAIN_NAME}}/profile?username={{d.username2}}">
-                    <img src="{{ctx.CLOUD_IMAGE}}/profiles/{{d.username2}}/profile" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
+                    <img src="/images/profile.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                   </a>
                   <a class=" text-decoration-none text-dark" href="{{ctx.DOMAIN_NAME}}/messages/{{d.messageId}}?username={{d.username2}}">
                     <span class="mx-2 h5 fw-bolder">{{d.username2}}</span>

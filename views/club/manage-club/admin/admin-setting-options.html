@@ -1,14 +1,3 @@
-<div id="admin-setting-btns">
-	<div class="d-flex">
-		<a href="{{ctx.DOMAIN_NAME}}/clubs/edit?clubId={{club._id}}">
-			<i class="icons fa-solid fa-gear"></i>
-		</a>
-		{% for member in clubMembers %}
-			{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
-				<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}">
-					<i class="icons fa-solid fa-comment"></i>
-				</a>
-				{% endif%}
-			{% endfor %}
-		</div>
-	</div>
+<a href="{{ctx.DOMAIN_NAME}}/clubs/edit?clubId={{club._id}}">
+	<i class="icons fa-solid fa-gear"></i>
+</a>
