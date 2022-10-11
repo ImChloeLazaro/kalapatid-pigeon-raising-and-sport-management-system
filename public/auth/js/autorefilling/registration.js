@@ -37,6 +37,18 @@ $(function () {
 	$("#barangay").val(localStorage.barangay)
 	$("#townCity").val(localStorage.townCity)
 	$("#province").val(localStorage.province)
-
-
 })
+
+
+function verifyEmail(url) {
+	let email = $("#email").val();
+	let fullUrl = url + email;
+	console.log(url);
+	$.getJSON(fullUrl, function (data) {
+		if (data.deliverability === "DELIVERABLE") {
+			swal({ title: "Email Varified!", icon: "success", button: "Done" })
+		} else {
+			swal({ title: "Email Not Valid!", icon: "error", button: "Done" })
+		}
+	})
+}

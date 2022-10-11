@@ -165,6 +165,20 @@ const POST_REGISTER = (req, res) => {
 }
 
 
+const GET_REGISTER_AUTHENTICATE = (req, res) => {
+	return res.render("auth/register.html", {
+		ctx: globalConstants.ctx
+	})
+}
+
+
+const POST_REGISTER_AUTHENTICATE = (req, res) => {
+	return res.redirect(globalConstants.ctx.DOMAIN_NAME + '/auth/login')
+}
+
+
+
+
 
 
 
@@ -226,6 +240,8 @@ module.exports = {
 	POST_LOGIN: POST_LOGIN,
 	GET_REGISTER: GET_REGISTER,
 	POST_REGISTER: POST_REGISTER,
+	GET_REGISTER_AUTHENTICATE: GET_REGISTER_AUTHENTICATE,
+	POST_REGISTER_AUTHENTICATE: POST_REGISTER_AUTHENTICATE,
 	GET_RECOVERY: GET_RECOVERY,
 	POST_RECOVERY: POST_RECOVERY,
 	GET_RECOVERY_CONFIRM: GET_RECOVERY_CONFIRM,

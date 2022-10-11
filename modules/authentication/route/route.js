@@ -14,7 +14,8 @@ loginRoute.post("/", controller.POST_LOGIN)
 let registerRoute = express.Router();
 registerRoute.get("/", controller.GET_REGISTER)
 registerRoute.post("/", checkSchema(registrationSchema), controller.POST_REGISTER)
-
+registerRoute.get("/authenticate", controller.GET_REGISTER_AUTHENTICATE)
+registerRoute.post("/authenticate", controller.POST_REGISTER_AUTHENTICATE)
 
 let recoveryRoute = express.Router();
 recoveryRoute.get("/", controller.GET_RECOVERY)
