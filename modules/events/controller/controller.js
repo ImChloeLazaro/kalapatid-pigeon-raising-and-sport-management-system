@@ -247,13 +247,14 @@ const POST_CREATE_EVENT = (req, res) => {
 		let description = req.body.description
 		let maxParticipants = req.body.maxParticipants
 		let accessability = req.body.accessability
+		let eventStatus = req.body.eventStatus
 
 		let EventModel = model.Event(
 			accountId,
 			clubId,
 			name, date, long, lat, hourStart, hourEnd,
 			type, description, username, clubName,
-			maxParticipants, accessability)
+			maxParticipants, accessability, eventStatus)
 
 
 		query(accountId, EventModel, (err) => {

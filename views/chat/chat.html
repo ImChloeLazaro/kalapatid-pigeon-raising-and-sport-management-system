@@ -7,7 +7,7 @@
         {{data[0].clubName}}
         Chats</h3>
     {% else %}
-      >Chats
+      Chats
     {%endif %}
   </h1>
   <div class="cards">
@@ -51,8 +51,8 @@
       </div>
       <div class="col-12" id="globalchat-form">
         <form class="d-flex" method="post" id="chat-form">
-          <textarea class="form-control w-75" style="height: 30px;" name="chat"></textarea>
-          <button class="form-control btn btn-lg  mt-3" type="submit" style="height: 40px;" id="chat-form-btn">Send</button>
+          <input type="text" name="chat" class="form-control w-100 h-auto">
+          <button type="submit" class="btn btn-primary" id="chat-form-btn">Send</button>
         </form>
       </div>
     </div>

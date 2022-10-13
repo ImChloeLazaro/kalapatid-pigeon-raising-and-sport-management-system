@@ -14,9 +14,6 @@ function dropCollections() {
 	}
 }
 
-
-
-
 function getData(colName) {
 	printjson(db.getCollection(colName).find())
 }
