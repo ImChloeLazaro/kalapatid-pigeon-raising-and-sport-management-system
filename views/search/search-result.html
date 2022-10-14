@@ -1,7 +1,7 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
 	<div class="container">
-		<h1 class="display-5">Search Result</h1>
+		<h1 class="h2 fw-bolder mt-2">Search Results</h1>
 		<div class="cards">
 
 			<table>
@@ -59,10 +59,8 @@
 
 										{% if clubs | is_empty and events | is_empty and accounts | is_empty %}
 											<tr>
-												<td>
-													<h6 class="fw-bold text-danger my-3">Searching '{{q}}' not found.
-													</h6>
-												</td>
+												<h6 class="fw-bold text-success my-3 text-center">Searching '{{q}}' not found.
+												</h6>
 											</tr>
 											{%endif%}
 

@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+
+
 .cards {
   padding: 20px;
   height: auto;
@@ -190,20 +192,22 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-textarea
-{
-  all:unset;
-  width: 100%!important;
+
+textarea {
+  all: unset;
+  width: 100% !important;
   border: 3px solid #FFFFFF;
   border-radius: 1rem;
   color: #2DA380;
 }
-textarea:focus, textarea::placeholder
-{
+
+textarea:focus,
+textarea::placeholder {
   padding-left: 7px;
 }
-textarea::placeholder
-{
+
+textarea::placeholder {
   color: #C5C3C3;
 }
+
 /*# sourceMappingURL=style.css.map */

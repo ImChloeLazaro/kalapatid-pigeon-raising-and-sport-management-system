@@ -1,6 +1,6 @@
 const { ObjectId } = require("mongodb")
 const globalConstants = require("../../../constants/constants");
-const { verifyLogin } = require("../../../lib/toolkit")
+const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
@@ -9,11 +9,11 @@ const { ctx } = require("../../../constants/constants");
 const { getEventAllParticipantDataBy } = require("../db/db-functions");
 const { bgBlack } = require("colors");
 
-
+const { getNotifications, insertNotification } = require("../../../database/notification-query")
+const Notification = require("../../../model/notification")
 
 
 const GET_EVENT = (req, res) => {
-
 	function query(fn) {
 		dbf.getAllEventDataBy({}, (err, docs) => {
 			if (err) return
@@ -37,14 +37,18 @@ const GET_EVENT = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query((events, clubs, clubMembers, eventParticipants) => {
-			return res.render("event/index.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				events: events,
-				clubs: clubs,
-				clubMembers: clubMembers,
-				eventParticipants: eventParticipants
+			let filter = { accountId: new ObjectId(accountId) };
+			getNotifications(filter, (err, notifications) => {
+				return res.render("event/index.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					events: events,
+					clubs: clubs,
+					clubMembers: clubMembers,
+					eventParticipants: eventParticipants,
+					notifications: notifications
+				})
 			})
 		})
 	})
@@ -78,13 +82,16 @@ const SHOW_EVENT_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
 			if (event != null && eventParticipants != null) {
-				return res.render("event/manage-event/show-event.html", {
-					ctx: globalConstants.ctx,
-					accountId: accountId,
-					username: username,
-					clubId: req.query.clubId,
-					event: event,
-					eventParticipants: eventParticipants
+				getNotifications({}, (err, notifications) => {
+					return res.render("event/manage-event/show-event.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username: username,
+						clubId: req.query.clubId,
+						event: event,
+						eventParticipants: eventParticipants,
+						notifications: notifications
+					})
 				})
 			} else {
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
@@ -118,13 +125,17 @@ const GET_EDIT_EVENT_ID = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.query.eventId, req.query.clubId, (event, eventParticipants) => {
 			if (event != null && eventParticipants != null) {
-				return res.render("event/manage-event/edit-event.html", {
-					ctx: globalConstants.ctx,
-					accountId: accountId,
-					username: username,
-					clubId: req.query.clubId,
-					event: event,
-					eventParticipants: eventParticipants
+				let filter = { accountId: new ObjectId(accountId) };
+				getNotifications(filter, (err, notifications) => {
+					return res.render("event/manage-event/edit-event.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username: username,
+						clubId: req.query.clubId,
+						event: event,
+						eventParticipants: eventParticipants,
+						notifications: notifications
+					})
 				})
 			} else {
 				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
@@ -186,6 +197,19 @@ const GET_DELETE_EVENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId;
 		let eventId = req.query.eventId;
+		let eventName = req.query.eventName;
+		insertNotification(Notification(
+			accountId,
+			username,
+			globalConstants.notificationPreveledge.CLUB,
+			{
+				title: req.body.eventName + " Event Deleted",
+				message: "Event " + req.body.eventName + " has been deleted",
+				link: "",
+				seen: false
+			},
+			datetimenow()))
+
 		query(eventId, clubId, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
@@ -208,6 +232,17 @@ const POST_DELETE_EVENT = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		query(accountId, req.body.eventId, req.body.clubId, (err) => {
+			insertNotification(Notification(
+				accountId,
+				username,
+				globalConstants.notificationPreveledge.CLUB,
+				{
+					title: req.body.eventName + " Event Deleted",
+					message: "Event " + req.body.eventName + " has been deleted",
+					link: "",
+					seen: false
+				},
+				datetimenow()))
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + req.body.clubId)
 		})
 	})
@@ -216,13 +251,16 @@ const POST_DELETE_EVENT = (req, res) => {
 
 const GET_CREATE_EVENT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		return res.render("event/manage-event/create-event.html", {
-			ctx: globalConstants.ctx,
-			username: username,
-			accountId: accountId,
-			clubId: req.query.clubId
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			return res.render("event/manage-event/create-event.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				accountId: accountId,
+				clubId: req.query.clubId,
+				notifications: notifications
+			})
 		})
-
 	})
 }
 
@@ -258,6 +296,18 @@ const POST_CREATE_EVENT = (req, res) => {
 
 
 		query(accountId, EventModel, (err) => {
+			insertNotification(Notification(
+				accountId,
+				username,
+				globalConstants.notificationPreveledge.CLUB,
+				{
+					title: name + " Event Created",
+					message: "Event " + name + " has been created",
+					link: globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + EventModel._id + "&clubId=" + clubId,
+					seen: false
+				},
+				datetimenow()))
+
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + clubId)
 		})
 	})

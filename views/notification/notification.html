@@ -1,182 +1,33 @@
 <a class="nav-link" id="notification" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">Notifications</a>
 <div class="dropdown-menu bg-white" aria-labelledby="notification" style="width: 30rem; right: 100%; left: auto;">
-	<header class="fw-bold text-center w-100">Notification</header>
+	<header class="fw-bold   h4 px-4">Notifications</header>
 	<hr>
-	<main class="w-100 ">
+	<main>
 		<table class="table table-borderless">
 			<tbody>
+				{% for notification in notifications | sort(false, true, "datetime") | reverse | limit(7) %}
 
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
+					<tr>
+						<td>
+							<div class="d-flex">
+								<p class="text-success">
+									<i class="fa-solid fa-bell"></i>
+								</p>
+								<a class="mx-2" href="{{notification.data.link}}">
+									<div>
+										<p class="fw-bold">{{notification.data.title}}</p>
+										<small class="text-muted">{{notification.data.message}}</small>
+									</div>
+								</a>
 							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
+						</td>
+					</tr>
 
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="d-flex">
-							<img id="account-picture" style="height: 45px; width: 45px; border-radius: 50%; margin-right: 5px" src="/images/club.jpg" alt="">
-							<div>
-								<p class="fw-bold">Pigeon Club INC</p>
-								<small class="text-muted">Just Now</small>
-							</div>
-						</div>
-					</td>
-					<td>
-						<a href="#">
-							<p>Club decline your request.</p>
-						</a>
-					</td>
-				</tr>
-
+				{% endfor %}
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-center">
-			<a href="{{ctx.DOMAIN_NAME}}/notifications" class="mx-4 text-center text-success">See more notifications...</a>
+			<a href="{{ctx.DOMAIN_NAME}}/notifications" class="mx-4 text-center fw-bolder text-success">see more notifications</a>
 		</div>
 	</main>
 </div>

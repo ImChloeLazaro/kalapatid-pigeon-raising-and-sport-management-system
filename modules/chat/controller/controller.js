@@ -5,14 +5,21 @@ const globalConstants = require("../../../constants/constants");
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const ObjectId = require('mongodb').ObjectId
 
+const { getNotifications } = require("../../../database/notification-query")
+
+
+
 function template(res, accountId, username, docs) {
-	console.log("template accountId: ".bgWhite.red, accountId);
-	return res.render("chat/index.html", {
-		ctx: globalConstants.ctx,
-		accountId: accountId,
-		username: username,
-		othername: username,
-		data: docs
+	let filter = { accountId: new ObjectId(accountId) };
+	getNotifications(filter, (err, notifications) => {
+		return res.render("chat/index.html", {
+			ctx: globalConstants.ctx,
+			accountId: accountId,
+			username: username,
+			othername: username,
+			data: docs,
+			notifications: notifications
+		})
 	})
 }
 
@@ -36,13 +43,16 @@ const GET_CHAT = (req, res) => {
 		let clubId = req.query.clubId
 		let filter = { clubId: new ObjectId(clubId) }
 		dbf.getAllChatData(filter, (err, docs) => {
-			console.log(docs);
-			return res.render("chat/chat.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubId: clubId,
-				data: docs
+			let filter = { accountId: new ObjectId(accountId) };
+			getNotifications(filter, (err, notifications) => {
+				return res.render("chat/chat.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					clubId: clubId,
+					data: docs,
+					notifications: notifications
+				})
 			})
 		})
 

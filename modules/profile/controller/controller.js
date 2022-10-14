@@ -4,11 +4,10 @@ const { getClubAllMemberDataBy, getAllClubDataBy } = require("../../clubs/db/db-
 const { getEventAllParticipantDataBy, getAllEventDataBy } = require("../../events/db/db-functions")
 const dbf = require('../db/db-functions')
 
+
+const { getNotifications } = require("../../../database/notification-query")
+
 const ObjectId = require("mongodb").ObjectId
-
-const path = require("path")
-const { error } = require("console")
-
 
 
 const GET_PROFILE = (req, res) => {
@@ -37,18 +36,21 @@ const GET_PROFILE = (req, res) => {
 								let clubs = docs
 								getAllEventDataBy({}, (err, docs) => {
 									let events = docs
-									return res.render("profile/profile.html", {
-										ctx: globalConstants.ctx,
-										accountId: accountId,
-										username: username,
-										othername: othername,
-										accData: accData,
-										addrData: addrData,
-										profileData: profileData,
-										clubMembers: clubMembers,
-										eventParticipants: eventParticipants,
-										clubs: clubs,
-										events: events
+									getNotifications({ accountId: new ObjectId(accData._id) }, (err, notifications) => {
+										return res.render("profile/profile.html", {
+											ctx: globalConstants.ctx,
+											accountId: accountId,
+											username: username,
+											othername: othername,
+											notifications: notifications,
+											accData: accData,
+											addrData: addrData,
+											profileData: profileData,
+											clubMembers: clubMembers,
+											eventParticipants: eventParticipants,
+											clubs: clubs,
+											events: events
+										})
 									})
 								})
 							})
@@ -80,13 +82,17 @@ const GET_EDIT_PROFILE = (req, res) => {
 				dbf.getProfileDataBy(profileFilter, (err, docs) => {
 					let profileData = docs
 					console.log("profile data: ".yellow, profileData);
-					return res.render("profile/edit-profile.html", {
-						ctx: globalConstants.ctx,
-						username: username,
-						othername: othername,
-						accData: accData,
-						addrData: addrData,
-						profileData: profileData
+					let filter = { accountId: new ObjectId(accountId) };
+					getNotifications(filter, (err, notifications) => {
+						return res.render("profile/edit-profile.html", {
+							ctx: globalConstants.ctx,
+							username: username,
+							othername: othername,
+							notifications: notifications,
+							accData: accData,
+							addrData: addrData,
+							profileData: profileData
+						})
 					})
 				})
 			})

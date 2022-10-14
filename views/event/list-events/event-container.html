@@ -12,8 +12,11 @@
 			{{eventParticipants|sizeByEventParticipants(e._id) }}
 			participants
 		</span>
-		<span id="el-{{-e._id.toString()}}" class="event-location mx-5 px-5 inline-block" onload="getAddressByLocation({{e.lat}},{{e.long}})">
-			<p class="mx-5 px-4" style="font-size: 10pt;"></p>
+		<span class="event-location mx-5 px-5 inline-block">
+			<p id="el-{{-e._id.toString()}}" class="mx-5 px-4" style="font-size: 10pt;"></p>
+			<script>
+				getAddressByLocation({{e.lat}}, {{e.long}}, "el-{{-e._id.toString()}}");
+			</script>
 		</span>
 
 	</a>

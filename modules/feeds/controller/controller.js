@@ -9,6 +9,8 @@ const dbf = require('../db/db-functions')
 const ObjectId = require('mongodb').ObjectId
 
 
+const { getNotifications } = require("../../../database/notification-query")
+
 // database query functions
 function getAllPostData(filter, fn) {
 	dbf.getAllPostData(filter, (err, docs) => {
@@ -45,17 +47,21 @@ function queries(filter, fn) {
 
 // template renderString
 function renderTemplate(res, accountId, username, accounts, profiles, posts, comments, events, clubs, clubMembers) {
-	return res.render("feeds/index.html", {
-		ctx: globalConstants.ctx,
-		accountId: accountId,
-		username: username,
-		accounts: accounts,
-		profiles: profiles,
-		posts: posts,
-		comments: comments,
-		events: events,
-		clubs: clubs,
-		clubMembers: clubMembers
+	let filter = { accountId: new ObjectId(accountId) };
+	getNotifications(filter, (err, notifications) => {
+		return res.render("feeds/index.html", {
+			ctx: globalConstants.ctx,
+			accountId: accountId,
+			username: username,
+			accounts: accounts,
+			profiles: profiles,
+			posts: posts,
+			comments: comments,
+			events: events,
+			clubs: clubs,
+			clubMembers: clubMembers,
+			notifications: notifications
+		});
 	});
 }
 

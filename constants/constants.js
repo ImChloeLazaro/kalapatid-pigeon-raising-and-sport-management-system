@@ -9,5 +9,10 @@ module.exports = {
 	},
 	VIEW_FOLDER: 'views',
 	STATIC_FOLDER: '/public',
-	SESSION_SECRET: 'the deadman tells no tale'
+	SESSION_SECRET: 'the deadman tells no tale',
+	notificationPreveledge: {
+		CLUB: 1,
+		ADMIN: 2,
+		USER: 3
+	}
 }

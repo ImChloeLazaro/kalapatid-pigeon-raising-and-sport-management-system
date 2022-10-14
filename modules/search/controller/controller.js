@@ -1,11 +1,13 @@
 const globalConstants = require("../../../constants/constants")
 const { verifyLogin } = require("../../../lib/toolkit")
 
+const ObjectId = require('mongodb').ObjectId;
 
 const { getAccountDataBy } = require('../db/db-functions')
 const { getAllClubDataBy } = require("../../clubs/db/db-functions")
 const { getAllEventDataBy } = require("../../events/db/db-functions")
 const { getAllProfileDataBy } = require("../../profile/db/db-functions")
+const { getNotifications } = require("../../../database/notification-query")
 
 const SEARCH = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
@@ -37,19 +39,19 @@ const SEARCH_RESULT = (req, res) => {
 
 	verifyLogin(req, res, (accountId, username) => {
 		query(req.query.q, (accounts, profile, events, clubs) => {
-			console.log(accounts);
-			console.log(events);
-			console.log(clubs);
-			console.log(profile);
-			return res.render('search/search-result.html', {
-				ctx: globalConstants.ctx,
-				q: req.query.q,
-				accountId: accountId,
-				profile: profile,
-				username: username,
-				accounts: accounts,
-				events: events,
-				clubs: clubs
+			let filter = { accountId: new ObjectId(accountId) };
+			getNotifications(filter, (err, notifications) => {
+				return res.render('search/search-result.html', {
+					ctx: globalConstants.ctx,
+					q: req.query.q,
+					accountId: accountId,
+					profile: profile,
+					username: username,
+					accounts: accounts,
+					events: events,
+					clubs: clubs,
+					notifications: notifications
+				})
 			})
 		})
 	})

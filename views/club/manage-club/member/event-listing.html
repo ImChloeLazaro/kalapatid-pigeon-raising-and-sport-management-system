@@ -32,6 +32,7 @@
 													<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/events/delete">
 														<input type="text" name="eventId" value="{{e._id}}" hidden="true">
 														<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+														<input type="text" name="eventName" value="{{e.name}}" hidden="true">
 														<button class="btn-sm icons" style="border: none;">
 															<i class="fa-solid fa-trash text-danger"></i>
 														</button>

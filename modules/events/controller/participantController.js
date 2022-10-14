@@ -1,10 +1,11 @@
 const { ObjectId } = require("mongodb")
 const globalConstants = require("../../../constants/constants");
-const { verifyLogin } = require("../../../lib/toolkit")
+const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
 const model = require('../model/model')
 
-
+const { getNotifications, insertNotification } = require("../../../database/notification-query")
+const Notification = require("../../../model/notification")
 
 
 const GET_PARTICIPANT = (req, res) => {
@@ -23,14 +24,17 @@ const GET_PARTICIPANT = (req, res) => {
 
 		query(clubId, eventId, partuName, (err, docs) => {
 			if (docs != null) {
-				return res.render("event/manage-participant/participant.html", {
-					ctx: globalConstants.ctx,
-					username: username,
-					accountId: accountId,
-					partuName: partuName,
-					eventId: eventId,
-					clubId: clubId,
-					participant: docs
+				getNotifications({}, (err, notifications) => {
+					return res.render("event/manage-participant/participant.html", {
+						ctx: globalConstants.ctx,
+						username: username,
+						accountId: accountId,
+						partuName: partuName,
+						eventId: eventId,
+						clubId: clubId,
+						participant: docs,
+						notifications: notifications
+					})
 				})
 			} else {
 				res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events")
@@ -44,10 +48,30 @@ const UPDATE_PARTICIPANT = (req, res) => {
 	function query(filter, setUpdate, fn) {
 		if (setUpdate.status === "accepted") {
 			dbf.updateEventParticipantDataBy(filter, setUpdate, (err) => {
+				insertNotification(Notification(
+					accountId,
+					username,
+					{
+						title: "Event Registration Accepted",
+						message: "Your registration for " + eventName + " has been accepted.",
+						link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${filter.eventId}&clubId=${filter.clubId}`,
+						seen: false,
+					},
+					datetimenow()))
 				fn(err)
 			})
 		} else if (setUpdate.status === "declined") {
 			dbf.deleteEventParticipantDataBy(filter, (err) => {
+				insertNotification(Notification(
+					accountId,
+					username,
+					{
+						title: "Event Registration Declined",
+						message: "Your registration for " + eventName + " has been declined.",
+						link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${filter.eventId}&clubId=${filter.clubId}`,
+						seen: false,
+					},
+					datetimenow()))
 				fn(err)
 			})
 		}
@@ -75,10 +99,13 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
 		let partId = req.query.partId
-		return res.render("event/manage-participant/participant-request.html", {
-			ctx: globalConstants.ctx,
-			username: username,
-			accountId: accountId,
+		getNotifications({}, (err, notifications) => {
+			return res.render("event/manage-participant/participant-request.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				accountId: accountId,
+				notifications: notifications,
+			})
 		})
 	})
 }
@@ -114,6 +141,15 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		let pigeons = pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons);
 		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, pigeons)
 		query(eventParticipant, (err) => {
+			insertNotification(Notification(
+				accountId,
+				username,
+				{
+					title: "Event Request",
+					message: `You have requested to join the event ${eventId}`,
+					link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`,
+					seen: false,
+				}, datetimenow()))
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
@@ -133,7 +169,15 @@ const GET_PARTICIPANT_REMOVE = (req, res) => {
 		let clubId = req.query.clubId
 		let filter = { _id: new ObjectId(id), eventId: new ObjectId(eventId), clubId: new ObjectId(clubId) }
 		query(filter, (err) => {
-			console.log(err);
+			insertNotification(Notification(
+				accountId,
+				username,
+				{
+					title: "Event Participant Removed",
+					message: `You been removed to the  event ${eventId}`,
+					link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`,
+					seen: false,
+				}, datetimenow()))
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})

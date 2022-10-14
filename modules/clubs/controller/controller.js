@@ -1,9 +1,13 @@
 const { ObjectId } = require("mongodb")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
 const dbf = require('../db/db-functions')
-const { insertNotificationDataBy } = require('../../notification/db/db-functions')
 const model = require('../model/model')
 
+
+const { Chat } = require("../../chat/model/models")
+const { insertChatData } = require("../../chat/db/db-functions")
+
+const { getNotifications } = require("../../../database/notification-query")
 
 const globalConstants = require("../../../constants/constants");
 const { getAllEventDataBy, deleteAllEventParticipantDataBy, deleteEventDataBy } = require("../../events/db/db-functions")
@@ -22,21 +26,24 @@ const GET_CLUB = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query((clubs, clubMembers) => {
-			if (clubs != null && clubMembers != null) {
-				return res.render("club/index.html", {
-					ctx: globalConstants.ctx,
-					accountId: accountId,
-					username: username,
-					clubs: clubs,
-					clubMembers: clubMembers
-				})
-			} else {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME)
-			}
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			query((clubs, clubMembers) => {
+				if (clubs != null && clubMembers != null) {
+					return res.render("club/index.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username: username,
+						notifications: notifications,
+						clubs: clubs,
+						clubMembers: clubMembers
+					})
+				} else {
+					return res.redirect(globalConstants.ctx.DOMAIN_NAME)
+				}
+			})
 		})
 	})
-
 }
 
 
@@ -61,23 +68,26 @@ const GET_SHOW_CLUB_ID = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.query.clubId, (club, clubMembers, events, announcements) => {
-			if (club != null && clubMembers != null && events != null && announcements != null) {
-				return res.render("club/manage-club/show-club.html", {
-					ctx: globalConstants.ctx,
-					accountId: accountId,
-					username, username,
-					club: club,
-					clubMembers: clubMembers,
-					events: events,
-					announcements: announcements
-				})
-			} else {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
-			}
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			query(req.query.clubId, (club, clubMembers, events, announcements) => {
+				if (club != null && clubMembers != null && events != null && announcements != null) {
+					return res.render("club/manage-club/show-club.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username, username,
+						notifications: notifications,
+						club: club,
+						clubMembers: clubMembers,
+						events: events,
+						announcements: announcements
+					})
+				} else {
+					return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+				}
+			})
 		})
 	})
-
 }
 
 
@@ -100,19 +110,23 @@ const GET_EDIT_CLUB_ID = (req, res) => {
 		})
 	}
 	verifyLogin(req, res, (accountId, username) => {
-		query(req.query.clubId, (club, clubMembers, events) => {
-			if (club != null && clubMembers != null && events != null) {
-				return res.render("club/manage-club/edit-club.html", {
-					ctx: globalConstants.ctx,
-					accountId: accountId,
-					username, username,
-					club: club,
-					clubMembers: clubMembers,
-					events: events
-				})
-			} else {
-				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
-			}
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			query(req.query.clubId, (club, clubMembers, events) => {
+				if (club != null && clubMembers != null && events != null) {
+					return res.render("club/manage-club/edit-club.html", {
+						ctx: globalConstants.ctx,
+						accountId: accountId,
+						username, username,
+						notifications: notifications,
+						club: club,
+						clubMembers: clubMembers,
+						events: events
+					})
+				} else {
+					return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+				}
+			})
 		})
 	})
 }
@@ -161,9 +175,14 @@ const GET_DELETE_CLUB_ID = (req, res) => {
 
 const GET_CREATE_CLUB = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
-		return res.render("club/manage-club/create-club.html", {
-			ctx: globalConstants.ctx,
-			username: username
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			return res.render("club/manage-club/create-club.html", {
+				ctx: globalConstants.ctx,
+				username: username,
+				accountId: accountId,
+				notifications: notifications
+			})
 		})
 	})
 }
@@ -185,12 +204,17 @@ const POST_CREATE_CLUB = (req, res) => {
 	}
 	verifyLogin(req, res, (accountId, username) => {
 		let name = req.body.clubName
-		let date = datetimenow()
+		let datetime = datetimenow()
 		let description = req.body.description
-		let clubModel = model.Club(name, date, description, accountId, username)
+		let clubModel = model.Club(name, datetime, description, accountId, username)
 		let clubMemberModel = model.ClubMember(clubModel._id.toString(), accountId, username, "admin", "accepted")
 		query(clubModel, clubMemberModel, (err) => {
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+			let chatModel = Chat(accountId, clubModel._id.toString(), clubModel.name, datetime, username, `
+			Welcome to ${clubModel.name} club!
+			`)
+			insertChatData(chatModel, (err) => {
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs")
+			})
 		})
 	})
 }

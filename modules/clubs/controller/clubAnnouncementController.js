@@ -1,21 +1,30 @@
 const { ObjectId } = require("mongodb")
 const { verifyLogin, datetimenow } = require("../../../lib/toolkit")
+
+const { getNotifications, insertNotification } = require("../../../database/notification-query")
+const Notification = require("../../../model/notification")
+
+
+
 const dbf = require('../db/db-functions')
-const { insertNotificationDataBy } = require('../../notification/db/db-functions')
 const model = require('../model/model')
 const globalConstants = require("../../../constants/constants");
 
 
 const GET_CLUB_ANNOUNCEMENT_CREATE = (req, res) => {
+
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId;
-		return res.render("club/announcement/create.html", {
-			ctx: globalConstants.ctx,
-			accountId: accountId,
-			username: username,
-			clubId: clubId
-		}
-		)
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			return res.render("club/announcement/create.html", {
+				ctx: globalConstants.ctx,
+				accountId: accountId,
+				username: username,
+				clubId: clubId,
+				notifications: notifications
+			})
+		})
 	})
 }
 
@@ -37,7 +46,19 @@ const POST_CLUB_ANNOUNCEMENT_CREATE = (req, res) => {
 		})
 
 		query(data, (err) => {
-			//	insert notification to all members of the club
+			insertNotification(Notification(
+				accountId,
+				username,
+				globalConstants.notificationPreveledge.CLUB,
+				{
+					title: "#" + data.title,
+					message: "New Announcement entitled \"" + data.title + "\" has been created",
+					link: globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + req.query.clubId,
+					seen: false,
+				},
+				datetimenow()
+			));
+
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/clubs/show?clubId=" + req.query.clubId)
 		})
 	})
@@ -56,19 +77,23 @@ const GET_CLUB_ANNOUNCEMENT_SHOW = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let id = req.query.id;
 		let clubId = req.query.clubId;
-		let filter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
-		query(filter, (err, docs) => {
-			let announcement = docs;
-			return res.render("club/announcement/show.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubId: clubId,
-				announcement: announcement
+		let cfilter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			query(cfilter, (err, docs) => {
+				let announcement = docs;
+				return res.render("club/announcement/show.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					notifications: notifications,
+
+					clubId: clubId,
+					announcement: announcement,
+				})
 			})
 		})
-	}
-	)
+	})
 }
 
 
@@ -85,19 +110,22 @@ const GET_CLUB_ANNOUNCEMENT_EDIT = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let id = req.query.id;
 		let clubId = req.query.clubId;
-		let filter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
-		query(filter, (err, docs) => {
-			let announcement = docs;
-			return res.render("club/announcement/edit.html", {
-				ctx: globalConstants.ctx,
-				accountId: accountId,
-				username: username,
-				clubId: clubId,
-				announcement: announcement
+		let cfilter = { _id: new ObjectId(id), clubId: new ObjectId(clubId) }
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			query(cfilter, (err, docs) => {
+				let announcement = docs;
+				return res.render("club/announcement/edit.html", {
+					ctx: globalConstants.ctx,
+					accountId: accountId,
+					username: username,
+					notifications: notifications,
+					clubId: clubId,
+					announcement: announcement
+				})
 			})
 		})
-	}
-	)
+	})
 }
 
 const POST_CLUB_ANNOUNCEMENT_EDIT = (req, res) => {

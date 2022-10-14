@@ -5,6 +5,7 @@
 				<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/moderator/set">
 					<input type="text" name="username" value="{{member.username}}" hidden="true">
 					<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+					<input type="text" name="clubName" value="{{club.name}}" hidden="true">
 					<button class="d-inline-block btn-sm btn-success" type="submit">set as officer</button>
 				</form>
 			</span>
@@ -13,6 +14,7 @@
 				<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/moderator/remove">
 					<input type="text" name="username" value="{{member.username}}" hidden="true">
 					<input type="text" name="clubId" value="{{club._id}}" hidden="true">
+					<input type="text" name="clubName" value="{{club.name}}" hidden="true">
 					<button class="d-inline-block btn-sm btn-danger" type="submit">remove as officer</button>
 				</form>
 			</span>
@@ -20,6 +22,7 @@
 		<span>
 			<form class="d-inline-block" method="POST" action="{{ctx.DOMAIN_NAME}}/clubs/membership/unjoin">
 				<input type="text" name="username" value="{{member.username}}" hidden="true">
+				<input type="text" name="clubName" value="{{club.name}}" hidden="true">
 				<input type="text" name="clubId" value="{{club._id}}" hidden="true">
 				<button class="d-inline-block btn-sm btn-danger" type="submit">remove</button>
 			</form>

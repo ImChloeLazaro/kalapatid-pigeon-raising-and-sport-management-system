@@ -6,7 +6,7 @@ const ObjectId = require("mongodb").ObjectId
 
 
 
-
+const { getNotifications } = require("../../../database/notification-query")
 
 
 const GET_MESSAGE = (req, res) => {
@@ -22,13 +22,17 @@ const GET_MESSAGE = (req, res) => {
 			fn(docs)
 		})
 	}
-	verifyLogin(req, res, (accountId, username) => {
-		dbquery(username, (docs) => {
-			return res.render("messaging/index.html", {
-				ctx: globalConstants.ctx,
-				username: username,
-				data: docs,
 
+	verifyLogin(req, res, (accountId, username) => {
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			dbquery(username, (docs) => {
+				return res.render("messaging/index.html", {
+					ctx: globalConstants.ctx,
+					username: username,
+					data: docs,
+					notifications: notifications
+				})
 			})
 		})
 	})
@@ -57,7 +61,7 @@ const GET_MESSAGE_ID = (req, res) => {
 
 
 	}
-	const template = (req, res, username1, username2, messages) => {
+	const template = (req, res, accountId, username1, username2, messages) => {
 		let curuser = username1
 		if (messages.length !== 0) {
 			username1 = messages[0].username1
@@ -69,21 +73,25 @@ const GET_MESSAGE_ID = (req, res) => {
 			otherusername = username1
 			username = username2
 		}
-		return res.render("messaging/message.html", {
-			ctx: globalConstants.ctx,
-			otherusername: otherusername,
-			username: username,
-			username1: username1,
-			username2: username2,
-			messages: messages,
-			messageId: req.params.id
-		});
+		let filter = { accountId: new ObjectId(accountId) };
+		getNotifications(filter, (err, notifications) => {
+			return res.render("messaging/message.html", {
+				ctx: globalConstants.ctx,
+				notifications: notifications,
+				otherusername: otherusername,
+				username: username,
+				username1: username1,
+				username2: username2,
+				messages: messages,
+				messageId: req.params.id
+			});
+		})
 	}
 
 	verifyLogin(req, res, (accountId, username) => {
 		let messageId = req.params.id
 		dbquery(messageId, username, (messages) => {
-			template(req, res, username, req.query.username, messages)
+			template(req, res, accountId, username, req.query.username, messages)
 		})
 	})
 }
