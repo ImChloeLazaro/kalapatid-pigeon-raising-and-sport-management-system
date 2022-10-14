@@ -1,7 +1,7 @@
 <div class="col-lg-4">
 	<div class="cards">
 		<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-			<h5 class="fw-bold h2">Profile</h5>
+			<p class="fw-bold h25">Profile</p>
 			<div class="d-flex">
 				{% if accData.username == username %}
 					<a href="{{ctx.DOMAIN_NAME}}/profile/edit?username={{accData.username}}&id={{profileData._id}}">
@@ -22,29 +22,28 @@
 			<p class="text-muted text-center" id="profile-id">{{accData.firstName}}
 				{{accData.middleName}}
 				{{accData.lastName}}
-				<span>({{accData.username}})</span>
+				<span>({{accData.username}})</span><br>
+				<small class="m-0 p-0"><i class="fas fa-user"></i> {{profileData.info}}</small>
 			</p>
 			<hr>
 			<div class="w-auto">
-
-				<h5 class="fw-bold">Account Info</h5>
 				<div class="d-flex px-2">
-					<p class="fw-bold me-2">Email</p>
-					<p class="text-muted">{{accData.email}}</p>
+					<small class="fw-bold me-2">Email</small>
+					<small class="text-muted">{{accData.email}}</small>
 				</div>
 				<div class="d-flex px-2">
-					<p class="fw-bold me-2">Contact Number</p>
-					<p>{{accData.phone}}</p>
+					<small class="fw-bold me-2">Contact Number</small>
+					<small>{{accData.phone}}</small>
 				</div>
 
 				<div class="d-flex px-2">
-					<p class="fw-bold me-2">Address</p>
-					<p>{{addrData.houseAddr}},
-						{{addrData.town}},{{addrData.province}}</p>
+					<small class="fw-bold me-2">Address</small>
+					<small>{{addrData.houseAddr}},
+						{{addrData.town}},{{addrData.province}}</small>
 				</div>
 				<div class="d-flex px-2">
-					<p class="fw-bold me-2">Birthday</p>
-					<p>{{accData.birthday| date_formatter}}</p>
+					<small class="fw-bold me-2">Birthday</small>
+					<small>{{accData.birthday| date_formatter}}</small>
 				</div>
 			</div>
 			<br>

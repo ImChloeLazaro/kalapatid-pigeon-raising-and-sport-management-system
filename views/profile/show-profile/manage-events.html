@@ -17,8 +17,8 @@
 			{# MODERATOR  #}
 			{% for m in clubMembers %}
 				{%if  e.clubId == m.clubId %}
-					<div class="card-content mb-3">
-						<img src="/images/events.jpg" style="width: 50px; height: 50px;" id="profile-club-picture">
+					<div class="card-content mb-">
+						<img class="" src="/images/events.jpg" style="width: 20px; height: 20px;" id="profile-club-picture">
 						<a class="mx-2 fw-bold badge text-white" href="{{ctx.DOMAIN_NAME}}/events/show?eventId={{e._id}}&clubId={{e.clubId}}">{{e.name}}</a>
 					</div>
 					{%endif%}
