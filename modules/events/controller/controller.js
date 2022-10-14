@@ -279,8 +279,8 @@ const POST_CREATE_EVENT = (req, res) => {
 		let date = req.body.date
 		let long = req.body.long
 		let lat = req.body.lat
-		let hourStart = req.body.hourStart
-		let hourEnd = req.body.hourEnd
+		let datetimeStart = req.body.datetimeStart
+		let datetimeEnd = req.body.datetimeEnd
 		let type = req.body.type
 		let description = req.body.description
 		let maxParticipants = req.body.maxParticipants
@@ -290,7 +290,7 @@ const POST_CREATE_EVENT = (req, res) => {
 		let EventModel = model.Event(
 			accountId,
 			clubId,
-			name, date, long, lat, hourStart, hourEnd,
+			name, date, long, lat, datetimeStart, datetimeEnd,
 			type, description, username, clubName,
 			maxParticipants, accessability, eventStatus)
 

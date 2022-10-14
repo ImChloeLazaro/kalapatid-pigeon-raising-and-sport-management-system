@@ -45,7 +45,7 @@ const GET_PARTICIPANT = (req, res) => {
 }
 
 const UPDATE_PARTICIPANT = (req, res) => {
-	function query(filter, setUpdate, fn) {
+	function query(accountId, username, filter, setUpdate, fn) {
 		if (setUpdate.status === "accepted") {
 			dbf.updateEventParticipantDataBy(filter, setUpdate, (err) => {
 				insertNotification(Notification(
@@ -53,7 +53,7 @@ const UPDATE_PARTICIPANT = (req, res) => {
 					username,
 					{
 						title: "Event Registration Accepted",
-						message: "Your registration for " + eventName + " has been accepted.",
+						message: "Your registration for " + req.body.eventName + " has been accepted.",
 						link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${filter.eventId}&clubId=${filter.clubId}`,
 						seen: false,
 					},
@@ -86,7 +86,7 @@ const UPDATE_PARTICIPANT = (req, res) => {
 		let filter = { username: partuName, clubId: new ObjectId(clubId), eventId: new ObjectId(eventId) }
 		let setUpdate = { status: status }
 
-		query(filter, setUpdate, (err) => {
+		query(accountId, username, filter, setUpdate, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
 		})
 	})
@@ -137,9 +137,10 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		let info = req.body.description;
 		let lat = req.body.lat;
 		let long = req.body.long;
+		let dropOffAddress = req.body.dropOffAddress
 		let status = "pending";
 		let pigeons = pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons);
-		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, pigeons)
+		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, dropOffAddress, pigeons)
 		query(eventParticipant, (err) => {
 			insertNotification(Notification(
 				accountId,

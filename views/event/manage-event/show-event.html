@@ -46,7 +46,7 @@
 									<div>{{event.date | date_formatter}}</div>
 
 									<p class="text-mute fw-bold py-2">Event Type</p>
-									<div class="h5">{{event.type}}</div>
+									<div class="">{{event.type}}</div>
 									<p class="text-mute fw-bold py-2">Address</p>
 									<div id="address"></div>
 									<p class="text-mute fw-bold py-2">Description</p>
@@ -54,15 +54,15 @@
 									<p class="text-mute fw-bold py-2">Maximum Pigeons per Participant</p>
 									<div class="">{{event.maxParticipants}}</div>
 
-									<p class="text-mute fw-bold py-2">Start Time</p>
-									<div class="">{{event.hourStart}}</div>
+									<p class="text-mute fw-bold py-2">Start Date Time</p>
+									<div class="">{{event.datetimeEnd}}</div>
 
-									<p class="text-mute fw-bold py-2">End Time</p>
-									<div class="">{{event.hourEnd}}</div>
+									<p class="text-mute fw-bold py-2">End Date Time</p>
+									<div class="">{{event.datetimeEnd}}</div>
 									<p class="text-mute fw-bold py-2">Accessability</p>
 									<div class="">{{event.accessability}}</div>
 
-									<p class="text-mute fw-bold py-2">Event Status</p>
+									<p class="text-mute fw-bold py-2">Status</p>
 									<div class="">{{event.eventStatus}}</div>
 									{%set pcounter = 0 -%}
 									{%set mcounter = 0 -%}

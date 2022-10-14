@@ -7,7 +7,9 @@
 				<div class="col-lg-4">
 					<div class="cards">
 						<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-							<h5 class="fw-bold">Edit Club</h5>
+							<h5 class="fw-bold">
+								<i class="bi bi-suit-club-fill"></i>
+								Edit Club</h5>
 						</div>
 
 						<div>
@@ -65,7 +67,9 @@
 							<main>
 								<div class="cards">
 									<div class="card-content">
-										<h5 class="fw-bold">Description</h5>
+										<h5 class="fw-bold">
+											<i class="bi bi-body-text"></i>
+											Description</h5>
 									</div>
 									<div class="card-body">
 										<textarea name="description" class="w-100 h-100">{{club.description}}</textarea>
@@ -78,7 +82,9 @@
 							<main>
 								<div class="cards">
 									<div class="card-content">
-										<h5 class="fw-bold text-center">Administrative Options</h5>
+										<h5 class="fw-bold">
+											<i class="bi bi-radioactive"></i>
+											Danger Zone</h5>
 									</div>
 									<div class="card-body">
 										<style>
@@ -90,7 +96,7 @@
 												background: #F2F2F2!important;
 											}
 										</style>
-										<a type="submit" id="danger" class="btn btn-danger" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
+										<a type="submit" id="danger" class="btn btn-danger w-25" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
 									</div>
 								</div>
 							</main>

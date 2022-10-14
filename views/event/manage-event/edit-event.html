@@ -32,18 +32,20 @@
 									<option value="Event type 2">Event Type 2</option>
 									<option value="Event type 3">Event Type 3</option>
 								</select>
-								<p class="text-mute fw-bold py-2">Start Time</p>
-								<input type="time" name="hourStart" value="{{event.hourStart}}">
 
-								<p class="text-mute fw-bold py-2">End Time</p>
 								<input class="w-100 py-2" type="time" name="hourEnd" value="{{event.hourEnd}}">
+								<p class="text-mute">Start Date Time</p>
+								<input class="form-control form-control-sm w-100" value="{{event.datetimeStart}}" name="datetimeStart" type="datetime-local" placeholder="Event Start Time" required="true">
+								<p class="text-mute">End Date Time</p>
+								<input class="form-control form-control-sm w-100" value="{{event.datetimeEnd}}" name="datetimeEnd" type="datetime-local" placeholder="Event End Time" required="true">
+
 								<p class="text-mute fw-bold py-2">Accessability</p>
 								<select class="form-select form-select-sm py-2" name="accessability" type="text" required="true" aria-label=".form-select-sm" selected="{{event.accessability}}">
 									<option value="Public">Public</option>
 									<option value="Private">Private</option>
 								</select>
 
-								<p class="text-mute fw-bold py-2">Event Status</p>
+								<p class="text-mute fw-bold py-2">Status</p>
 								<select class="form-select form-select-sm py-2" name="eventStatus" type="text" required="true" aria-label=".form-select-sm" selected="{{event.eventStatus}}">
 									<option value="Close">Close</option>
 									<option value="Open">Open</option>
