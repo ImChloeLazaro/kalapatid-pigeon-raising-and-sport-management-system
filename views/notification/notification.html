@@ -5,8 +5,12 @@
 	<main>
 		<table class="table table-borderless">
 			<tbody>
+				{% if notifications | is_empty %}
+					<tr>
+						<p class="text-center">No Notification Yet.</p>
+					</tr>
+				{% endif %}
 				{% for notification in notifications | sort(false, true, "datetime") | reverse | limit(7) %}
-
 					<tr>
 						<td>
 							<div class="d-flex">
@@ -22,7 +26,6 @@
 							</div>
 						</td>
 					</tr>
-
 				{% endfor %}
 			</tbody>
 		</table>

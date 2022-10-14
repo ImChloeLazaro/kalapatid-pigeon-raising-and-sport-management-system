@@ -5,6 +5,11 @@
 		<div class="cards">
 			<table class="table table-borderless">
 				<tbody>
+					{% if notifications | is_empty %}
+						<tr>
+							<p class="text-center">No Notification Yet.</p>
+						</tr>
+					{% endif %}
 					{% for notif in allnotifications | sort(false, true, "datetime") | reverse %}
 						<tr>
 							<td>

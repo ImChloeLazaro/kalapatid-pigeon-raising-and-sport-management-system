@@ -143,7 +143,6 @@ function GetCreateEventMap() {
 					title: "Current Location",
 					description: address
 				}
-				$("#description").text("Address: " + address)
 			})
 
 
