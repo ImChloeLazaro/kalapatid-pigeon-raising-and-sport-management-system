@@ -1,11 +1,10 @@
 {% extends '__init__/layout.html' %}
 {% block content %}
 	<div class="container">
-		<h1 class="h2 fw-bolder mt-2">Forecast Days</h1>
-		<div id="forcast-container" class="row cards"></div>
+		<p	class="h3 fw-bolder" >Weather Information</p>
+		<div id="forcast-container" class="row d-flex justify-content-center"></div>
 	</div>
 </div>
-
 <script>
 	if (navigator.geolocation) {
 		navigator
@@ -26,32 +25,20 @@
 								$("#forcast-container")
 								.append(`
 
-							<div class='w-100 col-lg-5 mb-3'>
-							<div class="row">
-								<div class="col-12">
-									<div class="w-100">
-										<div class=" d-inline-block w-50">
-										<h3	class="h3 fw-bolder">Weather Information</h3>
-											<p class="card-text">Current Temperature:${currentday.temp_c}°C</p>
-											<p class="card-text">Current Temperature:${currentday.temp_f}°F</p>
-											<p class="card-text">Wind Speed:${currentday.wind_kph}KPH</p>
-											<p class="card-text">Wind Speed:${currentday.wind_mph}MPH</p>
-											<p class="card-text">Humidity:${currentday.humidity}%</p>
-											<p class="card-text">Cloud:${currentday.cloud}%</p>
-											<p class="card-text">Feels Liked:${currentday.feelslike_c}°C</p>
-											<p class="card-text">Feels Liked: ${currentday.feelslike_f}°F</p>
-											<p class="card-text">Last Updated: ${formatDate(currentday.last_updated)}</p>
-										</div>
-									<div class="d-inline-block w-25">
-										<h4 class=" fw-bold">${currentday.condition.text} in ${currentlocation.name}</h4>
-											<span class="text-center"><img style="width: 400px;height: 400px;" src="${currentday.condition.icon}"></img>
-											</span>
-										</div>
-									</div>
+										<div class=" d-inline-block card mx-3" style='width: 18rem ;height: 25rem; border-radius: 0; padding:0;'>
+											<div class='card-header d-flex flex-column text-center' style='background: #D2EEE2;height: 10rem'>
+												<span class="text-center"><img style="width: 90px;height: 90px;" src="${currentday.condition.icon}"></span>
+												<small class=" fw-bold" style='color:#015F37'>${currentday.condition.text} in ${currentlocation.name}</small>	
+												<small class="card-text fw-bold" style='color:#015F37'>Today</small>
+											</div>
+											<div class='m-3'>
+												<small class="card-text fw-bold">Current Temperature: <span class='text-muted'>${currentday.temp_c} °C</span></small><br>
+												<small class="card-text fw-bold">Current Temperature: <span class='text-muted'>${currentday.temp_f} °F</span></small><br>
+												<small class="card-text fw-bold">Wind Speed: <span class='text-muted'>${currentday.wind_kph} KPH</span></small><br>
+												<small class="card-text fw-bold">Wind Speed: <span class='text-muted'>${currentday.wind_mph} MPH</span></small><br>
+												<small class="card-text fw-bold">Humidity: <span class='text-muted'>${currentday.humidity} %</span></small><br>
+											</div>
 										
-						</div>
-									</div>
-							</div>
 							`)
 							function formatDate(date) {
 								var options = {
@@ -69,15 +56,19 @@
 								currentdayindex = 0
 								if (i !== currentdayindex) {
 									$("#forcast-container").append(`
-								<div class=' col-lg-6 mt-3'>
-										<p class="h5 fw-bolder"> ${formatDate(d.date)}</p>
-									<p>humidity: ${d.day.avghumidity}</p>
-									<p>average temperature: ${d.day.avgtemp_c}</p>
-									<p>average temperature: ${d.day.avgtemp_f}</p>
-									<p>maximum wind per miles: ${d.day.maxwind_mph}</p>
-									<p>maximum wind per kilometer: ${d.day.maxwind_kph}</p>
-									<p>average velocity per miles: ${d.day.avgvis_miles}</p>
-								</div>
+										<div class='cards mx-3' style='width: 18rem; height: 25rem; border-radius: 0; padding:0;'>
+											<div class='card-header d-flex flex-column text-center' style='background: #D2EEE2;height: 10rem'>
+												<span class="text-center"><img style="width: 90px;height: 90px;" src="${d.day.condition.icon}"></span>
+												<small class=" fw-bold" style='color:#015F37'>${formatDate(d.date)}</small>	
+											</div>
+											<div class='m-3'>
+												<small class='fw-bold'>Wind Speed: <span class='text-muted'>${d.day.maxwind_mph} MPH</span></small><br>
+												<small class='fw-bold'>Wind Speed: <span class='text-muted'>${d.day.maxwind_kph} KPH</span></small><br>
+												<small class='fw-bold'>Humidity: <span class='text-muted'>${d.day.avghumidity} %</span></small><br>
+												<small class='fw-bold'>Average Temperature: <span class='text-muted'>${d.day.avgtemp_c} °C</span></small><br>
+												<small class='fw-bold'>Average Temperature: <span class='text-muted'>${d.day.avgtemp_f} °F</span></small><br>	
+											</div>
+										</div>
 							`)
 								}
 
