@@ -49,3 +49,13 @@ module.exports.getAllNotifications = function getAllNotifications(filter, fn) {
 		})
 	})
 }
+
+
+module.exports.getCurrentNotificationsCount = function getCurrentNotificationsCount(filter, fn) {
+	db.getCollection("notifications", (col) => {
+		col.find(filter).count((err, count) => {
+			if (err) console.log(err);
+			fn(err, count)
+		})
+	})
+}
