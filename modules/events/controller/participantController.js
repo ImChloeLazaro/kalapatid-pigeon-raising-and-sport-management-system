@@ -67,7 +67,7 @@ const UPDATE_PARTICIPANT = (req, res) => {
 					username,
 					{
 						title: "Event Registration Declined",
-						message: "Your registration for " + eventName + " has been declined.",
+						message: "Your registration for " + req.body.eventName + " has been declined.",
 						link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${filter.eventId}&clubId=${filter.clubId}`,
 						seen: false,
 					},
@@ -93,18 +93,19 @@ const UPDATE_PARTICIPANT = (req, res) => {
 }
 
 
-pigeonSerialGenerator("4")
-
+// pigeonSerialGenerator(4)
 const GET_PARTICIPANT_REQUEST = (req, res) => {
 	verifyLogin(req, res, (accountId, username) => {
 		let clubId = req.query.clubId
-		let partId = req.query.partId
+		let eventId = req.query.eventId
 		getNotifications({}, (err, notifications) => {
 			return res.render("event/manage-participant/participant-request.html", {
 				ctx: globalConstants.ctx,
 				username: username,
 				accountId: accountId,
 				notifications: notifications,
+				clubId: clubId,
+				eventId: eventId
 			})
 		})
 	})
@@ -113,15 +114,31 @@ const GET_PARTICIPANT_REQUEST = (req, res) => {
 function serialNoGenerator(number) {
 	return (number).toString().padStart(6, "0")
 }
+var lastCoutingNum = null;
+function pigeonSerialGenerator(eventId, clubId, participantId, numberOfPegions, fn) {
+	dbf.getLastInsertedParticipantData({ eventId: new ObjectId(eventId) }, (docs) => {
+		let pigeons = []
+		let lastParticipant = docs[0]
+		if (lastParticipant == undefined) {
+			let limit = Number(numberOfPegions)
+			for (let i = 1; i <= limit; i++) {
+				pigeons.push(model.Pigeon(eventId, clubId, participantId, i, serialNoGenerator(i)))
+			}
+		} else {
+			let lastIndex = lastParticipant.pigeons.length - 1
+			lastCoutingNum = lastParticipant.pigeons[lastIndex].pigeonNumber
+			limit = lastCoutingNum + Number(numberOfPegions)
 
-
-function pigeonSerialGenerator(eventId, clubId, participantId, numberOfPegions) {
-	let pigeons = []
-	for (let i = 1; i <= Number(numberOfPegions); i++) {
-		pigeons.push(model.Pigeon(eventId, clubId, participantId, i, serialNoGenerator(i)))
-	}
-	return pigeons;
+			for (let i = lastCoutingNum + 1; i <= limit; i++) {
+				pigeons.push(model.Pigeon(eventId, clubId, participantId, i, serialNoGenerator(i)))
+			}
+		}
+		fn(pigeons);
+	})
 }
+
+
+
 
 const POST_PARTICIPANT_REQUEST = (req, res) => {
 	function query(data, fn) {
@@ -140,23 +157,24 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		let dropOffAddress = req.body.dropOffAddress
 		let billingStatus = req.body.billingStatus
 		let status = "pending";
-		let pigeons = pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons);
-		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, billingStatus, dropOffAddress, pigeons)
-		query(eventParticipant, (err) => {
-			insertNotification(Notification(
-				accountId,
-				username,
-				{
-					title: "Event Request",
-					message: `You have requested to join the event ${eventId}`,
-					link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`,
-					seen: false,
-				}, datetimenow()))
-			return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
-		})
+		pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons, (pigeons) => {
+			let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, billingStatus, dropOffAddress, pigeons)
+			console.log(eventParticipant);
+			query(eventParticipant, (err) => {
+				insertNotification(Notification(
+					accountId,
+					username,
+					{
+						title: "Event Request",
+						message: `You have requested to join the event ${eventId}`,
+						link: globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`,
+						seen: false,
+					}, datetimenow()))
+				return res.redirect(globalConstants.ctx.DOMAIN_NAME + `/events/show?eventId=${eventId}&clubId=${clubId}`)
+			})
+		});
 	})
 }
-
 
 
 const GET_PARTICIPANT_REMOVE = (req, res) => {

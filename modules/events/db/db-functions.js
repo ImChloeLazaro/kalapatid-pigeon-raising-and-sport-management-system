@@ -127,7 +127,13 @@ function getAllAcountData(fn) {
 	})
 }
 
-
+function getLastInsertedParticipantData(filter, fn) {
+	db.getCollection("eventParticipants", (col) => {
+		col.find(filter).sort({ _id: -1 }).limit(1).toArray((err, docs) => {
+			fn(docs)
+		})
+	})
+}
 
 module.exports = {
 	getAllAcountData: getAllAcountData,
@@ -143,5 +149,7 @@ module.exports = {
 	updateEventParticipantDataBy: updateEventParticipantDataBy,
 	deleteEventParticipantDataBy: deleteEventParticipantDataBy,
 	deleteEventDataBy: deleteEventDataBy,
-	deleteAllEventParticipantDataBy: deleteAllEventParticipantDataBy
+	deleteAllEventParticipantDataBy: deleteAllEventParticipantDataBy,
+
+	getLastInsertedParticipantData: getLastInsertedParticipantData
 }

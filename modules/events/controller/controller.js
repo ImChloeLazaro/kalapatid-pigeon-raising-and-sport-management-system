@@ -127,6 +127,7 @@ const GET_EDIT_EVENT_ID = (req, res) => {
 			if (event != null && eventParticipants != null) {
 				let filter = { accountId: new ObjectId(accountId) };
 				getNotifications(filter, (err, notifications) => {
+					console.log(eventParticipants);
 					return res.render("event/manage-event/edit-event.html", {
 						ctx: globalConstants.ctx,
 						accountId: accountId,
