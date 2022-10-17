@@ -15,11 +15,15 @@ const GET_FAQ = (req, res) => {
 				ctx: globalConstants.ctx,
 				accountId: accountId,
 				username: username,
-				othername: username
+				othername: username,
+				notifications: notifications
 			})
 		})
 	})
 }
+
+
+
 
 
 module.exports = {

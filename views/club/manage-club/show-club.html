@@ -6,7 +6,9 @@
 			<div class="col-lg-4">
 				<div class="cards animate__animated animate__fadeIn">
 					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-						<h5 class="fw-bold">Club</h5>
+						<h5 class="fw-bold">
+							<i class="fas fa-users mx-2"></i>
+							Club</h5>
 
 						<div id="admin-setting-btns">
 							<div class="d-flex">
@@ -15,7 +17,7 @@
 								{% endif %}
 								{% for member in clubMembers %}
 									{% if member.accountId | isMatch(accountId)and member.memberStatus != "pending" %}
-										<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}">
+										<a href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{club._id}}" title="Club Chat">
 											<i class="icons fa-solid fa-comment"></i>
 										</a>
 										{% endif%}
@@ -43,7 +45,8 @@
 										<p class="fw-bolder">Creation Date</p>
 										<p class="text-muted">{{club.date | date_formatter}}</p>
 
-										<p class="fw-bolder">Description</p>
+										<p class="fw-bolder">
+											Description</p>
 										<div class="text-muted">{{club.description}}</div>
 
 										<span class="position-relative" style="left: 185px;">
@@ -94,6 +97,7 @@
 									</div>
 
 									<div class="col-lg-8">
+
 										<div class="row">
 
 											{# accessable only if you are a member of the club #}
@@ -127,8 +131,11 @@
 												<div class="col-lg-12">
 													<main>
 														<div class="cards">
+															{# {% include "club/manage-club/user/club-nav.html"%} #}
 															<div class="card-content">
-																<h5 class="fw-bold">Members</h5>
+																<h5 class="fw-bold" title="Club Members">
+																	<i class="bi bi-person-lines-fill"></i>
+																	Members</h5>
 															</div>
 															<div class="card-body">
 																{% if clubMembers | is_empty %}

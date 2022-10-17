@@ -52,21 +52,64 @@
 													</a>
 												</div>
 											</td>
-
 										</tr>
 										{%endfor%}
 										{%endif%}
 
-										{% if clubs | is_empty and events | is_empty and accounts | is_empty %}
+										{% if not posts | is_empty %}
 											<tr>
-												<h6 class="fw-bold text-success my-3 text-center">Searching '{{q}}' not found.
-												</h6>
+												<td>
+													<h6 class="fw-bold my-3">Questions</h6>
+												</td>
 											</tr>
+
+											{% for p in posts %}
+												<tr>
+													<td>
+
+														<div class="d-flex my-2">
+															<span class="mx-3 h5 fw-bolder">{{p.username}}:
+																{{p.post}}</span>
+														</a>
+													</div>
+
+												</td>
+											</tr>
+											{%endfor%}
 											{%endif%}
 
-										</tbody>
-									</table>
-								</div>
-							</div>
+											{% if not comments | is_empty %}
+												<tr>
+													<td>
+														<h6 class="fw-bold my-3">Answers</h6>
+													</td>
+												</tr>
 
-						{% endblock %}
+												{% for c in comments %}
+													<tr>
+														<td>
+
+															<div class="d-flex my-2">
+																<span class="mx-3 h5 fw-bolder">{{c.username}}:
+																	{{c.comment}}</span>
+															</a>
+														</div>
+
+													</td>
+												</tr>
+												{%endfor%}
+												{%endif%}
+
+												{% if clubs | is_empty and events | is_empty and accounts | is_empty and posts | is_empty %}
+													<tr>
+														<h6 class="fw-lighter text-success my-3 text-center">Searching '{{q}}' not found.
+														</h6>
+													</tr>
+													{%endif%}
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+								{% endblock %}

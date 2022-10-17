@@ -138,9 +138,10 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		let lat = req.body.lat;
 		let long = req.body.long;
 		let dropOffAddress = req.body.dropOffAddress
+		let billingStatus = req.body.billingStatus
 		let status = "pending";
 		let pigeons = pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons);
-		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, dropOffAddress, pigeons)
+		let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, billingStatus, dropOffAddress, pigeons)
 		query(eventParticipant, (err) => {
 			insertNotification(Notification(
 				accountId,

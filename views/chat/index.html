@@ -5,7 +5,9 @@
     <h1 class="h2 fw-bolder mt-2">Club Chats</h1>
     <div class="chats-container container mt-4">
       <div id="oid" class="container w-100">
-        <p class="h5 fw-bold mt-2 ms-2">Your Chats</p>
+        <p class="h5 fw-bold mt-2 ms-2">
+          <i class="icons fa-solid fa-comment"></i>
+          Your Chats</p>
 
         {%set accountIdStr = accountId.toString()%}
         {%if  data | unique_chat(username,clubId) | is_empty %}
@@ -21,8 +23,10 @@
                     <img src="/images/club.jpg" style="width: 50px; height: 50px;" id="globalchat-participant-picture">
                     <span class="mx-4 h5 fw-bolder">{{d.clubName}}</span>
                     <div>
-                      <sub class="mx-5 px-5">Updated:
-                        {{d.datetime|datetime_formatter}}</sub>
+                      <sub class="mx-5 px-5" title=" {{d.datetime|datetime_formatter}}">
+                        {{d.username}}:
+                        {{d.chat}}</sub>
+
                     </div>
                   </a>
                 </div>

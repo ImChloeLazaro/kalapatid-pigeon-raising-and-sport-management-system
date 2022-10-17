@@ -157,24 +157,25 @@ const POST_EDIT_EVENT_ID = (req, res) => {
 
 		let name = req.body.name;
 		let type = req.body.type;
-		let hourStart = req.body.hourStart;
-		let hourEnd = req.body.hourEnd;
+		let datetimeStart = req.body.datetimeStart;
+		let datetimeEnd = req.body.datetimeEnd;
 		let description = req.body.description;
 		let long = req.body.long;
 		let lat = req.body.lat;
 		let accessability = req.body.accessability
-
+		let eventStatus = req.body.eventStatus
 
 		let filter = { _id: new ObjectId(eventId), clubId: new ObjectId(clubId) }
 		let setUpdate = {
 			name: name,
 			type: type,
-			hourStart: hourStart,
-			hourEnd: hourEnd,
+			hourStart: datetimeStart,
+			datetimeEnd: datetimeEnd,
 			description: description,
 			lat: lat,
 			long: long,
-			accessability: accessability
+			accessability: accessability,
+			eventStatus: eventStatus
 		}
 		query(filter, setUpdate, (err) => {
 			return res.redirect(globalConstants.ctx.DOMAIN_NAME + "/events/show?eventId=" + eventId + "&clubId=" + clubId)

@@ -1,6 +1,8 @@
 <div class="event-table-container container w-100">
 
-	<p class="h5 fw-bold mt-2 ms-2">Public Events</p>
+	<p class="h5 fw-bold mt-2 ms-2">
+		<i class="bi bi-train-front-fill"></i>
+		Public Events</p>
 
 	{% set isEmpty = false %}
 	{#  loop all clubs #}
@@ -22,7 +24,8 @@
 
 	{% if events | isPublicEventEmpty %}
 		<div class="cards">
-			<p class="text-center fw-bold">You do not have public events.
+			<p class="text-center fw-bold">
+				You do not have public events.
 			</p>
 		</div>
 	{%endif %}

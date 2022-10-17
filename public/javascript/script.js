@@ -4,7 +4,7 @@ console.log("This is Client-side Event Script..")
 var faded = {
 	"version": "1.0",
 	"settings": {
-		"landColor": "#35be95",
+		"landColor": "#2DA380",
 		"shadedReliefVisible": false
 	},
 	"mapElement": {

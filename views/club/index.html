@@ -3,12 +3,14 @@
   <div class="container ">
     <h1 class="h2 fw-bolder mt-2">Clubs</h1>
     <div class="club-container container mt-4">
-      <a class="btn btn-sm btn-success w-25" href="{{ctx.DOMAIN_NAME}}/clubs/create">
-        <i class="fa-solid fa-plus mx-2"></i>
-        Club</a>
+      <a class="d-inline-block btn btn-sm btn-success " href="{{ctx.DOMAIN_NAME}}/clubs/create">
+        <i class="bi bi-plus"></i>
+        Add Club</a>
     </div>
     <div class="club-table-container container w-100">
-      <p class="h5 fw-bold mt-2 ms-2">All Clubs</p>
+      <p class="h5 fw-bold mt-2 ms-2">
+        <i class="fas fa-users mx-2"></i>
+        All Clubs</p>
 
       {% if not clubs | is_empty%}
         {% for c in clubs | sort(false, true, 'datetime') | reverse %}
@@ -22,17 +24,23 @@
                   {{clubMembers | sizeByClubMember(c._id) }}
                   members
                 </span>
-
-                <div class="m-4">
+                <div style="font-size: 10pt;">
                   <p class="fw-bolder">Short Description</p>
-                  <p>{{c.description}}</p>
+                  <div>
+                    {{c.description|limit(100)}}
+                    <span>
+                      <a class="d-inline-block text-success" href="{{ctx.DOMAIN_NAME}}/clubs/show?clubId={{c._id}}">See more...</a>
+                    </span>
+                  </div>
                 </div>
               </a>
             </div>
           </div>
         {% endfor %}
       {%else %}
-        <p>No Clubs.</p>
+        <div class="cards">
+          <p class="text-center">No Clubs.</p>
+        </div>
       {% endif %}
     </div>
   </div>

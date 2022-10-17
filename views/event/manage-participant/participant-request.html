@@ -19,6 +19,11 @@
 								<div class="form-group">
 									<input class="form-control" type="text" name="name" value="{{username}}" readonly="true">
 								</div>
+								<p class="text-mute fw-bold py-2">Status</p>
+								<select class="form-select form-select-sm py-2" name="billingStatus" type="text" required="true" aria-label=".form-select-sm" selected="{{event.accessability}}">
+									<option value="Paid">Paid</option>
+									<option value="NotPaid">Not Paid</option>
+								</select>
 								<p class="text-mute">DropOff Point Address</p>
 								<input class="form-control form-control-sm w-100" name="dropOffAddress" type="text" placeholder="Drop Off Address" required="true">
 

@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+:root {
+  --primary-color: #2DA380;
+  --secondary-color: #000;
+  --font-family: "Poppins", sans-serif;
+}
 
 
 .cards {
@@ -30,7 +35,7 @@
 }
 
 .btn:focus {
-  border-color: #2DA380;
+  border-color: var(--primary-color);
   background: #F2F2F2;
   outline: none;
   box-shadow: none;
@@ -51,7 +56,7 @@
 #profile-wrapper #profile-main .cards #profile-picture img {
   padding: 3px;
   border-radius: 50%;
-  border: 3px solid green;
+  border: 3px solid var(--primary-color);
 }
 
 #profile-wrapper #profile-main .cards #profile-id {
@@ -87,7 +92,7 @@
   #profile-wrapper #profile-main .cards #profile-picture img {
     padding: 3px;
     border-radius: 50%;
-    border: 3px solid green;
+    border: 3px solid var(--primary-color);
   }
 
   #profile-wrapper #profile-main .cards #profile-id {
@@ -140,7 +145,7 @@
   #profile-wrapper #profile-main .cards #profile-picture img {
     padding: 3px;
     border-radius: 50%;
-    border: 3px solid green;
+    border: 3px solid var(--primary-color);
   }
 
   #profile-wrapper #profile-main .cards #profile-id {
@@ -190,15 +195,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
 }
 
 textarea {
   all: unset;
+  padding: 5px !important;
   width: 100% !important;
   border: 3px solid #FFFFFF;
   border-radius: 1rem;
-  color: #2DA380;
 }
 
 textarea:focus,
@@ -209,5 +214,3 @@ textarea::placeholder {
 textarea::placeholder {
   color: #C5C3C3;
 }
-
-/*# sourceMappingURL=style.css.map */

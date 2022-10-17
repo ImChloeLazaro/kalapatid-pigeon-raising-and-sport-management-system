@@ -8,7 +8,7 @@
 					<div class="cards">
 						<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
 							<h5 class="fw-bold">
-								<i class="bi bi-suit-club-fill"></i>
+								<i class="fas fa-users mx-2"></i>
 								Edit Club</h5>
 						</div>
 
@@ -37,10 +37,9 @@
 														cursor: pointer;
 													}
 												</style>
-												<input class="my_file" type="file" name="clubProfile" id="profile-upload">
+												<input class="my_file" type="file" name="clubProfile" id="profile-upload" title="Picture upload should be limited to 60 kilobytes">
 											</div>
 										</div>
-										<small class="text-muted fw-lighter">NOTE: picture upload should be limited to 60 kilobytes</small>
 									</div>
 								</div>
 								<div class="w-auto">
@@ -82,21 +81,21 @@
 							<main>
 								<div class="cards">
 									<div class="card-content">
-										<h5 class="fw-bold">
+										<h5 class="fw-bold" title="Danger Zone">
 											<i class="bi bi-radioactive"></i>
 											Danger Zone</h5>
 									</div>
 									<div class="card-body">
 										<style>
-											#danger {
+											.danger {
 												background: #DC3646!important;
 											}
-											#danger:hover {
+											.danger:hover {
 												color: #DC3646!important;
 												background: #F2F2F2!important;
 											}
 										</style>
-										<a type="submit" id="danger" class="btn btn-danger w-25" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
+										<a type="submit" class="d-inline btn btn-sm danger" href="{{ctx.DOMAIN_NAME}}/clubs/delete?clubId={{club._id}}">delete club</a>
 									</div>
 								</div>
 							</main>

@@ -4,30 +4,52 @@
 		<form method="POST" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-lg-4">
-					<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
-						<h5 class="fw-bold">Edit Profile</h5>
-					</div>
+					<div class="cards">
+						<div class="d-flex justify-content-between align-items-center" style="height: 50px;">
+							<h5 class="fw-bold">
+								<i class="fas fa-user mx-2"></i>
+								Edit Profile</h5>
+						</div>
 
-					<div class="card-body">
+						<div class="card-body">
 
-						<div class="w-100 text-center my-3">
-							<img src="{{profileData.profileURL}}" style="width: 100px; height: 100px;" id="account-picture">
-							<div>
-								<input type="file" name="profile" id="profile-upload" accept=".png,.jpg,.jpeg">
-								<p class="fw-lighter">NOTE: picture upload should be limited to 60 kilobytes</p>
+							<div class="w-100 text-center my-3">
+								<img src="{{profileData.profileURL}}" style="width: 100px; height: 100px;" id="account-picture">
+								<div>
+									<style>
+										.my_file {
+											color: transparent;
+											position: relative;
+											bottom: 20px;
+											left: 187px;
+										}
+										.my_file::-webkit-file-upload-button {
+											visibility: hidden;
+										}
+										.my_file::before {
+											content: '\f030';
+											font-family: 'fontAwesome';
+											color: #F2F2F2;
+											-webkit-text-stroke: 1px #2DA380;
+											cursor: pointer;
+										}
+									</style>
+
+									<input class="my_file" type="file" name="profile" id="profile-upload" accept=".png,.jpg,.jpeg" title="Picture upload should be limited to 60 kilobytes">
+								</div>
 							</div>
-						</div>
 
-						<div class="w-auto">{{accData.firstName}}
-							{{accData.middleName}}
-							{{accData.lastName}}
-							<span>({{accData.username}})</span>
-							<p class="text-muted" style="font-size: 10px;">{{accData.email}}</p>
-							<p>{{accData.phone}}</p>
+							<div class="w-auto">{{accData.firstName}}
+								{{accData.middleName}}
+								{{accData.lastName}}
+								<span>({{accData.username}})</span>
+								<p class="text-muted" style="font-size: 10px;">{{accData.email}}</p>
+								<p>{{accData.phone}}</p>
+							</div>
+							<br>
 						</div>
-						<br>
-
 					</div>
+
 				</div>
 				<div class="col-lg-8">
 					<div class="row">
@@ -36,7 +58,9 @@
 								<div class="cards">
 
 									<div class="card-content">
-										<h5 class="fw-bold">Bio</h5>
+										<h5 class="fw-bold">
+											<i class="fas fa-user"></i>
+											Bio</h5>
 									</div>
 									<div class="card-body">
 										<textarea class="w-100" name="info">{{profileData.info}}</textarea>

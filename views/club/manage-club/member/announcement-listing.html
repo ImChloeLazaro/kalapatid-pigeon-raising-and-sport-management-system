@@ -1,17 +1,23 @@
 <div class="col-lg-12">
 	<main>
 		<div class="cards">
+			{# {% include "club/manage-club/user/club-nav.html"%} #}
 			<div class="card-content">
-				<h5 class="fw-bold">Announcements</h5>
+				<h5 class="fw-bold" title="Club Announcements">
+					<i class="bi bi-megaphone-fill"></i>
+					Announcements</h5>
 				{% if club.creatorId | isMatch(accountId) %}
 					<a class="d-inline-block btn btn-sm btn-success" style="font-size: 7pt;" href="{{ctx.DOMAIN_NAME}}/clubs/announcement/create?clubId={{club._id}}">
-						<i class="fa-solid fa-plus fw-bold"></i>Add Announcement
+						<i class="fa-solid fa-plus fw-bold"></i>
+						Add Announcement
 					</a>
 					{%endif%}
 				</div>
 				<div class="card-body">
 					{% if announcements | is_empty %}
-						<p class="text-center">No Announcements.</p>
+						<p class="text-center">
+							<i class="bi bi-megaphone-fill"></i>
+							No Announcements.</p>
 					{% endif %}
 					<div style="overflow-y: auto; height: 100px;">
 						<table class="table table-borderless">

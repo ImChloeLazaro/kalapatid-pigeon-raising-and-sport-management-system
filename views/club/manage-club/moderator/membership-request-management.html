@@ -1,8 +1,11 @@
 <div class="col-lg-12">
 	<main>
 		<div class="cards">
+			{# {% include "club/manage-club/user/club-nav.html"%} #}
 			<div class="card-content">
-				<h5 class="fw-bold">Membership Requests</h5>
+				<h5 class="fw-bold" title="Club Membership Requests">
+					<i class="bi bi-person-plus-fill"></i>
+					Membership Requests</h5>
 			</div>
 			<div class="card-body">
 				{% if clubMembers | is_empty %}

@@ -136,6 +136,27 @@ function filters(env) {
 		return `${dateformated}, ${time}`
 	})
 
+	env.addFilter('datetime_h_formatter', function (str) {
+		let date = str;
+		var options = {
+			weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
+		}
+		let newDate = new Date(date)
+		let today = new Date(Date.now()).toLocaleDateString("en-US", options)
+		let yesterday = new Date(Date.now() - 864e5).toLocaleDateString("en-US", options)
+		let dateformated = newDate.toLocaleDateString("en-US", options)
+
+		if (dateformated === today) {
+			dateformated = "Today"
+		} else if (dateformated === yesterday) {
+			dateformated = "Yesterday"
+		}
+		return `${dateformated}`
+	})
+
+
+
+
 
 
 	env.addFilter('date_formatter', function (date) {

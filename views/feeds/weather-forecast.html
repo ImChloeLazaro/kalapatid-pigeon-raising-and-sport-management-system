@@ -1,22 +1,24 @@
 <script>
-function weekdayFormat(date) {
-var options = {
-        weekday: 'long'
-}
-console.log(date);
-let newDate = new Date()
-let today = new Date(Date.now()).toLocaleDateString("en-US", options)
-let yesterday = new Date(Date.now() - 864e5).toLocaleDateString("en-US", options)
-let dateformated = newDate.toLocaleDateString("en-US", options)
-if (dateformated === today) {
-        dateformated = "Today"
-} else if (dateformated === yesterday) {
-        dateformated = "Yesterday"
-}
-return dateformated
-}
-if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
+        function weekdayFormat(date) {
+                var options = {
+                        weekday: 'long'
+                }
+                console.log(date);
+                let newDate = new Date()
+                let today = new Date(Date.now()).toLocaleDateString("en-US", options)
+                let yesterday = new Date(Date.now() - 864e5).toLocaleDateString("en-US", options)
+                let dateformated = newDate.toLocaleDateString("en-US", options)
+                if (dateformated === today) {
+                        dateformated = "Today"
+                } else if (dateformated === yesterday) {
+                        dateformated = "Yesterday"
+                }
+                return dateformated
+        }
+        if (navigator.geolocation) {
+                navigator
+                        .geolocation
+                        .getCurrentPosition(function (position) {
                                 let {latitude, longitude} = position.coords;
                                 getForcastWeather(`${latitude},${longitude}`)
                                 async function getForcastWeather(location) {
@@ -34,7 +36,7 @@ if (navigator.geolocation) {
                                                                 $("#forcast-container")
                                                                 .append(`
                         <div class="card-header fw-bolder">
-                                Weather
+                                <i class="bi bi-cloud-fill"></i> Weather
                                 <div class="icon d-flex justify-content-between">
                         
                                         <span class="fw-normal">Date: ${weekdayFormat(currentday.last_updated)}</span>
@@ -85,11 +87,11 @@ if (navigator.geolocation) {
                 </div>
                 
         `)
-                                })
-                                .catch(err => {
-                                        console.log(err)
-                                })
-                        }
-        });
-}
+                                                })
+                                                .catch(err => {
+                                                        console.log(err)
+                                                })
+                                        }
+                        });
+        }
 </script>

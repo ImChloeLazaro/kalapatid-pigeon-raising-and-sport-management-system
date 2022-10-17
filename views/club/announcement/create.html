@@ -6,17 +6,18 @@
 				<div class="col-12 d-flex justify-content-center">
 					<div class="col-12 col-lg-10 mt-5">
 						<div class="cards w-auto">
-							<h5 class="fw-bold">Create Club Announcement</h5>
+							<h5 class="fw-bold">
+								<i class="bi bi-megaphone-fill"></i>
+								Create Club Announcement</h5>
 							<div class="card-body">
 								<form action="{{ctx.DOMAIN_NAME}}/clubs/announcement/create?clubId={{clubId}}" method="post">
 									<div class="form-group">
 										<div>
-											<label for="clubAnnouncement">Announcement Title</label>
+											<label class="fw-bolder" for="clubAnnouncement">Title</label>
 											<input class="form-control form-control-sm position-relative" style="width: 100%; right: 5px;" name="title" type="text" placeholder="Club Announcement">
 										</div>
 										<div class="my-4 form-group">
-											<label for="description">
-												Announcement Description</label>
+											<label class="fw-bolder" for="description">Description</label>
 											<textarea class="d-block w-100" name="content" placeholder="Announcement Description"></textarea>
 										</div>
 

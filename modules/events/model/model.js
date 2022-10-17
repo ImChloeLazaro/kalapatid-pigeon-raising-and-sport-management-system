@@ -24,7 +24,7 @@ function Event(accountId, clubId, name, date, long, lat, datetimeStart, datetime
 
 
 
-function EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, dropOffAddress, pigeons) {
+function EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, billingStatus, dropOffAddress, pigeons) {
 	return {
 		_id: new ObjectId(),
 		eventId: new ObjectId(eventId),
@@ -35,6 +35,7 @@ function EventParticipant(eventId, accountId, clubId, username, status, info, la
 		info: info,
 		lat: lat,
 		long: long,
+		billingStatus: billingStatus,
 		dropOffAddress: dropOffAddress,
 		pigeons: pigeons,
 	}

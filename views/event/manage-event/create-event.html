@@ -17,31 +17,31 @@
 								<p class="text-mute">Creation Date</p>
 								<input class="form-control form-control-sm w-100" name="date" type="date" placeholder="Event Date" required="true">
 								<p class="text-mute">Event Type</p>
-								<select class="form-select form-select-sm py-2" name="type" type="text" required="true" aria-label=".form-select-sm ">
-									<option value="Event type 1">Event Type 1</option>
-									<option value="Event type 2">Event Type 2</option>
-									<option value="Event type 3">Event Type 3</option>
+								<select class="form-select form-select-sm py-2 w-100" name="type" type="text" required="true" aria-label=".form-select-sm ">
+									<option value="Young Bird">Young Bird</option>
+									<option value="Old Bird">Old Bird</option>
+									<option value="Training">Training</option>
 								</select>
 
 								<p class="text-mute">Max Range of Pigeons per Participant</p>
-								<select class="form-select form-select-sm py-2" name="maxParticipants" type="number" required="true" aria-label=".form-select-sm">
-									<option value="10">10</option>
-									<option value="100">100</option>
-									<option value="1000">1000</option>
+								<select class="form-select form-select-sm py-2 w-100" name="maxParticipants" type="number" required="true" aria-label=".form-select-sm">
+									<option value="10">50 Participants</option>
+									<option value="100">100 Participants</option>
+									<option value="1000">1000 Participants</option>
 								</select>
 								<p class="text-mute">Start Date Time</p>
 								<input class="form-control form-control-sm w-100" name="datetimeStart" type="datetime-local" placeholder="Event Start Time" required="true">
 								<p class="text-mute">End ate Time</p>
 								<input class="form-control form-control-sm w-100" name="datetimeEnd" type="datetime-local" placeholder="Event End Time" required="true">
 								<p class="text-mute">Accessability</p>
-								<select class="form-select form-select-sm py-2" name="accessability" type="text" required="true" aria-label=".form-select-sm ">
+								<select class="form-select form-select-sm w-100" name="accessability" type="text" required="true" aria-label=".form-select-sm ">
 									<option value="Public">Public</option>
 									<option value="Private">Private</option>
 								</select>
 								<p class="text-mute fw-bold py-2">Status</p>
-								<select class="form-select form-select-sm py-2" name="eventStatus" type="text" required="true" aria-label=".form-select-sm">
-									<option value="Close">Close</option>
-									<option value="Open">Open</option>
+								<select class="form-select form-select-sm w-100" name="eventStatus" type="text" required="true" aria-label=".form-select-sm">
+									<option value="Close">Closed</option>
+									<option value="Open">Opened</option>
 								</select>
 							</div>
 						</div>
@@ -56,7 +56,9 @@
 							<footer class="mt-3" id="profile-group">
 								<div class="cards overflow-auto">
 									<div class="card-content mb-3">
-										<h5 class="fw-bold">Event Map</h5>
+										<h5 class="fw-bold">
+											<i class="bi bi-map-fill"></i>
+											Event Map</h5>
 									</div>
 									<div class="card-body d-flex justify-content-between">
 										<div id="event-map" style="width: fit-content; height:300px;"></div>

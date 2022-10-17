@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+:root {
+  --primary-color: #2DA380;
+  --secondary-color: #000;
+  --font-family: "Poppins", sans-serif;
+}
+
 p {
   color: #2D2626;
   margin: 0;
@@ -8,6 +14,15 @@ p {
 a {
   text-decoration: none;
   z-index: 1000;
+}
+
+.text-success {
+  color: var(--primary-color) !important;
+}
+
+::placeholder {
+  font-weight: lighter;
+  color: rgb(173, 173, 173) !important;
 }
 
 .icons {
@@ -19,7 +34,7 @@ a {
 }
 
 .icons:hover {
-  color: #2DA380;
+  color: var(--primary-color);
   border-radius: 50%;
 }
 
@@ -44,21 +59,23 @@ a {
   background: #F2F2F2;
 }
 
-.form-control {
+.form-control,
+.form-select {
   height: auto;
   width: auto;
-  margin: 5px;
+  margin: 5px 0;
   background: #F2F2F2;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 2rem;
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
 }
 
-.form-control:focus {
-  color: #2D2626;
-  border-color: #2DA380;
+.form-control:focus,
+.form-select:focus {
+  color: #464646;
+  border-color: var(--primary-color);
   background: #F2F2F2;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
   outline: none;
   box-shadow: none;
 }
@@ -66,6 +83,8 @@ a {
 .form-control::placeholder {
   color: #C5C3C3;
 }
+
+
 
 .btn {
   margin: 5px;
@@ -75,7 +94,7 @@ a {
   color: #F2F2F2;
   font-weight: bold;
   border-radius: 50%;
-  background: #2DA380 !important;
+  background: var(--primary-color) !important;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 2rem;
   box-shadow: 20px 20px 68px #d3d3d3, -20px -20px 68px #ffffff;
@@ -83,21 +102,21 @@ a {
 }
 
 .btn:hover {
-  color: #2DA380;
+  color: var(--primary-color) !important;
   background: #F2F2F2 !important;
 }
 
 .btn:focus {
-  border-color: #2DA380;
+  border-color: var(--primary-color) !important;
   background: #F2F2F2;
   outline: none;
   box-shadow: none;
 }
 
 .badge {
-  background: #2DA380 !important;
+  background: var(--primary-color) !important;
   height: 20px;
-  z-index: 1000;
+  z-index: 1;
 }
 
 #global-chat-wrapper {
@@ -117,7 +136,7 @@ a {
 #globalchat-participant-picture {
   padding: 3px;
   margin-right: 10px;
-  background: #2DA380;
+  background: var(--primary-color);
   border-radius: 50%;
 }
 
@@ -134,7 +153,7 @@ a {
   padding: 10px;
   width: auto;
   color: #F2F2F2;
-  background: #2DA380;
+  background: var(--primary-color);
   border-radius: 1rem;
 }
 
@@ -166,7 +185,7 @@ a {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #2DA380;
+  background: var(--primary-color);
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -176,12 +195,12 @@ a {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link:hover {
-  color: #2DA380;
+  color: var(--primary-color);
 }
 
 #account-picture,
 #profile-club-picture {
-  background: #2DA380;
+  background: var(--primary-color);
   padding: 1px;
   border-radius: 50%;
 }
@@ -194,13 +213,10 @@ a {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
 }
-
-/*# sourceMappingURL=style.css.map */
-
 
 
 .bg-success {
-  background-color: #2DA380 !important;
+  background-color: var(--primary-color) !important;
 }

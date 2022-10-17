@@ -16,16 +16,16 @@
 									{{c.name}}
 								</span>
 							</a>
-
 						</td>
+
 						<td>
 							<div id="profile-link">
 								<a class="text-dark" href="{{ctx.DOMAIN_NAME}}/chats/show?clubId={{c._id}}" data-toggle="tooltip" data-placement="top" title="Club Chat">
 									<i class="icons fa-solid fa-comment" id="profile-icons"></i>
-
 								</a>
 							</div>
 						</td>
+
 					</tr>
 				{%elif m.memberStatus == "accepted" %}
 					{% set counter = counter + 1 -%}

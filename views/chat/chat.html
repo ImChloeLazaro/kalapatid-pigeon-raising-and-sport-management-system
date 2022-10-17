@@ -4,9 +4,11 @@
   <div class="container">
     <h1 class="h2 fw-bolder mt-2">
       {%if not data | is_empty %}
+
         {{data[0].clubName}}
         Chats</h3>
     {% else %}
+      <i class="icons fa-solid fa-comment"></i>
       Chats
     {%endif %}
   </h1>
