@@ -43,32 +43,51 @@ $(function () {
 function verifyEmail(url) {
 	let email = $("#email").val();
 	let fullUrl = url + email;
-	console.log(url);
-	$.getJSON(fullUrl, function (data) {
-		if (data.deliverability === "DELIVERABLE") {
-			emailVerifier(data.deliverability)
-		} else {
-			emailVerifier(data.deliverability)
-		}
-	})
+	// console.log(url);
+	// $.getJSON(fullUrl, function (data) {
+	// 	if (data.deliverability === "DELIVERABLE") {
+	// 		emailVerifier(data.deliverability)
+	// 	} else {
+	// 		emailVerifier(data.deliverability)
+	// 	}
+	// })
+	var myHeaders = new Headers();
+	myHeaders.append("apikey", "IFYOXYapu2AOtV4uKxPpIwYWQtdf8bg3");
+
+	var requestOptions = {
+		method: 'GET',
+		redirect: 'follow',
+		headers: myHeaders
+	};
+
+	fetch(fullUrl, requestOptions)
+		.then(response => response.text())
+		.then(result => {
+			let data = JSON.parse(result)
+			if (data.smtp_check) {
+				emailVerifier(true)
+			} else {
+				emailVerifier(false)
+			}
+		})
+		.catch(error => console.log('error', error));
 }
 
 
 function emailVerifier(value) {
-	let icheck = $('<i class="bi bi-check2-circle">')
-	let ierror = $('<i class="bi bi-x-circle-fill">')
+	let icheck = $('<i class="bi bi-check2-circle my-2">')
+	let ierror = $('<i class="bi bi-x-circle-fill my-2">')
 
 	let emailValid = "Email verified";
 	let emailInvalid = "Email invalid";
 
-	if (value === "DELIVERABLE") {
-		let p = $('<p class="text-success">')
+	if (value) {
+		let p = $('<p class="text-success me-2">')
 		p.text(emailValid)
 		p.append(icheck)
 		$("#email-verifier").html(p)
 	} else {
-		let p = $("<p>")
-		p.addClass("text-danger")
+		let p = $('<p class="text-danger me-2">')
 		p.append(emailInvalid)
 		p.append(ierror)
 		$("#email-verifier").html(p)

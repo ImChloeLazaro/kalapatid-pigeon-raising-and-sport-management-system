@@ -2,10 +2,10 @@
 
 $(function () {
 	console.log("This is Client-side Authentication Script..")
-	if (localStorage.chkbx && localStorage.chkbx != '') {
+	if (sessionStorage.chkbx && sessionStorage.chkbx != '') {
 		$('#rememberme').attr('checked', 'checked')
-		$('#username').val(localStorage.username)
-		$('#password').val(localStorage.password)
+		$('#username').val(sessionStorage.username)
+		$('#password').val(sessionStorage.password)
 	} else {
 		$('#rememberme').removeAttr('checked')
 		$('#username').val('')
@@ -15,13 +15,13 @@ $(function () {
 
 		if ($('#rememberme').is(':checked')) {
 
-			localStorage.username = $('#username').val()
-			localStorage.password = $('#password').val()
-			localStorage.chkbx = $('#rememberme').val()
+			sessionStorage.username = $('#username').val()
+			sessionStorage.password = $('#password').val()
+			sessionStorage.chkbx = $('#rememberme').val()
 		} else {
-			localStorage.username = ''
-			localStorage.password = ''
-			localStorage.chkbx = ''
+			sessionStorage.username = ''
+			sessionStorage.password = ''
+			sessionStorage.chkbx = ''
 		}
 	})
 	if (!navigator.geolocation) {
