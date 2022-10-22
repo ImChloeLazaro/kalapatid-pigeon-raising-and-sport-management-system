@@ -28,13 +28,33 @@
 								<div class="carousel-item">
 									<h5>Personal Address</h5>
 									<div class="form-container">
-										<input id="barangay" name="barangay" type="text" class="form-control text-center" placeholder="Barangay" required="true">
-									</div>
-									<div class="form-container">
-										<input id="townCity" name="townCity" type="text" class="form-control text-center" placeholder="Town/City" required="true">
-									</div>
-									<div class="form-container">
 										<input id="province" name="province" type="text" class="form-control text-center" placeholder="Province" required="true">
+										<div class="form-container">
+											<select id="citymun" name="citymun" type="text" class="form-select text-center" placeholder="Town/City" required="true"></select>
+										</div>
+										<div class="form-container">
+											<select id="brgy" name="brgy" type="text" class="form-select text-center" placeholder="Barangay" required="true"></select>
+										</div>
+										<script src="https://cdn.jsdelivr.net/gh/marcuwynu23/camarinessur.js/dist/0.0.1/camarinessur.min.js"></script>
+										<script>
+											$("#province").val("Camarines Sur")
+											$("#citymun").append(`<option value="">Select City/Municipality</option>`)
+											$("#brgy").append(`<option value="" >Select Barangay</option>`)
+											getAllCityByProvinceCodeList((data) => {
+												for (var d of data) {
+													$("#citymun").append(`<option value="${d.citymunDesc}" data-id="${d.citymunCode}">${ConvertTitleCase(d.citymunDesc)}</option>`)
+												}
+											})
+
+											$("#citymun").on("change", function () {
+												getAllBarangayByCityCodeList($(this).find(":selected").data("id"), (data) => {
+													for (var d of data) {
+														$("#brgy").append(`<option value="${d.brgyDesc}">${d.brgyDesc}</option>`)
+													}
+												})
+												$("#brgy").empty()
+											})
+										</script>
 									</div>
 								</div>
 								<div class="carousel-item">

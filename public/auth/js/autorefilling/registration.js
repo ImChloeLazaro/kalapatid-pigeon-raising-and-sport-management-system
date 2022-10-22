@@ -8,9 +8,13 @@ $(function () {
 	let birthday = $("#birthday")
 	let phone = $("#phone")
 	let email = $("#email")
-	let barangay = $("#barangay")
-	let townCity = $("#townCity")
+	let barangay = $("#brgy")
+	let townCity = $("#citymun")
 	let province = $("#province")
+
+	$("#province").val("Camarines Sur")
+	$("#citymun").val("Select City/Municipality")
+	$("#brgy").val("Select Barangay")
 
 	$("#register").click(function () {
 		localStorage.rusername = rusername.val()
@@ -34,9 +38,8 @@ $(function () {
 	$("#birthday").val(localStorage.birthday)
 	$("#phone").val(localStorage.phone)
 	$("#email").val(localStorage.email)
-	$("#barangay").val(localStorage.barangay)
-	$("#townCity").val(localStorage.townCity)
-	$("#province").val(localStorage.province)
+	$("#brgy").val(localStorage.barangay)
+	$("#citymun").val(localStorage.townCity)
 })
 
 
@@ -92,4 +95,14 @@ function emailVerifier(value) {
 		p.append(ierror)
 		$("#email-verifier").html(p)
 	}
+}
+
+
+
+function ConvertTitleCase(str) {
+	const strArr = str.toLowerCase().split(" ");
+	for (let i = 0; i < strArr.length; i++) {
+		strArr[i] = strArr[i][0].toUpperCase() + strArr[i].slice(1);
+	}
+	return strArr.join(" ");
 }
