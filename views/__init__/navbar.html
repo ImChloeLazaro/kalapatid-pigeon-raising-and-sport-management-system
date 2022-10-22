@@ -12,7 +12,7 @@
 			<!-- header collapse -->
 			<div class="collapse navbar-collapse" id="headerContent">
 				<!-- ########################### Search ########################## -->
-				<ul class="w-100 navbar-nav m-auto my-2 mb-lg-0">
+				<ul class="w-100 h-25 navbar-nav m-auto my-2 mb-lg-0">
 					{% include 'search/search.html' %}
 				</ul>
 				<!-- ########################### Menu ########################## -->
@@ -48,7 +48,8 @@
 					</li>
 
 					<li class="nav-item dropdown">
-						<a class="nav-link nav-link-container" id="notification" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+
+						<a class="nav-link  nav-link-container" id="notification" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
 							{# <i class="nav-icon fa-solid fa-bell"></i> #}
 							Notifications<span class="nav-link-content" style="top: 0">10</span>
 							{# <style>
@@ -61,6 +62,7 @@
 							</style>
 							<span class="badge-sm rounded-pill" id="notification-count">2</span> #}
 						</a>
+
 						{% include "notification/notification.html" %}
 					</li>
 				</ul>

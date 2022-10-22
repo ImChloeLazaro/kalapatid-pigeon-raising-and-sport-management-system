@@ -154,8 +154,8 @@ const POST_PARTICIPANT_REQUEST = (req, res) => {
 		let info = req.body.description;
 		let lat = req.body.lat;
 		let long = req.body.long;
-		let dropOffAddress = req.body.dropOffAddress
-		let billingStatus = req.body.billingStatus
+		let dropOffAddress = `${req.body.brgy}, ${req.body.citymun}, ${req.body.province}`;
+		let billingStatus = "NotPaid"
 		let status = "pending";
 		pigeonSerialGenerator(eventId, clubId, accountId, req.body.pigeons, (pigeons) => {
 			let eventParticipant = model.EventParticipant(eventId, accountId, clubId, username, status, info, lat, long, billingStatus, dropOffAddress, pigeons)

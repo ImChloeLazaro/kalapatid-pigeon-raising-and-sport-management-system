@@ -17,14 +17,40 @@
 							<div >
 								<p class=" text-mute ">Name</p>
 								<input class="form-control w-100" type="text" name="name" value="{{username}}" readonly="true">
-
+								{# 
 								<p class="text-mute fw-bold py-2">Status</p>
 								<select class="form-select form-select-sm py-2  w-100" name="billingStatus" type="text" required="true" aria-label=".form-select-sm" selected="{{event.accessability}}">
 									<option value="NotPaid">Not Paid</option>
 									<option value="Paid">Paid</option>
-								</select>
-								<p class="text-mute">DropOff Point Address</p>
-								<input class="form-control form-control-sm w-100" name="dropOffAddress" type="text" placeholder="Drop Off Address" required="true">
+								</select> #}
+								<p class="text-mute fw-bold">DropOff Point Address</p>
+								<p style="font-size: 12pt;" class="text-mute">Province</p>
+								<input id="province" name="province" type="text" class="form-control text-center" placeholder="Province" required="true" readonly="true">
+								<p style="font-size: 12pt;" class="text-mute">City/Municipality</p>
+								<select id="citymun" name="citymun" type="text" class="form-select text-center" placeholder="Town/City" required="true"></select>
+								<p style="font-size: 12pt;" class="text-mute">Barangay</p>
+								<select id="brgy" name="brgy" type="text" class="form-select text-center" placeholder="Barangay" required="true"></select>
+								<script src="https://cdn.jsdelivr.net/gh/marcuwynu23/camarinessur.js/dist/0.0.1/camarinessur.min.js"></script>
+								<script>
+									$("#province").val("Camarines Sur");
+
+									$("#citymun").append(`<option value="">Select City/Municipality</option>`)
+									$("#brgy").append(`<option value="" >Select Barangay</option>`)
+									getAllCityByProvinceCodeList((data) => {
+										for (var d of data) {
+											$("#citymun").append(`<option value="${d.citymunDesc}" data-id="${d.citymunCode}">${ConvertTitleCase(d.citymunDesc)}</option>`)
+										}
+									})
+
+									$("#citymun").on("change", function () {
+										getAllBarangayByCityCodeList($(this).find(":selected").data("id"), (data) => {
+											for (var d of data) {
+												$("#brgy").append(`<option value="${d.brgyDesc}">${d.brgyDesc}</option>`)
+											}
+										})
+										$("#brgy").empty()
+									})
+								</script>
 
 								<label class="text-mute">Number of Pigeon to Join</p>
 								<input class="form-control form-control-sm  w-100" type="text" name="pigeons" required="true">
@@ -66,7 +92,7 @@
 			</div>
 		</form>
 	</div>
-
+	<script src="/javascript/lib.js"></script>
 	<script>
 		if (!navigator.geolocation) {} else {
 			navigator
