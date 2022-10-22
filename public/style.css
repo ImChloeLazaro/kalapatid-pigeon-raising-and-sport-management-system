@@ -4,8 +4,8 @@
   --primary-color: #2DA380;
   --secondary-color: #000;
   --font-family: "Poppins", sans-serif;
+  --swiper-theme-color: var(--primary-color);
 }
-
 
 .cards {
   padding: 20px;
@@ -213,4 +213,32 @@ textarea::placeholder {
 
 textarea::placeholder {
   color: #C5C3C3;
+}
+
+.swiper-button-next:after {
+  content: 'next';
+}
+.swiper-button-prev:after {
+  content: 'prev';
+}
+.swiper-button-next:after, .swiper-button-prev:after {
+
+  color: #2DA380;
+  font-size: 1rem;
+  font-weight: bold;
+  background: rgba(45,163,128, .2);
+  min-height: 2rem;
+  min-width: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: .3s opacity;
+  transform: translate3d(0,0,0);
+  z-index: 10;
+  color: #2DA380;
 }
